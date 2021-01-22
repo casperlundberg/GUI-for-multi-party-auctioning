@@ -7,7 +7,7 @@ class MainGUI extends StatelessWidget {
       backgroundColor: Colors.grey[200],
       body: Center(
         child: SizedBox(
-          width: 500,
+          width: 1000,
           child: Card(),
         ),
       ),
