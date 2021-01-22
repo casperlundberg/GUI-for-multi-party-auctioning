@@ -11,7 +11,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-<<<<<<< HEAD
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -145,5 +144,3 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 }
-=======
->>>>>>> be57dc526bd73127715cc643f9d0463e9128ba13
