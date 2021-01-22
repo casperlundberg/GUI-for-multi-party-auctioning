@@ -55,15 +55,19 @@ class _SignUpFormState extends State<SignUpForm> {
               decoration: InputDecoration(hintText: 'Address'),
             ),
           ),
-          TextButton(child: Text('Signup'), onPressed: () {}),
           TextButton(
-              child: Text('Login'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              }),
+            child: Text('Signup'),
+            onPressed: () {},
+          ),
+          TextButton(
+            child: Text('Login'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+            },
+          ),
         ],
       ),
     );
