@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'Register.dart';
-import '../Dashboard/mainGUI.dart';
+import 'login.dart';
 
-class LoginScreen extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +10,7 @@ class LoginScreen extends StatelessWidget {
         child: SizedBox(
           width: 500,
           child: Card(
-            child: LoginForm(),
+            child: SignUpForm(),
           ),
         ),
       ),
@@ -19,19 +18,19 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
+class SignUpForm extends StatefulWidget {
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Login', style: Theme.of(context).textTheme.headline4),
+          Text('Signup', style: Theme.of(context).textTheme.headline4),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
@@ -44,20 +43,25 @@ class _LoginFormState extends State<LoginForm> {
               decoration: InputDecoration(hintText: 'Password'),
             ),
           ),
-          TextButton(
-              child: Text('Signup'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpScreen()),
-                );
-              }),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextFormField(
+              decoration: InputDecoration(hintText: 'Age'),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextFormField(
+              decoration: InputDecoration(hintText: 'Address'),
+            ),
+          ),
+          TextButton(child: Text('Signup'), onPressed: () {}),
           TextButton(
               child: Text('Login'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MainGUI()),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               }),
         ],

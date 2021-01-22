@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'Login.dart';
+import 'register.dart';
+import '../Dashboard/mainGUI.dart';
 
-class SignUpScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +11,7 @@ class SignUpScreen extends StatelessWidget {
         child: SizedBox(
           width: 500,
           child: Card(
-            child: SignUpForm(),
+            child: LoginForm(),
           ),
         ),
       ),
@@ -18,19 +19,19 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-class SignUpForm extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Signup', style: Theme.of(context).textTheme.headline4),
+          Text('Login', style: Theme.of(context).textTheme.headline4),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
@@ -43,25 +44,20 @@ class _SignUpFormState extends State<SignUpForm> {
               decoration: InputDecoration(hintText: 'Password'),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
-              decoration: InputDecoration(hintText: 'Age'),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
-              decoration: InputDecoration(hintText: 'Address'),
-            ),
-          ),
-          TextButton(child: Text('Signup'), onPressed: () {}),
+          TextButton(
+              child: Text('Signup'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                );
+              }),
           TextButton(
               child: Text('Login'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => MainGUI()),
                 );
               }),
         ],
