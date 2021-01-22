@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'Login/Login.dart';
 import 'auctions/AuctionsTemplateGUI.dart';
+=======
+import 'Login/login.dart';
+>>>>>>> 10478557af5ac6cfd9be91e45741ef20cb6e4641
 
 void main() => runApp(MyApp());
 
@@ -8,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {'/': (context) => LoginScreen()},
       //routes: {'/': (context) => AuctionTemplateGUI()},
       theme: ThemeData(
