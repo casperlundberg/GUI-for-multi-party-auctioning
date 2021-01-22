@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'Login/Login.dart';
-import 'auctions/AuctionsTemplateGUI.dart';
-=======
 import 'Login/login.dart';
->>>>>>> 10478557af5ac6cfd9be91e45741ef20cb6e4641
 
 void main() => runApp(MyApp());
 
