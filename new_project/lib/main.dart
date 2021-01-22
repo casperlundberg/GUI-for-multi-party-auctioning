@@ -6,7 +6,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,r
+      debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
