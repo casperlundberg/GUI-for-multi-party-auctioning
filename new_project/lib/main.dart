@@ -78,7 +78,14 @@ class _LoginFormState extends State<LoginForm> {
                   MaterialPageRoute(builder: (context) => SignUpScreen()),
                 );
               }),
-          TextButton(child: Text('Login'), onPressed: () {}),
+          TextButton(
+              child: Text('Login'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainGUI()),
+                );
+              }),
         ],
       ),
     );
