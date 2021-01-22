@@ -6,7 +6,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< HEAD
       routes: {'/': (context) => LoginScreen()},
     );
   }
@@ -23,13 +22,6 @@ class LoginScreen extends StatelessWidget {
           child: Card(
             child: LoginForm(),
           ),
-=======
-      debugShowCheckedModeBanner: false,
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Flutter'),
->>>>>>> b5103a73b83f32d1fa10c7ece2a51eb7af38e0d8
         ),
       ),
     );
