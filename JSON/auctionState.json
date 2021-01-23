@@ -1,0 +1,57 @@
+{
+    "@context": [
+        "ourschema_URL",
+        {
+            "categories": {
+                "@id": "schema:categories",
+                "@type": "@id"
+            },
+            "owner": {
+                "@id": "schema:user",
+                "@type": "@userTypes"
+            },
+            "room": {
+                "@id": "schema:room",
+                "@type": "@id"
+            },
+            "participants": {
+                "@id": "schema:users",
+                "@type": "@id"
+            },
+            "material": {
+                "@id": "schema:material",
+                "@type": "@id"
+            },
+            "bids": {
+                "@id": "schema:user",
+                "@type": "@bid"
+            },
+            "state": {
+                "@id": "schema:state",
+                "@type": "@state"
+            },
+            "contract": {
+                "@id": "schema:contract",
+                "@type": "@id"
+            }
+        }
+    ],
+    "auctionInfo": {
+        "auctionId": 1,
+        "title": "Test Auction",
+        "currentRound": 1
+    },
+    "auctionSettings": {
+        "bidding": {
+            "maxBidsPerUser": 10,
+            "maxBidsTotal": 50,
+            "allowedBidders": [
+                "consumer"
+            ]
+        },
+        "rounds": {
+            "maxRounds": 5,
+            "roundTimeMinutes": 60
+        }
+    }
+}

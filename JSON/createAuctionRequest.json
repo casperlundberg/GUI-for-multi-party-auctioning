@@ -1,0 +1,30 @@
+{
+    "auctionInfo": {
+        "auctionId": null,
+        "title": "Test Auction",
+        "currentRound": 0,
+        "categoryIds": [1, 2, 7, 32],
+        "owner": {
+            "ownerId": 1,
+            "ownerType": "provider"
+        },
+        "roomId": null,
+        "participants": null,
+        "materialId": 5,
+        "bids": null,
+        "state": "created",
+        "contractId": null
+    },
+    
+    "auctionSettings": {
+        "bidding": {
+            "maxBidsPerUser": 10,
+            "maxBidsTotal": 50,
+            "allowedBidders": ["consumer"]
+        },
+        "rounds": {
+            "maxRounds": 5,
+            "roundTimeMinutes": 60
+        }
+    }
+}
