@@ -3,7 +3,12 @@
         "auctionId": null,
         "title": "Test Auction",
         "currentRound": 0,
-        "categoryIds": [1, 2, 7, 32],
+        "categoryIds": [
+            1,
+            2,
+            7,
+            32
+        ],
         "owner": {
             "ownerId": 1,
             "ownerType": "provider"
@@ -15,12 +20,13 @@
         "state": "created",
         "contractId": null
     },
-    
     "auctionSettings": {
         "bidding": {
             "maxBidsPerUser": 10,
             "maxBidsTotal": 50,
-            "allowedBidders": ["consumer"]
+            "allowedBidders": [
+                "consumer"
+            ]
         },
         "rounds": {
             "maxRounds": 5,

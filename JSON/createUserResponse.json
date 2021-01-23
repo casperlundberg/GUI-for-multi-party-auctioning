@@ -1,8 +1,13 @@
 {
-    "@context": ["ourschema_URL", {
-        "company": {"@id": "schema:company", "@type": "@id"}
-      }],
-    
+    "@context": [
+        "ourschema_URL",
+        {
+            "company": {
+                "@id": "schema:company",
+                "@type": "@id"
+            }
+        }
+    ],
     "userInfo": {
         "userId": 1,
         "userName": "Thule Thulesson",
@@ -16,22 +21,20 @@
         },
         "phoneNumbers": [
             {
-            "type": "home",
-            "number": "212 555-1234"
+                "type": "home",
+                "number": "212 555-1234"
             },
             {
-            "type": "office",
-            "number": "646 555-4567"
+                "type": "office",
+                "number": "646 555-4567"
             }
-        ]   
+        ]
     },
-    
     "userTypes": [
         {
             "defaultType": "consumer",
             "currentType": "provider"
         }
     ],
-
     "statusCode": 201
-  }
+}

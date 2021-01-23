@@ -43,7 +43,6 @@
                 }
             ]
         },
-
         {
             "@context": [
                 "ourschema_URL",

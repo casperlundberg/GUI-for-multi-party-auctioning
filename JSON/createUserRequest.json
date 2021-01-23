@@ -1,4 +1,4 @@
-{  
+{
     "userInfo": {
         "userId": null,
         "userName": "Thule Thulesson",
@@ -16,21 +16,20 @@
         },
         "phoneNumbers": [
             {
-            "type": "home",
-            "number": null
+                "type": "home",
+                "number": null
             },
             {
-            "type": "office",
-            "number": null
+                "type": "office",
+                "number": null
             }
         ],
         "company": "Teknologkåren"
     },
-    
     "userTypes": [
         {
             "defaultType": "consumer",
             "currentType": "consumer"
         }
     ]
-  }
+}
