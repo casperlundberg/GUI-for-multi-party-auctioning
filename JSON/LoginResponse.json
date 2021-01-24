@@ -2,7 +2,8 @@
     "userInfo": {
         "userId": 1,
         "userName": "Thule Thulesson",
-        "email": "thule@gmail.com",
+        "email": "thule@gmail.com"
+    },
     "userTypes": [
         {
             "defaultType": "consumer",
