@@ -3,6 +3,7 @@ import '../navigationbar/navbar.dart';
 import '../Auctions/filters.dart';
 import '../Auctions/ongoing.dart';
 import '../Auctions/finished.dart';
+import '../Auctions/myauctions.dart';
 
 class MainGUI extends StatelessWidget {
   @override
@@ -21,15 +22,22 @@ class MainGUI extends StatelessWidget {
                 margin: EdgeInsets.all(25.0),
                 child: Filter(),
               ),
-              Container(
-                color: Colors.blue,
-                margin: EdgeInsets.all(25.0),
-                child: Ongoing(),
-              ),
+              Row(children: [
+                Container(
+                  color: Colors.blue,
+                  margin: EdgeInsets.all(25.0),
+                  child: Ongoing(),
+                ),
+                Container(
+                  color: Colors.blue,
+                  margin: EdgeInsets.all(25.0),
+                  child: Finished(),
+                ),
+              ]),
               Container(
                 color: Colors.purple,
                 margin: EdgeInsets.all(25.0),
-                child: Finished(),
+                child: MyAuctions(),
               ),
             ],
           ),
