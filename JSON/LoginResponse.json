@@ -1,0 +1,14 @@
+{
+    "userInfo": {
+        "userId": 1,
+        "userName": "Thule Thulesson",
+        "email": "thule@gmail.com"
+    },
+    "userTypes": [
+        {
+            "defaultType": "consumer",
+            "currentType": "provider"
+        }
+    ],
+    "statusCode": 200
+}
