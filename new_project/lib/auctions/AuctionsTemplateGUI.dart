@@ -40,17 +40,31 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(1.0),
                                 child: TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'Arg1'),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    labelText: '<amount>',
+                                    prefix: Text('I hereby accept to pay '),
+                                    suffix: Text(' sek for exchange of '),
+                                  ),
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(1.0),
                                 child: TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'Arg2'),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    labelText: '<quantity>',
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(1.0),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: '<object>',
+                                  ),
                                 ),
                               ),
                               Padding(
