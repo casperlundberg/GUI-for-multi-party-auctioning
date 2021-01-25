@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'auctions/AuctionsTemplateGUI.dart';
 import 'Login/login.dart';
 
 void main() => runApp(MyApp());
