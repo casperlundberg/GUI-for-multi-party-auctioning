@@ -5,10 +5,7 @@ class MainGUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: const Text('AppBar Demo'),
-          backgroundColor: const Color(0xFF0099a9),
-        ),
+        appBar: NavigationBar(),
         body: Column(children: <Widget>[
           Row(
             mainAxisAlignment:

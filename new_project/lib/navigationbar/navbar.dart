@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'nav_special.dart';
 import 'nav_item.dart';
 
-class NavigationBar extends StatelessWidget {
+class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,4 +20,7 @@ class NavigationBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
 }
