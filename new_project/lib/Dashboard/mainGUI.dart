@@ -22,18 +22,20 @@ class MainGUI extends StatelessWidget {
                 margin: EdgeInsets.all(25.0),
                 child: Filter(),
               ),
-              Row(children: [
-                Container(
-                  color: Colors.blue,
-                  margin: EdgeInsets.all(25.0),
-                  child: Ongoing(),
-                ),
-                Container(
-                  color: Colors.blue,
-                  margin: EdgeInsets.all(25.0),
-                  child: Finished(),
-                ),
-              ]),
+              Row(
+                children: [
+                  Container(
+                    color: Colors.blue,
+                    margin: EdgeInsets.all(25.0),
+                    child: Ongoing(),
+                  ),
+                  Container(
+                    color: Colors.blue,
+                    margin: EdgeInsets.all(25.0),
+                    child: Finished(),
+                  ),
+                ],
+              ),
               Container(
                 color: Colors.purple,
                 margin: EdgeInsets.all(25.0),
