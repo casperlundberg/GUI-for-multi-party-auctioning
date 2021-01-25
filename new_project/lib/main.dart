@@ -9,8 +9,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //routes: {'/': (context) => LoginScreen()},
-      routes: {'/': (context) => AuctionTemplateGUI()},
+      routes: {'/': (context) => LoginScreen()},
+      //routes: {'/': (context) => AuctionTemplateGUI()},
       theme: ThemeData(
         // Define the default brightness and colors.
         brightness: Brightness.dark,
