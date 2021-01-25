@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../navigationbar/navbar.dart';
+import '../Auctions/filters.dart';
+import '../Auctions/ongoing.dart';
+import '../Auctions/finished.dart';
 
 class MainGUI extends StatelessWidget {
   @override
@@ -16,23 +19,17 @@ class MainGUI extends StatelessWidget {
               Container(
                 color: Colors.orange,
                 margin: EdgeInsets.all(25.0),
-                child: FlutterLogo(
-                  size: 400.0,
-                ),
+                child: Filter(),
               ),
               Container(
                 color: Colors.blue,
                 margin: EdgeInsets.all(25.0),
-                child: FlutterLogo(
-                  size: 400.0,
-                ),
+                child: Ongoing(),
               ),
               Container(
                 color: Colors.purple,
                 margin: EdgeInsets.all(25.0),
-                child: FlutterLogo(
-                  size: 400.0,
-                ),
+                child: Finished(),
               ),
             ],
           ),
