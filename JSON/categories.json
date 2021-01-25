@@ -1,0 +1,16 @@
+{
+    "categories": [
+        {
+            "categoryId": 1,
+            "name": "Wood"
+        },
+        {
+            "categoryId": 2,
+            "name": "Metals"
+        },
+        {
+            "categoryId": 3,
+            "name": "Soil"
+        }
+    ]
+}
