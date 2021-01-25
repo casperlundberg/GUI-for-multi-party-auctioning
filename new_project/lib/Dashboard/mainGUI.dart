@@ -25,12 +25,10 @@ class MainGUI extends StatelessWidget {
               Row(children: [
                 Container(
                   color: Colors.blue,
-                  margin: EdgeInsets.all(25.0),
                   child: Ongoing(),
                 ),
                 Container(
                   color: Colors.blue,
-                  margin: EdgeInsets.all(25.0),
                   child: Finished(),
                 ),
               ]),
