@@ -1,8 +1,8 @@
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'dart:async' show Future;
+import 'dart:async' show Future;
 //import 'package:http/http.dart' as http;
-//import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 
 class FilterTemplateGUI extends StatefulWidget {
@@ -63,13 +63,18 @@ class FiltersList extends StatelessWidget {
 Local test for json handling
 =====================
 */
-List<LocalJSONFilter> getLocalJSONTest() {
-  String arrayObjsText = '''
+//Get local json file - not sure how it works
+Future<String> getJson() async {
+  return await rootBundle.loadString("../../JSON/filters.json");
+}
+
+Future<List<LocalJSONFilter>> getLocalJSONTest() async {
+  /* String arrayObjsText = '''
 {"filters":[
     {
         "id": 1,
         "name": "Wood",
-        "description": "test"
+        "description": "Soft material which often is used i the paper industri"
     },
     {
         "id": 2,
@@ -82,11 +87,13 @@ List<LocalJSONFilter> getLocalJSONTest() {
         "description": "test"
     }
 ]}
-''';
-  var filterJson = jsonDecode(arrayObjsText)['filters'] as List;
-  List<LocalJSONFilter> filters = filterJson
-      .map((filterJson) => LocalJSONFilter.fromJson(filterJson))
-      .toList();
+'''; */
+
+  String arrayObjsText = await getJson();
+
+  var filterJson = json.decode(arrayObjsText)['filters'] as List;
+  List<LocalJSONFilter> filters =
+      filterJson.map((data) => LocalJSONFilter.fromJson(data)).toList();
   return filters;
 }
 
@@ -97,11 +104,11 @@ class LocalJSONFilter {
 
   LocalJSONFilter({this.id, this.name, this.description});
 
-  factory LocalJSONFilter.fromJson(dynamic json) {
-    return LocalJSONFilter(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      description: json['description'] as String,
+  factory LocalJSONFilter.fromJson(Map<String, dynamic> json) {
+    return new LocalJSONFilter(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
     );
   }
 }
@@ -129,7 +136,7 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
     futureFilter = fetchFilter();
   } */
 
-  List<LocalJSONFilter> items;
+  Future<List<LocalJSONFilter>> items;
   void initState() {
     super.initState();
     items = getLocalJSONTest();
@@ -166,25 +173,28 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                       Pop-up widget information is put here
                       ====================
                       */
-                      Center(
-                        /* child: FutureBuilder<List<Filter>>(
-                          future: fetchFilters(http.Client()),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) print(snapshot.error);
-
-                            return snapshot.hasData
-                                ? FiltersList(filters: snapshot.data)
-                                : Center(child: CircularProgressIndicator());
-                          },
-                        ), */
-                        child: ListView.builder(
-                          itemCount: items.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text('${items[index].name}'),
-                            );
+                      SizedBox(
+                        width: 200.0,
+                        child: FutureBuilder<List<LocalJSONFilter>>(
+                          future: items,
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasError)
+                              return new Text('Error: ${snapshot.error}');
+                            else
+                              return createListView(context, snapshot);
                           },
                         ),
+                        /* child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: items.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              title: Text(items[index].name),
+                              subtitle: Text(items[index].description),
+                            );
+                          },
+                        ), */
                       ),
                     ],
                     clipBehavior: Clip.none,
@@ -198,10 +208,24 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
       ),
     );
   }
-}
 
-//Get local json file - not sure how it works
-/* Future<String> getJson() async {
-  return await rootBundle.loadString('../../../JSON/categories.json');
+  Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
+    List<LocalJSONFilter> values = snapshot.data;
+    return new ListView.builder(
+      itemCount: values.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text(values[index].name),
+              subtitle: new Text(values[index].description),
+            ),
+            new Divider(
+              height: 2.0,
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
- */

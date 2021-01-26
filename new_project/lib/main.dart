@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'auctions/AuctionsTemplateGUI.dart';
 import 'Dashboard/mainGUI.dart';
+import 'auctions/FiltersTemplateGUI.dart';
 
 void main() => runApp(MyApp());
 

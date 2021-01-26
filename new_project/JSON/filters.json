@@ -1,0 +1,19 @@
+{
+    "filters": [
+        {
+            "id": 1,
+            "name": "Wood",
+            "description": "Soft material which often is used i the paper industri"
+        },
+        {
+            "id": 2,
+            "name": "Metals",
+            "description": "test"
+        },
+        {
+            "id": 3,
+            "name": "Soil",
+            "description": "test"
+        }
+    ]
+}
