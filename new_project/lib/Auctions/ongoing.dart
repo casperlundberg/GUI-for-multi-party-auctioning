@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Login/login.dart';
 import 'AuctionsTemplateGUI.dart';
 import 'FiltersTemplateGUI.dart';
+import '../Auctions/room.dart';
 
 class Ongoing extends StatelessWidget {
   @override
@@ -27,7 +28,7 @@ class Ongoing extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        MaterialPageRoute(builder: (context) => Room()),
                       );
                     }),
               ]),
