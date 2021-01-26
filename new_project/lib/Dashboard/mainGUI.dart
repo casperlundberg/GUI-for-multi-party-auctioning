@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../navigationbar/navbar.dart';
-import '../Auctions/filters.dart';
-import '../Auctions/ongoing.dart';
-import '../Auctions/finished.dart';
-import '../Auctions/myauctions.dart';
+import '../auctions/filters.dart';
+import '../auctions/ongoing.dart';
+import '../auctions/finished.dart';
+import '../auctions/myauctions.dart';
 
 class MainGUI extends StatelessWidget {
   @override
@@ -22,20 +22,16 @@ class MainGUI extends StatelessWidget {
                 margin: EdgeInsets.all(25.0),
                 child: Filter(),
               ),
-              Row(
-                children: [
-                  Container(
-                    color: Colors.blue,
-                    margin: EdgeInsets.all(25.0),
-                    child: Ongoing(),
-                  ),
-                  Container(
-                    color: Colors.blue,
-                    margin: EdgeInsets.all(25.0),
-                    child: Finished(),
-                  ),
-                ],
-              ),
+              Row(children: [
+                Container(
+                  color: Colors.blue,
+                  child: Ongoing(),
+                ),
+                Container(
+                  color: Colors.blue,
+                  child: Finished(),
+                ),
+              ]),
               Container(
                 color: Colors.purple,
                 margin: EdgeInsets.all(25.0),
