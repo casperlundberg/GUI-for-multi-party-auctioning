@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Dashboard/mainGUI.dart';
 import 'nav_item.dart';
+import '../profile.dart';
 
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -32,7 +33,10 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.account_circle),
           tooltip: 'Profile',
           onPressed: () {
-            // TODO: Routa till profilsidan när den finns
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
           },
         ),
       ],
