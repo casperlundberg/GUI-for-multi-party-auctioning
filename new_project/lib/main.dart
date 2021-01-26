@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.cyan[600],
 
         // Define the default font family.
-        fontFamily: 'Georgia',
+        fontFamily: 'Roboto',
 
         // Define the default TextTheme. Use this to specify the default
         // text styling for headlines, titles, bodies of text, and more.

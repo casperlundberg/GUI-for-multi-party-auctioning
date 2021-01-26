@@ -9,7 +9,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       //color cheat sheet
       //https://api.flutter.dev/flutter/material/Colors-class.html
-      backgroundColor: Colors.lightBlue[900],
+      backgroundColor: Colors.grey[900],
       title: Text("Auctioneer"),
       leading: IconButton(
         icon: Icon(Icons.home),
@@ -21,9 +21,6 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
       ),
 
       actions: <Widget>[
-        /* NavigationItem(title: 'Home'),
-        NavigationItem(title: 'About'),
-        NavigationItem(title: 'Contact'), */
         IconButton(
           icon: Icon(Icons.notifications),
           tooltip: 'Notifications',
