@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import '../navigationbar/navbar.dart';
+import '../Auctions/filters.dart';
+import '../Auctions/ongoing.dart';
+import '../Auctions/finished.dart';
+import '../Auctions/myauctions.dart';
 
 class MainGUI extends StatelessWidget {
   @override
@@ -16,64 +20,25 @@ class MainGUI extends StatelessWidget {
               Container(
                 color: Colors.orange,
                 margin: EdgeInsets.all(25.0),
-                child: FlutterLogo(
-                  size: 400.0,
-                ),
+                child: Filter(),
               ),
-              Container(
-                color: Colors.blue,
-                margin: EdgeInsets.all(25.0),
-                child: FlutterLogo(
-                  size: 400.0,
+              Row(children: [
+                Container(
+                  color: Colors.blue,
+                  child: Ongoing(),
                 ),
-              ),
+                Container(
+                  color: Colors.blue,
+                  child: Finished(),
+                ),
+              ]),
               Container(
                 color: Colors.purple,
                 margin: EdgeInsets.all(25.0),
-                child: FlutterLogo(
-                  size: 400.0,
-                ),
+                child: MyAuctions(),
               ),
             ],
           ),
         ]));
   }
 }
-/*
-class MainGUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment:
-          MainAxisAlignment.center, //Center Row contents horizontally
-      crossAxisAlignment:
-          CrossAxisAlignment.center, //Center Row contents vertically
-      children: [
-        NavigationBar(
-
-        ),
-        Row(
-          Container(
-            color: Colors.orange,
-            child: FlutterLogo(
-              size: 400.0, //Insert 1st class
-            ),
-          ),
-          Container(
-            color: Colors.blue,
-            child: FlutterLogo(
-              size: 400.0, //Insert 2nd class
-            ),
-          ),
-          Container(
-            color: Colors.purple,
-            child: FlutterLogo(
-              size: 400.0, //Insert 3rd class
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-*/
