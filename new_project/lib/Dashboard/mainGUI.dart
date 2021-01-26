@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../navigationbar/navbar.dart';
-import '../Auctions/filters.dart';
-import '../Auctions/ongoing.dart';
-import '../Auctions/finished.dart';
-import '../Auctions/myauctions.dart';
+import '../auctions/filters.dart';
+import '../auctions/ongoing.dart';
+import '../auctions/finished.dart';
+import '../auctions/myauctions.dart';
 
 class MainGUI extends StatelessWidget {
   @override
