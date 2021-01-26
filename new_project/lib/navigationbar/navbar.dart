@@ -15,7 +15,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
         NavigationItem(title: 'About'),
         NavigationItem(title: 'Contact'), */
         IconButton(
-          icon: Icon(Icons.account_circle),
+          icon: Icon(Icons.account_circle, size: 50.0),
           tooltip: 'Profile',
           onPressed: () {
             // TODO: Routa till profilsidan när den finns

@@ -17,7 +17,7 @@ class NavigationItem extends StatelessWidget {
   }
 }
 
-class SpecialNavigationItem extends StatelessWidget {
+/* class SpecialNavigationItem extends StatelessWidget {
   final String title;
 
   const SpecialNavigationItem({@required this.title});
@@ -32,4 +32,4 @@ class SpecialNavigationItem extends StatelessWidget {
       ),
     );
   }
-}
+} */
