@@ -9,13 +9,28 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
       //color cheat sheet
       //https://api.flutter.dev/flutter/material/Colors-class.html
       backgroundColor: Colors.indigo[900],
+      title: Text("Auctioneer"),
+      leading: IconButton(
+        icon: Icon(Icons.home),
+        tooltip: 'Home',
+        onPressed: () {
+          //TODO: Routa till home
+        },
+      ),
 
       actions: <Widget>[
         /* NavigationItem(title: 'Home'),
         NavigationItem(title: 'About'),
         NavigationItem(title: 'Contact'), */
         IconButton(
-          icon: Icon(Icons.account_circle, size: 50.0),
+          icon: Icon(Icons.notifications),
+          tooltip: 'Notifications',
+          onPressed: () {
+            //TODO: Fixa interface för notiser?
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.account_circle),
           tooltip: 'Profile',
           onPressed: () {
             // TODO: Routa till profilsidan när den finns
