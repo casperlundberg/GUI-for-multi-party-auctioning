@@ -20,9 +20,34 @@ class Profile extends StatelessWidget {
               height: 700.0,
               color: Colors.grey[900],
               margin: EdgeInsets.all(25.0),
-              child: Text(
-                'My profile',
-                style: TextStyle(fontSize: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'MY PROFILE \n',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Text(
+                    'Name: Project \n',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    'E-mail: projectgroup13@ltu.se \n',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    'a new line \n',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    'a new line \n',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    'a new line \n',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
               ),
             )));
   }
