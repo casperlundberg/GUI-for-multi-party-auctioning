@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
 import '../navigationbar/navbar.dart';
-import '../auctions/filters.dart';
-import '../auctions/ongoing.dart';
-import '../auctions/finished.dart';
-import '../auctions/myauctions.dart';
+import 'homescreen.dart';
+import 'login.dart';
+import 'register.dart';
+//Inspired by Widget Switch Demo, by GitHub user TechieBlossom
+//https://github.com/TechieBlossom/flutter-samples/blob/master/widgetswitchdemo.dart
 
-class MainGUI extends StatelessWidget {
+enum WidgetMarker { home, login, register, profile }
+
+class MainGUI extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => MainGUIState();
+}
+
+class MainGUIState extends State<MainGUI>
+    with SingleTickerProviderStateMixin<MainGUI> {
+  WidgetMarker selectedWidgetMarker = WidgetMarker.login;
+  AnimationController _controller;
+  Animation _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -19,35 +46,150 @@ class MainGUI extends StatelessWidget {
         child: Scaffold(
             appBar: NavigationBar(),
             backgroundColor: Colors.transparent,
-            body: Column(children: <Widget>[
-              Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.center, //Center Row contents horizontally
-                crossAxisAlignment:
-                    CrossAxisAlignment.center, //Center Row contents vertically
-                children: [
-                  Container(
-                    color: Colors.orange,
-                    margin: EdgeInsets.all(25.0),
-                    child: Filter(),
-                  ),
-                  Row(children: [
-                    Container(
-                      color: Colors.blue,
-                      child: Ongoing(),
-                    ),
-                    Container(
-                      color: Colors.blue,
-                      child: Finished(),
-                    ),
-                  ]),
-                  Container(
-                    color: Colors.purple,
-                    margin: EdgeInsets.all(25.0),
-                    child: MyAuctions(),
-                  ),
-                ],
-              ),
-            ])));
+            body: FutureBuilder(
+                future: _playAnimation(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  return getCustomContainer();
+                })));
+  }
+
+  _playAnimation() {
+    _controller.reset();
+    _controller.forward();
+  }
+
+  Widget getCustomContainer() {
+    switch (selectedWidgetMarker) {
+      case WidgetMarker.home:
+        return getHomeContainer();
+      case WidgetMarker.login:
+        return getLoginContainer();
+      case WidgetMarker.profile:
+        return getProfileContainer();
+      case WidgetMarker.register:
+        return getRegisterContainer();
+    }
+    return getLoginContainer();
+  }
+
+  Widget getHomeContainer() {
+    return FadeTransition(
+      opacity: _animation,
+      child: AuctionContainers(),
+    );
+  }
+
+  Widget getLoginContainer() {
+    return FadeTransition(
+        opacity: _animation,
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+                child: SizedBox(
+                    width: 500,
+                    child: Card(
+                        child: Form(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Login',
+                              style: Theme.of(context).textTheme.headline4),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(hintText: 'Username'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              obscureText: true,
+                              decoration: InputDecoration(hintText: 'Password'),
+                            ),
+                          ),
+                          TextButton(
+                              child: Text('Signup'),
+                              onPressed: () {
+                                setState(() {
+                                  selectedWidgetMarker = WidgetMarker.register;
+                                });
+                              }),
+                          TextButton(
+                              child: Text('Login'),
+                              onPressed: () {
+                                setState(() {
+                                  selectedWidgetMarker = WidgetMarker.home;
+                                });
+                              }),
+                        ],
+                      ),
+                    ))))));
+  }
+
+  Widget getRegisterContainer() {
+    return FadeTransition(
+        opacity: _animation,
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+                child: SizedBox(
+                    width: 500,
+                    child: Card(
+                        child: Form(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Signup',
+                              style: Theme.of(context).textTheme.headline4),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(hintText: 'Username'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              obscureText: true,
+                              decoration: InputDecoration(hintText: 'Password'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(hintText: 'Age'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(hintText: 'Address'),
+                            ),
+                          ),
+                          TextButton(
+                            child: Text('Signup'),
+                            onPressed: () {},
+                          ),
+                          TextButton(
+                            child: Text('Login'),
+                            onPressed: () {
+                              setState(() {
+                                selectedWidgetMarker = WidgetMarker.login;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ))))));
+  }
+
+  Widget getProfileContainer() {
+    return FadeTransition(
+      opacity: _animation,
+      child: Container(
+        color: Colors.blue,
+        height: 400,
+      ),
+    );
   }
 }

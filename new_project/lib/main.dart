@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auctions/AuctionsTemplateGUI.dart';
-import 'Login/login.dart';
+import 'Dashboard/mainGUI.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {'/': (context) => LoginScreen()},
+      routes: {'/': (context) => MainGUI()},
       //routes: {'/': (context) => AuctionTemplateGUI()},
       theme: ThemeData(
         // Define the default brightness and colors.
