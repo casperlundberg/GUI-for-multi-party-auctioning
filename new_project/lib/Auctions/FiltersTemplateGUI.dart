@@ -63,32 +63,11 @@ class FiltersList extends StatelessWidget {
 Local test for json handling
 =====================
 */
-//Get local json file - not sure how it works
 Future<String> getJson() async {
   return await rootBundle.loadString("../../JSON/filters.json");
 }
 
 Future<List<LocalJSONFilter>> getLocalJSONTest() async {
-  /* String arrayObjsText = '''
-{"filters":[
-    {
-        "id": 1,
-        "name": "Wood",
-        "description": "Soft material which often is used i the paper industri"
-    },
-    {
-        "id": 2,
-        "name": "Metals",
-        "description": "test"
-    },
-    {
-        "id": 3,
-        "name": "Soil",
-        "description": "test"
-    }
-]}
-'''; */
-
   String arrayObjsText = await getJson();
 
   var filterJson = json.decode(arrayObjsText)['filters'] as List;
@@ -114,29 +93,8 @@ class LocalJSONFilter {
 }
 
 class _FilterTemplateState extends State<FilterTemplateGUI> {
-  /* Future<List<Filter>> _getFilters() async {
-    //var data = await http.get("API-URL");
-    var data = json.decode(await getJson());
-    var jsonData = json.decode(data.body);
-    List<Filter> filters = [];
-    for (var f in data) {
-      Filter filter = Filter(f["id"], f["name"], f["description"]);
-      filters.add(filter);
-    }
-
-    print(filters.length);
-
-    return filters;
-  } */
-/*   Future<Filter> futureFilter; */
-
-/*   @override
-  void initState() {
-    super.initState();
-    futureFilter = fetchFilter();
-  } */
-
   Future<List<LocalJSONFilter>> items;
+
   void initState() {
     super.initState();
     items = getLocalJSONTest();

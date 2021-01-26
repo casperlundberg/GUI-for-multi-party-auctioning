@@ -51,7 +51,7 @@ flutter:
   assets:
     - images/
     - images/dark/
-    - JSON/filters.json
+    - JSON/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

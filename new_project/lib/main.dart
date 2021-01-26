@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {'/': (context) => MainGUI()},
+      routes: {'/': (context) => FilterTemplateGUI()},
       //routes: {'/': (context) => AuctionTemplateGUI()},
       theme: ThemeData(
         // Define the default brightness and colors.
