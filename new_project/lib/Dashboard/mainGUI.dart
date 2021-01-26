@@ -8,37 +8,46 @@ import '../auctions/myauctions.dart';
 class MainGUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: NavigationBar(),
-        body: Column(children: <Widget>[
-          Row(
-            mainAxisAlignment:
-                MainAxisAlignment.center, //Center Row contents horizontally
-            crossAxisAlignment:
-                CrossAxisAlignment.center, //Center Row contents vertically
-            children: [
-              Container(
-                color: Colors.orange,
-                margin: EdgeInsets.all(25.0),
-                child: Filter(),
-              ),
-              Row(children: [
-                Container(
-                  color: Colors.blue,
-                  child: Ongoing(),
-                ),
-                Container(
-                  color: Colors.blue,
-                  child: Finished(),
-                ),
-              ]),
-              Container(
-                color: Colors.purple,
-                margin: EdgeInsets.all(25.0),
-                child: MyAuctions(),
-              ),
-            ],
+    return new Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            //Source: https://www.pexels.com/photo/iphone-notebook-pen-working-34088/
+            image: AssetImage("../../images/dark/main-BG-dark.png"),
+            fit: BoxFit.cover,
           ),
-        ]));
+        ),
+        child: Scaffold(
+            appBar: NavigationBar(),
+            backgroundColor: Colors.transparent,
+            body: Column(children: <Widget>[
+              Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.center, //Center Row contents horizontally
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, //Center Row contents vertically
+                children: [
+                  Container(
+                    color: Colors.orange,
+                    margin: EdgeInsets.all(25.0),
+                    child: Filter(),
+                  ),
+                  Row(children: [
+                    Container(
+                      color: Colors.blue,
+                      child: Ongoing(),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      child: Finished(),
+                    ),
+                  ]),
+                  Container(
+                    color: Colors.purple,
+                    margin: EdgeInsets.all(25.0),
+                    child: MyAuctions(),
+                  ),
+                ],
+              ),
+            ])));
   }
 }
