@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Login/login.dart';
 import 'AuctionsTemplateGUI.dart';
 import 'FiltersTemplateGUI.dart';
 import '../Auctions/room.dart';

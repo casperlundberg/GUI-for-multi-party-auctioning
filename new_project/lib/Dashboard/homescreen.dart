@@ -3,7 +3,7 @@ import '../navigationbar/navbar.dart';
 import '../Auctions/filters.dart';
 import '../Auctions/ongoing.dart';
 import '../Auctions/finished.dart';
-import '../Auctions/myauctions.dart';
+import '../auctions/myauctions.dart';
 
 class AuctionContainers extends StatelessWidget {
   @override
