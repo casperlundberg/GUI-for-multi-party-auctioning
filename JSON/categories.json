@@ -1,16 +1,17 @@
-{
-    "categories": [
-        {
-            "categoryId": 1,
-            "name": "Wood"
-        },
-        {
-            "categoryId": 2,
-            "name": "Metals"
-        },
-        {
-            "categoryId": 3,
-            "name": "Soil"
-        }
-    ]
-}
+[
+    {
+        "categoryId": 1,
+        "name": "Wood",
+        "description": "test"
+    },
+    {
+        "categoryId": 2,
+        "name": "Metals",
+        "description": "test"
+    },
+    {
+        "categoryId": 3,
+        "name": "Soil",
+        "description": "test"
+    }
+]

@@ -1,7 +1,11 @@
-{
-    "rooms": [
-        {
-            "roomId": 1
-        }
-    ]
-}
+[
+    {
+        "roomId": 1
+    },
+    {
+        "roomId": 2
+    },
+    {
+        "roomId": 3
+    }
+]
