@@ -9,6 +9,10 @@ class Ongoing extends StatelessWidget {
       color: Colors.grey[900],
       child: new Column(
         children: <Widget>[
+          Text(
+            'ONGOING AUCTIONS\n',
+            style: TextStyle(fontSize: 30),
+          ),
           Column(children: [
             new Container(
               width: 320.0,
@@ -51,14 +55,6 @@ class Ongoing extends StatelessWidget {
               width: 320.0,
               height: 110.0,
               color: Colors.green,
-              margin: EdgeInsets.all(5.0),
-            ),
-          ]),
-          Column(children: [
-            new Container(
-              child: AuctionTemplateGUI(),
-              width: 320.0,
-              height: 110.0,
               margin: EdgeInsets.all(5.0),
             ),
           ]),
