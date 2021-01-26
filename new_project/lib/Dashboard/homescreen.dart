@@ -22,10 +22,12 @@ class AuctionContainers extends StatelessWidget {
         Row(children: [
           Container(
             color: Colors.blue,
+            margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
             child: Ongoing(),
           ),
           Container(
             color: Colors.blue,
+            margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
             child: Finished(),
           ),
         ]),
