@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Login/login.dart';
+import '../Dashboard/mainGUI.dart';
 import 'AuctionsTemplateGUI.dart';
 import 'FiltersTemplateGUI.dart';
 
@@ -27,7 +27,7 @@ class Ongoing extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        MaterialPageRoute(builder: (context) => MainGUI()),
                       );
                     }),
               ]),
