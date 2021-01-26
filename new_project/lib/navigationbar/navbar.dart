@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Dashboard/mainGUI.dart';
 import 'nav_item.dart';
 
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,7 +15,8 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Icon(Icons.home),
         tooltip: 'Home',
         onPressed: () {
-          //TODO: Routa till home
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MainGUI()));
         },
       ),
 
