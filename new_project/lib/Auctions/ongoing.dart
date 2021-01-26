@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Login/login.dart';
 import 'AuctionsTemplateGUI.dart';
 import 'FiltersTemplateGUI.dart';
 
@@ -17,7 +18,19 @@ class Ongoing extends StatelessWidget {
             new Container(
               width: 320.0,
               height: 110.0,
-              child: Text('s'),
+              child: Column(children: [
+                Text('Name: Room 1'),
+                Text('Material: Wood'),
+                Text('Participants: 5'),
+                TextButton(
+                    child: Text('Visit room'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    }),
+              ]),
               color: Colors.orange,
               margin: EdgeInsets.all(5.0),
             ),
