@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import '../Dashboard/mainGUI.dart';
+=======
+import '../Dashboard/login.dart';
+>>>>>>> 24b4025e03a7ed5c3f435c4c79232c92e3a11272
 import 'AuctionsTemplateGUI.dart';
 import 'FiltersTemplateGUI.dart';
+import '../Auctions/room.dart';
 
 class Ongoing extends StatelessWidget {
   @override
@@ -27,7 +32,11 @@ class Ongoing extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
+<<<<<<< HEAD
                         MaterialPageRoute(builder: (context) => MainGUI()),
+=======
+                        MaterialPageRoute(builder: (context) => Room()),
+>>>>>>> 24b4025e03a7ed5c3f435c4c79232c92e3a11272
                       );
                     }),
               ]),
