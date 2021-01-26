@@ -1,8 +1,13 @@
+/* import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'register.dart';
-import '../Dashboard/mainGUI.dart';
+import 'mainGUI.dart';
 
 class LoginScreen extends StatelessWidget {
+  MainGUIState parent;
+  LoginScreen(this.parent);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +16,7 @@ class LoginScreen extends StatelessWidget {
         child: SizedBox(
           width: 500,
           child: Card(
-            child: LoginForm(),
+            child: LoginForm(this),
           ),
         ),
       ),
@@ -19,12 +24,10 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
-  @override
-  _LoginFormState createState() => _LoginFormState();
-}
+class LoginForm extends StatelessWidget {
+  LoginScreen parent;
+  LoginForm(this.parent);
 
-class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -48,21 +51,19 @@ class _LoginFormState extends State<LoginForm> {
           TextButton(
               child: Text('Signup'),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpScreen()),
-                );
+                this.parent.parent.setState(() {
+                  this.parent.parent.selectedWidgetMarker = WidgetMarker.login;
+                });
               }),
           TextButton(
               child: Text('Login'),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MainGUI()),
-                );
+                this.parent.parent.setState(() {
+                  this.parent.parent.selectedWidgetMarker = WidgetMarker.login;
+                });
               }),
         ],
       ),
     );
   }
-}
+} */
