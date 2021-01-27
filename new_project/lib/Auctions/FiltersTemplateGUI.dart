@@ -59,15 +59,15 @@ class FiltersList extends StatelessWidget {
 }*/
 
 /*
-=====================
+============================
 Local test for json handling
-=====================
+============================
 */
 Future<String> getJson() async {
   return await rootBundle.loadString("../../JSON/filters.json");
 }
 
-Future<List<LocalJSONFilter>> getLocalJSONTest() async {
+Future<List<LocalJSONFilter>> get getLocalJSONTest async {
   String arrayObjsText = await getJson();
 
   var filterJson = json.decode(arrayObjsText)['filters'] as List;
@@ -81,7 +81,11 @@ class LocalJSONFilter {
   final String name;
   final String description;
 
-  LocalJSONFilter({this.id, this.name, this.description});
+  LocalJSONFilter({
+    this.id,
+    this.name,
+    this.description,
+  });
 
   factory LocalJSONFilter.fromJson(Map<String, dynamic> json) {
     return new LocalJSONFilter(
@@ -94,10 +98,18 @@ class LocalJSONFilter {
 
 class _FilterTemplateState extends State<FilterTemplateGUI> {
   Future<List<LocalJSONFilter>> items;
+  var selectedLocationIndices = Set<int>();
 
   void initState() {
     super.initState();
-    items = getLocalJSONTest();
+    items = getLocalJSONTest;
+  }
+
+  void toggleSelectedFilter(int index) {
+    if (selectedLocationIndices.contains(index))
+      selectedLocationIndices.remove(index);
+    else
+      selectedLocationIndices.add(index);
   }
 
   @override
@@ -132,27 +144,68 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                       ====================
                       */
                       SizedBox(
-                        width: 200.0,
-                        child: FutureBuilder<List<LocalJSONFilter>>(
-                          future: items,
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasError)
-                              return new Text('Error: ${snapshot.error}');
-                            else
-                              return createListView(context, snapshot);
-                          },
-                        ),
-                        /* child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: items.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              title: Text(items[index].name),
-                              subtitle: Text(items[index].description),
+                        width: 400.0,
+                        child: StatefulBuilder(
+                          builder: (context, setState) {
+                            return FutureBuilder<List<LocalJSONFilter>>(
+                              future: items,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError)
+                                  return new Text('Error: ${snapshot.error}');
+                                else {
+                                  List<LocalJSONFilter> values = snapshot.data;
+                                  if (values != null && values.length > 0) {
+                                    return new Scrollbar(
+                                      child: new RefreshIndicator(
+                                        onRefresh: _handleRefresh,
+                                        child: ListView.builder(
+                                          physics:
+                                              const AlwaysScrollableScrollPhysics(),
+                                          itemCount: values.length,
+                                          itemBuilder: (context, index) {
+                                            return new Column(
+                                              children: <Widget>[
+                                                new Container(
+                                                  //color: values[index].selected ? Colors.blue : Colors.orange,
+                                                  color: selectedLocationIndices
+                                                          .contains(index)
+                                                      ? Colors.transparent
+                                                      : Colors.blue,
+                                                  child: ListTile(
+                                                    onTap: () {
+                                                      toggleSelectedFilter(
+                                                          index);
+                                                      setState(() {});
+                                                    },
+                                                    title: new Text(
+                                                      values[index].name,
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                    subtitle: new Text(
+                                                      values[index].description,
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                                new Divider(
+                                                  height: 2.0,
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return new Container();
+                                  }
+                                }
+                              },
                             );
                           },
-                        ), */
+                        ),
                       ),
                     ],
                     clipBehavior: Clip.none,
@@ -167,23 +220,11 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
     );
   }
 
-  Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
-    List<LocalJSONFilter> values = snapshot.data;
-    return new ListView.builder(
-      itemCount: values.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new Column(
-          children: <Widget>[
-            new ListTile(
-              title: new Text(values[index].name),
-              subtitle: new Text(values[index].description),
-            ),
-            new Divider(
-              height: 2.0,
-            ),
-          ],
-        );
-      },
-    );
+  Future<Null> _handleRefresh() async {
+    await new Future.delayed(new Duration(seconds: 1));
+
+    setState(() {});
+
+    return null;
   }
 }
