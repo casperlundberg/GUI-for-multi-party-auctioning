@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Dashboard/mainGUI.dart';
 import 'auctions/AuctionsTemplateGUI.dart';
 import 'Dashboard/mainGUI.dart';
 import 'auctions/FiltersTemplateGUI.dart';
