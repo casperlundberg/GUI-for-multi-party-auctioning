@@ -23,7 +23,6 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     content: Stack(
-                      overflow: Overflow.visible,
                       children: <Widget>[
                         Positioned(
                           right: -40.0,
@@ -115,6 +114,7 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
                           ),
                         ),
                       ],
+                      clipBehavior: Clip.none,
                     ),
                   );
                 });

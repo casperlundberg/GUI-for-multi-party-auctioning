@@ -1,0 +1,14 @@
+[
+    {
+        "materialId": 1,
+        "name": "Pine wood"
+    },
+    {
+        "materialId": 2,
+        "name": "Steel"
+    },
+    {
+        "materialId": 3,
+        "name": "Copper"
+    }
+]

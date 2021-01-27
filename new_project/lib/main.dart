@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'auctions/AuctionsTemplateGUI.dart';
 import 'Dashboard/mainGUI.dart';
+import 'auctions/FiltersTemplateGUI.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {'/': (context) => MainGUI()},
+      routes: {'/': (context) => FilterTemplateGUI()},
       //routes: {'/': (context) => AuctionTemplateGUI()},
       theme: ThemeData(
         // Define the default brightness and colors.

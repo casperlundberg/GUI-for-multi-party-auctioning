@@ -1,0 +1,19 @@
+{
+    "filters": [
+        {
+            "id": 1,
+            "name": "Wood",
+            "description": "Soft material which often is used i the paper industri."
+        },
+        {
+            "id": 2,
+            "name": "Metals",
+            "description": "Metal is stronger than most materials."
+        },
+        {
+            "id": 3,
+            "name": "Soil",
+            "description": "Soil is used to grow plants and trees."
+        }
+    ]
+}
