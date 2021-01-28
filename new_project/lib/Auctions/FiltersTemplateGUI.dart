@@ -101,7 +101,6 @@ class LocalJSONFilter {
 class _FilterTemplateState extends State<FilterTemplateGUI> {
   Future<List<LocalJSONFilter>> items;
   var selectedLocationIndices = Set<int>();
-  //final _formKey = GlobalKey<FormState>();
 
   void initState() {
     super.initState();
@@ -289,131 +288,6 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                       ],
                     ),
                   ),
-                  /* content: Stack(
-                    children: <Widget>[
-                      /*
-                      ====================
-                      Exitbutton
-                      ====================
-                      */
-                      Positioned(
-                        right: -40.0,
-                        top: -40.0,
-                        child: InkResponse(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: CircleAvatar(
-                            child: Icon(Icons.close),
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                      ),
-                      /*
-                      ====================
-                      Bottombutton
-                      ====================
-                      */
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.blue[300],
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Okay let's go!",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      /*
-                      ====================
-                      Filters are listed below
-                      ====================
-                      */
-                      Container(
-                        width: double.infinity,
-                        height: 300,
-                        child: StatefulBuilder(
-                          builder: (context, setState) {
-                            return FutureBuilder<List<LocalJSONFilter>>(
-                              future: items,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError)
-                                  return new Text('Error: ${snapshot.error}');
-                                else {
-                                  List<LocalJSONFilter> values = snapshot.data;
-                                  if (values != null && values.length > 0) {
-                                    return new Scrollbar(
-                                      child: new RefreshIndicator(
-                                        onRefresh: _handleRefresh,
-                                        child: ListView.builder(
-                                          itemCount: values.length,
-                                          itemBuilder: (context, index) {
-                                            return new Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                new Container(
-                                                  color: selectedLocationIndices
-                                                          .contains(index)
-                                                      ? Colors.blue
-                                                      : Colors.transparent,
-                                                  child: ListTile(
-                                                    onTap: () {
-                                                      toggleSelectedFilter(
-                                                          index);
-                                                      setState(() {});
-                                                    },
-                                                    title: new Text(
-                                                      values[index].name,
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                    subtitle: new Text(
-                                                      values[index].description,
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                                new Divider(
-                                                  height: 2.0,
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return new Container();
-                                  }
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                    clipBehavior: Clip.hardEdge,
-                  ), */
                 );
               },
             );
