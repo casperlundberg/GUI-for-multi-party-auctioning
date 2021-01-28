@@ -15,8 +15,7 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        // ignore: deprecated_member_use
-        child: RaisedButton(
+        child: ElevatedButton(
           onPressed: () {
             showDialog(
                 context: context,
