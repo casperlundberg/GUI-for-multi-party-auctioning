@@ -39,7 +39,8 @@
     "auctionInfo": {
         "auctionId": 1,
         "title": "Test Auction",
-        "currentRound": 1
+        "currentRound": 1,
+        "winner": null
     },
     "auctionSettings": {
         "bidding": {
