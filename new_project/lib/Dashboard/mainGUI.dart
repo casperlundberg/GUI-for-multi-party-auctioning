@@ -3,10 +3,11 @@ import '../navigationbar/navbar.dart';
 import 'homescreen.dart';
 import 'login.dart';
 import 'register.dart';
+import 'forgotPass.dart';
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
 //https://github.com/TechieBlossom/flutter-samples/blob/master/widgetswitchdemo.dart
 
-enum WidgetMarker { home, login, register, profile }
+enum WidgetMarker { home, login, register, profile, forgotPass }
 
 class MainGUI extends StatefulWidget {
   @override
@@ -68,6 +69,8 @@ class MainGUIState extends State<MainGUI>
         return getProfileContainer();
       case WidgetMarker.register:
         return getRegisterContainer();
+      case WidgetMarker.forgotPass:
+        return getForgotPassContainer();
     }
     return getLoginContainer();
   }
@@ -90,6 +93,13 @@ class MainGUIState extends State<MainGUI>
     return FadeTransition(
       opacity: _animation,
       child: RegisterScreen(this),
+    );
+  }
+
+  Widget getForgotPassContainer() {
+    return FadeTransition(
+      opacity: _animation,
+      child: ForgotPasswordScreen(this),
     );
   }
 

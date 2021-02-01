@@ -50,6 +50,14 @@ class LoginScreen extends StatelessWidget {
                                   WidgetMarker.home;
                             });
                           }),
+                      TextButton(
+                          child: Text('Forgot password?'),
+                          onPressed: () {
+                            this.parent.setState(() {
+                              this.parent.selectedWidgetMarker =
+                                  WidgetMarker.forgotPass;
+                            });
+                          }),
                     ],
                   ),
                 )))));
