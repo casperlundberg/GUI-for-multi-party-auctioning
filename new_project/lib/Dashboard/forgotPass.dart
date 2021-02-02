@@ -32,7 +32,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     onPressed: () {
                       this.parent.setState(
                         () {
-                          //Should go to a waiting for confiramtion screen or just sit here with a message saying the same.
+                          //Should go to a waiting for confiramtion screen or just sit here with a message saying the same
                           //this.parent.selectedWidgetMarker = WidgetMarker.register;
                         },
                       );
