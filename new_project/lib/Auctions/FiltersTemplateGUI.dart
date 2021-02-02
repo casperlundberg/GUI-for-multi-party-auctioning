@@ -1,11 +1,6 @@
-//import 'package:flutter/foundation.dart';
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'dart:async' show Future;
-//import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:convert';
+
+import '../entities/LocalJSONFilter.dart';
 
 class FilterTemplateGUI extends StatefulWidget {
   @override
@@ -65,38 +60,6 @@ class FiltersList extends StatelessWidget {
 Local test for json handling
 ============================
 */
-Future<String> getJson() async {
-  return await rootBundle.loadString("../../JSON/filters.json");
-}
-
-Future<List<LocalJSONFilter>> get getLocalJSONTest async {
-  String arrayObjsText = await getJson();
-
-  var filterJson = json.decode(arrayObjsText)['filters'] as List;
-  List<LocalJSONFilter> filters =
-      filterJson.map((data) => LocalJSONFilter.fromJson(data)).toList();
-  return filters;
-}
-
-class LocalJSONFilter {
-  final int id;
-  final String name;
-  final String description;
-
-  LocalJSONFilter({
-    this.id,
-    this.name,
-    this.description,
-  });
-
-  factory LocalJSONFilter.fromJson(Map<String, dynamic> json) {
-    return new LocalJSONFilter(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-    );
-  }
-}
 
 class _FilterTemplateState extends State<FilterTemplateGUI> {
   Future<List<LocalJSONFilter>> items;
