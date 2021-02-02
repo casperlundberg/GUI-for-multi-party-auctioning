@@ -5,7 +5,7 @@ import '../Auctions/ongoing.dart';
 import '../Auctions/finished.dart';
 import '../auctions/myauctions.dart';
 
-class AuctionContainers extends StatelessWidget {
+class AuctionsGUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(

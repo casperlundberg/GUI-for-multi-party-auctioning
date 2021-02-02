@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../navigationbar/navbar.dart';
-import 'homescreen.dart';
+import 'AuctionsGUI.dart';
 import 'login.dart';
 import 'register.dart';
 import 'forgotPass.dart';
@@ -81,7 +81,7 @@ class MainGUIState extends State<MainGUI>
   Widget getHomeContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: AuctionContainers(),
+      child: AuctionsGUI(),
     );
   }
 
