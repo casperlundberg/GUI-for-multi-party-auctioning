@@ -36,21 +36,24 @@ class MainGUIState extends State<MainGUI>
   @override
   Widget build(BuildContext context) {
     return new Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            //Source: https://www.pexels.com/photo/iphone-notebook-pen-working-34088/
-            image: AssetImage("../../images/dark/main-BG-dark.png"),
-            fit: BoxFit.cover,
-          ),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          //Source: https://www.pexels.com/photo/iphone-notebook-pen-working-34088/
+          image: AssetImage("../../images/dark/main-BG-dark.png"),
+          fit: BoxFit.cover,
         ),
-        child: Scaffold(
-            appBar: NavigationBar(),
-            backgroundColor: Colors.transparent,
-            body: FutureBuilder(
-                future: _playAnimation(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return getCustomContainer();
-                })));
+      ),
+      child: Scaffold(
+        appBar: NavigationBar(),
+        backgroundColor: Colors.transparent,
+        body: FutureBuilder(
+          future: _playAnimation(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return getCustomContainer();
+          },
+        ),
+      ),
+    );
   }
 
   _playAnimation() {

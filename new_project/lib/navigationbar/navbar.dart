@@ -17,7 +17,9 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
         tooltip: 'Home',
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MainGUI()));
+            context,
+            MaterialPageRoute(builder: (context) => MainGUI()),
+          );
         },
       ),
 
