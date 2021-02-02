@@ -48,42 +48,47 @@ class Room extends StatelessWidget {
                     ),
                   ]),
                   Column(children: [
-                    Row(children: [
-                      new Container(
-                        child: Text('HOST'),
-                        width: 320.0,
-                        height: 110.0,
-                        color: Colors.grey,
-                        margin: EdgeInsets.all(5.0),
-                      ),
-                    ]),
-                    Row(children: [
-                      new Container(
-                        child: Text('USER 1'),
-                        width: 320.0,
-                        height: 110.0,
-                        color: Colors.yellow,
-                        margin: EdgeInsets.all(5.0),
-                      ),
-                    ]),
-                    Row(children: [
-                      new Container(
-                        child: Text('USER 2'),
-                        width: 320.0,
-                        height: 110.0,
-                        color: Colors.yellow,
-                        margin: EdgeInsets.all(5.0),
-                      ),
-                    ]),
-                    Row(children: [
-                      new Container(
-                        child: Text('USER 3'),
-                        width: 320.0,
-                        height: 110.0,
-                        color: Colors.yellow,
-                        margin: EdgeInsets.all(5.0),
-                      ),
-                    ]),
+                    CustomScrollView(
+                      shrinkWrap: true,
+                      primary: false,
+                      slivers: <Widget>[
+                        SliverPadding(
+                          padding: const EdgeInsets.all(5),
+                          sliver: SliverGrid.count(
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                            crossAxisCount: 5,
+                            children: <Widget>[
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                child: const Text("HOST"),
+                                color: Colors.green[100],
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                child: const Text('USER'),
+                                color: Colors.green[200],
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                child: const Text('USER'),
+                                color: Colors.green[300],
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                child: const Text('USER'),
+                                color: Colors.green[400],
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                child: const Text('USER'),
+                                color: Colors.green[500],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ]),
                 ],
               ),
