@@ -6,7 +6,7 @@ import '../Auctions/ongoing.dart';
 import '../Auctions/finished.dart';
 import '../Auctions/myauctions.dart';
 import 'mainGUI.dart';
-import '../auctions/FiltersTemplateGUI.dart';
+import '../auctions/filtersTemplateGUI.dart';
 
 class AuctionsGUI extends StatelessWidget {
   Function navigate;
