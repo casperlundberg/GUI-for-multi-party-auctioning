@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../Dashboard/mainGUI.dart';
 import '../entities/LocalJSONFilter.dart';
 
 class FilterTemplateGUI extends StatefulWidget {
+  List<LocalJSONFilter> filters;
+  Function updateFilters;
+  FilterTemplateGUI(this.filters, this.updateFilters);
+
   @override
-  _FilterTemplateState createState() => _FilterTemplateState();
+  _FilterTemplateState createState() =>
+      _FilterTemplateState(filters, updateFilters);
 }
 
 /* Future<List<Filter>> fetchFilters(http.Client client) async {
@@ -62,19 +68,36 @@ Local test for json handling
 */
 
 class _FilterTemplateState extends State<FilterTemplateGUI> {
+  List<LocalJSONFilter> filters;
+  Function updateFilters;
   Future<List<LocalJSONFilter>> items;
   var selectedLocationIndices = Set<int>();
+
+  _FilterTemplateState(List<LocalJSONFilter> filters, Function updateFilters) {
+    for (int i = 0; i < filters.length; i++) {
+      this.selectedLocationIndices.add(filters[i].id);
+    }
+    this.filters = filters;
+    this.updateFilters = updateFilters;
+  }
 
   void initState() {
     super.initState();
     items = getLocalJSONTest;
   }
 
-  void toggleSelectedFilter(int index) {
-    if (selectedLocationIndices.contains(index))
-      selectedLocationIndices.remove(index);
-    else
-      selectedLocationIndices.add(index);
+  void toggleSelectedFilter(LocalJSONFilter filter) {
+    if (selectedLocationIndices.contains(filter.id)) {
+      selectedLocationIndices.remove(filter.id);
+      for (int i = 0; i < filters.length; i++) {
+        if (filters[i].id == filter.id) {
+          filters.removeAt(i);
+        }
+      }
+    } else {
+      selectedLocationIndices.add(filter.id);
+      filters.add(filter);
+    }
   }
 
   @override
@@ -161,14 +184,16 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                                                             new Container(
                                                               color: selectedLocationIndices
                                                                       .contains(
-                                                                          index)
+                                                                          values[index]
+                                                                              .id)
                                                                   ? Colors.blue
                                                                   : Colors
                                                                       .transparent,
                                                               child: ListTile(
                                                                 onTap: () {
                                                                   toggleSelectedFilter(
-                                                                      index);
+                                                                      values[
+                                                                          index]);
                                                                   setState(
                                                                       () {});
                                                                 },
@@ -220,6 +245,7 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                                 child: ElevatedButton(
                                   child: Text("Add selected filters"),
                                   onPressed: () {
+                                    updateFilters(filters);
                                     Navigator.pop(context);
                                   },
                                 ),

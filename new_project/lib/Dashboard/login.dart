@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'mainGUI.dart';
 
 class LoginScreen extends StatelessWidget {
-  MainGUIState parent;
-  LoginScreen(this.parent);
+  final Function navigate;
+  LoginScreen(this.navigate);
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +35,17 @@ class LoginScreen extends StatelessWidget {
                 TextButton(
                     child: Text('Signup'),
                     onPressed: () {
-                      this.parent.setState(() {
-                        this.parent.selectedWidgetMarker =
-                            WidgetMarker.register;
-                      });
+                      navigate(WidgetMarker.register);
                     }),
                 TextButton(
                     child: Text('Login'),
                     onPressed: () {
-                      this.parent.setState(() {
-                        this.parent.selectedWidgetMarker = WidgetMarker.home;
-                      });
+                      navigate(WidgetMarker.auctions);
                     }),
                 TextButton(
                     child: Text('Forgot password?'),
                     onPressed: () {
-                      this.parent.setState(() {
-                        this.parent.selectedWidgetMarker =
-                            WidgetMarker.forgotPass;
-                      });
+                      navigate(WidgetMarker.forgotPass);
                     }),
               ],
             ),

@@ -5,6 +5,9 @@ import 'FiltersTemplateGUI.dart';
 import '../Auctions/room.dart';
 
 class Ongoing extends StatelessWidget {
+  final Function navigate;
+  Ongoing(this.navigate);
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -26,10 +29,7 @@ class Ongoing extends StatelessWidget {
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Room()),
-                      );
+                      navigate(WidgetMarker.room);
                     }),
               ]),
               color: Colors.orange,

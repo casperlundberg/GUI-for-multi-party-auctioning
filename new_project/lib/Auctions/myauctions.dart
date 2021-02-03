@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'AuctionsTemplateGUI.dart';
 
 class MyAuctions extends StatelessWidget {
+  final Function navigate;
+  MyAuctions(this.navigate);
+
   @override
   Widget build(BuildContext context) {
     return new Container(

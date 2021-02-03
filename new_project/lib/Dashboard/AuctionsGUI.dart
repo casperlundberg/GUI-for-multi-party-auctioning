@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/entities/LocalJSONFilter.dart';
 import '../navigationbar/navbar.dart';
 import '../Auctions/filters.dart';
 import '../Auctions/ongoing.dart';
 import '../Auctions/finished.dart';
-import '../auctions/myauctions.dart';
+import '../Auctions/myauctions.dart';
+import 'mainGUI.dart';
+import '../auctions/FiltersTemplateGUI.dart';
 
 class AuctionsGUI extends StatelessWidget {
+  Function navigate;
+  List<LocalJSONFilter> filters;
+  Function updateFilters;
+  AuctionsGUI(this.navigate, this.filters, this.updateFilters);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -14,27 +22,39 @@ class AuctionsGUI extends StatelessWidget {
       crossAxisAlignment:
           CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
-        Container(
-          color: Colors.orange,
-          margin: EdgeInsets.all(25.0),
-          child: Filter(),
+        Column(
+          children: [
+            Container(
+              color: Colors.orange,
+              margin: EdgeInsets.only(top: 25.0, right: 25.0, left: 25.0),
+              child: Filter(),
+            ),
+            Container(
+              child: FilterTemplateGUI(filters, updateFilters),
+              width: 330.0,
+              height: 120.0,
+              margin: EdgeInsets.only(bottom: 25.0, right: 25.0, left: 25.0),
+            ),
+          ],
         ),
-        Row(children: [
-          Container(
-            color: Colors.blue,
-            margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
-            child: Ongoing(),
-          ),
-          Container(
-            color: Colors.blue,
-            margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
-            child: Finished(),
-          ),
-        ]),
+        Row(
+          children: [
+            Container(
+              color: Colors.blue,
+              margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
+              child: Ongoing(navigate),
+            ),
+            Container(
+              color: Colors.blue,
+              margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
+              child: Finished(navigate),
+            ),
+          ],
+        ),
         Container(
           color: Colors.purple,
           margin: EdgeInsets.all(25.0),
-          child: MyAuctions(),
+          child: MyAuctions(navigate),
         ),
       ],
     );

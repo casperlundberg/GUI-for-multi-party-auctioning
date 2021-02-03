@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'mainGUI.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  MainGUIState parent;
-  ForgotPasswordScreen(this.parent);
+  final Function navigate;
+  ForgotPasswordScreen(this.navigate);
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +30,14 @@ class ForgotPasswordScreen extends StatelessWidget {
                   TextButton(
                     child: Text('Reset Password'),
                     onPressed: () {
-                      this.parent.setState(
-                        () {
-                          //Should go to a waiting for confiramtion screen or just sit here with a message saying the same
-                          //this.parent.selectedWidgetMarker = WidgetMarker.register;
-                        },
-                      );
+                      //Should go to a waiting for confiramtion screen or just sit here with a message saying the same
+                      //this.parent.selectedWidgetMarker = WidgetMarker.register;
                     },
                   ),
                   TextButton(
                     child: Text('Back to login page'),
                     onPressed: () {
-                      this.parent.setState(
-                        () {
-                          this.parent.selectedWidgetMarker = WidgetMarker.login;
-                        },
-                      );
+                      navigate(WidgetMarker.login);
                     },
                   ),
                 ],

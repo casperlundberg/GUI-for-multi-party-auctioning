@@ -24,14 +24,6 @@ class Filter extends StatelessWidget {
                 Text('Material: Wood'),
                 Text(
                     'Description: Soft material which often is used i the paper industri.'),
-                TextButton(
-                    child: Text('Visit room'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Room()),
-                      );
-                    }),
               ]),
               color: Colors.blue,
               margin: EdgeInsets.all(5.0),
@@ -61,14 +53,6 @@ class Filter extends StatelessWidget {
               width: 320.0,
               height: 110.0,
               color: Colors.blue,
-              margin: EdgeInsets.all(5.0),
-            ),
-          ]),
-          Column(children: [
-            new Container(
-              child: FilterTemplateGUI(),
-              width: 320.0,
-              height: 110.0,
               margin: EdgeInsets.all(5.0),
             ),
           ]),

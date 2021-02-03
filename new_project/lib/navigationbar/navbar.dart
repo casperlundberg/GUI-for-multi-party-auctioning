@@ -4,6 +4,9 @@ import 'nav_item.dart';
 import '../profile.dart';
 
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
+  final Function navigate;
+  NavigationBar(this.navigate);
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -16,10 +19,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Icon(Icons.home),
         tooltip: 'Home',
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainGUI()),
-          );
+          navigate(WidgetMarker.login);
         },
       ),
 
@@ -35,10 +35,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.account_circle),
           tooltip: 'Profile',
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-            );
+            navigate(WidgetMarker.profile);
           },
         ),
       ],
