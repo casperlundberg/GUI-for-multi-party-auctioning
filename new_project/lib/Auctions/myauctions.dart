@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'AuctionsTemplateGUI.dart';
 
 class MyAuctions extends StatelessWidget {
   final Function navigate;
