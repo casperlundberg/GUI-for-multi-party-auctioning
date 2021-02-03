@@ -5,7 +5,7 @@ import 'login.dart';
 import 'register.dart';
 import 'forgotPass.dart';
 import '../profile.dart';
-import '../auctions/room.dart';
+import '../Auctions/room.dart';
 import '../entities/LocalJSONFilter.dart';
 
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
@@ -76,9 +76,6 @@ class MainGUIState extends State<MainGUI>
   }
 
   void navigate(WidgetMarker page) {
-    for (int i = 0; i < filters.length; i++) {
-      print(filters[i].id);
-    }
     switch (page) {
       case WidgetMarker.auctions:
         setState(() {
