@@ -2,8 +2,9 @@ class Auction {
   final int auctionID;
   final int ownerID;
   int maxParticipants;
-  int round_num;
-  int round_current;
+  int currentParticipants;
+  int roundNumber;
+  int roundCurrent;
   String material;
   String title;
   String state;
@@ -16,8 +17,9 @@ class Auction {
       this.auctionID,
       this.ownerID,
       this.maxParticipants,
-      this.round_num,
-      this.round_current,
+      this.currentParticipants,
+      this.roundNumber,
+      this.roundCurrent,
       this.material,
       this.title,
       this.state,
