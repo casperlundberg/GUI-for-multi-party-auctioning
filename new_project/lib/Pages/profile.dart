@@ -8,9 +8,16 @@ class Profile extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
+  final TextEditingController _controllerUserName = new TextEditingController();
+  final TextEditingController _controllerFirstName = new TextEditingController();
+  final TextEditingController _controllerLastName = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    _controllerUserName.text = "Username test 1";
+    _controllerFirstName.text = "First name test 1";
+    _controllerLastName.text = "Last name test 1";
     //final DateTime today = new DateTime.now();
 
     return new Scaffold(
@@ -41,9 +48,11 @@ class Profile extends StatelessWidget {
             new Container(
               child: new TextField(
                 decoration: const InputDecoration(
-                    labelText: "Username",
-                    hintText: "What do people call you?"),
+                  labelText: "Username",
+                  hintText: "What do people call you?",
+                ),
                 autocorrect: false,
+                controller: _controllerUserName,
                 onChanged: (String value) {
                   //userName = value;
                 },
@@ -51,8 +60,11 @@ class Profile extends StatelessWidget {
             ),
             new Container(
               child: new TextField(
-                decoration: const InputDecoration(labelText: "First Name"),
+                decoration: const InputDecoration(
+                  labelText: "First Name",
+                ),
                 autocorrect: false,
+                controller: _controllerFirstName,
                 onChanged: (String value) {
                   //lastName = value;
                 },
@@ -60,8 +72,11 @@ class Profile extends StatelessWidget {
             ),
             new Container(
               child: new TextField(
-                decoration: const InputDecoration(labelText: "Last Name"),
+                decoration: const InputDecoration(
+                  labelText: "Last Name",
+                ),
                 autocorrect: false,
+                controller: _controllerLastName,
                 onChanged: (String value) {
                   //lastName = value;
                 },
