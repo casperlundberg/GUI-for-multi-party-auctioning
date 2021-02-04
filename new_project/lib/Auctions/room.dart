@@ -56,11 +56,48 @@ class Room extends StatelessWidget {
                 height: 525.0,
                 child: CustomScrollView(
                   slivers: <Widget>[
-                    const SliverAppBar(
+                    SliverAppBar(
                       pinned: true,
                       expandedHeight: 250.0,
                       flexibleSpace: FlexibleSpaceBar(
-                        title: Text('Bids'),
+                        background: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                color: Colors.amber[700],
+                                width: 650.0,
+                                height: 150.0,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Some text',
+                                  textAlign: TextAlign.center,
+                                )),
+                            Spacer(),
+                            Container(
+                              color: Colors.amber[900],
+                              width: 650.0,
+                              height: 150.0,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'A graph?',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                        title: Row(children: [
+                          Text(
+                            'Bids',
+                            textAlign: TextAlign.start,
+                          ),
+                          Spacer(),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            tooltip: 'New bid',
+                            onPressed: () {},
+                          ),
+                        ]),
                       ),
                     ),
                     SliverGrid(
@@ -75,7 +112,7 @@ class Room extends StatelessWidget {
                           return Container(
                             alignment: Alignment.center,
                             color: Colors.teal[100 * (index % 9)],
-                            child: Text('Grid Item $index'),
+                            child: Text('Company $index'),
                           );
                         },
                         childCount: 20,
