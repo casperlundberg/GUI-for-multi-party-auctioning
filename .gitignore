@@ -21,4 +21,4 @@ doc/api/
 *.js.map
 
 # Other/Custom
-.vscode\settings.json
+.vscode/
