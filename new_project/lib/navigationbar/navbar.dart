@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../Dashboard/mainGUI.dart';
+
+import '../State/mainGUI.dart';
 import 'nav_item.dart';
-import '../profile.dart';
 
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   final Function navigate;

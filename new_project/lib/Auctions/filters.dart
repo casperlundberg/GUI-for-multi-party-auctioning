@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Dashboard/mainGUI.dart';
-import 'AuctionsTemplateGUI.dart';
-import 'FiltersTemplateGUI.dart';
-import '../Auctions/room.dart';
 
 class Filter extends StatelessWidget {
   @override

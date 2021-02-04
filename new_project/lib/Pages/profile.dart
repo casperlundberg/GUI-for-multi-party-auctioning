@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'navigationbar/navbar.dart';
 
 class Profile extends StatelessWidget {
   final Function navigate;

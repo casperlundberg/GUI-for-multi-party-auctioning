@@ -1,7 +1,7 @@
 import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'mainGUI.dart';
+
+import '../State/mainGUI.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   final Function navigate;

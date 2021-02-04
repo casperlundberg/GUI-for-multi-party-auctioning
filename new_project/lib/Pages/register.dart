@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'mainGUI.dart';
+
+import '../State/mainGUI.dart';
 
 class RegisterScreen extends StatelessWidget {
   final Function navigate;
