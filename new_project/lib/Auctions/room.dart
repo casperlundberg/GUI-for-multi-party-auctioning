@@ -54,9 +54,11 @@ class Room extends StatelessWidget {
                                 .then((_) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      backgroundColor: Colors.primaries.last,
+                                      backgroundColor: Colors.grey[900],
                                       content: Text(
-                                          "Room code copied to clipboard")));
+                                          "Room code copied to clipboard",
+                                          style:
+                                              TextStyle(color: Colors.white))));
                             });
                           }),
                     )),
