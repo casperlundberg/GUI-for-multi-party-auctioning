@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../State/mainGUI.dart';
 
 class Room extends StatelessWidget {
   final Function navigate;
@@ -18,6 +20,13 @@ class Room extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Row(children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  tooltip: 'Back',
+                  onPressed: () {
+                    navigate(WidgetMarker.auctions);
+                  },
+                ),
                 Container(
                   child: Text(
                     'GROUP13',
@@ -29,16 +38,28 @@ class Room extends StatelessWidget {
                 ),
                 Spacer(),
                 Container(
-                  child: Text(
-                    'ROOM CODE: 1337',
-                    textAlign: TextAlign.end,
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  height: 40.0,
-                  alignment: Alignment.topLeft,
-                  color: Colors.blue[600],
-                  margin: EdgeInsets.all(5.0),
-                ),
+                    height: 40.0,
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.all(5.0),
+                    child: Tooltip(
+                      message: "Copy to clipboard",
+                      child: TextButton(
+                          child: Text(
+                            'ROOM CODE: 1337',
+                            textAlign: TextAlign.end,
+                            style: TextStyle(fontSize: 30),
+                          ),
+                          onPressed: () {
+                            Clipboard.setData(new ClipboardData(text: "1337"))
+                                .then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: Colors.primaries.last,
+                                      content: Text(
+                                          "Room code copied to clipboard")));
+                            });
+                          }),
+                    )),
               ]),
               Container(
                 child: Text(
@@ -70,7 +91,7 @@ class Room extends StatelessWidget {
                                 height: 150.0,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Some text',
+                                  'Specific Auction info',
                                   textAlign: TextAlign.center,
                                 )),
                             Spacer(),
@@ -80,7 +101,7 @@ class Room extends StatelessWidget {
                               height: 150.0,
                               alignment: Alignment.center,
                               child: Text(
-                                'A graph?',
+                                'Time remaining, current bid, graph of bid history?',
                                 textAlign: TextAlign.center,
                               ),
                             ),
