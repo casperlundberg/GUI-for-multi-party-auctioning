@@ -102,6 +102,7 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
       body: Center(
         child: ElevatedButton(
@@ -126,8 +127,8 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                           margin: EdgeInsets.only(top: 13.0, right: 8.0),
                           decoration: BoxDecoration(
                             //color: Colors.red,
-                            color: Colors.grey[
-                                900], //Couldn't import from theme as "Dialog" is transparent
+                            color: themeData
+                                .primaryColor, //Couldn't import from theme as "Dialog" is transparent
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(16.0),
                             boxShadow: <BoxShadow>[
