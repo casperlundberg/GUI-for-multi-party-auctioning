@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/entities/LocalJSONFilter.dart';
-import '../navigationbar/navbar.dart';
+
 import '../Auctions/filters.dart';
 import '../Auctions/ongoing.dart';
 import '../Auctions/finished.dart';
 import '../Auctions/myauctions.dart';
-import 'mainGUI.dart';
-import '../auctions/filtersTemplateGUI.dart';
+import '../Auctions/filtersTemplateGUI.dart';
+import '../Entities/localJSONFilter.dart';
 
 class AuctionsGUI extends StatelessWidget {
-  Function navigate;
-  List<LocalJSONFilter> filters;
-  Function updateFilters;
+  final Function navigate;
+  final List<LocalJSONFilter> filters;
+  final Function updateFilters;
   AuctionsGUI(this.navigate, this.filters, this.updateFilters);
 
   @override

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+
 import '../navigationbar/navbar.dart';
-import 'AuctionsGUI.dart';
-import 'login.dart';
-import 'register.dart';
-import 'forgotPass.dart';
-import '../profile.dart';
 import '../Auctions/room.dart';
-import '../entities/LocalJSONFilter.dart';
+import '../Entities/localJSONFilter.dart';
+
+import '../Pages/auctionsGUI.dart';
+import '../Pages/forgotPass.dart';
+import '../Pages/login.dart';
+import '../Pages/profile.dart';
+import '../Pages/register.dart';
 
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
 //https://github.com/TechieBlossom/flutter-samples/blob/master/widgetswitchdemo.dart
@@ -20,10 +22,10 @@ class MainGUI extends StatefulWidget {
 
 class MainGUIState extends State<MainGUI>
     with SingleTickerProviderStateMixin<MainGUI> {
-  WidgetMarker selectedWidgetMarker;
+  WidgetMarker _selectedWidgetMarker;
   AnimationController _controller;
   Animation _animation;
-  List<LocalJSONFilter> filters;
+  List<LocalJSONFilter> _filters;
 
   @override
   void initState() {
@@ -31,8 +33,8 @@ class MainGUIState extends State<MainGUI>
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
-    filters = [];
-    selectedWidgetMarker = WidgetMarker.login;
+    _filters = [];
+    _selectedWidgetMarker = WidgetMarker.login;
   }
 
   @override
@@ -52,12 +54,12 @@ class MainGUIState extends State<MainGUI>
         ),
       ),
       child: Scaffold(
-        appBar: NavigationBar(navigate),
+        appBar: NavigationBar(_navigate),
         backgroundColor: Colors.transparent,
         body: FutureBuilder(
           future: _playAnimation(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return getCustomContainer();
+            return _getCustomContainer();
           },
         ),
       ),
@@ -69,48 +71,48 @@ class MainGUIState extends State<MainGUI>
     _controller.forward();
   }
 
-  void updateFilters(List<LocalJSONFilter> selectedFilters) {
+  void _updateFilters(List<LocalJSONFilter> selectedFilters) {
     setState(() {
-      filters = selectedFilters;
+      _filters = selectedFilters;
     });
   }
 
-  void navigate(WidgetMarker page) {
+  void _navigate(WidgetMarker page) {
     switch (page) {
       case WidgetMarker.auctions:
         setState(() {
-          selectedWidgetMarker = WidgetMarker.auctions;
+          _selectedWidgetMarker = WidgetMarker.auctions;
         });
         return;
       case WidgetMarker.login:
         setState(() {
-          selectedWidgetMarker = WidgetMarker.login;
+          _selectedWidgetMarker = WidgetMarker.login;
         });
         return;
       case WidgetMarker.profile:
         setState(() {
-          selectedWidgetMarker = WidgetMarker.profile;
+          _selectedWidgetMarker = WidgetMarker.profile;
         });
         return;
       case WidgetMarker.register:
         setState(() {
-          selectedWidgetMarker = WidgetMarker.register;
+          _selectedWidgetMarker = WidgetMarker.register;
         });
         return;
       case WidgetMarker.forgotPass:
         setState(() {
-          selectedWidgetMarker = WidgetMarker.forgotPass;
+          _selectedWidgetMarker = WidgetMarker.forgotPass;
         });
         return;
       case WidgetMarker.room:
         setState(() {
-          selectedWidgetMarker = WidgetMarker.room;
+          _selectedWidgetMarker = WidgetMarker.room;
         });
     }
   }
 
-  Widget getCustomContainer() {
-    switch (selectedWidgetMarker) {
+  Widget _getCustomContainer() {
+    switch (_selectedWidgetMarker) {
       case WidgetMarker.auctions:
         return getAuctionsGUIContainer();
       case WidgetMarker.login:
@@ -130,42 +132,42 @@ class MainGUIState extends State<MainGUI>
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: AuctionsGUI(navigate, filters, updateFilters),
+      child: AuctionsGUI(_navigate, _filters, _updateFilters),
     );
   }
 
   Widget getLoginContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: LoginScreen(navigate),
+      child: LoginScreen(_navigate),
     );
   }
 
   Widget getRegisterContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: RegisterScreen(navigate),
+      child: RegisterScreen(_navigate),
     );
   }
 
   Widget getForgotPassContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: ForgotPasswordScreen(navigate),
+      child: ForgotPasswordScreen(_navigate),
     );
   }
 
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: Profile(navigate),
+      child: Profile(_navigate),
     );
   }
 
   Widget getRoomContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: Room(navigate),
+      child: Room(_navigate),
     );
   }
 }

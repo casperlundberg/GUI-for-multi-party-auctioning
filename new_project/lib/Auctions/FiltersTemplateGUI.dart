@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../Dashboard/mainGUI.dart';
-import '../entities/LocalJSONFilter.dart';
+import '../Entities/localJSONFilter.dart';
 
 class FilterTemplateGUI extends StatefulWidget {
-  List<LocalJSONFilter> filters;
-  Function updateFilters;
+  final List<LocalJSONFilter> filters;
+  final Function updateFilters;
   FilterTemplateGUI(this.filters, this.updateFilters);
 
   @override
