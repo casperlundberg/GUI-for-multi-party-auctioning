@@ -8,8 +8,7 @@ class FilterTemplateGUI extends StatefulWidget {
   FilterTemplateGUI(this.filters, this.updateFilters);
 
   @override
-  _FilterTemplateState createState() =>
-      _FilterTemplateState(filters, updateFilters);
+  _FilterTemplateState createState() => _FilterTemplateState(filters, updateFilters);
 }
 
 /* Future<List<Filter>> fetchFilters(http.Client client) async {
@@ -111,8 +110,7 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
                   elevation: 0.0,
                   backgroundColor: Colors.transparent,
                   child: Container(
@@ -127,8 +125,7 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                           margin: EdgeInsets.only(top: 13.0, right: 8.0),
                           decoration: BoxDecoration(
                             //color: Colors.red,
-                            color: themeData
-                                .primaryColor, //Couldn't import from theme as "Dialog" is transparent
+                            color: themeData.primaryColor, //Couldn't import from theme as "Dialog" is transparent
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(16.0),
                             boxShadow: <BoxShadow>[
@@ -159,59 +156,37 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                                     height: 300,
                                     child: StatefulBuilder(
                                       builder: (context, setState) {
-                                        return FutureBuilder<
-                                            List<LocalJSONFilter>>(
+                                        return FutureBuilder<List<LocalJSONFilter>>(
                                           future: items,
                                           builder: (context, snapshot) {
                                             if (snapshot.hasError)
-                                              return new Text(
-                                                  'Error: ${snapshot.error}');
+                                              return new Text('Error: ${snapshot.error}');
                                             else {
-                                              List<LocalJSONFilter> values =
-                                                  snapshot.data;
-                                              if (values != null &&
-                                                  values.length > 0) {
+                                              List<LocalJSONFilter> values = snapshot.data;
+                                              if (values != null && values.length > 0) {
                                                 return new Scrollbar(
                                                   child: new RefreshIndicator(
                                                     onRefresh: _handleRefresh,
                                                     child: ListView.builder(
                                                       itemCount: values.length,
-                                                      itemBuilder:
-                                                          (context, index) {
+                                                      itemBuilder: (context, index) {
                                                         return new Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
+                                                          mainAxisSize: MainAxisSize.min,
                                                           children: <Widget>[
                                                             new Container(
-                                                              color: selectedLocationIndices
-                                                                      .contains(
-                                                                          values[index]
-                                                                              .id)
-                                                                  ? Colors.blue
-                                                                  : Colors
-                                                                      .transparent,
+                                                              color: selectedLocationIndices.contains(values[index].id) ? Colors.blue : Colors.transparent,
                                                               child: ListTile(
                                                                 onTap: () {
-                                                                  toggleSelectedFilter(
-                                                                      values[
-                                                                          index]);
-                                                                  setState(
-                                                                      () {});
+                                                                  toggleSelectedFilter(values[index]);
+                                                                  setState(() {});
                                                                 },
                                                                 title: new Text(
-                                                                  values[index]
-                                                                      .name,
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
+                                                                  values[index].name,
+                                                                  style: TextStyle(color: Colors.white),
                                                                 ),
-                                                                subtitle:
-                                                                    new Text(
-                                                                  values[index]
-                                                                      .description,
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
+                                                                subtitle: new Text(
+                                                                  values[index].description,
+                                                                  style: TextStyle(color: Colors.white),
                                                                 ),
                                                               ),
                                                             ),
