@@ -8,29 +8,40 @@ class Room extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: new Container(
-        width: 1400.0,
-        height: 700.0,
-        color: Colors.grey[900],
-        margin: EdgeInsets.all(25.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(children: [
-              new Container(
-                child: Text(
-                  'ROOM NAME: GROUP13, ROOM CODE: 1337',
-                  style: TextStyle(fontSize: 30),
+        backgroundColor: Colors.transparent,
+        body: Center(
+            child: Container(
+          width: 1400.0,
+          height: 700.0,
+          color: Colors.grey[900],
+          margin: EdgeInsets.all(25.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Row(children: [
+                Container(
+                  child: Text(
+                    'GROUP13',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  height: 40.0,
+                  color: Colors.blue[300],
+                  margin: EdgeInsets.all(5.0),
                 ),
-                width: 1400.0,
-                height: 40.0,
-                color: Colors.blue,
-                margin: EdgeInsets.all(5.0),
-              ),
-            ]),
-            Column(children: [
-              new Container(
+                Spacer(),
+                Container(
+                  child: Text(
+                    'ROOM CODE: 1337',
+                    textAlign: TextAlign.end,
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  height: 40.0,
+                  alignment: Alignment.topLeft,
+                  color: Colors.blue[600],
+                  margin: EdgeInsets.all(5.0),
+                ),
+              ]),
+              Container(
                 child: Text(
                   'REQUESTED SERVICE: XXX',
                   style: TextStyle(fontSize: 30),
@@ -40,53 +51,54 @@ class Room extends StatelessWidget {
                 color: Colors.red,
                 margin: EdgeInsets.all(5.0),
               ),
-            ]),
-            Column(children: [
-              CustomScrollView(
-                shrinkWrap: true,
-                primary: false,
-                slivers: <Widget>[
-                  SliverPadding(
-                    padding: const EdgeInsets.all(5),
-                    sliver: SliverGrid.count(
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                      crossAxisCount: 5,
-                      children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text("HOST"),
-                          color: Colors.green[100],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[200],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[300],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[400],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[500],
-                        ),
-                      ],
+              Container(
+                color: Colors.blue,
+                margin: EdgeInsets.all(5.0),
+                height: 525.0,
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    const SliverAppBar(
+                      pinned: true,
+                      expandedHeight: 250.0,
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text('Bids'),
+                      ),
                     ),
-                  ),
-                ],
+                    SliverGrid(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 410.0,
+                        mainAxisSpacing: 10.0,
+                        crossAxisSpacing: 10.0,
+                        childAspectRatio: 4.0,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return Container(
+                            alignment: Alignment.center,
+                            color: Colors.teal[100 * (index % 9)],
+                            child: Text('Grid Item $index'),
+                          );
+                        },
+                        childCount: 20,
+                      ),
+                    ),
+                    // SliverFixedExtentList(
+                    //   itemExtent: 50.0,
+                    //   delegate: SliverChildBuilderDelegate(
+                    //     (BuildContext context, int index) {
+                    //       return Container(
+                    //         alignment: Alignment.center,
+                    //         color: Colors.lightBlue[100 * (index % 9)],
+                    //         child: Text('List Item $index'),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
-            ]),
-          ],
-        ),
-      ),
-    );
+            ],
+          ),
+        )));
   }
 }
