@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Auctions/filters.dart';
-import '../Auctions/ongoing.dart';
-import '../Auctions/finished.dart';
+import '../Auctions/auctions.dart';
 import '../Auctions/myauctions.dart';
 import '../Auctions/filtersTemplateGUI.dart';
 import '../Entities/localJSONFilter.dart';
@@ -41,12 +40,7 @@ class AuctionsGUI extends StatelessWidget {
             Container(
               color: Colors.blue,
               margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
-              child: Ongoing(navigate),
-            ),
-            Container(
-              color: Colors.blue,
-              margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
-              child: Finished(navigate),
+              child: Auctions(navigate),
             ),
           ],
         ),
