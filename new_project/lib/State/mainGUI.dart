@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../navigationbar/navbar.dart';
+import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/localJSONFilter.dart';
 
