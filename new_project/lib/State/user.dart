@@ -1,8 +1,8 @@
 class User {
-  final int userId;
+  final int userID;
   String userName;
   String userType;
 
   //Constructor
-  User(this.userId, this.userName, this.userType);
+  User(this.userID, this.userName, this.userType);
 }
