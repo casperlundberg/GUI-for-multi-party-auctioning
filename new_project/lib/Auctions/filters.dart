@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class Filter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return new Container(
-      color: Colors.grey[900],
+      color: themeData.primaryColor,
       child: new Column(
         children: <Widget>[
           Text(

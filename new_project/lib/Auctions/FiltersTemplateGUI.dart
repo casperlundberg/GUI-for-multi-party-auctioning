@@ -102,8 +102,9 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    return Scaffold(
-      body: Center(
+    return Container(
+      color: themeData.primaryColor,
+      child: Center(
         child: ElevatedButton(
           onPressed: () {
             showDialog(
