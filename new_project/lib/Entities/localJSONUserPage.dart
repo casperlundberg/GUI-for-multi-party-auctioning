@@ -7,10 +7,10 @@ Future<String> getJson() async {
 }
 
 Future<LocalJSONUserPage> get localJSONUserResponse async {
-  String jsonString = await getJson();
+  String arrayObjsText = await getJson();
 
-  var userJson = json.decode(jsonString);
-  LocalJSONUserPage user = userJson.map((data) => LocalJSONUserPage.fromJson(data)).toList();
+  var userJson = json.decode(arrayObjsText);
+  LocalJSONUserPage user = userJson.map((data) => LocalJSONUserPage.fromJson(data));
   return user;
 }
 
@@ -23,9 +23,11 @@ class LocalJSONUserPage {
     this.statusCode,
   });
 
-  LocalJSONUserPage.fromJson(Map<String, dynamic> json) {
-    userInfo = json['userInfo'] != null ? new UserInfo.fromJson(json['userInfo']) : null;
-    statusCode = json['statusCode'];
+  factory LocalJSONUserPage.fromJson(Map<String, dynamic> json) {
+    return new LocalJSONUserPage(
+      userInfo: json['userInfo'] != null ? new UserInfo.fromJson(json['userInfo']) : null,
+      statusCode: json['statusCode'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -53,12 +55,14 @@ class UserInfo {
     this.currentType,
   });
 
-  UserInfo.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    userName = json['userName'];
-    email = json['email'];
-    age = json['age'];
-    currentType = json['currentType'];
+  factory UserInfo.fromJson(Map<String, dynamic> json) {
+    return new UserInfo(
+      userId: json['userId'],
+      userName: json['userName'],
+      email: json['email'],
+      age: json['age'],
+      currentType: json['currentType'],
+    );
   }
 
   Map<String, dynamic> toJson() {

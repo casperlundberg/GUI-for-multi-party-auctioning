@@ -174,7 +174,9 @@ class _FilterTemplateState extends State<FilterTemplateGUI> {
                                                           mainAxisSize: MainAxisSize.min,
                                                           children: <Widget>[
                                                             new Container(
-                                                              color: selectedLocationIndices.contains(values[index].id) ? Colors.blue : Colors.transparent,
+                                                              color: selectedLocationIndices.contains(values[index].id)
+                                                                  ? Colors.blue
+                                                                  : Colors.transparent,
                                                               child: ListTile(
                                                                 onTap: () {
                                                                   toggleSelectedFilter(values[index]);

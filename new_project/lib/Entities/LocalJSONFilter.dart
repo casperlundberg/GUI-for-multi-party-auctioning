@@ -13,8 +13,7 @@ Future<List<LocalJSONFilter>> get getLocalJSONTest async {
   String arrayObjsText = await getJson();
 
   var filterJson = json.decode(arrayObjsText)['filters'] as List;
-  List<LocalJSONFilter> filters =
-      filterJson.map((data) => LocalJSONFilter.fromJson(data)).toList();
+  List<LocalJSONFilter> filters = filterJson.map((data) => LocalJSONFilter.fromJson(data)).toList();
   return filters;
 }
 

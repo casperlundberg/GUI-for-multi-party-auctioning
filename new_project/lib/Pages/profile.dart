@@ -15,7 +15,7 @@ class Profile extends State<ProfileGUI> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  final TextEditingController _controllerUserName = new TextEditingController();
+  //final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerAge = new TextEditingController();
   final TextEditingController _controllerUserType = new TextEditingController();
@@ -74,7 +74,9 @@ class Profile extends State<ProfileGUI> {
                           hintText: "What do people call you?",
                         ),
                         autocorrect: false,
-                        controller: _controllerUserName..text = value.userInfo.userName,
+                        controller: new TextEditingController(
+                          text: value.userInfo.userName,
+                        ),
                         onChanged: (String value) {
                           //userName = value;
                         },
