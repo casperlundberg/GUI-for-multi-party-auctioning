@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+//import 'package:http/http.dart' as http;
+//import 'package:flutter/foundation.dart';
+
+import 'dart:html';
+import 'dart:async' show Future;
 
 import '../navigationbar/navbar.dart';
 import '../Auctions/room.dart';
-import '../Entities/localJSONFilter.dart';
-
+import '../Entities/filtersJSON.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
@@ -15,26 +20,39 @@ import '../Pages/register.dart';
 
 enum WidgetMarker { auctions, login, register, profile, forgotPass, room }
 
+Future<Filters> getFilters() async {
+  String jsonString = await rootBundle.loadString("../../JSON/filters.json");
+  return filtersFromJson(jsonString);
+}
+
 class MainGUI extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MainGUIState();
 }
 
-class MainGUIState extends State<MainGUI>
-    with SingleTickerProviderStateMixin<MainGUI> {
+class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<MainGUI> {
   WidgetMarker _selectedWidgetMarker;
   AnimationController _controller;
   Animation _animation;
-  List<LocalJSONFilter> _filters;
+  List<Filter> _availableFilters;
+  List<Filter> _activeFilters;
+  List<Filter> _inactiveFilters;
+  int _localidCounter;
+  Future _filterFuture;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
-    _filters = [];
+    _activeFilters = [];
+    _inactiveFilters = [];
+    _localidCounter = 0;
     _selectedWidgetMarker = WidgetMarker.login;
+    _filterFuture = getFilters();
+    _filterFuture.then((filters) {
+      _availableFilters = filters.filters;
+    });
   }
 
   @override
@@ -71,9 +89,96 @@ class MainGUIState extends State<MainGUI>
     _controller.forward();
   }
 
-  void _updateFilters(List<LocalJSONFilter> selectedFilters) {
+  void _printFilters() {
+    for (int i = 0; i < _activeFilters.length; i++) {
+      print("_activeFilters id: [" + i.toString() + "]: " + _activeFilters[i].id.toString());
+      print("_activeFilters localid: [" + i.toString() + "]: " + _activeFilters[i].localid.toString());
+      print("_activeFilters distance: [" + i.toString() + "]: " + _activeFilters[i].distance.toString());
+    }
+    for (int i = 0; i < _inactiveFilters.length; i++) {
+      print("_inactiveFilters id: [" + i.toString() + "]: " + _inactiveFilters[i].id.toString());
+      print("_inactiveFilters localid: [" + i.toString() + "]: " + _inactiveFilters[i].localid.toString());
+      print("_inactiveFilters distance: [" + i.toString() + "]: " + _inactiveFilters[i].distance.toString());
+    }
+  }
+
+  void _updateFilters(Filter filter) {
     setState(() {
-      _filters = selectedFilters;
+      if (filter.localid == null) {
+        filter.localid = _localidCounter++;
+      }
+      for (int i = 0; i < _inactiveFilters.length; i++) {
+        if (_inactiveFilters[i].localid == filter.localid) {
+          _inactiveFilters[i] = filter;
+          return;
+        }
+      }
+      for (int i = 0; i < _activeFilters.length; i++) {
+        if (_activeFilters[i].localid == filter.localid) {
+          _activeFilters[i] = filter;
+          return;
+        }
+        if (_activeFilters[i].id == filter.id) {
+          _inactiveFilters.add(_activeFilters[i]);
+          _activeFilters.removeAt(i);
+          break;
+        }
+      }
+      _activeFilters.add(filter);
+    });
+  }
+
+  void _deleteFilter(Filter filter) {
+    setState(() {
+      for (int i = 0; i < _activeFilters.length; i++) {
+        if (_activeFilters[i].localid == filter.localid) {
+          for (int y = 0; y < _inactiveFilters.length; y++) {
+            if (_inactiveFilters[y].id == _activeFilters[i].id) {
+              _activeFilters.add(_inactiveFilters[y]);
+              _inactiveFilters.removeAt(y);
+              break;
+            }
+          }
+          _activeFilters.removeAt(i);
+          return;
+        }
+      }
+      for (int i = 0; i < _inactiveFilters.length; i++) {
+        if (_inactiveFilters[i].localid == filter.localid) {
+          _inactiveFilters.removeAt(i);
+          return;
+        }
+      }
+    });
+  }
+
+  void _activateFilter(Filter filter) {
+    setState(() {
+      for (int i = 0; i < _activeFilters.length; i++) {
+        if (_activeFilters[i].id == filter.id) {
+          _inactiveFilters.add(_activeFilters[i]);
+          _activeFilters.removeAt(i);
+          break;
+        }
+      }
+      _activeFilters.add(filter);
+      for (int i = 0; i < _inactiveFilters.length; i++) {
+        if (_inactiveFilters[i].localid == filter.localid) {
+          _inactiveFilters.removeAt(i);
+          return;
+        }
+      }
+    });
+  }
+
+  void _deactivateFilter(Filter filter) {
+    setState(() {
+      for (int i = 0; i < _activeFilters.length; i++) {
+        if (_activeFilters[i].localid == filter.localid) {
+          _inactiveFilters.add(_activeFilters[i]);
+          _activeFilters.removeAt(i);
+        }
+      }
     });
   }
 
@@ -81,6 +186,10 @@ class MainGUIState extends State<MainGUI>
     switch (page) {
       case WidgetMarker.auctions:
         setState(() {
+          _filterFuture = getFilters();
+          _filterFuture.then((filters) {
+            _availableFilters = filters.filters;
+          });
           _selectedWidgetMarker = WidgetMarker.auctions;
         });
         return;
@@ -132,7 +241,7 @@ class MainGUIState extends State<MainGUI>
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: AuctionsGUI(_navigate, _filters, _updateFilters),
+      child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter),
     );
   }
 

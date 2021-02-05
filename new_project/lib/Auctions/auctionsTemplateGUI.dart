@@ -21,8 +21,7 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
                   elevation: 0.0,
                   backgroundColor: Colors.transparent,
                   child: Container(
@@ -37,8 +36,7 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
                           margin: EdgeInsets.only(top: 13.0, right: 8.0),
                           decoration: BoxDecoration(
                             //color: Colors.red,
-                            color: Colors.grey[
-                                900], //Couldn't import from theme as "Dialog" is transparent
+                            color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(16.0),
                             boxShadow: <BoxShadow>[
@@ -59,8 +57,7 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
                                   key: _formKey,
                                   child: Wrap(
                                     alignment: WrapAlignment.center,
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.center,
+                                    crossAxisAlignment: WrapCrossAlignment.center,
                                     children: <Widget>[
                                       IntrinsicWidth(
                                         child: Text(
@@ -103,8 +100,7 @@ class _AuctionTemplateState extends State<AuctionTemplateGUI> {
                                       ),
                                       IntrinsicWidth(
                                         child: TextFormField(
-                                          controller:
-                                              _textEditingControllerThree,
+                                          controller: _textEditingControllerThree,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                             focusedBorder: InputBorder.none,

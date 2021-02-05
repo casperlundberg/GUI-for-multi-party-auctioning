@@ -4,37 +4,31 @@ import '../Auctions/filters.dart';
 import '../Auctions/ongoing.dart';
 import '../Auctions/finished.dart';
 import '../Auctions/myauctions.dart';
-import '../Auctions/filtersTemplateGUI.dart';
-import '../Entities/localJSONFilter.dart';
+import '../Entities/filtersJSON.dart';
 
 class AuctionsGUI extends StatelessWidget {
   final Function navigate;
-  final List<LocalJSONFilter> filters;
+  final List<Filter> availableFilters;
+  final List<Filter> activeFilters;
+  final List<Filter> inactiveFilters;
   final Function updateFilters;
-  AuctionsGUI(this.navigate, this.filters, this.updateFilters);
+  final Function deleteFilter;
+  final Function activateFilter;
+  final Function deactivateFilter;
+
+  AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter,
+      this.deactivateFilter);
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment:
-          MainAxisAlignment.center, //Center Row contents horizontally
-      crossAxisAlignment:
-          CrossAxisAlignment.center, //Center Row contents vertically
+      mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally
+      crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
-        Column(
-          children: [
-            Container(
-              color: Colors.orange,
-              margin: EdgeInsets.only(top: 25.0, right: 25.0, left: 25.0),
-              child: Filter(),
-            ),
-            Container(
-              child: FilterTemplateGUI(filters, updateFilters),
-              width: 330.0,
-              height: 120.0,
-              margin: EdgeInsets.only(bottom: 25.0, right: 25.0, left: 25.0),
-            ),
-          ],
+        Container(
+          color: Colors.grey[900],
+          margin: EdgeInsets.all(25.0),
+          child: FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
         ),
         Row(
           children: [
