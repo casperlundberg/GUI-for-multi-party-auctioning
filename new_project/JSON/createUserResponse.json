@@ -1,13 +1,4 @@
 {
-    "@context": [
-        "ourschema_URL",
-        {
-            "company": {
-                "@id": "schema:company",
-                "@type": "@id"
-            }
-        }
-    ],
     "userInfo": {
         "userId": 1,
         "userName": "Thule Thulesson",

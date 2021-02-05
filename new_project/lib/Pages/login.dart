@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
@@ -9,16 +8,18 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
         child: SizedBox(
           width: 500,
           child: Card(
+            color: themeData.primaryColor,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Login', style: Theme.of(context).textTheme.headline4),
+                Text('Login', style: themeData.textTheme.headline4),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: TextFormField(

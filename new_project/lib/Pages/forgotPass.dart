@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
@@ -9,12 +8,14 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
         child: SizedBox(
           width: 500,
           child: Card(
+            color: themeData.primaryColor,
             child: Form(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

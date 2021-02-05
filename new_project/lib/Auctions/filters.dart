@@ -12,11 +12,12 @@ class FiltersGUI extends StatefulWidget {
   final Function activateFilter;
   final Function deactivateFilter;
 
-  FiltersGUI(
-      this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter, this.deactivateFilter);
+  FiltersGUI(this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter,
+      this.activateFilter, this.deactivateFilter);
 
   @override
-  _FiltersState createState() => _FiltersState(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter);
+  _FiltersState createState() => _FiltersState(
+      availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter);
 }
 
 class _FiltersState extends State<FiltersGUI> {
@@ -30,12 +31,13 @@ class _FiltersState extends State<FiltersGUI> {
   final myController = TextEditingController();
   Filter filter;
 
-  _FiltersState(
-      this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter, this.deactivateFilter);
+  _FiltersState(this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter,
+      this.activateFilter, this.deactivateFilter);
 
   void showFilterTemplateGUI() {
     if (filter == null) {
-      filter = new Filter(id: availableFilters[0].id, name: availableFilters[0].name, description: availableFilters[0].description);
+      filter = new Filter(
+          id: availableFilters[0].id, name: availableFilters[0].name, description: availableFilters[0].description);
     }
 
     if (filter.distance != null) {
@@ -45,11 +47,14 @@ class _FiltersState extends State<FiltersGUI> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        final ThemeData themeData = Theme.of(context);
+
         return Dialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           child: Container(
+            color: themeData.primaryColor,
             width: 400,
             margin: EdgeInsets.only(left: 0.0, right: 0.0),
             child: Stack(
@@ -142,7 +147,9 @@ class _FiltersState extends State<FiltersGUI> {
                                             child: TextField(
                                               controller: myController,
                                               keyboardType: TextInputType.number,
-                                              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                              inputFormatters: <TextInputFormatter>[
+                                                FilteringTextInputFormatter.digitsOnly
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -211,142 +218,153 @@ class _FiltersState extends State<FiltersGUI> {
 
   @override
   Widget build(BuildContext context) {
-    if ((activeFilters != null && activeFilters.length > 0) || (inactiveFilters != null && inactiveFilters.length > 0)) {
+    final ThemeData themeData = Theme.of(context);
+
+    if ((activeFilters != null && activeFilters.length > 0) ||
+        (inactiveFilters != null && inactiveFilters.length > 0)) {
       List<Filter> allfilters = [];
       allfilters.addAll(activeFilters);
       allfilters.addAll(inactiveFilters);
-      return Column(
-        children: [
-          Text(
-            'FILTERS\n',
-            style: TextStyle(fontSize: 30),
-          ),
-          Container(
-            width: 330,
-            height: 720,
-            child: Scrollbar(
-              child: ListView.builder(
-                itemCount: allfilters.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      new Container(
-                        width: 320.0,
-                        height: 110.0,
-                        color: index >= activeFilters.length ? Colors.grey : Colors.blue,
-                        margin: EdgeInsets.all(5.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      filter = allfilters[index];
-                                    });
-                                    showFilterTemplateGUI();
-                                  },
-                                  child: Text('Edit'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: index >= activeFilters.length
-                                      ? () {
-                                          activateFilter(allfilters[index]);
-                                        }
-                                      : null,
-                                  child: Text('Activate'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: index < activeFilters.length
-                                      ? () {
-                                          deactivateFilter(allfilters[index]);
-                                        }
-                                      : null,
-                                  child: Text('Deactivate'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    deleteFilter(allfilters[index]);
-                                  },
-                                  child: Text('Delete'),
-                                ),
-                                Text('id: ' + allfilters[index].localid.toString()),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(''),
-                                Text(
-                                  'Material: ' + allfilters[index].name,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Text(
-                                  'Description: ' + allfilters[index].description,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ],
+
+      return new Container(
+        color: themeData.primaryColor,
+        child: Column(
+          children: <Widget>[
+            Text(
+              'FILTERS\n',
+              style: TextStyle(fontSize: 30),
+            ),
+            Container(
+              width: 330,
+              height: 720,
+              child: Scrollbar(
+                child: ListView.builder(
+                  itemCount: allfilters.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        new Container(
+                          width: 320.0,
+                          height: 110.0,
+                          color: index >= activeFilters.length ? Colors.grey : Colors.blue,
+                          margin: EdgeInsets.all(5.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        filter = allfilters[index];
+                                      });
+                                      showFilterTemplateGUI();
+                                    },
+                                    child: Text('Edit'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: index >= activeFilters.length
+                                        ? () {
+                                            activateFilter(allfilters[index]);
+                                          }
+                                        : null,
+                                    child: Text('Activate'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: index < activeFilters.length
+                                        ? () {
+                                            deactivateFilter(allfilters[index]);
+                                          }
+                                        : null,
+                                    child: Text('Deactivate'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      deleteFilter(allfilters[index]);
+                                    },
+                                    child: Text('Delete'),
+                                  ),
+                                  Text('id: ' + allfilters[index].localid.toString()),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(''),
+                                  Text(
+                                    'Material: ' + allfilters[index].name,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  Text(
+                                    'Description: ' + allfilters[index].description,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                },
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          Container(
-            width: 330,
-            height: 50,
-            margin: EdgeInsets.all(5.0),
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    filter = null;
-                  });
-                  showFilterTemplateGUI();
-                },
-                child: Text('Add filter'),
+            Container(
+              width: 330,
+              height: 50,
+              margin: EdgeInsets.all(5.0),
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      filter = null;
+                    });
+                    showFilterTemplateGUI();
+                  },
+                  child: Text('Add filter'),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     } else {
-      return Column(
-        children: [
-          Text(
-            'FILTERS\n',
-            style: TextStyle(fontSize: 30),
-          ),
-          Container(
-            width: 330,
-            height: 720,
-            child: Text(
-              'No filters added yet.\n',
-              style: TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
+      final ThemeData themeData = Theme.of(context);
+      return new Container(
+        color: themeData.primaryColor,
+        child: Column(
+          children: [
+            Text(
+              'FILTERS\n',
+              style: TextStyle(fontSize: 30),
             ),
-          ),
-          Container(
-            width: 330,
-            height: 50,
-            margin: EdgeInsets.all(5.0),
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    filter = null;
-                  });
-                  showFilterTemplateGUI();
-                },
-                child: Text('Add filter'),
+            Container(
+              width: 330,
+              height: 720,
+              child: Text(
+                'No filters added yet.\n',
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
               ),
             ),
-          ),
-        ],
+            Container(
+              width: 330,
+              height: 50,
+              margin: EdgeInsets.all(5.0),
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      filter = null;
+                    });
+                    showFilterTemplateGUI();
+                  },
+                  child: Text('Add filter'),
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     }
   }

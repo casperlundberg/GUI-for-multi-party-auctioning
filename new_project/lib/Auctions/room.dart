@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../State/mainGUI.dart';
 
 class Room extends StatelessWidget {
   final Function navigate;
@@ -7,29 +9,61 @@ class Room extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: new Container(
-        width: 1400.0,
-        height: 700.0,
-        color: Colors.grey[900],
-        margin: EdgeInsets.all(25.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(children: [
-              new Container(
-                child: Text(
-                  'ROOM NAME: GROUP13, ROOM CODE: 1337',
-                  style: TextStyle(fontSize: 30),
+        backgroundColor: Colors.transparent,
+        body: Center(
+            child: Container(
+          width: 1400.0,
+          height: 700.0,
+          color: Colors.grey[900],
+          margin: EdgeInsets.all(25.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Row(children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  tooltip: 'Back',
+                  onPressed: () {
+                    navigate(WidgetMarker.auctions);
+                  },
                 ),
-                width: 1400.0,
-                height: 40.0,
-                color: Colors.blue,
-                margin: EdgeInsets.all(5.0),
-              ),
-            ]),
-            Column(children: [
-              new Container(
+                Container(
+                  child: Text(
+                    'GROUP13',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  height: 40.0,
+                  color: Colors.blue[300],
+                  margin: EdgeInsets.all(5.0),
+                ),
+                Spacer(),
+                Container(
+                    height: 40.0,
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.all(5.0),
+                    child: Tooltip(
+                      message: "Copy to clipboard",
+                      child: TextButton(
+                          child: Text(
+                            'ROOM CODE: 1337',
+                            textAlign: TextAlign.end,
+                            style: TextStyle(fontSize: 30),
+                          ),
+                          onPressed: () {
+                            Clipboard.setData(new ClipboardData(text: "1337"))
+                                .then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: Colors.grey[900],
+                                      content: Text(
+                                          "Room code copied to clipboard",
+                                          style:
+                                              TextStyle(color: Colors.white))));
+                            });
+                          }),
+                    )),
+              ]),
+              Container(
                 child: Text(
                   'REQUESTED SERVICE: XXX',
                   style: TextStyle(fontSize: 30),
@@ -39,53 +73,91 @@ class Room extends StatelessWidget {
                 color: Colors.red,
                 margin: EdgeInsets.all(5.0),
               ),
-            ]),
-            Column(children: [
-              CustomScrollView(
-                shrinkWrap: true,
-                primary: false,
-                slivers: <Widget>[
-                  SliverPadding(
-                    padding: const EdgeInsets.all(5),
-                    sliver: SliverGrid.count(
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                      crossAxisCount: 5,
-                      children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text("HOST"),
-                          color: Colors.green[100],
+              Container(
+                color: Colors.blue,
+                margin: EdgeInsets.all(5.0),
+                height: 525.0,
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    SliverAppBar(
+                      pinned: true,
+                      expandedHeight: 250.0,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                color: Colors.amber[700],
+                                width: 650.0,
+                                height: 150.0,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Specific Auction info',
+                                  textAlign: TextAlign.center,
+                                )),
+                            Spacer(),
+                            Container(
+                              color: Colors.amber[900],
+                              width: 650.0,
+                              height: 150.0,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Time remaining, current bid, graph of bid history?',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[200],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[300],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[400],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('USER'),
-                          color: Colors.green[500],
-                        ),
-                      ],
+                        title: Row(children: [
+                          Text(
+                            'Bids',
+                            textAlign: TextAlign.start,
+                          ),
+                          Spacer(),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            tooltip: 'New bid',
+                            onPressed: () {},
+                          ),
+                        ]),
+                      ),
                     ),
-                  ),
-                ],
+                    SliverGrid(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 410.0,
+                        mainAxisSpacing: 10.0,
+                        crossAxisSpacing: 10.0,
+                        childAspectRatio: 4.0,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return Container(
+                            alignment: Alignment.center,
+                            color: Colors.teal[100 * (index % 9)],
+                            child: Text('Company $index'),
+                          );
+                        },
+                        childCount: 20,
+                      ),
+                    ),
+                    // SliverFixedExtentList(
+                    //   itemExtent: 50.0,
+                    //   delegate: SliverChildBuilderDelegate(
+                    //     (BuildContext context, int index) {
+                    //       return Container(
+                    //         alignment: Alignment.center,
+                    //         color: Colors.lightBlue[100 * (index % 9)],
+                    //         child: Text('List Item $index'),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
-            ]),
-          ],
-        ),
-      ),
-    );
+            ],
+          ),
+        )));
   }
 }

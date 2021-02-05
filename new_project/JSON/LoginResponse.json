@@ -2,13 +2,9 @@
     "userInfo": {
         "userId": 1,
         "userName": "Thule Thulesson",
-        "email": "thule@gmail.com"
+        "email": "thule@gmail.com",
+        "age": 35,
+        "currentType": "provider"
     },
-    "userTypes": [
-        {
-            "defaultType": "consumer",
-            "currentType": "provider"
-        }
-    ],
     "statusCode": 200
 }

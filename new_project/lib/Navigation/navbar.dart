@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
-import 'nav_item.dart';
 
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   final Function navigate;
@@ -28,7 +27,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.notifications),
           tooltip: 'Notifications',
           onPressed: () {
-            //TODO: Fixa interface för notiser?
+            // Fixa potentiellt interface för detta i framtiden
           },
         ),
         IconButton(

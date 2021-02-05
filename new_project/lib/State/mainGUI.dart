@@ -6,7 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:html';
 import 'dart:async' show Future;
 
-import '../navigationbar/navbar.dart';
+import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
 import '../Pages/auctionsGUI.dart';
@@ -269,7 +269,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: Profile(_navigate),
+      child: ProfileGUI(_navigate),
     );
   }
 
