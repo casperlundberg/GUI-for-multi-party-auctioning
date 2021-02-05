@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../Auctions/filters.dart';
+import '../Auctions/filtersGUI.dart';
 import '../Auctions/auctions.dart';
 import '../Auctions/myauctions.dart';
-import '../Entities/filtersJSON.dart';
+import '../Entities/filters.dart';
 
 class AuctionsGUI extends StatelessWidget {
   final Function navigate;
@@ -15,8 +15,8 @@ class AuctionsGUI extends StatelessWidget {
   final Function activateFilter;
   final Function deactivateFilter;
 
-  AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter,
-      this.deactivateFilter);
+  AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters,
+      this.deleteFilter, this.activateFilter, this.deactivateFilter);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,8 @@ class AuctionsGUI extends StatelessWidget {
         Container(
           color: Colors.grey[900],
           margin: EdgeInsets.all(25.0),
-          child: FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
+          child: FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter,
+              activateFilter, deactivateFilter),
         ),
         Row(
           children: [

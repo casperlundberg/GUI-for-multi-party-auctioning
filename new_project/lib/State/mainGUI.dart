@@ -8,7 +8,7 @@ import 'dart:async' show Future;
 
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
-import '../Entities/filtersJSON.dart';
+import '../Entities/filters.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
@@ -37,7 +37,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   List<Filter> _availableFilters;
   List<Filter> _activeFilters;
   List<Filter> _inactiveFilters;
-  int _localidCounter;
+  int _localFilteridCounter;
   Future _filterFuture;
 
   @override
@@ -47,7 +47,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _activeFilters = [];
     _inactiveFilters = [];
-    _localidCounter = 0;
+    _localFilteridCounter = 0;
     _selectedWidgetMarker = WidgetMarker.login;
     _filterFuture = getFilters();
     _filterFuture.then((filters) {
@@ -89,23 +89,10 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _controller.forward();
   }
 
-  void _printFilters() {
-    for (int i = 0; i < _activeFilters.length; i++) {
-      print("_activeFilters id: [" + i.toString() + "]: " + _activeFilters[i].id.toString());
-      print("_activeFilters localid: [" + i.toString() + "]: " + _activeFilters[i].localid.toString());
-      print("_activeFilters distance: [" + i.toString() + "]: " + _activeFilters[i].distance.toString());
-    }
-    for (int i = 0; i < _inactiveFilters.length; i++) {
-      print("_inactiveFilters id: [" + i.toString() + "]: " + _inactiveFilters[i].id.toString());
-      print("_inactiveFilters localid: [" + i.toString() + "]: " + _inactiveFilters[i].localid.toString());
-      print("_inactiveFilters distance: [" + i.toString() + "]: " + _inactiveFilters[i].distance.toString());
-    }
-  }
-
   void _updateFilters(Filter filter) {
     setState(() {
       if (filter.localid == null) {
-        filter.localid = _localidCounter++;
+        filter.localid = _localFilteridCounter++;
       }
       for (int i = 0; i < _inactiveFilters.length; i++) {
         if (_inactiveFilters[i].localid == filter.localid) {
@@ -241,7 +228,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter),
+      child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter,
+          _activateFilter, _deactivateFilter),
     );
   }
 
