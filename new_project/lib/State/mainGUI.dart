@@ -58,6 +58,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
 
   // AUCTION JSON
   List<AuctionsJSON> _ongoingAuctionList;
+
   Future _auctionFuture;
   int _localAuctionidCounter;
 
@@ -71,7 +72,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _ongoingAuctionList = [];
     _auctionFuture = getOngoingAuctions();
     _auctionFuture.then((auctions) {
-      _ongoingAuctionList = auctions.auction;
+      _ongoingAuctionList = auctions;
     });
 
     // FILTER VARIABLES
