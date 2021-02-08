@@ -55,9 +55,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                       });
                     },
                     child: Container(
-                      child: Text("Ongoing",
-                          style:
-                              TextStyle(color: (_currentPage == PageMarker.ongoing) ? Colors.white : Colors.white60)),
+                      child: Text("Ongoing", style: TextStyle(color: (_currentPage == PageMarker.ongoing) ? Colors.white : Colors.white60)),
                     ),
                   )),
               Container(
@@ -71,9 +69,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                       });
                     },
                     child: Container(
-                      child: Text("Finished",
-                          style:
-                              TextStyle(color: (_currentPage == PageMarker.finished) ? Colors.white : Colors.white60)),
+                      child: Text("Finished", style: TextStyle(color: (_currentPage == PageMarker.finished) ? Colors.white : Colors.white60)),
                     ),
                   )),
             ]),
