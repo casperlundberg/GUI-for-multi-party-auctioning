@@ -15,35 +15,28 @@ class AuctionsGUI extends StatelessWidget {
   final Function activateFilter;
   final Function deactivateFilter;
 
-  AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters,
-      this.deleteFilter, this.activateFilter, this.deactivateFilter);
+  AuctionsGUI(
+      this.navigate,
+      this.availableFilters,
+      this.activeFilters,
+      this.inactiveFilters,
+      this.updateFilters,
+      this.deleteFilter,
+      this.activateFilter,
+      this.deactivateFilter);
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally
-      crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically
+      mainAxisAlignment:
+          MainAxisAlignment.center, //Center Row contents horizontally
+      crossAxisAlignment:
+          CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
-        Container(
-          color: Colors.grey[900],
-          margin: EdgeInsets.all(25.0),
-          child: FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter,
-              activateFilter, deactivateFilter),
-        ),
-        Row(
-          children: [
-            Container(
-              color: Colors.blue,
-              margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
-              child: Auctions(navigate),
-            ),
-          ],
-        ),
-        Container(
-          color: Colors.purple,
-          margin: EdgeInsets.all(25.0),
-          child: MyAuctions(navigate),
-        ),
+        FiltersGUI(availableFilters, activeFilters, inactiveFilters,
+            updateFilters, deleteFilter, activateFilter, deactivateFilter),
+        Center(child: Auctions(navigate)),
+        Center(child: MyAuctions(navigate)),
       ],
     );
   }
