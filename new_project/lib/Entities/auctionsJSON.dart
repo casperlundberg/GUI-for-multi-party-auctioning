@@ -1,21 +1,21 @@
 // To parse this JSON data, do
 //
-//     final welcome = welcomeFromJson(jsonString);
+//     final auctions = auctionsFromJson(jsonString);
 
 import 'dart:convert';
 
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
+Auctions auctionsFromJson(String str) => Auctions.fromJson(json.decode(str));
 
-String welcomeToJson(Welcome data) => json.encode(data.toJson());
+String auctionsToJson(Auctions data) => json.encode(data.toJson());
 
-class Welcome {
-  Welcome({
+class Auctions {
+  Auctions({
     this.auctions,
   });
 
   List<Auction> auctions;
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory Auctions.fromJson(Map<String, dynamic> json) => Auctions(
         auctions: List<Auction>.from(json["auctions"].map((x) => Auction.fromJson(x))),
       );
 
