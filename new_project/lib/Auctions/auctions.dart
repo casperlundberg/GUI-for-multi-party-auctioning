@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/State/auction.dart';
 
 import '../State/mainGUI.dart';
+import 'contractGUI.dart';
+import '../Entities/auctionsJSON.dart';
 
 enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
+  final List<AuctionsJSON> ongoingAuctionList;
+  final Function auctionList;
   final Function navigate;
-  Auctions(this.navigate);
+
+  Auctions(this.navigate, this.ongoingAuctionList, this.auctionList);
 
   @override
-  State<StatefulWidget> createState() => AuctionsState(this.navigate);
+  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, auctionList);
 }
 
-class AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
+class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
+  final List<AuctionsJSON> ongoingAuctionList;
+  final Function auctionList;
+  Auctions auction;
 
   final Function navigate;
-  AuctionsState(this.navigate);
+
+  _AuctionsState(this.navigate, this.ongoingAuctionList, this.auctionList);
 
   @override
   void initState() {
@@ -45,9 +55,7 @@ class AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<
                       });
                     },
                     child: Container(
-                      child: Text("Ongoing",
-                          style:
-                              TextStyle(color: (_currentPage == PageMarker.ongoing) ? Colors.white : Colors.white60)),
+                      child: Text("Ongoing", style: TextStyle(color: (_currentPage == PageMarker.ongoing) ? Colors.white : Colors.white60)),
                     ),
                   )),
               Container(
@@ -61,9 +69,7 @@ class AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<
                       });
                     },
                     child: Container(
-                      child: Text("Finished",
-                          style:
-                              TextStyle(color: (_currentPage == PageMarker.finished) ? Colors.white : Colors.white60)),
+                      child: Text("Finished", style: TextStyle(color: (_currentPage == PageMarker.finished) ? Colors.white : Colors.white60)),
                     ),
                   )),
             ]),

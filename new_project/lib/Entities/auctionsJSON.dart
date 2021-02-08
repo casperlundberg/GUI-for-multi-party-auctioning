@@ -4,18 +4,18 @@
 
 import 'dart:convert';
 
-Auctions auctionsFromJson(String str) => Auctions.fromJson(json.decode(str));
+AuctionsJSON auctionsFromJson(String str) => AuctionsJSON.fromJson(json.decode(str));
 
-String auctionsToJson(Auctions data) => json.encode(data.toJson());
+String auctionsToJson(AuctionsJSON data) => json.encode(data.toJson());
 
-class Auctions {
-  Auctions({
+class AuctionsJSON {
+  AuctionsJSON({
     this.auctions,
   });
 
   List<Auction> auctions;
 
-  factory Auctions.fromJson(Map<String, dynamic> json) => Auctions(
+  factory AuctionsJSON.fromJson(Map<String, dynamic> json) => AuctionsJSON(
         auctions: List<Auction>.from(json["auctions"].map((x) => Auction.fromJson(x))),
       );
 

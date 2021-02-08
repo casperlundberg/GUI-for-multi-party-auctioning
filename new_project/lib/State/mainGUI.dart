@@ -9,6 +9,7 @@ import 'dart:async' show Future;
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
+import '../Entities/auctionsJSON.dart';
 import '../Entities/localJSONUserPage.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
@@ -26,9 +27,9 @@ Future<Filters> getFilters() async {
   return filtersFromJson(jsonString);
 }
 
-Future<Filters> getOngoingAuctions() async {
+Future<AuctionsJSON> getOngoingAuctions() async {
   String jsonString = await rootBundle.loadString("../../JSON/getOngoingAuctions.json");
-  return filtersFromJson(jsonString);
+  return auctionsFromJson(jsonString);
 }
 
 Future<LocalJsonUserPage> getUserPage() async {
@@ -45,6 +46,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   WidgetMarker _selectedWidgetMarker;
   AnimationController _controller;
   Animation _animation;
+
+  // FILTER JSON
   List<Filter> _availableFilters;
   List<Filter> _activeFilters;
   List<Filter> _inactiveFilters;
@@ -53,11 +56,25 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Future _userFuture;
   LocalJsonUserPage _user;
 
+  // AUCTION JSON
+  List<AuctionsJSON> _ongoingAuctionList;
+  Future _auctionFuture;
+  int _localAuctionidCounter;
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+
+    // AUCTION VARIABLES
+    _ongoingAuctionList = [];
+    _auctionFuture = getOngoingAuctions();
+    _auctionFuture.then((auctions) {
+      _ongoingAuctionList = auctions.auction;
+    });
+
+    // FILTER VARIABLES
     _activeFilters = [];
     _inactiveFilters = [];
     _localFilteridCounter = 0;
@@ -104,6 +121,18 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   _playAnimation() {
     _controller.reset();
     _controller.forward();
+  }
+
+  void _auctionList(Auction auction) {
+    setState(() {
+      if (auction.id == null) {
+        auction.id = _localAuctionidCounter++;
+      }
+      for (int i = 0; i < _ongoingAuctionList.length; i++) {
+        //_ongoingAuctionList.add();
+      }
+      return;
+    });
   }
 
   void _updateFilters(Filter filter) {
@@ -245,8 +274,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter,
-          _activateFilter, _deactivateFilter),
+      child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
+          _ongoingAuctionList, _auctionList),
     );
   }
 
