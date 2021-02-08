@@ -4,10 +4,11 @@ import '../Entities/localJSONUserPage.dart';
 
 class ProfileGUI extends StatefulWidget {
   final Function navigate;
+  final LocalJsonUserPage user;
 
-  const ProfileGUI(this.navigate);
+  const ProfileGUI(this.navigate, this.user);
   @override
-  Profile createState() => Profile(navigate);
+  Profile createState() => Profile(navigate, user);
 }
 
 class Profile extends State<ProfileGUI> {
@@ -21,18 +22,21 @@ class Profile extends State<ProfileGUI> {
   //final TextEditingController _controllerUserType = new TextEditingController();
   LocalJsonUserPage user;
 
-  Profile(
-    this.navigate,
-  );
+  Profile(this.navigate, this.user);
 
   @override
   Widget build(BuildContext context) {
+    print(user.statusCode);
+    return Container(
+      width: 100,
+      height: 100,
+    );
     final ThemeData themeData = Theme.of(context);
 /*     _controllerUserName.text = "Username test 1";
     _controllerEmail.text = "First name test 1";
     _controllerLastName.text = "Last name test 1"; */
     //final DateTime today = new DateTime.now();
-
+/*
     if (user != null) {
       return new Scaffold(
         appBar: new AppBar(
@@ -152,5 +156,6 @@ class Profile extends State<ProfileGUI> {
     } else {
       return new Container();
     }
+    */
   }
 }

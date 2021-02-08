@@ -4,18 +4,18 @@
 
 import 'dart:convert';
 
-Auctions auctionsFromJson(String str) => Auctions.fromJson(json.decode(str));
+AuctionsJSON auctionsFromJson(String str) => AuctionsJSON.fromJson(json.decode(str));
 
-String auctionsToJson(Auctions data) => json.encode(data.toJson());
+String auctionsToJson(AuctionsJSON data) => json.encode(data.toJson());
 
-class Auctions {
-  Auctions({
+class AuctionsJSON {
+  AuctionsJSON({
     this.auctions,
   });
 
   List<Auction> auctions;
 
-  factory Auctions.fromJson(Map<String, dynamic> json) => Auctions(
+  factory AuctionsJSON.fromJson(Map<String, dynamic> json) => AuctionsJSON(
         auctions: List<Auction>.from(json["auctions"].map((x) => Auction.fromJson(x))),
       );
 
@@ -28,7 +28,7 @@ class Auction {
   Auction({
     this.id,
     this.title,
-    this.owner,
+    this.ownerID,
     this.ownerType,
     this.stopDate,
     this.referenceSector,
@@ -37,7 +37,7 @@ class Auction {
 
   int id;
   String title;
-  String owner;
+  int ownerID;
   String ownerType;
   DateTime stopDate;
   String referenceSector;
@@ -46,7 +46,7 @@ class Auction {
   factory Auction.fromJson(Map<String, dynamic> json) => Auction(
         id: json["id"],
         title: json["title"],
-        owner: json["owner"],
+        ownerID: json["ownerID"],
         ownerType: json["ownerType"],
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
@@ -56,7 +56,7 @@ class Auction {
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
-        "owner": owner,
+        "ownerID": ownerID,
         "ownerType": ownerType,
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,
