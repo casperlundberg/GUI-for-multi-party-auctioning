@@ -31,23 +31,9 @@ class AuctionsGUI extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally
       crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
-        Container(
-          color: Colors.grey[900],
-          margin: EdgeInsets.all(25.0),
-          child: FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
-        ),
-        Row(children: [
-          Container(
-            color: Colors.blue,
-            margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
-            child: Auctions(navigate, ongoingAuctionList, auctionList),
-          ),
-        ]),
-        Container(
-          color: Colors.purple,
-          margin: EdgeInsets.all(25.0),
-          child: MyAuctions(navigate),
-        ),
+        FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
+        Center(child: Auctions(navigate, ongoingAuctionList, auctionList)),
+        Center(child: MyAuctions(navigate)),
       ],
     );
   }

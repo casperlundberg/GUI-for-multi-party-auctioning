@@ -35,16 +35,19 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
-        height: 1000.0,
-        width: 700.0,
-        color: Colors.transparent,
+        height: MediaQuery.of(context).size.height * 0.9,
+        width: MediaQuery.of(context).size.width * 0.4,
+        color: Colors.grey[900],
+        margin: EdgeInsets.all(5.0),
         child: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            title: Row(children: [
+            title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Container(
-                  width: 330.0,
+                  width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
                   color: (_currentPage == PageMarker.ongoing) ? Colors.black : Colors.grey[900],
                   child: TextButton(
@@ -58,7 +61,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                     ),
                   )),
               Container(
-                  width: 330.0,
+                  width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
                   color: (_currentPage == PageMarker.finished) ? Colors.black : Colors.grey[900],
                   child: TextButton(
