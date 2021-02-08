@@ -2,13 +2,20 @@
     "id": 1,
     "title": "Testauction 1",
     "ownerID": 1,
-    "ownerType": "Supplier",
-    "stopDate": "2021-02-15T10:30:00.001Z",
+    "ownerType" : "Supplier",
+    "maxParticipants": 10,
+    "currentParticipants": 0,
+    "roundTime": 300,
+    "material": "Wood",
+    "templateID":  1,
+    "variables": [
+        {
+            "quantity": "int",
+            "price": "int"
+        }
+    ],
+    "startDate": "2021-02-15T10:30:00.001Z",
+    "stopDate": "2021-02-15T11:30:00.001Z",
     "referenceSector": "composites",
-    "referenceType": "material",
-    "parameters": {
-        "quantity": 20,
-        "weight": "1 kg",
-        "length": "100 mm"
-    }
+    "referenceType": "material"
 }

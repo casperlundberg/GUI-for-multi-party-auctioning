@@ -12,66 +12,86 @@ class AuctionDetails {
   AuctionDetails({
     this.id,
     this.title,
-    this.ownerID,
+    this.ownerId,
     this.ownerType,
+    this.maxParticipants,
+    this.currentParticipants,
+    this.roundTime,
+    this.material,
+    this.templateId,
+    this.variables,
+    this.startDate,
     this.stopDate,
     this.referenceSector,
     this.referenceType,
-    this.parameters,
   });
 
   int id;
   String title;
-  int ownerID;
+  int ownerId;
   String ownerType;
+  int maxParticipants;
+  int currentParticipants;
+  int roundTime;
+  String material;
+  int templateId;
+  List<Variables> variables;
+  DateTime startDate;
   DateTime stopDate;
   String referenceSector;
   String referenceType;
-  Parameters parameters;
 
   factory AuctionDetails.fromJson(Map<String, dynamic> json) => AuctionDetails(
         id: json["id"],
         title: json["title"],
-        ownerID: json["ownerID"],
+        ownerId: json["ownerID"],
         ownerType: json["ownerType"],
+        maxParticipants: json["maxParticipants"],
+        currentParticipants: json["currentParticipants"],
+        roundTime: json["roundTime"],
+        material: json["material"],
+        templateId: json["templateID"],
+        variables: List<Variables>.from(json["variables"].map((x) => Variables.fromJson(x))),
+        startDate: DateTime.parse(json["startDate"]),
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
         referenceType: json["referenceType"],
-        parameters: Parameters.fromJson(json["parameters"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
-        "ownerID": ownerID,
+        "ownerID": ownerId,
         "ownerType": ownerType,
+        "maxParticipants": maxParticipants,
+        "currentParticipants": currentParticipants,
+        "roundTime": roundTime,
+        "material": material,
+        "templateID": templateId,
+        "variables": List<dynamic>.from(variables.map((x) => x.toJson())),
+        "startDate": startDate.toIso8601String(),
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,
         "referenceType": referenceType,
-        "parameters": parameters.toJson(),
       };
 }
 
-class Parameters {
-  Parameters({
+class Variables {
+  Variables({
     this.quantity,
-    this.weight,
-    this.length,
+    this.price,
   });
 
-  int quantity;
-  String weight;
-  String length;
+  String quantity;
+  String price;
 
-  factory Parameters.fromJson(Map<String, dynamic> json) => Parameters(
+  factory Variables.fromJson(Map<String, dynamic> json) => Variables(
         quantity: json["quantity"],
-        weight: json["weight"],
-        length: json["length"],
+        price: json["price"],
       );
 
   Map<String, dynamic> toJson() => {
         "quantity": quantity,
-        "weight": weight,
-        "length": length,
+        "price": price,
       };
 }

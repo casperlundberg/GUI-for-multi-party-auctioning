@@ -4,7 +4,7 @@ import '../State/filtersGUI.dart';
 import '../Auctions/auctions.dart';
 import '../Auctions/myauctions.dart';
 import '../Entities/filtersJSON.dart';
-import '../Entities/auctionsJSON.dart';
+import '../Entities/auctionsListJSON.dart';
 
 class AuctionsGUI extends StatelessWidget {
   final Function navigate;
@@ -19,11 +19,11 @@ class AuctionsGUI extends StatelessWidget {
   final Function deactivateFilter;
 
   //AUCTION JSON
-  final List<AuctionsJSON> ongoingAuctionList;
+  final List<AuctionsList> ongoingAuctionList;
   final Function auctionList;
 
-  AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters,
-      this.deleteFilter, this.activateFilter, this.deactivateFilter, this.ongoingAuctionList, this.auctionList);
+  AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter,
+      this.deactivateFilter, this.ongoingAuctionList, this.auctionList);
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +34,7 @@ class AuctionsGUI extends StatelessWidget {
         Container(
           color: Colors.grey[900],
           margin: EdgeInsets.all(25.0),
-          child: FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter,
-              activateFilter, deactivateFilter),
+          child: FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
         ),
         Row(children: [
           Container(
