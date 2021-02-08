@@ -84,6 +84,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _filterFuture.then((filters) {
       _availableFilters = filters.filters;
     });
+
     _userFuture = getUserPage();
     _userFuture.then((user) {
       userInfo = user.userInfo;
@@ -126,13 +127,13 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
 
   void _auctionList(Auction auction) {
     setState(() {
-      if (auction.id == null) {
-        auction.id = _localAuctionidCounter++;
-      }
-      for (int i = 0; i < _ongoingAuctionList.length; i++) {
-        //_ongoingAuctionList.add();
-      }
-      return;
+      // if (auction.id == null) {
+      //   auction.id = _localAuctionidCounter++;
+      // }
+      // for (int i = 0; i < _ongoingAuctionList.length; i++) {
+      //   _ongoingAuctionList.add();
+      // }
+      // return;
     });
   }
 

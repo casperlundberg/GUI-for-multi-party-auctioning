@@ -94,7 +94,6 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Container(
-              auction.id
               alignment: Alignment.center,
               margin: EdgeInsets.all(5.0),
               color: Colors.lightGreen[100 * (index % 9)],
