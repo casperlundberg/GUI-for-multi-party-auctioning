@@ -54,6 +54,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   int _localFilteridCounter;
   Future _filterFuture;
   Future _userFuture;
+
+  // USER
   LocalJsonUserPage _user;
 
   // AUCTION JSON
@@ -211,6 +213,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         if (_activeFilters[i].localid == filter.localid) {
           _inactiveFilters.add(_activeFilters[i]);
           _activeFilters.removeAt(i);
+          return;
         }
       }
     });
