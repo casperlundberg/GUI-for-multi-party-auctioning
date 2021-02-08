@@ -26,7 +26,7 @@ Future<Filters> getFilters() async {
   return filtersFromJson(jsonString);
 }
 
-Future<Auction> getOngoingAuctions() async {
+Future<AuctionsJSON> getOngoingAuctions() async {
   String jsonString = await rootBundle.loadString("../../JSON/getOngoingAuctions.json");
   return auctionsFromJson(jsonString);
 }
@@ -40,15 +40,18 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   WidgetMarker _selectedWidgetMarker;
   AnimationController _controller;
   Animation _animation;
+
+  // FILTER JSON
   List<Filter> _availableFilters;
   List<Filter> _activeFilters;
   List<Filter> _inactiveFilters;
-  List<Auction> _ongoingAuctionList;
   int _localFilteridCounter;
   Future _filterFuture;
+
+  // AUCTION JSON
+  List<AuctionsJSON> _ongoingAuctionList;
   Future _auctionFuture;
   int _localAuctionidCounter;
-  List<Filter> _availableAuctions;
 
   @override
   void initState() {
@@ -59,8 +62,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     // AUCTION VARIABLES
     _ongoingAuctionList = [];
     _auctionFuture = getOngoingAuctions();
-    _auctionFuture.then((auction) {
-      _availableAuctions = auction.auction;
+    _auctionFuture.then((auctions) {
+      _ongoingAuctionList = auctions.auction;
     });
 
     // FILTER VARIABLES
@@ -111,12 +114,12 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   void _auctionList(Auction auction) {
     setState(() {
       if (auction.id == null) {
-        auction.id = _localFilteridCounter++;
+        auction.id = _localAuctionidCounter++;
       }
       for (int i = 0; i < _ongoingAuctionList.length; i++) {
-        return;
+        //_ongoingAuctionList.add();
       }
-      _ongoingAuctionList.add(auction);
+      return;
     });
   }
 
@@ -260,7 +263,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     return FadeTransition(
       opacity: _animation,
       child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter,
-          _activateFilter, _deactivateFilter),
+          _activateFilter, _deactivateFilter, _ongoingAuctionList, _auctionList),
     );
   }
 
