@@ -48,6 +48,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Future _filterFuture;
   Future _auctionFuture;
   int _localAuctionidCounter;
+  List<Filter> _availableAuctions;
 
   @override
   void initState() {
@@ -55,12 +56,14 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
 
+    // AUCTION VARIABLES
     _ongoingAuctionList = [];
     _auctionFuture = getOngoingAuctions();
     _auctionFuture.then((auction) {
-      _availableFilters = auction.auction;
+      _availableAuctions = auction.auction;
     });
 
+    // FILTER VARIABLES
     _activeFilters = [];
     _inactiveFilters = [];
     _localFilteridCounter = 0;
