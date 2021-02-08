@@ -16,10 +16,10 @@ class Profile extends State<ProfileGUI> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  //final TextEditingController _controllerUserName = new TextEditingController();
+  final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerAge = new TextEditingController();
-  //final TextEditingController _controllerUserType = new TextEditingController();
+  final TextEditingController _controllerUserType = new TextEditingController();
   LocalJsonUserPage user;
 
   Profile(this.navigate, this.user);
@@ -27,135 +27,130 @@ class Profile extends State<ProfileGUI> {
   @override
   Widget build(BuildContext context) {
     print(user.statusCode);
-    return Container(
+/*     return Container(
       width: 100,
       height: 100,
-    );
+    ); */
     final ThemeData themeData = Theme.of(context);
-/*     _controllerUserName.text = "Username test 1";
-    _controllerEmail.text = "First name test 1";
-    _controllerLastName.text = "Last name test 1"; */
     //final DateTime today = new DateTime.now();
-/*
+
     if (user != null) {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: const Text('Edit Profile'),
-          actions: <Widget>[
-            new Container(
-              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 5.0, 10.0),
-              child: new MaterialButton(
-                color: themeData.primaryColor,
-                textColor: themeData.secondaryHeaderColor,
-                child: new Text('Save'),
-                onPressed: () {
-                  //_handleSubmitted();
-                  Navigator.pop(context);
-                },
-              ),
+      return Center(
+        child: Container(
+          width: 600,
+          height: 600,
+          child: new Form(
+            key: _formKey,
+            //autovalidate: _autovalidate,
+            //onWillPop: _warnUserAboutInvalidData,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: new TextField(
+                    decoration: const InputDecoration(
+                      labelText: "Username",
+                      hintText: "What do people call you?",
+                    ),
+                    autocorrect: false,
+                    controller: _controllerUserName..text = user.userInfo.userName,
+                    onChanged: (String value) {
+                      //userName = value;
+                    },
+                  ),
+                ),
+                Container(
+                  child: new TextField(
+                    decoration: const InputDecoration(
+                      labelText: "E-mail",
+                    ),
+                    autocorrect: false,
+                    controller: _controllerEmail..text = user.userInfo.email,
+                    onChanged: (String value) {
+                      //mail = value;
+                    },
+                  ),
+                ),
+                Container(
+                  child: new TextField(
+                    decoration: const InputDecoration(
+                      labelText: "Age",
+                    ),
+                    autocorrect: false,
+                    controller: _controllerAge..text = user.userInfo.age.toString(),
+                    onChanged: (String value) {
+                      //Age = value;
+                    },
+                  ),
+                ),
+                /* Container(
+                  child: new TextField(
+                    decoration: const InputDecoration(
+                      labelText: "Current user type",
+                    ),
+                    autocorrect: false,
+                    controller: _controllerUserType..text = user.userInfo.currentType,
+                    onChanged: (String value) {
+                      //lastName = value;
+                    },
+                  ),
+                ), */
+                Container(
+                  child: StatefulBuilder(
+                    builder: (context, setState) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text('User Type: '),
+                              /* DropdownButton(
+                                icon: Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                value: dropdownValue,
+                                elevation: 16,
+                                style: TextStyle(color: Colors.white),
+                                items: types.map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ), */
+                              new DropdownButton<String>(
+                                icon: Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                value: user.userInfo.currentType,
+                                elevation: 16,
+                                style: TextStyle(color: Colors.white),
+                                items: <String>['Supplier', 'Consumer'].map((String value) {
+                                  return new DropdownMenuItem<String>(
+                                    value: value,
+                                    child: new Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (_) {},
+                              )
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  child: ElevatedButton(
+                    child: Text("Save changes"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        body: new Form(
-          key: _formKey,
-          //autovalidate: _autovalidate,
-          //onWillPop: _warnUserAboutInvalidData,
-          child: Row(
-            children: <Widget>[
-              Container(
-                child: new TextField(
-                  decoration: const InputDecoration(
-                    labelText: "Username",
-                    hintText: "What do people call you?",
-                  ),
-                  autocorrect: false,
-                  controller: new TextEditingController(
-                    text: user.userInfo.userName,
-                  ),
-                  onChanged: (String value) {
-                    //userName = value;
-                  },
-                ),
-              ),
-              Container(
-                child: new TextField(
-                  decoration: const InputDecoration(
-                    labelText: "E-mail",
-                  ),
-                  autocorrect: false,
-                  controller: _controllerEmail..text = user.userInfo.email,
-                  onChanged: (String value) {
-                    //mail = value;
-                  },
-                ),
-              ),
-              Container(
-                child: new TextField(
-                  decoration: const InputDecoration(
-                    labelText: "Age",
-                  ),
-                  autocorrect: false,
-                  controller: _controllerAge..text = user.userInfo.age.toString(),
-                  onChanged: (String value) {
-                    //Age = value;
-                  },
-                ),
-              ),
-              Container(
-                /* child: new TextField(
-                decoration: const InputDecoration(
-                  labelText: "Current user type",
-                ),
-                autocorrect: false,
-                controller: _controllerUserType..text = user.userInfo.currentType,
-                onChanged: (String value) {
-                  //lastName = value;
-                },
-              ), */
-                child: StatefulBuilder(
-                  builder: (context, setState) {
-                    String dropdownValue = user.userInfo.currentType;
-                    List<String> types = ["Consumer", "Provider"];
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text('User Type: '),
-                            DropdownButton(
-                              icon: Icon(Icons.arrow_downward),
-                              iconSize: 24,
-                              value: dropdownValue,
-                              elevation: 16,
-                              style: TextStyle(color: Colors.white),
-                              items: types.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Container(
-                child: ElevatedButton(
-                  child: Text("Save changes"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
           ),
         ),
       );
     } else {
       return new Container();
     }
-    */
   }
 }
