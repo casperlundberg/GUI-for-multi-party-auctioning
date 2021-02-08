@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../Entities/filters.dart';
+import '../Entities/filtersJSON.dart';
 
 class FiltersGUI extends StatefulWidget {
   final List<Filter> availableFilters;
