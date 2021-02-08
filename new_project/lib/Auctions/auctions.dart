@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
 import 'contractGUI.dart';
-import '../Entities/auctionsJSON.dart';
+import '../Entities/auctionsListJSON.dart';
 
 enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
-  final List<AuctionsJSON> ongoingAuctionList;
+  final List<AuctionsList> ongoingAuctionList;
   final Function auctionList;
   final Function navigate;
 
@@ -19,7 +19,7 @@ class Auctions extends StatefulWidget {
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
-  final List<AuctionsJSON> ongoingAuctionList;
+  final List<AuctionsList> ongoingAuctionList;
   final Function auctionList;
   Auction auction;
 
