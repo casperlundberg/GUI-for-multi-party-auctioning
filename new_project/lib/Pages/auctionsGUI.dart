@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Auctions/filtersGUI.dart';
 import '../Auctions/auctions.dart';
 import '../Auctions/myauctions.dart';
-import '../Entities/filters.dart';
+import '../Entities/filtersJSON.dart';
 
 class AuctionsGUI extends StatelessWidget {
   final Function navigate;
