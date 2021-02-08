@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/State/auction.dart';
 
 import '../State/mainGUI.dart';
 import 'auctionsTemplateGUI.dart';
+import '../Entities/auctionsJSON.dart';
+
 
 enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
-  final Function navigate;
+  final List<Auction> ongoingAuctionList;
+  final Function auctionList;
+  auctions(this., this.auctionList);
+
+  @override
+  _AuctionState createState(auctionlist) => _AuctionState(
+      );
+}
   Auctions(this.navigate);
 
   @override
