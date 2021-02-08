@@ -9,6 +9,7 @@ import 'dart:async' show Future;
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
+import '../Entities/auctionsJSON.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
@@ -25,9 +26,9 @@ Future<Filters> getFilters() async {
   return filtersFromJson(jsonString);
 }
 
-Future<Filters> getOngoingAuctions() async {
+Future<Auction> getOngoingAuctions() async {
   String jsonString = await rootBundle.loadString("../../JSON/getOngoingAuctions.json");
-  return filtersFromJson(jsonString);
+  return auctionsFromJson(jsonString);
 }
 
 class MainGUI extends StatefulWidget {
@@ -42,6 +43,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   List<Filter> _availableFilters;
   List<Filter> _activeFilters;
   List<Filter> _inactiveFilters;
+  List<Auction> _ongoingAuctionList;
   int _localFilteridCounter;
   Future _filterFuture;
 
@@ -51,6 +53,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _activeFilters = [];
+    _ongoingAuctionList = [];
     _inactiveFilters = [];
     _localFilteridCounter = 0;
     _selectedWidgetMarker = WidgetMarker.login;
@@ -92,6 +95,32 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   _playAnimation() {
     _controller.reset();
     _controller.forward();
+  }
+
+  void _ongoingAuctionList(Auction auction) {
+    setState(() {
+      if (filter.localid == null) {
+        filter.localid = _localFilteridCounter++;
+      }
+      for (int i = 0; i < _inactiveFilters.length; i++) {
+        if (_inactiveFilters[i].localid == filter.localid) {
+          _inactiveFilters[i] = filter;
+          return;
+        }
+      }
+      for (int i = 0; i < _activeFilters.length; i++) {
+        if (_activeFilters[i].localid == filter.localid) {
+          _activeFilters[i] = filter;
+          return;
+        }
+        if (_activeFilters[i].id == filter.id) {
+          _inactiveFilters.add(_activeFilters[i]);
+          _activeFilters.removeAt(i);
+          break;
+        }
+      }
+      _activeFilters.add(filter);
+    });
   }
 
   void _updateFilters(Filter filter) {

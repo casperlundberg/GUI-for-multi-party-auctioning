@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
+Auction auctionsFromJson(String str) => Auction.fromJson(json.decode(str));
 
-String welcomeToJson(Welcome data) => json.encode(data.toJson());
+String auctionsToJson(Auction data) => json.encode(data.toJson());
 
 class Welcome {
   Welcome({
