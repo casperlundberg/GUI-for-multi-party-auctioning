@@ -49,7 +49,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               Container(
                   width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.ongoing) ? Colors.black : Colors.grey[900],
+                  color: (_currentPage == PageMarker.ongoing) ? Colors.black : themeData.primaryColor,
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -63,7 +63,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               Container(
                   width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.finished) ? Colors.black : Colors.grey[900],
+                  color: (_currentPage == PageMarker.finished) ? Colors.black : themeData.primaryColor,
                   child: TextButton(
                     onPressed: () {
                       setState(() {

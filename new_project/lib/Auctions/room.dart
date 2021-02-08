@@ -9,13 +9,14 @@ class Room extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
             child: Container(
           width: 1400.0,
           height: 700.0,
-          color: Colors.grey[900],
+          color: themeData.primaryColor,
           margin: EdgeInsets.all(25.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -53,9 +54,7 @@ class Room extends StatelessWidget {
                           onPressed: () {
                             Clipboard.setData(new ClipboardData(text: "1337")).then((_) {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  backgroundColor: Colors.grey[900],
-                                  content:
-                                      Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
+                                  backgroundColor: Colors.grey[900], content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
                             });
                           }),
                     )),
