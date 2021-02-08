@@ -28,7 +28,7 @@ Future<Filters> getFilters() async {
 }
 
 Future<AuctionsJSON> getOngoingAuctions() async {
-  String jsonString = await rootBundle.loadString("../../JSON/getOngoingAuctions.json");
+  String jsonString = await rootBundle.loadString("../../JSON/ongoingAuctions.json");
   return auctionsFromJson(jsonString);
 }
 
