@@ -9,11 +9,7 @@ import 'dart:async' show Future;
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
-<<<<<<< HEAD
 import '../Entities/auctionsJSON.dart';
-=======
-import '../Entities/localJSONUserPage.dart';
->>>>>>> 375c967191a0de100d55e47921484f474aad1976
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
@@ -278,8 +274,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter,
-          _activateFilter, _deactivateFilter, _ongoingAuctionList, _auctionList),
+      child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
+          _ongoingAuctionList, _auctionList),
     );
   }
 
