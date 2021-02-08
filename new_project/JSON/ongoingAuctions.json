@@ -3,7 +3,7 @@
         {
             "id": 1,
             "title": "Testauction 1",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -12,7 +12,7 @@
         {
             "id": 2,
             "title": "Testauction 2",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -21,7 +21,7 @@
         {
             "id": 3,
             "title": "Testauction 3",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -30,7 +30,7 @@
         {
             "id": 4,
             "title": "Testauction 4",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -39,7 +39,7 @@
         {
             "id": 5,
             "title": "Testauction 5",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -48,7 +48,7 @@
         {
             "id": 6,
             "title": "Testauction 6",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -57,7 +57,7 @@
         {
             "id": 7,
             "title": "Testauction 7",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -66,7 +66,7 @@
         {
             "id": 8,
             "title": "Testauction 8",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",
@@ -75,7 +75,7 @@
         {
             "id": 9,
             "title": "Testauction 9",
-            "owner": "Casper",
+            "ownerID": 1,
             "ownerType" : "Supplier",
             "stopDate": "2021-02-15T10:30:00.001Z",
             "referenceSector": "composites",

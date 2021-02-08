@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Auctions/filtersGUI.dart';
+import '../State/filtersGUI.dart';
 import '../Auctions/auctions.dart';
 import '../Auctions/myauctions.dart';
 import '../Entities/filtersJSON.dart';

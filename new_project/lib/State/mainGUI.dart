@@ -51,8 +51,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   int _localFilteridCounter;
   Future _filterFuture;
   Future _userFuture;
-  LocalJsonUserPage user;
-  UserInfo userInfo;
+  LocalJsonUserPage _user;
 
   @override
   void initState() {
@@ -69,7 +68,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     });
     _userFuture = getUserPage();
     _userFuture.then((user) {
-      userInfo = user.userInfo;
+      _user = user;
     });
   }
 
@@ -275,7 +274,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: ProfileGUI(_navigate),
+      child: ProfileGUI(_navigate, _user),
     );
   }
 

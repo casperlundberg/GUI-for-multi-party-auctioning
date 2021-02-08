@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../State/mainGUI.dart';
+import 'contractGUI.dart';
 
 class Room extends StatelessWidget {
   final Function navigate;
@@ -50,15 +51,11 @@ class Room extends StatelessWidget {
                             style: TextStyle(fontSize: 30),
                           ),
                           onPressed: () {
-                            Clipboard.setData(new ClipboardData(text: "1337"))
-                                .then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      backgroundColor: Colors.grey[900],
-                                      content: Text(
-                                          "Room code copied to clipboard",
-                                          style:
-                                              TextStyle(color: Colors.white))));
+                            Clipboard.setData(new ClipboardData(text: "1337")).then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: Colors.grey[900],
+                                  content:
+                                      Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
                             });
                           }),
                     )),

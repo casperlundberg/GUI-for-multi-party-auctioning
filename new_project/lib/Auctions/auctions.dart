@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
-import 'auctionsTemplateGUI.dart';
 
 enum PageMarker { ongoing, finished }
 
@@ -13,8 +12,7 @@ class Auctions extends StatefulWidget {
   State<StatefulWidget> createState() => AuctionsState(this.navigate);
 }
 
-class AuctionsState extends State<Auctions>
-    with SingleTickerProviderStateMixin<Auctions> {
+class AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
 
   final Function navigate;
@@ -39,9 +37,7 @@ class AuctionsState extends State<Auctions>
               Container(
                   width: 330.0,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.ongoing)
-                      ? Colors.black
-                      : Colors.grey[900],
+                  color: (_currentPage == PageMarker.ongoing) ? Colors.black : Colors.grey[900],
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -50,18 +46,14 @@ class AuctionsState extends State<Auctions>
                     },
                     child: Container(
                       child: Text("Ongoing",
-                          style: TextStyle(
-                              color: (_currentPage == PageMarker.ongoing)
-                                  ? Colors.white
-                                  : Colors.white60)),
+                          style:
+                              TextStyle(color: (_currentPage == PageMarker.ongoing) ? Colors.white : Colors.white60)),
                     ),
                   )),
               Container(
                   width: 330.0,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.finished)
-                      ? Colors.black
-                      : Colors.grey[900],
+                  color: (_currentPage == PageMarker.finished) ? Colors.black : Colors.grey[900],
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -70,16 +62,13 @@ class AuctionsState extends State<Auctions>
                     },
                     child: Container(
                       child: Text("Finished",
-                          style: TextStyle(
-                              color: (_currentPage == PageMarker.finished)
-                                  ? Colors.white
-                                  : Colors.white60)),
+                          style:
+                              TextStyle(color: (_currentPage == PageMarker.finished) ? Colors.white : Colors.white60)),
                     ),
                   )),
             ]),
           ),
-          FutureBuilder(
-              builder: (BuildContext context, AsyncSnapshot snaptshot) {
+          FutureBuilder(builder: (BuildContext context, AsyncSnapshot snaptshot) {
             return _getPageContainer();
           })
         ]));
