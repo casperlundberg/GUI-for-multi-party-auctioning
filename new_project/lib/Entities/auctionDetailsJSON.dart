@@ -12,7 +12,8 @@ class AuctionDetails {
   AuctionDetails({
     this.id,
     this.title,
-    this.owner,
+    this.ownerID,
+    this.ownerType,
     this.stopDate,
     this.referenceSector,
     this.referenceType,
@@ -21,7 +22,8 @@ class AuctionDetails {
 
   int id;
   String title;
-  String owner;
+  int ownerID;
+  String ownerType;
   DateTime stopDate;
   String referenceSector;
   String referenceType;
@@ -30,7 +32,8 @@ class AuctionDetails {
   factory AuctionDetails.fromJson(Map<String, dynamic> json) => AuctionDetails(
         id: json["id"],
         title: json["title"],
-        owner: json["owner"],
+        ownerID: json["ownerID"],
+        ownerType: json["ownerType"],
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
         referenceType: json["referenceType"],
@@ -40,7 +43,8 @@ class AuctionDetails {
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
-        "owner": owner,
+        "ownerID": ownerID,
+        "ownerType": ownerType,
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,
         "referenceType": referenceType,

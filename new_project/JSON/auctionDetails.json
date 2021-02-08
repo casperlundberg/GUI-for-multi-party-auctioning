@@ -1,7 +1,8 @@
 {
     "id": 1,
     "title": "Testauction 1",
-    "owner": "Casper",
+    "ownerID": 1,
+    "ownerType": "Supplier",
     "stopDate": "2021-02-15T10:30:00.001Z",
     "referenceSector": "composites",
     "referenceType": "material",

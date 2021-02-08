@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
+import 'contractGUI.dart';
 import '../Entities/auctionsJSON.dart';
 
 enum PageMarker { ongoing, finished }
