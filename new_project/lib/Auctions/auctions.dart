@@ -23,8 +23,8 @@ class Auctions extends StatefulWidget {
   State<StatefulWidget> createState() => AuctionsState(this.navigate);
 }
 
-class AuctionsState extends State<Auctions>
-    with SingleTickerProviderStateMixin<Auctions> {
+class AuctionsState extends State<Auction>
+    with SingleTickerProviderStateMixin<Auction> {
   PageMarker _currentPage;
 
   final Function navigate;
