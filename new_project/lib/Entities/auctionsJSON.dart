@@ -4,15 +4,9 @@
 
 import 'dart:convert';
 
-<<<<<<< HEAD
 Auction auctionsFromJson(String str) => Auction.fromJson(json.decode(str));
 
 String auctionsToJson(Auction data) => json.encode(data.toJson());
-=======
-Auctions auctionsFromJson(String str) => Auctions.fromJson(json.decode(str));
-
-String auctionsToJson(Auctions data) => json.encode(data.toJson());
->>>>>>> 3caa39fcc9a4fa59411212cff88ebc67322de3b5
 
 class Auctions {
   Auctions({

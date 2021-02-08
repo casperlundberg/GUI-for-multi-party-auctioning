@@ -46,14 +46,22 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   List<Auction> _ongoingAuctionList;
   int _localFilteridCounter;
   Future _filterFuture;
+  Future _auctionFuture;
+  int _localAuctionidCounter;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
-    _activeFilters = [];
+
     _ongoingAuctionList = [];
+    _auctionFuture = getOngoingAuctions();
+    _auctionFuture.then((auction) {
+      _availableFilters = auction.auction;
+    });
+
+    _activeFilters = [];
     _inactiveFilters = [];
     _localFilteridCounter = 0;
     _selectedWidgetMarker = WidgetMarker.login;
@@ -97,29 +105,15 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _controller.forward();
   }
 
-  void _ongoingAuctionList(Auction auction) {
+  void _auctionList(Auction auction) {
     setState(() {
-      if (filter.localid == null) {
-        filter.localid = _localFilteridCounter++;
+      if (auction.id == null) {
+        auction.id = _localFilteridCounter++;
       }
-      for (int i = 0; i < _inactiveFilters.length; i++) {
-        if (_inactiveFilters[i].localid == filter.localid) {
-          _inactiveFilters[i] = filter;
-          return;
-        }
+      for (int i = 0; i < _ongoingAuctionList.length; i++) {
+        return;
       }
-      for (int i = 0; i < _activeFilters.length; i++) {
-        if (_activeFilters[i].localid == filter.localid) {
-          _activeFilters[i] = filter;
-          return;
-        }
-        if (_activeFilters[i].id == filter.id) {
-          _inactiveFilters.add(_activeFilters[i]);
-          _activeFilters.removeAt(i);
-          break;
-        }
-      }
-      _activeFilters.add(filter);
+      _ongoingAuctionList.add(auction);
     });
   }
 
