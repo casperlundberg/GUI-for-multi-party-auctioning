@@ -9,6 +9,7 @@ import 'dart:async' show Future;
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
+import '../Entities/localJSONUserPage.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
@@ -30,6 +31,11 @@ Future<Filters> getOngoingAuctions() async {
   return filtersFromJson(jsonString);
 }
 
+Future<LocalJsonUserPage> getUserPage() async {
+  String jsonString = await rootBundle.loadString("../../JSON/LoginResponse.json");
+  return localJsonUserPageFromJson(jsonString);
+}
+
 class MainGUI extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MainGUIState();
@@ -44,6 +50,9 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   List<Filter> _inactiveFilters;
   int _localFilteridCounter;
   Future _filterFuture;
+  Future _userFuture;
+  LocalJsonUserPage user;
+  UserInfo userInfo;
 
   @override
   void initState() {
@@ -57,6 +66,10 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _filterFuture = getFilters();
     _filterFuture.then((filters) {
       _availableFilters = filters.filters;
+    });
+    _userFuture = getUserPage();
+    _userFuture.then((user) {
+      userInfo = user.userInfo;
     });
   }
 
