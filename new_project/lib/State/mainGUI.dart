@@ -8,7 +8,7 @@ import 'dart:async' show Future;
 
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
-import '../Entities/filters.dart';
+import '../Entities/filtersJSON.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
@@ -22,6 +22,11 @@ enum WidgetMarker { auctions, login, register, profile, forgotPass, room }
 
 Future<Filters> getFilters() async {
   String jsonString = await rootBundle.loadString("../../JSON/filters.json");
+  return filtersFromJson(jsonString);
+}
+
+Future<Filters> getOngoingAuctions() async {
+  String jsonString = await rootBundle.loadString("../../JSON/getOngoingAuctions.json");
   return filtersFromJson(jsonString);
 }
 
