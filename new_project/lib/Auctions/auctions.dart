@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/State/auction.dart';
 
 import '../State/mainGUI.dart';
-import 'auctionsTemplateGUI.dart';
 import '../Entities/auctionsJSON.dart';
 
 enum PageMarker { ongoing, finished }
@@ -22,7 +20,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   PageMarker _currentPage;
   final List<AuctionsJSON> ongoingAuctionList;
   final Function auctionList;
-  Auctions auction;
+  Auction auction;
 
   final Function navigate;
 
@@ -96,6 +94,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Container(
+              auction.id
               alignment: Alignment.center,
               margin: EdgeInsets.all(5.0),
               color: Colors.lightGreen[100 * (index % 9)],
