@@ -9,7 +9,11 @@ import 'dart:async' show Future;
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
+<<<<<<< HEAD
 import '../Entities/auctionsJSON.dart';
+=======
+import '../Entities/localJSONUserPage.dart';
+>>>>>>> 375c967191a0de100d55e47921484f474aad1976
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
@@ -31,6 +35,11 @@ Future<AuctionsJSON> getOngoingAuctions() async {
   return auctionsFromJson(jsonString);
 }
 
+Future<LocalJsonUserPage> getUserPage() async {
+  String jsonString = await rootBundle.loadString("../../JSON/LoginResponse.json");
+  return localJsonUserPageFromJson(jsonString);
+}
+
 class MainGUI extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MainGUIState();
@@ -47,6 +56,9 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   List<Filter> _inactiveFilters;
   int _localFilteridCounter;
   Future _filterFuture;
+  Future _userFuture;
+  LocalJsonUserPage user;
+  UserInfo userInfo;
 
   // AUCTION JSON
   List<AuctionsJSON> _ongoingAuctionList;
@@ -74,6 +86,10 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _filterFuture = getFilters();
     _filterFuture.then((filters) {
       _availableFilters = filters.filters;
+    });
+    _userFuture = getUserPage();
+    _userFuture.then((user) {
+      userInfo = user.userInfo;
     });
   }
 

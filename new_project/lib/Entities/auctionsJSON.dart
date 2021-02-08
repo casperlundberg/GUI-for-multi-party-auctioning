@@ -29,6 +29,7 @@ class Auction {
     this.id,
     this.title,
     this.owner,
+    this.ownerType,
     this.stopDate,
     this.referenceSector,
     this.referenceType,
@@ -37,6 +38,7 @@ class Auction {
   int id;
   String title;
   String owner;
+  String ownerType;
   DateTime stopDate;
   String referenceSector;
   String referenceType;
@@ -45,6 +47,7 @@ class Auction {
         id: json["id"],
         title: json["title"],
         owner: json["owner"],
+        ownerType: json["ownerType"],
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
         referenceType: json["referenceType"],
@@ -54,6 +57,7 @@ class Auction {
         "id": id,
         "title": title,
         "owner": owner,
+        "ownerType": ownerType,
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,
         "referenceType": referenceType,

@@ -1,52 +1,34 @@
-import 'dart:async' show Future;
+// To parse this JSON data, do
+//
+//     final localJsonUserPage = localJsonUserPageFromJson(jsonString);
+
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 
-Future<String> getJson() async {
-  return await rootBundle.loadString("../../JSON/LoginResponse.json");
-}
+LocalJsonUserPage localJsonUserPageFromJson(String str) => LocalJsonUserPage.fromJson(json.decode(str));
 
-Future<LocalJSONUserPage> get localJSONUserResponse async {
-  String arrayObjsText = await getJson();
+String localJsonUserPageToJson(LocalJsonUserPage data) => json.encode(data.toJson());
 
-  var userJson = json.decode(arrayObjsText);
-  LocalJSONUserPage user = userJson.map((data) => LocalJSONUserPage.fromJson(data));
-  return user;
-}
-
-class LocalJSONUserPage {
-  UserInfo userInfo;
-  int statusCode;
-
-  LocalJSONUserPage({
+class LocalJsonUserPage {
+  LocalJsonUserPage({
     this.userInfo,
     this.statusCode,
   });
 
-  factory LocalJSONUserPage.fromJson(Map<String, dynamic> json) {
-    return new LocalJSONUserPage(
-      userInfo: json['userInfo'] != null ? new UserInfo.fromJson(json['userInfo']) : null,
-      statusCode: json['statusCode'],
-    );
-  }
+  UserInfo userInfo;
+  int statusCode;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.userInfo != null) {
-      data['userInfo'] = this.userInfo.toJson();
-    }
-    data['statusCode'] = this.statusCode;
-    return data;
-  }
+  factory LocalJsonUserPage.fromJson(Map<String, dynamic> json) => LocalJsonUserPage(
+        userInfo: UserInfo.fromJson(json["userInfo"]),
+        statusCode: json["statusCode"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "userInfo": userInfo.toJson(),
+        "statusCode": statusCode,
+      };
 }
 
 class UserInfo {
-  int userId;
-  String userName;
-  String email;
-  int age;
-  String currentType;
-
   UserInfo({
     this.userId,
     this.userName,
@@ -55,23 +37,25 @@ class UserInfo {
     this.currentType,
   });
 
-  factory UserInfo.fromJson(Map<String, dynamic> json) {
-    return new UserInfo(
-      userId: json['userId'],
-      userName: json['userName'],
-      email: json['email'],
-      age: json['age'],
-      currentType: json['currentType'],
-    );
-  }
+  int userId;
+  String userName;
+  String email;
+  int age;
+  String currentType;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
-    data['userName'] = this.userName;
-    data['email'] = this.email;
-    data['age'] = this.age;
-    data['currentType'] = this.currentType;
-    return data;
-  }
+  factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
+        userId: json["userId"],
+        userName: json["userName"],
+        email: json["email"],
+        age: json["age"],
+        currentType: json["currentType"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "userId": userId,
+        "userName": userName,
+        "email": email,
+        "age": age,
+        "currentType": currentType,
+      };
 }
