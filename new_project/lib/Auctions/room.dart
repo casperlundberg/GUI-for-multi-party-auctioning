@@ -9,13 +9,14 @@ class Room extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
             child: Container(
           width: 1400.0,
           height: MediaQuery.of(context).size.height * 0.9,
-          color: Colors.grey[900],
+          color: themeData.primaryColor,
           margin: EdgeInsets.all(25.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

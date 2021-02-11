@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
 import 'contractGUI.dart';
-import '../Entities/auctionsJSON.dart';
+import '../Entities/auctionsListJSON.dart';
 
 enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
-  final List<AuctionsJSON> ongoingAuctionList;
+  final List<AuctionsList> ongoingAuctionList;
   final Function auctionList;
   final Function navigate;
 
@@ -19,7 +19,7 @@ class Auctions extends StatefulWidget {
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
-  final List<AuctionsJSON> ongoingAuctionList;
+  final List<AuctionsList> ongoingAuctionList;
   final Function auctionList;
   Auction auction;
 
@@ -49,7 +49,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               Container(
                   width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.ongoing) ? Colors.black : Colors.grey[900],
+                  color: (_currentPage == PageMarker.ongoing) ? Colors.black : themeData.primaryColor,
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -63,7 +63,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               Container(
                   width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.finished) ? Colors.black : Colors.grey[900],
+                  color: (_currentPage == PageMarker.finished) ? Colors.black : themeData.primaryColor,
                   child: TextButton(
                     onPressed: () {
                       setState(() {

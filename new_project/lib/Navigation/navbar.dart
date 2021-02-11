@@ -8,11 +8,12 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return AppBar(
       automaticallyImplyLeading: false,
       //color cheat sheet
       //https://api.flutter.dev/flutter/material/Colors-class.html
-      backgroundColor: Colors.grey[900],
+      backgroundColor: themeData.primaryColor,
       title: Text("Auctioneer"),
       leading: IconButton(
         icon: Icon(Icons.home),
