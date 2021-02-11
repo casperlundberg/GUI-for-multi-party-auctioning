@@ -19,7 +19,7 @@ class Profile extends State<ProfileGUI> {
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerAge = new TextEditingController();
-  final TextEditingController _controllerUserType = new TextEditingController();
+  //final TextEditingController _controllerUserType = new TextEditingController();
   LocalJsonUserPage user;
 
   Profile(this.navigate, this.user);
