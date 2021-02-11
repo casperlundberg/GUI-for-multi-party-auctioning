@@ -16,7 +16,8 @@ class Auctions extends StatefulWidget {
   _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList);
 }
 
-class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
+class _AuctionsState extends State<Auctions>
+    with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
   final AuctionsList ongoingAuctionList;
   Auction auction;
@@ -44,17 +45,20 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ElevatedButton(
+            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              IconButton(
+                icon: Icon(Icons.add),
+                tooltip: 'New auction',
                 onPressed: () {
                   showContractTemplateGUI();
                 },
-                child: Text("Create auction", style: TextStyle(color: Colors.white)),
               ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.ongoing) ? Colors.black : themeData.primaryColor,
+                  color: (_currentPage == PageMarker.ongoing)
+                      ? Colors.black
+                      : themeData.primaryColor,
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -62,13 +66,19 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                       });
                     },
                     child: Container(
-                      child: Text("Ongoing", style: TextStyle(color: (_currentPage == PageMarker.ongoing) ? Colors.white : Colors.white60)),
+                      child: Text("Ongoing",
+                          style: TextStyle(
+                              color: (_currentPage == PageMarker.ongoing)
+                                  ? Colors.white
+                                  : Colors.white60)),
                     ),
                   )),
               Container(
                   width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.05,
-                  color: (_currentPage == PageMarker.finished) ? Colors.black : themeData.primaryColor,
+                  color: (_currentPage == PageMarker.finished)
+                      ? Colors.black
+                      : themeData.primaryColor,
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -76,12 +86,17 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                       });
                     },
                     child: Container(
-                      child: Text("Finished", style: TextStyle(color: (_currentPage == PageMarker.finished) ? Colors.white : Colors.white60)),
+                      child: Text("Finished",
+                          style: TextStyle(
+                              color: (_currentPage == PageMarker.finished)
+                                  ? Colors.white
+                                  : Colors.white60)),
                     ),
                   )),
             ]),
           ),
-          FutureBuilder(builder: (BuildContext context, AsyncSnapshot snaptshot) {
+          FutureBuilder(
+              builder: (BuildContext context, AsyncSnapshot snaptshot) {
             return _getPageContainer();
           })
         ],
@@ -109,9 +124,13 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               margin: EdgeInsets.all(5.0),
               color: Colors.lightGreen[100 * (index % 9)],
               child: Column(children: [
-                Text('Name: Room ' + ongoingAuctionList.auctions[index].id.toString()),
-                Text('Material: ' + ongoingAuctionList.auctions[index].material),
-                Text('Participants: ' + ongoingAuctionList.auctions[index].currentParticipants.toString()),
+                Text('Name: Room ' +
+                    ongoingAuctionList.auctions[index].id.toString()),
+                Text(
+                    'Material: ' + ongoingAuctionList.auctions[index].material),
+                Text('Participants: ' +
+                    ongoingAuctionList.auctions[index].currentParticipants
+                        .toString()),
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {
@@ -150,7 +169,10 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   }
 
   int templateItemCount = 1;
-  List<TextEditingController> controllers = [TextEditingController(), TextEditingController()];
+  List<TextEditingController> controllers = [
+    TextEditingController(),
+    TextEditingController()
+  ];
   List<String> types = ["Text", "Number", "Integer"];
   List<String> dropdownValues = ["Text"];
 
@@ -161,7 +183,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
         final ThemeData themeData = Theme.of(context);
 
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           child: Container(
@@ -177,7 +200,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                   margin: EdgeInsets.only(top: 13.0, right: 8.0),
                   decoration: BoxDecoration(
                     //color: Colors.red,
-                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
+                    color: Colors.grey[
+                        900], //Couldn't import from theme as "Dialog" is transparent
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(16.0),
                     boxShadow: <BoxShadow>[
@@ -215,13 +239,17 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                             iconSize: 24,
                                             value: dropdownValues[index],
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             onChanged: (String newValue) {
                                               setState(() {
-                                                dropdownValues[index] = newValue;
+                                                dropdownValues[index] =
+                                                    newValue;
                                               });
                                             },
-                                            items: types.map<DropdownMenuItem<String>>((String value) {
+                                            items: types
+                                                .map<DropdownMenuItem<String>>(
+                                                    (String value) {
                                               return DropdownMenuItem<String>(
                                                 value: value,
                                                 child: Text(value),
@@ -239,7 +267,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                     onPressed: () {
                                       setState(() {
                                         templateItemCount++;
-                                        controllers.add(TextEditingController());
+                                        controllers
+                                            .add(TextEditingController());
                                         dropdownValues.add("Text");
                                       });
                                     },
@@ -259,7 +288,10 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                           onPressed: () {
                             setState(() {
                               templateItemCount = 1;
-                              controllers = [TextEditingController(), TextEditingController()];
+                              controllers = [
+                                TextEditingController(),
+                                TextEditingController()
+                              ];
                               dropdownValues = ["Text"];
                             });
                             Navigator.pop(context);
@@ -275,7 +307,10 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                     onTap: () {
                       setState(() {
                         templateItemCount = 1;
-                        controllers = [TextEditingController(), TextEditingController()];
+                        controllers = [
+                          TextEditingController(),
+                          TextEditingController()
+                        ];
                         dropdownValues = ["Text"];
                       });
                       Navigator.of(context).pop();
