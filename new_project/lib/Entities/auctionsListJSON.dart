@@ -16,11 +16,11 @@ class AuctionsList {
   List<Auction> auctions;
 
   factory AuctionsList.fromJson(Map<String, dynamic> json) => AuctionsList(
-        auctions: List<Auction>.from(json["auctions"].map((x) => Auction.fromJson(x))),
+        auctions: List<Auction>.from(json["auctionsList"].map((x) => Auction.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "auctions": List<dynamic>.from(auctions.map((x) => x.toJson())),
+        "auctionsList": List<dynamic>.from(auctions.map((x) => x.toJson())),
       };
 }
 

@@ -110,8 +110,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               color: Colors.lightGreen[100 * (index % 9)],
               child: Column(children: [
                 Text('Name: Room ' + ongoingAuctionList.auctions[index].id.toString()),
-                Text('Material: Wood'),
-                Text('Participants: 5'),
+                Text('Material: ' + ongoingAuctionList.auctions[index].material),
+                Text('Participants: ' + ongoingAuctionList.auctions[index].currentParticipants.toString()),
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {

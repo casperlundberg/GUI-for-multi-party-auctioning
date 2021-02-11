@@ -71,10 +71,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     // AUCTION VARIABLES
     _auctionFuture = getOngoingAuctions();
     _auctionFuture.then((ongoingauctions) {
-      _ongoingAuctionList = ongoingauctions.auctions;
-      if (_ongoingAuctionList == null) {
-        print("funkar ej");
-      }
+      _ongoingAuctionList = ongoingauctions;
     });
 
     // FILTER VARIABLES
