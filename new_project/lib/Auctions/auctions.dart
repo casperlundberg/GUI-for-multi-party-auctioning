@@ -151,7 +151,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   }
 
   int templateItemCount = 1;
-  List<TextEditingController> controllers = [TextEditingController(), TextEditingController()];
+  List<TextEditingController> controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
   List<String> types = ["Text", "Number", "Integer"];
   List<String> dropdownValues = ["Text"];
 
@@ -167,7 +167,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
           backgroundColor: Colors.transparent,
           child: Container(
             color: themeData.primaryColor,
-            width: MediaQuery.of(context).size.width * 0.2,
+            width: MediaQuery.of(context).size.width * 0.5,
             margin: EdgeInsets.only(left: 0.0, right: 0.0),
             child: Stack(
               children: <Widget>[
@@ -198,48 +198,143 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                       ),
                       Expanded(
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.2,
                           child: StatefulBuilder(
                             builder: (context, setState) {
-                              return Row(
+                              return Column(
                                 children: [
-                                  TextField(
-                                    controller: controllers[0],
+                                  Text(
+                                    "Contract template creator",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    textScaleFactor: 2,
                                   ),
-                                  ListView.builder(
-                                    itemCount: templateItemCount,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        children: [
-                                          DropdownButton(
-                                            icon: Icon(Icons.arrow_downward),
-                                            iconSize: 24,
-                                            value: dropdownValues[index],
-                                            elevation: 16,
-                                            style: TextStyle(color: Colors.white),
-                                            onChanged: (String newValue) {
-                                              setState(() {
-                                                dropdownValues[index] = newValue;
-                                              });
-                                            },
-                                            items: types.map<DropdownMenuItem<String>>((String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                          ),
-                                          TextField(
-                                            controller: controllers[index + 1],
-                                          ),
-                                        ],
-                                      );
-                                    },
+                                  SizedBox(height: 24.0),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: templateItemCount,
+                                      itemBuilder: (context, index) {
+                                        if (index == 0) {
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                height: MediaQuery.of(context).size.height * 0.1,
+                                                child: TextField(
+                                                  maxLines: null,
+                                                  controller: controllers[0],
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                height: MediaQuery.of(context).size.height * 0.1,
+                                                child: Row(
+                                                  children: [
+                                                    Text("Key: "),
+                                                    Container(
+                                                      width: MediaQuery.of(context).size.width * 0.05,
+                                                      height: MediaQuery.of(context).size.height * 0.05,
+                                                      child: TextField(
+                                                        controller: controllers[1],
+                                                      ),
+                                                    ),
+                                                    Text(" Value: "),
+                                                    DropdownButton(
+                                                      icon: Icon(Icons.arrow_downward),
+                                                      iconSize: 24,
+                                                      value: dropdownValues[index],
+                                                      elevation: 16,
+                                                      style: TextStyle(color: Colors.white),
+                                                      onChanged: (String newValue) {
+                                                        setState(() {
+                                                          dropdownValues[index] = newValue;
+                                                        });
+                                                      },
+                                                      items: types.map<DropdownMenuItem<String>>((String value) {
+                                                        return DropdownMenuItem<String>(
+                                                          value: value,
+                                                          child: Text(value),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                height: MediaQuery.of(context).size.height * 0.1,
+                                                child: TextField(
+                                                  maxLines: null,
+                                                  controller: controllers[2],
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                        return Column(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                              width: MediaQuery.of(context).size.width * 0.4,
+                                              height: MediaQuery.of(context).size.height * 0.1,
+                                              child: Row(
+                                                children: [
+                                                  Text("Key: "),
+                                                  Container(
+                                                    width: MediaQuery.of(context).size.width * 0.05,
+                                                    height: MediaQuery.of(context).size.height * 0.05,
+                                                    child: TextField(
+                                                      controller: controllers[index * 2 + 1],
+                                                    ),
+                                                  ),
+                                                  Text(" Value: "),
+                                                  DropdownButton(
+                                                    icon: Icon(Icons.arrow_downward),
+                                                    iconSize: 24,
+                                                    value: dropdownValues[index],
+                                                    elevation: 16,
+                                                    style: TextStyle(color: Colors.white),
+                                                    onChanged: (String newValue) {
+                                                      setState(() {
+                                                        dropdownValues[index] = newValue;
+                                                      });
+                                                    },
+                                                    items: types.map<DropdownMenuItem<String>>((String value) {
+                                                      return DropdownMenuItem<String>(
+                                                        value: value,
+                                                        child: Text(value),
+                                                      );
+                                                    }).toList(),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                              width: MediaQuery.of(context).size.width * 0.4,
+                                              height: MediaQuery.of(context).size.height * 0.1,
+                                              child: TextField(
+                                                maxLines: null,
+                                                controller: controllers[index * 2 + 2],
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
                                       setState(() {
                                         templateItemCount++;
+                                        controllers.add(TextEditingController());
                                         controllers.add(TextEditingController());
                                         dropdownValues.add("Text");
                                       });
@@ -260,7 +355,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                           onPressed: () {
                             setState(() {
                               templateItemCount = 1;
-                              controllers = [TextEditingController(), TextEditingController()];
+                              controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
                               dropdownValues = ["Text"];
                             });
                             Navigator.pop(context);
@@ -276,7 +371,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                     onTap: () {
                       setState(() {
                         templateItemCount = 1;
-                        controllers = [TextEditingController(), TextEditingController()];
+                        controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
                         dropdownValues = ["Text"];
                       });
                       Navigator.of(context).pop();
