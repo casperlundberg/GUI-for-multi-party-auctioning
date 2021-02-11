@@ -18,8 +18,8 @@ class AuctionDetails {
     this.currentParticipants,
     this.roundTime,
     this.material,
-    this.templateId,
-    this.variables,
+    this.template,
+    this.templateVariables,
     this.startDate,
     this.stopDate,
     this.referenceSector,
@@ -34,8 +34,8 @@ class AuctionDetails {
   int currentParticipants;
   int roundTime;
   String material;
-  int templateId;
-  List<Variables> variables;
+  String template;
+  List<TemplateVariable> templateVariables;
   DateTime startDate;
   DateTime stopDate;
   String referenceSector;
@@ -50,8 +50,8 @@ class AuctionDetails {
         currentParticipants: json["currentParticipants"],
         roundTime: json["roundTime"],
         material: json["material"],
-        templateId: json["templateID"],
-        variables: List<Variables>.from(json["variables"].map((x) => Variables.fromJson(x))),
+        template: json["template"],
+        templateVariables: List<TemplateVariable>.from(json["templateVariables"].map((x) => TemplateVariable.fromJson(x))),
         startDate: DateTime.parse(json["startDate"]),
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
@@ -67,8 +67,8 @@ class AuctionDetails {
         "currentParticipants": currentParticipants,
         "roundTime": roundTime,
         "material": material,
-        "templateID": templateId,
-        "variables": List<dynamic>.from(variables.map((x) => x.toJson())),
+        "template": template,
+        "templateVariables": List<dynamic>.from(templateVariables.map((x) => x.toJson())),
         "startDate": startDate.toIso8601String(),
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,
@@ -76,22 +76,22 @@ class AuctionDetails {
       };
 }
 
-class Variables {
-  Variables({
-    this.quantity,
-    this.price,
+class TemplateVariable {
+  TemplateVariable({
+    this.name,
+    this.type,
   });
 
-  String quantity;
-  String price;
+  String name;
+  String type;
 
-  factory Variables.fromJson(Map<String, dynamic> json) => Variables(
-        quantity: json["quantity"],
-        price: json["price"],
+  factory TemplateVariable.fromJson(Map<String, dynamic> json) => TemplateVariable(
+        name: json["name"],
+        type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
-        "quantity": quantity,
-        "price": price,
+        "name": name,
+        "type": type,
       };
 }
