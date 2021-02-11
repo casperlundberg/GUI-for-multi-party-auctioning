@@ -1,26 +1,26 @@
 // To parse this JSON data, do
 //
-//     final auctionsList = auctionsListFromJson(jsonString);
+//     final auctionList = auctionListFromJson(jsonString);
 
 import 'dart:convert';
 
-AuctionsList auctionsListFromJson(String str) => AuctionsList.fromJson(json.decode(str));
+AuctionList auctionListFromJson(String str) => AuctionList.fromJson(json.decode(str));
 
-String auctionsListToJson(AuctionsList data) => json.encode(data.toJson());
+String auctionListToJson(AuctionList data) => json.encode(data.toJson());
 
-class AuctionsList {
-  AuctionsList({
-    this.auctions,
+class AuctionList {
+  AuctionList({
+    this.auctionList,
   });
 
-  List<Auction> auctions;
+  List<Auction> auctionList;
 
-  factory AuctionsList.fromJson(Map<String, dynamic> json) => AuctionsList(
-        auctions: List<Auction>.from(json["auctionsList"].map((x) => Auction.fromJson(x))),
+  factory AuctionList.fromJson(Map<String, dynamic> json) => AuctionList(
+        auctionList: List<Auction>.from(json["auctionList"].map((x) => Auction.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "auctionsList": List<dynamic>.from(auctions.map((x) => x.toJson())),
+        "auctionList": List<dynamic>.from(auctionList.map((x) => x.toJson())),
       };
 }
 

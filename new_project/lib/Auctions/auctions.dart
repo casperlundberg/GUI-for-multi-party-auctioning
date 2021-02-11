@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
 import 'contractGUI.dart';
-import '../Entities/auctionsListJSON.dart';
+import '../Entities/auctionListJSON.dart';
 
 enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
-  final AuctionsList ongoingAuctionList;
+  final AuctionList ongoingAuctionList;
   final Function navigate;
 
   Auctions(this.navigate, this.ongoingAuctionList);
@@ -18,7 +18,7 @@ class Auctions extends StatefulWidget {
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
-  final AuctionsList ongoingAuctionList;
+  final AuctionList ongoingAuctionList;
   Auction auction;
 
   final Function navigate;
@@ -109,9 +109,9 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               margin: EdgeInsets.all(5.0),
               color: Colors.lightGreen[100 * (index % 9)],
               child: Column(children: [
-                Text('Name: Room ' + ongoingAuctionList.auctions[index].id.toString()),
-                Text('Material: ' + ongoingAuctionList.auctions[index].material),
-                Text('Participants: ' + ongoingAuctionList.auctions[index].currentParticipants.toString()),
+                Text('Name: Room ' + ongoingAuctionList.auctionList[index].id.toString()),
+                Text('Material: ' + ongoingAuctionList.auctionList[index].material),
+                Text('Participants: ' + ongoingAuctionList.auctionList[index].currentParticipants.toString()),
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {

@@ -4,7 +4,7 @@ import '../State/filtersGUI.dart';
 import '../Auctions/auctions.dart';
 import '../Auctions/myauctions.dart';
 import '../Entities/filtersJSON.dart';
-import '../Entities/auctionsListJSON.dart';
+import '../Entities/auctionListJSON.dart';
 
 class AuctionsGUI extends StatelessWidget {
   final Function navigate;
@@ -19,7 +19,7 @@ class AuctionsGUI extends StatelessWidget {
   final Function deactivateFilter;
 
   //AUCTION JSON
-  final AuctionsList ongoingAuctionList;
+  final AuctionList ongoingAuctionList;
 
   AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter,
       this.deactivateFilter, this.ongoingAuctionList);

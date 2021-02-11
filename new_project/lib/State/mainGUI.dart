@@ -9,7 +9,7 @@ import 'dart:async' show Future;
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
-import '../Entities/auctionsListJSON.dart';
+import '../Entities/auctionListJSON.dart';
 import '../Entities/localJSONUserPage.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
@@ -27,9 +27,9 @@ Future<Filters> getFilters() async {
   return filtersFromJson(jsonString);
 }
 
-Future<AuctionsList> getOngoingAuctions() async {
+Future<AuctionList> getOngoingAuctions() async {
   String jsonString = await rootBundle.loadString("../../JSON/ongoingAuctions.json");
-  return auctionsListFromJson(jsonString);
+  return auctionListFromJson(jsonString);
 }
 
 Future<LocalJsonUserPage> getUserPage() async {
@@ -59,7 +59,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   LocalJsonUserPage _user;
 
   // AUCTION JSON
-  AuctionsList _ongoingAuctionList;
+  AuctionList _ongoingAuctionList;
   Future _auctionFuture;
 
   @override
