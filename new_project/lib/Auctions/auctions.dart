@@ -120,7 +120,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               ]),
             );
           },
-          childCount: 10,
+          childCount: ongoingAuctionList.auctions.length,
         ));
   }
 
