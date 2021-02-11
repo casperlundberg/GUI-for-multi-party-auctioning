@@ -19,11 +19,10 @@ class AuctionsGUI extends StatelessWidget {
   final Function deactivateFilter;
 
   //AUCTION JSON
-  final List<AuctionsList> ongoingAuctionList;
-  final Function auctionList;
+  final AuctionsList ongoingAuctionList;
 
   AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter,
-      this.deactivateFilter, this.ongoingAuctionList, this.auctionList);
+      this.deactivateFilter, this.ongoingAuctionList);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class AuctionsGUI extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
         FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
-        Center(child: Auctions(navigate, ongoingAuctionList, auctionList)),
+        Center(child: Auctions(navigate, ongoingAuctionList)),
         Center(child: MyAuctions(navigate)),
       ],
     );

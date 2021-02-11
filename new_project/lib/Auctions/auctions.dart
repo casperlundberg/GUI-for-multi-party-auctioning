@@ -7,25 +7,23 @@ import '../Entities/auctionsListJSON.dart';
 enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
-  final List<AuctionsList> ongoingAuctionList;
-  final Function auctionList;
+  final AuctionsList ongoingAuctionList;
   final Function navigate;
 
-  Auctions(this.navigate, this.ongoingAuctionList, this.auctionList);
+  Auctions(this.navigate, this.ongoingAuctionList);
 
   @override
-  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, auctionList);
+  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList);
 }
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
-  final List<AuctionsList> ongoingAuctionList;
-  final Function auctionList;
+  final AuctionsList ongoingAuctionList;
   Auction auction;
 
   final Function navigate;
 
-  _AuctionsState(this.navigate, this.ongoingAuctionList, this.auctionList);
+  _AuctionsState(this.navigate, this.ongoingAuctionList);
 
   @override
   void initState() {
@@ -102,7 +100,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               margin: EdgeInsets.all(5.0),
               color: Colors.lightGreen[100 * (index % 9)],
               child: Column(children: [
-                Text('Name: Room $index'),
+                Text('Name: Room ' + ongoingAuctionList.auctions[index].id.toString()),
                 Text('Material: Wood'),
                 Text('Participants: 5'),
                 TextButton(

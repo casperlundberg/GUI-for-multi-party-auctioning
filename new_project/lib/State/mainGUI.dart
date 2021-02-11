@@ -59,10 +59,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   LocalJsonUserPage _user;
 
   // AUCTION JSON
-  List<AuctionsList> _ongoingAuctionList;
-
+  AuctionsList _ongoingAuctionList;
   Future _auctionFuture;
-  int _localAuctionidCounter;
 
   @override
   void initState() {
@@ -71,10 +69,12 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
 
     // AUCTION VARIABLES
-    _ongoingAuctionList = [];
     _auctionFuture = getOngoingAuctions();
-    _auctionFuture.then((auctions) {
-      _ongoingAuctionList = auctions;
+    _auctionFuture.then((ongoingauctions) {
+      _ongoingAuctionList = ongoingauctions.auctions;
+      if (_ongoingAuctionList == null) {
+        print("funkar ej");
+      }
     });
 
     // FILTER VARIABLES
@@ -125,18 +125,6 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   _playAnimation() {
     _controller.reset();
     _controller.forward();
-  }
-
-  void _auctionList(Auction auction) {
-    setState(() {
-      // if (auction.id == null) {
-      //   auction.id = _localAuctionidCounter++;
-      // }
-      // for (int i = 0; i < _ongoingAuctionList.length; i++) {
-      //   _ongoingAuctionList.add();
-      // }
-      // return;
-    });
   }
 
   void _updateFilters(Filter filter) {
@@ -280,7 +268,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     return FadeTransition(
       opacity: _animation,
       child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
-          _ongoingAuctionList, _auctionList),
+          _ongoingAuctionList),
     );
   }
 
