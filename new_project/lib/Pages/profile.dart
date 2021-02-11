@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../State/mainGUI.dart';
 import '../Entities/localJSONUserPage.dart';
 
 class ProfileGUI extends StatefulWidget {
@@ -27,25 +27,23 @@ class Profile extends State<ProfileGUI> {
   @override
   Widget build(BuildContext context) {
     print(user.statusCode);
-/*     return Container(
-      width: 100,
-      height: 100,
-    ); */
     final ThemeData themeData = Theme.of(context);
     //final DateTime today = new DateTime.now();
 
     if (user != null) {
       return Center(
         child: Container(
-          width: 600,
-          height: 600,
+          height: MediaQuery.of(context).size.height * 0.5,
+          width: MediaQuery.of(context).size.height * 0.4,
+          color: themeData.primaryColor,
           child: new Form(
             key: _formKey,
             //autovalidate: _autovalidate,
             //onWillPop: _warnUserAboutInvalidData,
             child: Column(
               children: <Widget>[
-                Container(
+                Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: new TextField(
                     decoration: const InputDecoration(
                       labelText: "Username",
@@ -58,7 +56,8 @@ class Profile extends State<ProfileGUI> {
                     },
                   ),
                 ),
-                Container(
+                Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: new TextField(
                     decoration: const InputDecoration(
                       labelText: "E-mail",
@@ -70,7 +69,8 @@ class Profile extends State<ProfileGUI> {
                     },
                   ),
                 ),
-                Container(
+                Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: new TextField(
                     decoration: const InputDecoration(
                       labelText: "Age",
@@ -94,27 +94,15 @@ class Profile extends State<ProfileGUI> {
                     },
                   ),
                 ), */
-                Container(
+                Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: StatefulBuilder(
                     builder: (context, setState) {
                       return Column(
                         children: [
                           Row(
                             children: [
-                              Text('User Type: '),
-                              /* DropdownButton(
-                                icon: Icon(Icons.arrow_downward),
-                                iconSize: 24,
-                                value: dropdownValue,
-                                elevation: 16,
-                                style: TextStyle(color: Colors.white),
-                                items: types.map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ), */
+                              Text('User Type:  '),
                               new DropdownButton<String>(
                                 icon: Icon(Icons.arrow_downward),
                                 iconSize: 24,
@@ -136,11 +124,12 @@ class Profile extends State<ProfileGUI> {
                     },
                   ),
                 ),
-                Container(
+                Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     child: Text("Save changes"),
                     onPressed: () {
-                      Navigator.pop(context);
+                      navigate(WidgetMarker.auctions);
                     },
                   ),
                 ),

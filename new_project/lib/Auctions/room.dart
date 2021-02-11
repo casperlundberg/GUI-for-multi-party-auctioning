@@ -9,13 +9,14 @@ class Room extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
             child: Container(
           width: 1400.0,
-          height: 700.0,
-          color: Colors.grey[900],
+          height: MediaQuery.of(context).size.height * 0.9,
+          color: themeData.primaryColor,
           margin: EdgeInsets.all(25.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -51,11 +52,15 @@ class Room extends StatelessWidget {
                             style: TextStyle(fontSize: 30),
                           ),
                           onPressed: () {
-                            Clipboard.setData(new ClipboardData(text: "1337")).then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  backgroundColor: Colors.grey[900],
-                                  content:
-                                      Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
+                            Clipboard.setData(new ClipboardData(text: "1337"))
+                                .then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: Colors.grey[900],
+                                      content: Text(
+                                          "Room code copied to clipboard",
+                                          style:
+                                              TextStyle(color: Colors.white))));
                             });
                           }),
                     )),
@@ -66,14 +71,14 @@ class Room extends StatelessWidget {
                   style: TextStyle(fontSize: 30),
                 ),
                 width: 1400.0,
-                height: 100.0,
+                height: MediaQuery.of(context).size.height * 0.05,
                 color: Colors.red,
                 margin: EdgeInsets.all(5.0),
               ),
               Container(
                 color: Colors.blue,
                 margin: EdgeInsets.all(5.0),
-                height: 525.0,
+                height: MediaQuery.of(context).size.height * 0.7,
                 child: CustomScrollView(
                   slivers: <Widget>[
                     SliverAppBar(
@@ -87,7 +92,8 @@ class Room extends StatelessWidget {
                             Container(
                                 color: Colors.amber[700],
                                 width: 650.0,
-                                height: 150.0,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
                                 alignment: Alignment.center,
                                 child: Text(
                                   'Specific Auction info',
@@ -97,7 +103,7 @@ class Room extends StatelessWidget {
                             Container(
                               color: Colors.amber[900],
                               width: 650.0,
-                              height: 150.0,
+                              height: MediaQuery.of(context).size.height * 0.1,
                               alignment: Alignment.center,
                               child: Text(
                                 'Time remaining, current bid, graph of bid history?',
@@ -135,7 +141,7 @@ class Room extends StatelessWidget {
                             child: Text('Company $index'),
                           );
                         },
-                        childCount: 20,
+                        childCount: 50,
                       ),
                     ),
                     // SliverFixedExtentList(
