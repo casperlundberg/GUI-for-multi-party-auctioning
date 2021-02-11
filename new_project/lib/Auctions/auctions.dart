@@ -44,12 +44,13 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ElevatedButton(
+            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              IconButton(
+                icon: Icon(Icons.add),
+                tooltip: 'New auction',
                 onPressed: () {
                   showContractTemplateGUI();
                 },
-                child: Text("Create auction", style: TextStyle(color: Colors.white)),
               ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.15,
@@ -120,7 +121,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               ]),
             );
           },
-          childCount: 10,
+          childCount: ongoingAuctionList.auctionList.length,
         ));
   }
 

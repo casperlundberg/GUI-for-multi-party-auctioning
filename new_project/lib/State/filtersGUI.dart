@@ -280,12 +280,15 @@ class _FiltersState extends State<FiltersGUI> {
                                     },
                                     child: Text('Delete'),
                                   ),
+                                ],
+                              ),
+                              Row(
+                                children: [
                                   Text('id: ' + allfilters[index].localid.toString()),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  Text(''),
                                   Text(
                                     'Material: ' + allfilters[index].name,
                                     style: TextStyle(color: Colors.white),
