@@ -18,7 +18,7 @@ class AuctionDetails {
     this.currentParticipants,
     this.roundTime,
     this.material,
-    this.template,
+    this.templateStrings,
     this.templateVariables,
     this.startDate,
     this.stopDate,
@@ -34,7 +34,7 @@ class AuctionDetails {
   int currentParticipants;
   int roundTime;
   String material;
-  String template;
+  List<TemplateString> templateStrings;
   List<TemplateVariable> templateVariables;
   DateTime startDate;
   DateTime stopDate;
@@ -50,7 +50,7 @@ class AuctionDetails {
         currentParticipants: json["currentParticipants"],
         roundTime: json["roundTime"],
         material: json["material"],
-        template: json["template"],
+        templateStrings: List<TemplateString>.from(json["templateStrings"].map((x) => TemplateString.fromJson(x))),
         templateVariables: List<TemplateVariable>.from(json["templateVariables"].map((x) => TemplateVariable.fromJson(x))),
         startDate: DateTime.parse(json["startDate"]),
         stopDate: DateTime.parse(json["stopDate"]),
@@ -67,7 +67,7 @@ class AuctionDetails {
         "currentParticipants": currentParticipants,
         "roundTime": roundTime,
         "material": material,
-        "template": template,
+        "templateStrings": List<dynamic>.from(templateStrings.map((x) => x.toJson())),
         "templateVariables": List<dynamic>.from(templateVariables.map((x) => x.toJson())),
         "startDate": startDate.toIso8601String(),
         "stopDate": stopDate.toIso8601String(),
@@ -76,22 +76,38 @@ class AuctionDetails {
       };
 }
 
-class TemplateVariable {
-  TemplateVariable({
-    this.name,
-    this.type,
+class TemplateString {
+  TemplateString({
+    this.text,
   });
 
-  String name;
-  String type;
+  String text;
 
-  factory TemplateVariable.fromJson(Map<String, dynamic> json) => TemplateVariable(
-        name: json["name"],
-        type: json["type"],
+  factory TemplateString.fromJson(Map<String, dynamic> json) => TemplateString(
+        text: json["text"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
+        "text": text,
+      };
+}
+
+class TemplateVariable {
+  TemplateVariable({
+    this.key,
+    this.valueType,
+  });
+
+  String key;
+  String valueType;
+
+  factory TemplateVariable.fromJson(Map<String, dynamic> json) => TemplateVariable(
+        key: json["key"],
+        valueType: json["valueType"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "key": key,
+        "valueType": valueType,
       };
 }

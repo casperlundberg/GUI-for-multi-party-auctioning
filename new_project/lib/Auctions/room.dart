@@ -1,11 +1,203 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../Entities/auctionDetailsJSON.dart';
 import '../State/mainGUI.dart';
 import 'contractGUI.dart';
 
-class Room extends StatelessWidget {
+class Room extends StatefulWidget {
   final Function navigate;
-  Room(this.navigate);
+  final Function getAuctionDetails;
+
+  Room(this.navigate, this.getAuctionDetails);
+
+  @override
+  _RoomState createState() => _RoomState(navigate, getAuctionDetails);
+}
+
+class _RoomState extends State<Room> {
+  final Function navigate;
+  final Function getAuctionDetails;
+
+  _RoomState(this.navigate, this.getAuctionDetails);
+
+  void showContractGUI() {
+    AuctionDetails auctionDetails = getAuctionDetails();
+    List<TextEditingController> controllers = [];
+    for (int i = 0; i < auctionDetails.templateVariables.length; i++) {
+      controllers.add(TextEditingController());
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final ThemeData themeData = Theme.of(context);
+
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          child: Container(
+            color: themeData.primaryColor,
+            width: MediaQuery.of(context).size.width * 0.5,
+            margin: EdgeInsets.only(left: 0.0, right: 0.0),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(
+                    top: 18.0,
+                  ),
+                  margin: EdgeInsets.only(top: 13.0, right: 8.0),
+                  decoration: BoxDecoration(
+                    //color: Colors.red,
+                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(16.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 0.0,
+                        offset: Offset(0.0, 0.0),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Contract",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textScaleFactor: 2,
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: auctionDetails.templateVariables.length,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              if (auctionDetails.templateVariables[0].valueType == "Text") {
+                                return Column(
+                                  children: [
+                                    Text(auctionDetails.templateStrings[0].text),
+                                    Container(
+                                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      height: MediaQuery.of(context).size.height * 0.1,
+                                      child: TextField(
+                                        maxLines: null,
+                                        controller: controllers[0],
+                                        decoration: InputDecoration(
+                                          hintText: auctionDetails.templateVariables[0].key,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(auctionDetails.templateStrings[1].text),
+                                  ],
+                                );
+                              } else if (auctionDetails.templateVariables[0].valueType == "Integer") {
+                                return Column(
+                                  children: [
+                                    Text(auctionDetails.templateStrings[0].text),
+                                    Container(
+                                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      height: MediaQuery.of(context).size.height * 0.1,
+                                      child: TextField(
+                                        maxLines: null,
+                                        controller: controllers[0],
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                        decoration: InputDecoration(
+                                          hintText: auctionDetails.templateVariables[0].key,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(auctionDetails.templateStrings[1].text),
+                                  ],
+                                );
+                              }
+                            } else {
+                              if (auctionDetails.templateVariables[index].valueType == "Text") {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      height: MediaQuery.of(context).size.height * 0.1,
+                                      child: TextField(
+                                        maxLines: null,
+                                        controller: controllers[index],
+                                        decoration: InputDecoration(
+                                          hintText: auctionDetails.templateVariables[index].key,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(auctionDetails.templateStrings[index + 1].text),
+                                  ],
+                                );
+                              } else if (auctionDetails.templateVariables[index].valueType == "Integer") {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      height: MediaQuery.of(context).size.height * 0.1,
+                                      child: TextField(
+                                        maxLines: null,
+                                        controller: controllers[index],
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                        decoration: InputDecoration(
+                                          hintText: auctionDetails.templateVariables[index].key,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(auctionDetails.templateStrings[index + 1].text),
+                                  ],
+                                );
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 24.0),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ElevatedButton(
+                          child: Text("Make bid"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  right: 0.0,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: CircleAvatar(
+                        radius: 14.0,
+                        backgroundColor: Colors.white,
+                        child: Icon(Icons.close, color: Colors.red),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +244,9 @@ class Room extends StatelessWidget {
                             style: TextStyle(fontSize: 30),
                           ),
                           onPressed: () {
-                            Clipboard.setData(new ClipboardData(text: "1337"))
-                                .then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      backgroundColor: Colors.grey[900],
-                                      content: Text(
-                                          "Room code copied to clipboard",
-                                          style:
-                                              TextStyle(color: Colors.white))));
+                            Clipboard.setData(new ClipboardData(text: "1337")).then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: Colors.grey[900], content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
                             });
                           }),
                     )),
@@ -92,8 +278,7 @@ class Room extends StatelessWidget {
                             Container(
                                 color: Colors.amber[700],
                                 width: 650.0,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.1,
+                                height: MediaQuery.of(context).size.height * 0.1,
                                 alignment: Alignment.center,
                                 child: Text(
                                   'Specific Auction info',
@@ -121,7 +306,9 @@ class Room extends StatelessWidget {
                           IconButton(
                             icon: Icon(Icons.add),
                             tooltip: 'New bid',
-                            onPressed: () {},
+                            onPressed: () {
+                              showContractGUI();
+                            },
                           ),
                         ]),
                       ),

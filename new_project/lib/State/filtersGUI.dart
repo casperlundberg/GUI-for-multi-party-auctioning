@@ -282,11 +282,6 @@ class _FiltersState extends State<FiltersGUI> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Text('id: ' + allfilters[index].localid.toString()),
-                                ],
-                              ),
                               Column(
                                 children: [
                                   Text(

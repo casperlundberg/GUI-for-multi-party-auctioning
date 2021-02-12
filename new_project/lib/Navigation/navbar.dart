@@ -19,7 +19,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Icon(Icons.home),
         tooltip: 'Home',
         onPressed: () {
-          navigate(WidgetMarker.login);
+          navigate(WidgetMarker.auctions);
         },
       ),
 

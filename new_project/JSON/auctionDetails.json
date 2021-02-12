@@ -7,15 +7,25 @@
     "currentParticipants": 0,
     "roundTime": 300,
     "material": "Wood",
-    "template": "I would like to purchase <Quantity> things for <Price>.",
-    "templateVariables": [
+    "templateStrings": [
         {
-            "name": "Quantity",
-            "type": "int"
+            "text": "I would like to purchase "
         },
         {
-            "name": "Price",
-            "type": "double"
+            "text": " things for "
+        },
+        {
+            "text": " dollars."
+        }
+    ],
+    "templateVariables": [
+        {
+            "key": "Quantity",
+            "valueType": "Integer"
+        },
+        {
+            "key": "Dollars",
+            "valueType": "Integer"
         }
     ],
     "startDate": "2021-02-15T10:30:00.001Z",

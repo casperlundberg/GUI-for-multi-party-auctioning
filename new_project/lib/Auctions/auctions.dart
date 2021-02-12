@@ -9,11 +9,13 @@ enum PageMarker { ongoing, finished }
 class Auctions extends StatefulWidget {
   final AuctionList ongoingAuctionList;
   final Function navigate;
+  final Function createAuction;
+  final Function setCurrentAuction;
 
-  Auctions(this.navigate, this.ongoingAuctionList);
+  Auctions(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction);
 
   @override
-  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList);
+  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, createAuction, setCurrentAuction);
 }
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
@@ -22,8 +24,10 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   Auction auction;
 
   final Function navigate;
+  final Function createAuction;
+  final Function setCurrentAuction;
 
-  _AuctionsState(this.navigate, this.ongoingAuctionList);
+  _AuctionsState(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction);
 
   @override
   void initState() {
@@ -116,6 +120,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {
+                      setCurrentAuction(ongoingAuctionList.auctionList[index].id);
                       navigate(WidgetMarker.room);
                     }),
               ]),
@@ -152,7 +157,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
 
   int templateItemCount = 1;
   List<TextEditingController> controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
-  List<String> types = ["Text", "Number", "Integer"];
+  final List<String> valueTypes = ["Text", "Integer"];
   List<String> dropdownValues = ["Text"];
 
   void showContractTemplateGUI() {
@@ -241,7 +246,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                                         controller: controllers[1],
                                                       ),
                                                     ),
-                                                    Text(" Value: "),
+                                                    Text(" Value-type: "),
                                                     DropdownButton(
                                                       icon: Icon(Icons.arrow_downward),
                                                       iconSize: 24,
@@ -253,7 +258,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                                           dropdownValues[index] = newValue;
                                                         });
                                                       },
-                                                      items: types.map<DropdownMenuItem<String>>((String value) {
+                                                      items: valueTypes.map<DropdownMenuItem<String>>((String value) {
                                                         return DropdownMenuItem<String>(
                                                           value: value,
                                                           child: Text(value),
@@ -305,7 +310,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                                         dropdownValues[index] = newValue;
                                                       });
                                                     },
-                                                    items: types.map<DropdownMenuItem<String>>((String value) {
+                                                    items: valueTypes.map<DropdownMenuItem<String>>((String value) {
                                                       return DropdownMenuItem<String>(
                                                         value: value,
                                                         child: Text(value),
@@ -354,6 +359,19 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                           child: Text("Create auction"),
                           onPressed: () {
                             setState(() {
+                              List<String> templateStrings = [];
+                              templateStrings.add(controllers[0].text);
+                              for (int i = 0; i < templateItemCount; i++) {
+                                templateStrings.add(controllers[i * 2 + 2].text);
+                              }
+
+                              List<String> keys = [];
+                              for (int i = 0; i < templateItemCount; i++) {
+                                keys.add(controllers[i * 2 + 1].text);
+                              }
+
+                              createAuction(templateStrings, keys, dropdownValues);
+
                               templateItemCount = 1;
                               controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
                               dropdownValues = ["Text"];

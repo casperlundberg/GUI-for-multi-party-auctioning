@@ -3,13 +3,14 @@ import 'package:flutter/services.dart' show rootBundle;
 //import 'package:http/http.dart' as http;
 //import 'package:flutter/foundation.dart';
 
-import 'dart:html';
+//import 'dart:html';
 import 'dart:async' show Future;
 
 import '../Navigation/navbar.dart';
 import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
 import '../Entities/auctionListJSON.dart';
+import '../Entities/auctionDetailsJSON.dart';
 import '../Entities/localJSONUserPage.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
@@ -30,6 +31,11 @@ Future<Filters> getFilters() async {
 Future<AuctionList> getOngoingAuctions() async {
   String jsonString = await rootBundle.loadString("../../JSON/ongoingAuctions.json");
   return auctionListFromJson(jsonString);
+}
+
+Future<AuctionDetails> getAuctionDetails() async {
+  String jsonString = await rootBundle.loadString("../../JSON/auctionDetails.json");
+  return auctionDetailsFromJson(jsonString);
 }
 
 Future<LocalJsonUserPage> getUserPage() async {
@@ -59,7 +65,10 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   LocalJsonUserPage _user;
 
   // AUCTION JSON
+  List<AuctionDetails> _auctionDetailsList;
   AuctionList _ongoingAuctionList;
+  int _currentAuction;
+  Future _auctionDetailsFuture;
   Future _auctionFuture;
 
   @override
@@ -72,6 +81,11 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _auctionFuture = getOngoingAuctions();
     _auctionFuture.then((ongoingauctions) {
       _ongoingAuctionList = ongoingauctions;
+    });
+    _auctionDetailsList = [];
+    _auctionDetailsFuture = getAuctionDetails();
+    _auctionDetailsFuture.then((auctionDetails) {
+      _auctionDetailsList.add(auctionDetails);
     });
 
     // FILTER VARIABLES
@@ -123,6 +137,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _controller.reset();
     _controller.forward();
   }
+
+  //FILTER METHODS
 
   void _updateFilters(Filter filter) {
     setState(() {
@@ -205,6 +221,80 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     });
   }
 
+  //AUCTION METHODS
+
+  void _createAuction(List<String> strings, List<String> keys, List<String> valueTypes) {
+    int highestid = 0;
+    for (int i = 0; i < _ongoingAuctionList.auctionList.length; i++) {
+      if (_ongoingAuctionList.auctionList[i].id > highestid) {
+        highestid = _ongoingAuctionList.auctionList[i].id;
+      }
+    }
+    highestid++;
+
+    List<TemplateString> ts = [];
+    for (int i = 0; i < strings.length; i++) {
+      ts.add(new TemplateString(text: strings[i]));
+    }
+
+    List<TemplateVariable> tv = [];
+    for (int i = 0; i < keys.length; i++) {
+      tv.add(new TemplateVariable(key: keys[i], valueType: valueTypes[i]));
+    }
+
+    DateTime startDate = new DateTime.now();
+    DateTime stopDate = startDate.add(Duration(hours: 1));
+
+    AuctionDetails newAuctionDetails = new AuctionDetails(
+        id: highestid,
+        title: "Testauction " + highestid.toString(),
+        ownerId: 1,
+        ownerType: "Supplier",
+        maxParticipants: 10,
+        currentParticipants: 0,
+        roundTime: 300,
+        material: "Wood",
+        templateStrings: ts,
+        templateVariables: tv,
+        startDate: startDate,
+        stopDate: stopDate,
+        referenceSector: "composites",
+        referenceType: "material");
+
+    Auction newAuction = new Auction(
+        id: highestid,
+        title: "Testauction " + highestid.toString(),
+        ownerId: 1,
+        ownerType: "Supplier",
+        maxParticipants: 10,
+        currentParticipants: 0,
+        roundTime: 300,
+        material: "Wood",
+        startDate: startDate,
+        stopDate: stopDate,
+        referenceSector: "composites",
+        referenceType: "material");
+
+    setState(() {
+      _auctionDetailsList.add(newAuctionDetails);
+      _ongoingAuctionList.auctionList.add(newAuction);
+    });
+  }
+
+  AuctionDetails _getAuctionDetails() {
+    for (int i = 0; i < _auctionDetailsList.length; i++) {
+      if (_auctionDetailsList[i].id == _currentAuction) {
+        return _auctionDetailsList[i];
+      }
+    }
+  }
+
+  //NAVIGATION METHODS
+
+  void _setCurrentAuction(int auctionid) {
+    _currentAuction = auctionid;
+  }
+
   void _navigate(WidgetMarker page) {
     switch (page) {
       case WidgetMarker.auctions:
@@ -265,7 +355,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     return FadeTransition(
       opacity: _animation,
       child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
-          _ongoingAuctionList),
+          _ongoingAuctionList, _createAuction, _setCurrentAuction),
     );
   }
 
@@ -300,7 +390,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getRoomContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: Room(_navigate),
+      child: Room(_navigate, _getAuctionDetails),
     );
   }
 }
