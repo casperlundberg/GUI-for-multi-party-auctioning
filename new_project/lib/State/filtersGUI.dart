@@ -140,7 +140,7 @@ class _FiltersState extends State<FiltersGUI> {
                                       Text('Description: ' + filter.description),
                                       Row(
                                         children: [
-                                          Text('Distance: '),
+                                          Text('Max distance: '),
                                           Expanded(
                                             child: TextField(
                                               controller: myController,

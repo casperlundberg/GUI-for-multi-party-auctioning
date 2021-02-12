@@ -115,7 +115,11 @@ class Profile extends State<ProfileGUI> {
                                     child: new Text(value),
                                   );
                                 }).toList(),
-                                onChanged: (_) {},
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    user.userInfo.currentType = newValue;
+                                  });
+                                },
                               )
                             ],
                           ),

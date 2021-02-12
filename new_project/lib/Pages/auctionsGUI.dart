@@ -33,7 +33,7 @@ class AuctionsGUI extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
         FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
-        Center(child: Auctions(navigate, ongoingAuctionList, createAuction, setCurrentAuction)),
+        Center(child: Auctions(navigate, ongoingAuctionList, createAuction, setCurrentAuction, activeFilters)),
         Center(child: MyAuctions(navigate)),
       ],
     );

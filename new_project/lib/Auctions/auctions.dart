@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../State/mainGUI.dart';
 import 'contractGUI.dart';
 import '../Entities/auctionListJSON.dart';
+import '../Entities/filtersJSON.dart';
 
 enum PageMarker { ongoing, finished }
 
@@ -11,11 +12,12 @@ class Auctions extends StatefulWidget {
   final Function navigate;
   final Function createAuction;
   final Function setCurrentAuction;
+  final List<Filter> activeFilters;
 
-  Auctions(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction);
+  Auctions(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
 
   @override
-  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, createAuction, setCurrentAuction);
+  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, createAuction, setCurrentAuction, activeFilters);
 }
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
@@ -26,8 +28,9 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   final Function navigate;
   final Function createAuction;
   final Function setCurrentAuction;
+  final List<Filter> activeFilters;
 
-  _AuctionsState(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction);
+  _AuctionsState(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
 
   @override
   void initState() {
@@ -105,6 +108,19 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   }
 
   SliverFixedExtentList _getOngoing() {
+    List<Auction> output = [];
+    if (activeFilters.length == 0) {
+      output.addAll(ongoingAuctionList.auctionList);
+    } else {
+      for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
+        for (int y = 0; y < activeFilters.length; y++) {
+          if (ongoingAuctionList.auctionList[i].material == activeFilters[y].name) {
+            output.add(ongoingAuctionList.auctionList[i]);
+          }
+        }
+      }
+    }
+
     return SliverFixedExtentList(
         itemExtent: 100.0,
         delegate: SliverChildBuilderDelegate(
@@ -114,19 +130,19 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               margin: EdgeInsets.all(5.0),
               color: Colors.lightGreen[100 * (index % 9)],
               child: Column(children: [
-                Text('Name: Room ' + ongoingAuctionList.auctionList[index].id.toString()),
-                Text('Material: ' + ongoingAuctionList.auctionList[index].material),
-                Text('Participants: ' + ongoingAuctionList.auctionList[index].currentParticipants.toString()),
+                Text('Name: Room ' + output[index].id.toString()),
+                Text('Material: ' + output[index].material),
+                Text('Participants: ' + output[index].currentParticipants.toString()),
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {
-                      setCurrentAuction(ongoingAuctionList.auctionList[index].id);
+                      setCurrentAuction(output[index].id);
                       navigate(WidgetMarker.room);
                     }),
               ]),
             );
           },
-          childCount: ongoingAuctionList.auctionList.length,
+          childCount: output.length,
         ));
   }
 

@@ -112,6 +112,26 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
 
   @override
   Widget build(BuildContext context) {
+    if (_selectedWidgetMarker == WidgetMarker.login || _selectedWidgetMarker == WidgetMarker.register || _selectedWidgetMarker == WidgetMarker.forgotPass) {
+      return new Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            //Source: https://www.pexels.com/photo/iphone-notebook-pen-working-34088/
+            image: AssetImage("../../images/dark/main-BG-dark.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: FutureBuilder(
+            future: _playAnimation(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return _getCustomContainer();
+            },
+          ),
+        ),
+      );
+    }
     return new Container(
       decoration: BoxDecoration(
         image: DecorationImage(
