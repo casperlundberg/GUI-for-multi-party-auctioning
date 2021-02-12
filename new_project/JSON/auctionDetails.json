@@ -9,22 +9,43 @@
     "material": "Wood",
     "templateStrings": [
         {
-            "text": "I would like to purchase "
+            "text": "I, "
         },
         {
-            "text": " things for "
+            "text": " hereby makes an order for "
         },
         {
-            "text": " dollars."
+            "text": " units of "
+        },
+        {
+            "text": " at the unit price of "
+        },
+        {
+            "text": " EUR from Component Supplier Inc. The units are to be delivered by Carrier Inc. to the Final Assembly Plant in "
+        },
+        {
+            "text": " hours."
         }
     ],
     "templateVariables": [
+        {
+            "key": "Name",
+            "valueType": "Text"
+        },
         {
             "key": "Quantity",
             "valueType": "Integer"
         },
         {
-            "key": "Dollars",
+            "key": "ArticleID",
+            "valueType": "Integer"
+        },
+        {
+            "key": "Amount of money",
+            "valueType": "Integer"
+        },
+        {
+            "key": "Amount of hours",
             "valueType": "Integer"
         }
     ],
