@@ -49,6 +49,58 @@
             "valueType": "Integer"
         }
     ],
+    "bids": [
+        {
+            "userID": 2,
+            "keyValuePairs": [
+                {
+                    "key": "Name",
+                    "value": "Thule Thulesson"
+                },
+                {
+                    "key": "Quantity",
+                    "value": 5
+                },
+                {
+                    "key": "ArticleID",
+                    "value": 726387327
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 25
+                },
+                {
+                    "key": "Amount of hours",
+                    "value": 10
+                }
+            ]
+        },
+        {
+            "userID": 3,
+            "keyValuePairs": [
+                {
+                    "key": "Name",
+                    "value": "Sven Svensson"
+                },
+                {
+                    "key": "Quantity",
+                    "value": 1
+                },
+                {
+                    "key": "ArticleID",
+                    "value": 726387327
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 55
+                },
+                {
+                    "key": "Amount of hours",
+                    "value": 2
+                }
+            ]
+        }
+    ],
     "startDate": "2021-02-15T10:30:00.001Z",
     "stopDate": "2021-02-15T11:30:00.001Z",
     "referenceSector": "composites",
