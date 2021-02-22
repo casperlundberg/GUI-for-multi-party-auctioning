@@ -9,20 +9,22 @@ enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
   final AuctionList ongoingAuctionList;
+  final AuctionList finishedAuctionList;
   final Function navigate;
   final Function createAuction;
   final Function setCurrentAuction;
   final List<Filter> activeFilters;
 
-  Auctions(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
+  Auctions(this.navigate, this.ongoingAuctionList, this.finishedAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
 
   @override
-  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, createAuction, setCurrentAuction, activeFilters);
+  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, finishedAuctionList, createAuction, setCurrentAuction, activeFilters);
 }
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
   final AuctionList ongoingAuctionList;
+  final AuctionList finishedAuctionList;
   Auction auction;
 
   final Function navigate;
@@ -30,7 +32,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   final Function setCurrentAuction;
   final List<Filter> activeFilters;
 
-  _AuctionsState(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
+  _AuctionsState(this.navigate, this.ongoingAuctionList, this.finishedAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
 
   @override
   void initState() {
@@ -147,6 +149,9 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   }
 
   SliverFixedExtentList _getFinished() {
+    List<Auction> output = [];
+    //output.addAll(finishedAuctionList.auctionList);
+
     return SliverFixedExtentList(
         itemExtent: 100.0,
         delegate: SliverChildBuilderDelegate(
@@ -156,18 +161,19 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               margin: EdgeInsets.all(5.0),
               color: Colors.yellow[800],
               child: Column(children: [
-                Text('Name: Room $index'),
-                Text('Material: Wood'),
-                Text('Participants: 5'),
+                Text('Name: Room ' + output[index].id.toString()),
+                Text('Material: ' + output[index].material),
+                Text('Participants: ' + output[index].currentParticipants.toString()),
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {
+                      setCurrentAuction(output[index].id);
                       navigate(WidgetMarker.room);
                     }),
               ]),
             );
           },
-          childCount: 10,
+          childCount: output.length,
         ));
   }
 
