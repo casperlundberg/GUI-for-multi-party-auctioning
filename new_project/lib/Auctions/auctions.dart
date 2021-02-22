@@ -111,13 +111,22 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
 
   SliverFixedExtentList _getOngoing() {
     List<Auction> output = [];
+    var now = new DateTime.now();
+
+    for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {}
     if (activeFilters.length == 0) {
-      output.addAll(ongoingAuctionList.auctionList);
+      for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
+        if (now.isBefore(ongoingAuctionList.auctionList[i].stopDate)) {
+          output.add(ongoingAuctionList.auctionList[i]);
+        }
+      }
     } else {
       for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
         for (int y = 0; y < activeFilters.length; y++) {
           if (ongoingAuctionList.auctionList[i].material == activeFilters[y].name) {
-            output.add(ongoingAuctionList.auctionList[i]);
+            if (now.isBefore(ongoingAuctionList.auctionList[i].stopDate)) {
+              output.add(ongoingAuctionList.auctionList[i]);
+            }
           }
         }
       }
@@ -150,7 +159,13 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
 
   SliverFixedExtentList _getFinished() {
     List<Auction> output = [];
-    //output.addAll(finishedAuctionList.auctionList);
+    var now = new DateTime.now();
+
+    for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
+      if (now.isAfter(ongoingAuctionList.auctionList[i].stopDate)) {
+        output.add(ongoingAuctionList.auctionList[i]);
+      }
+    }
 
     return SliverFixedExtentList(
         itemExtent: 100.0,
