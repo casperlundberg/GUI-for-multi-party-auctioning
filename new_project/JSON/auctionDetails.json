@@ -4,7 +4,6 @@
     "ownerID": 1,
     "ownerType" : "Supplier",
     "maxParticipants": 10,
-    "currentParticipants": 0,
     "roundTime": 300,
     "material": "Wood",
     "templateStrings": [
