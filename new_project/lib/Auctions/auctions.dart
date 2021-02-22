@@ -128,7 +128,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
             return Container(
               alignment: Alignment.center,
               margin: EdgeInsets.all(5.0),
-              color: Colors.lightGreen[100 * (index % 9)],
+              color: Colors.lightGreen[600],
               child: Column(children: [
                 Text('Name: Room ' + output[index].id.toString()),
                 Text('Material: ' + output[index].material),
@@ -154,7 +154,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
             return Container(
               alignment: Alignment.center,
               margin: EdgeInsets.all(5.0),
-              color: Colors.yellow[100 * (index % 9)],
+              color: Colors.yellow[800],
               child: Column(children: [
                 Text('Name: Room $index'),
                 Text('Material: Wood'),
