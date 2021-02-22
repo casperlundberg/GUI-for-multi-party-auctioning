@@ -276,6 +276,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         material: "Wood",
         templateStrings: ts,
         templateVariables: tv,
+        bids: [],
         startDate: startDate,
         stopDate: stopDate,
         referenceSector: "composites",
