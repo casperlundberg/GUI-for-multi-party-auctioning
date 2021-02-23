@@ -17,6 +17,7 @@ import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
 import '../Pages/profile.dart';
 import '../Pages/register.dart';
+import '../jsonUtilities.dart';
 
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
 //https://github.com/TechieBlossom/flutter-samples/blob/master/widgetswitchdemo.dart
@@ -38,11 +39,6 @@ Future<AuctionDetails> getAuctionDetails() async {
   return auctionDetailsFromJson(jsonString);
 }
 
-Future<LocalJsonUserPage> getUserPage() async {
-  String jsonString = await rootBundle.loadString("../../JSON/user.json");
-  return localJsonUserPageFromJson(jsonString);
-}
-
 class MainGUI extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MainGUIState();
@@ -59,7 +55,6 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   List<Filter> _inactiveFilters;
   int _localFilteridCounter;
   Future _filterFuture;
-  Future _userFuture;
 
   // USER
   LocalJsonUserPage _user;
@@ -100,10 +95,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     });
 
     // USER VARIABLES
-    _userFuture = getUserPage();
-    _userFuture.then((user) {
-      _user = user;
-    });
+    _user = localJsonUserPageFromJson(getUserString());
   }
 
   @override

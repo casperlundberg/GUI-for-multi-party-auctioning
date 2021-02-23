@@ -1,12 +1,20 @@
+import 'dart:convert';
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../State/mainGUI.dart';
 import '../Entities/localJSONUserPage.dart';
+import '../jsonUtilities.dart';
 
 class ProfileGUI extends StatefulWidget {
   final Function navigate;
   final LocalJsonUserPage user;
 
-  const ProfileGUI(this.navigate, this.user);
+  const ProfileGUI(
+    this.navigate,
+    this.user,
+  );
   @override
   Profile createState() => Profile(navigate, user);
 }
@@ -223,6 +231,7 @@ class Profile extends State<ProfileGUI> {
                       child: ElevatedButton(
                         child: Text("Save changes"),
                         onPressed: () {
+                          setUserString(localJsonUserPageToJson(user));
                           navigate(WidgetMarker.auctions);
                         },
                       ),
