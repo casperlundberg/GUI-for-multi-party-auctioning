@@ -39,7 +39,7 @@ Future<AuctionDetails> getAuctionDetails() async {
 }
 
 Future<LocalJsonUserPage> getUserPage() async {
-  String jsonString = await rootBundle.loadString("../../JSON/LoginResponse.json");
+  String jsonString = await rootBundle.loadString("../../JSON/user.json");
   return localJsonUserPageFromJson(jsonString);
 }
 
@@ -99,6 +99,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
       _availableFilters = filters.filters;
     });
 
+    // USER VARIABLES
     _userFuture = getUserPage();
     _userFuture.then((user) {
       _user = user;
