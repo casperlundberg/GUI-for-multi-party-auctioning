@@ -10,7 +10,7 @@ class MyAuctions extends StatelessWidget {
     final ThemeData themeData = Theme.of(context);
 
     return new Container(
-      color: Colors.grey[800],
+      color: Colors.grey[900],
       height: MediaQuery.of(context).size.height * 0.9,
       width: MediaQuery.of(context).size.width * 0.2,
       margin: EdgeInsets.all(5.0),
@@ -27,7 +27,7 @@ class MyAuctions extends StatelessWidget {
                   return Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.all(5.0),
-                    color: Colors.pink[100 * (index % 9)],
+                    color: Colors.pink[600],
                     child: Column(children: [
                       Text('Name: Room $index'),
                       Text('Material: Wood'),

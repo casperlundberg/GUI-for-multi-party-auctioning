@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final auctionList = auctionListFromJson(jsonString);
-
 import 'dart:convert';
 
 AuctionList auctionListFromJson(String str) => AuctionList.fromJson(json.decode(str));

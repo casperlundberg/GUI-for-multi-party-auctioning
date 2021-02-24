@@ -17,6 +17,7 @@ import '../Pages/forgotPass.dart';
 import '../Pages/login.dart';
 import '../Pages/profile.dart';
 import '../Pages/register.dart';
+import '../jsonUtilities.dart';
 
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
 //https://github.com/TechieBlossom/flutter-samples/blob/master/widgetswitchdemo.dart
@@ -38,11 +39,6 @@ Future<AuctionDetails> getAuctionDetails() async {
   return auctionDetailsFromJson(jsonString);
 }
 
-Future<LocalJsonUserPage> getUserPage() async {
-  String jsonString = await rootBundle.loadString("../../JSON/LoginResponse.json");
-  return localJsonUserPageFromJson(jsonString);
-}
-
 class MainGUI extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MainGUIState();
@@ -59,7 +55,6 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   List<Filter> _inactiveFilters;
   int _localFilteridCounter;
   Future _filterFuture;
-  Future _userFuture;
 
   // USER
   LocalJsonUserPage _user;
@@ -67,6 +62,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   // AUCTION JSON
   List<AuctionDetails> _auctionDetailsList;
   AuctionList _ongoingAuctionList;
+  AuctionList _finishedAuctionList;
   int _currentAuction;
   Future _auctionDetailsFuture;
   Future _auctionFuture;
@@ -98,10 +94,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
       _availableFilters = filters.filters;
     });
 
-    _userFuture = getUserPage();
-    _userFuture.then((user) {
-      _user = user;
-    });
+    // USER VARIABLES
+    _user = localJsonUserPageFromJson(getUserString());
   }
 
   @override
@@ -276,6 +270,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         material: "Wood",
         templateStrings: ts,
         templateVariables: tv,
+        bids: [],
         startDate: startDate,
         stopDate: stopDate,
         referenceSector: "composites",
@@ -375,7 +370,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     return FadeTransition(
       opacity: _animation,
       child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
-          _ongoingAuctionList, _createAuction, _setCurrentAuction),
+          _ongoingAuctionList, _finishedAuctionList, _createAuction, _setCurrentAuction),
     );
   }
 
