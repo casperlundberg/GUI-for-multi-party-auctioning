@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../State/mainGUI.dart';
 import 'contractGUI.dart';
 import '../Entities/auctionListJSON.dart';
 import '../Entities/filtersJSON.dart';
+import '../Entities/contractTemplatesJSON.dart';
 
 enum PageMarker { ongoing, finished }
 
@@ -13,11 +15,12 @@ class Auctions extends StatefulWidget {
   final Function createAuction;
   final Function setCurrentAuction;
   final List<Filter> activeFilters;
+  final Function getContractTemplates;
 
-  Auctions(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
+  Auctions(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters, this.getContractTemplates);
 
   @override
-  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, createAuction, setCurrentAuction, activeFilters);
+  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates);
 }
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
@@ -29,8 +32,26 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   final Function createAuction;
   final Function setCurrentAuction;
   final List<Filter> activeFilters;
+  final Function getContractTemplates;
+  ContractTemplates contractTemplates;
+  ContractTemplate contractTemplate;
+  TextEditingController auctionTitle = TextEditingController();
+  TextEditingController maxParticipants = TextEditingController();
+  TextEditingController roundTime = TextEditingController();
+  TextEditingController rounds = TextEditingController();
+  List<String> materialTypes = ["Wood", "Metals", "Soil", "Stone", "Gold", "Silver"];
+  String materialDropdownValue = "Wood";
+  List<String> contractIDs = [];
+  String contractDropdownValue;
 
-  _AuctionsState(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters);
+  _AuctionsState(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters, this.getContractTemplates) {
+    contractTemplates = getContractTemplates("Supplier");
+    contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
+    contractTemplate = contractTemplates.contractTemplates[0];
+    for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
+      contractIDs.add(contractTemplates.contractTemplates[i].id.toString());
+    }
+  }
 
   @override
   void initState() {
@@ -56,6 +77,13 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                 icon: Icon(Icons.add),
                 tooltip: 'New auction',
                 onPressed: () {
+                  setState(() {
+                    contractTemplates = getContractTemplates("Supplier");
+                    contractIDs = [];
+                    for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
+                      contractIDs.add(contractTemplates.contractTemplates[i].id.toString());
+                    }
+                  });
                   showContractTemplateGUI();
                 },
               ),
@@ -171,11 +199,6 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
         ));
   }
 
-  int templateItemCount = 1;
-  List<TextEditingController> controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
-  final List<String> valueTypes = ["Text", "Integer"];
-  List<String> dropdownValues = ["Text"];
-
   void showContractTemplateGUI() {
     showDialog(
       context: context,
@@ -224,143 +247,198 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                               return Column(
                                 children: [
                                   Text(
-                                    "Contract template creator",
+                                    "Create new auction",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 2,
                                   ),
-                                  SizedBox(height: 24.0),
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Auction Title: "),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.25,
+                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        child: TextField(
+                                          controller: auctionTitle,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Max Participants: "),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.03,
+                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        child: TextField(
+                                          controller: maxParticipants,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                        ),
+                                      ),
+                                      SizedBox(width: 30.0),
+                                      Text("Round Time (s): "),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.03,
+                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        child: TextField(
+                                          controller: roundTime,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                        ),
+                                      ),
+                                      SizedBox(width: 30.0),
+                                      Text("Number of rounds: "),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.03,
+                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        child: TextField(
+                                          controller: rounds,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Material: "),
+                                      DropdownButton(
+                                        icon: Icon(Icons.arrow_downward),
+                                        iconSize: 24,
+                                        value: materialDropdownValue,
+                                        elevation: 16,
+                                        style: TextStyle(color: Colors.white),
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            materialDropdownValue = newValue;
+                                          });
+                                        },
+                                        items: materialTypes.map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Contract Template ID: "),
+                                      DropdownButton(
+                                        icon: Icon(Icons.arrow_downward),
+                                        iconSize: 24,
+                                        value: contractDropdownValue,
+                                        elevation: 16,
+                                        style: TextStyle(color: Colors.white),
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            contractDropdownValue = newValue;
+                                            for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
+                                              if (contractTemplates.contractTemplates[i].id.toString() == newValue) {
+                                                contractTemplate = contractTemplates.contractTemplates[i];
+                                              }
+                                            }
+                                          });
+                                        },
+                                        items: contractIDs.map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  Text(
+                                    "Contract Template",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    textScaleFactor: 1.5,
+                                  ),
+                                  SizedBox(height: 20.0),
                                   Expanded(
                                     child: ListView.builder(
-                                      itemCount: templateItemCount,
+                                      itemCount: contractTemplate.templateVariables.length,
                                       itemBuilder: (context, index) {
                                         if (index == 0) {
                                           return Column(
                                             children: [
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
-                                                width: MediaQuery.of(context).size.width * 0.4,
-                                                height: MediaQuery.of(context).size.height * 0.1,
-                                                child: TextField(
-                                                  maxLines: null,
-                                                  controller: controllers[0],
-                                                ),
+                                              Text(
+                                                contractTemplate.templateStrings[0].text,
+                                                textAlign: TextAlign.center,
                                               ),
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
-                                                width: MediaQuery.of(context).size.width * 0.4,
-                                                height: MediaQuery.of(context).size.height * 0.1,
-                                                child: Row(
-                                                  children: [
-                                                    Text("Key: "),
-                                                    Container(
-                                                      width: MediaQuery.of(context).size.width * 0.05,
-                                                      height: MediaQuery.of(context).size.height * 0.05,
-                                                      child: TextField(
-                                                        controller: controllers[1],
-                                                      ),
-                                                    ),
-                                                    Text(" Value-type: "),
-                                                    DropdownButton(
-                                                      icon: Icon(Icons.arrow_downward),
-                                                      iconSize: 24,
-                                                      value: dropdownValues[index],
-                                                      elevation: 16,
-                                                      style: TextStyle(color: Colors.white),
-                                                      onChanged: (String newValue) {
-                                                        setState(() {
-                                                          dropdownValues[index] = newValue;
-                                                        });
-                                                      },
-                                                      items: valueTypes.map<DropdownMenuItem<String>>((String value) {
-                                                        return DropdownMenuItem<String>(
-                                                          value: value,
-                                                          child: Text(value),
-                                                        );
-                                                      }).toList(),
-                                                    ),
-                                                  ],
-                                                ),
+                                              SizedBox(height: 20.0),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Key: ",
+                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    contractTemplate.templateVariables[0].key,
+                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                  ),
+                                                  Text(
+                                                    " Value Type: ",
+                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    contractTemplate.templateVariables[0].valueType,
+                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                  ),
+                                                ],
                                               ),
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
-                                                width: MediaQuery.of(context).size.width * 0.4,
-                                                height: MediaQuery.of(context).size.height * 0.1,
-                                                child: TextField(
-                                                  maxLines: null,
-                                                  controller: controllers[2],
-                                                ),
+                                              SizedBox(height: 20.0),
+                                              Text(
+                                                contractTemplate.templateStrings[1].text,
+                                                textAlign: TextAlign.center,
                                               ),
                                             ],
                                           );
                                         }
                                         return Column(
                                           children: [
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
-                                              width: MediaQuery.of(context).size.width * 0.4,
-                                              height: MediaQuery.of(context).size.height * 0.1,
-                                              child: Row(
-                                                children: [
-                                                  Text("Key: "),
-                                                  Container(
-                                                    width: MediaQuery.of(context).size.width * 0.05,
-                                                    height: MediaQuery.of(context).size.height * 0.05,
-                                                    child: TextField(
-                                                      controller: controllers[index * 2 + 1],
-                                                    ),
-                                                  ),
-                                                  Text(" Value: "),
-                                                  DropdownButton(
-                                                    icon: Icon(Icons.arrow_downward),
-                                                    iconSize: 24,
-                                                    value: dropdownValues[index],
-                                                    elevation: 16,
-                                                    style: TextStyle(color: Colors.white),
-                                                    onChanged: (String newValue) {
-                                                      setState(() {
-                                                        dropdownValues[index] = newValue;
-                                                      });
-                                                    },
-                                                    items: valueTypes.map<DropdownMenuItem<String>>((String value) {
-                                                      return DropdownMenuItem<String>(
-                                                        value: value,
-                                                        child: Text(value),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                ],
-                                              ),
+                                            SizedBox(height: 20.0),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "Key: ",
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  contractTemplate.templateVariables[index].key,
+                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                ),
+                                                Text(
+                                                  " Value Type: ",
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  contractTemplate.templateVariables[index].valueType,
+                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                ),
+                                              ],
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
-                                              width: MediaQuery.of(context).size.width * 0.4,
-                                              height: MediaQuery.of(context).size.height * 0.1,
-                                              child: TextField(
-                                                maxLines: null,
-                                                controller: controllers[index * 2 + 2],
-                                              ),
+                                            SizedBox(height: 20.0),
+                                            Text(
+                                              contractTemplate.templateStrings[index + 1].text,
+                                              textAlign: TextAlign.center,
                                             ),
                                           ],
                                         );
                                       },
                                     ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        templateItemCount++;
-                                        controllers.add(TextEditingController());
-                                        controllers.add(TextEditingController());
-                                        dropdownValues.add("Text");
-                                      });
-                                    },
-                                    child: Text("New variable"),
                                   ),
                                 ],
                               );
@@ -368,29 +446,23 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                           ),
                         ),
                       ),
-                      SizedBox(height: 24.0),
+                      SizedBox(height: 10.0),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ElevatedButton(
                           child: Text("Create auction"),
                           onPressed: () {
                             setState(() {
-                              List<String> templateStrings = [];
-                              templateStrings.add(controllers[0].text);
-                              for (int i = 0; i < templateItemCount; i++) {
-                                templateStrings.add(controllers[i * 2 + 2].text);
-                              }
+                              createAuction(int.parse(contractDropdownValue), auctionTitle.text, int.parse(maxParticipants.text), int.parse(roundTime.text),
+                                  int.parse(rounds.text), materialDropdownValue);
 
-                              List<String> keys = [];
-                              for (int i = 0; i < templateItemCount; i++) {
-                                keys.add(controllers[i * 2 + 1].text);
-                              }
-
-                              createAuction(templateStrings, keys, dropdownValues);
-
-                              templateItemCount = 1;
-                              controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
-                              dropdownValues = ["Text"];
+                              auctionTitle.clear();
+                              maxParticipants.clear();
+                              roundTime.clear();
+                              rounds.clear();
+                              materialDropdownValue = "Wood";
+                              contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
+                              contractTemplate = contractTemplates.contractTemplates[0];
                             });
                             Navigator.pop(context);
                           },
@@ -404,9 +476,13 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        templateItemCount = 1;
-                        controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
-                        dropdownValues = ["Text"];
+                        auctionTitle.clear();
+                        maxParticipants.clear();
+                        roundTime.clear();
+                        rounds.clear();
+                        materialDropdownValue = "Wood";
+                        contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
+                        contractTemplate = contractTemplates.contractTemplates[0];
                       });
                       Navigator.of(context).pop();
                     },

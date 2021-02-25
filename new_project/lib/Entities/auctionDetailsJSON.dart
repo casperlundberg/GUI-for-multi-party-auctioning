@@ -15,11 +15,10 @@ class AuctionDetails {
     this.ownerId,
     this.ownerType,
     this.maxParticipants,
-    this.currentParticipants,
+    this.participants,
     this.roundTime,
     this.material,
-    this.templateStrings,
-    this.templateVariables,
+    this.contractTemplateId,
     this.bids,
     this.startDate,
     this.stopDate,
@@ -32,11 +31,10 @@ class AuctionDetails {
   int ownerId;
   String ownerType;
   int maxParticipants;
-  int currentParticipants;
+  List<Participant> participants;
   int roundTime;
   String material;
-  List<TemplateString> templateStrings;
-  List<TemplateVariable> templateVariables;
+  int contractTemplateId;
   List<Bid> bids;
   DateTime startDate;
   DateTime stopDate;
@@ -49,11 +47,10 @@ class AuctionDetails {
         ownerId: json["ownerID"],
         ownerType: json["ownerType"],
         maxParticipants: json["maxParticipants"],
-        currentParticipants: json["currentParticipants"],
+        participants: List<Participant>.from(json["participants"].map((x) => Participant.fromJson(x))),
         roundTime: json["roundTime"],
         material: json["material"],
-        templateStrings: List<TemplateString>.from(json["templateStrings"].map((x) => TemplateString.fromJson(x))),
-        templateVariables: List<TemplateVariable>.from(json["templateVariables"].map((x) => TemplateVariable.fromJson(x))),
+        contractTemplateId: json["contractTemplateID"],
         bids: List<Bid>.from(json["bids"].map((x) => Bid.fromJson(x))),
         startDate: DateTime.parse(json["startDate"]),
         stopDate: DateTime.parse(json["stopDate"]),
@@ -67,11 +64,10 @@ class AuctionDetails {
         "ownerID": ownerId,
         "ownerType": ownerType,
         "maxParticipants": maxParticipants,
-        "currentParticipants": currentParticipants,
+        "participants": List<dynamic>.from(participants.map((x) => x.toJson())),
         "roundTime": roundTime,
         "material": material,
-        "templateStrings": List<dynamic>.from(templateStrings.map((x) => x.toJson())),
-        "templateVariables": List<dynamic>.from(templateVariables.map((x) => x.toJson())),
+        "contractTemplateID": contractTemplateId,
         "bids": List<dynamic>.from(bids.map((x) => x.toJson())),
         "startDate": startDate.toIso8601String(),
         "stopDate": stopDate.toIso8601String(),
@@ -120,38 +116,18 @@ class KeyValuePair {
       };
 }
 
-class TemplateString {
-  TemplateString({
-    this.text,
+class Participant {
+  Participant({
+    this.userId,
   });
 
-  String text;
+  int userId;
 
-  factory TemplateString.fromJson(Map<String, dynamic> json) => TemplateString(
-        text: json["text"],
+  factory Participant.fromJson(Map<String, dynamic> json) => Participant(
+        userId: json["userID"],
       );
 
   Map<String, dynamic> toJson() => {
-        "text": text,
-      };
-}
-
-class TemplateVariable {
-  TemplateVariable({
-    this.key,
-    this.valueType,
-  });
-
-  String key;
-  String valueType;
-
-  factory TemplateVariable.fromJson(Map<String, dynamic> json) => TemplateVariable(
-        key: json["key"],
-        valueType: json["valueType"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "key": key,
-        "valueType": valueType,
+        "userID": userId,
       };
 }

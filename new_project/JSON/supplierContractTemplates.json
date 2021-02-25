@@ -1,0 +1,125 @@
+{
+    "contractTemplates": [
+        {
+            "id": 1,
+            "templateStrings": [
+                {
+                    "text": "I, "
+                },
+                {
+                    "text": " hereby makes an order for "
+                },
+                {
+                    "text": " units of "
+                },
+                {
+                    "text": " at the unit price of "
+                },
+                {
+                    "text": " EUR from Component Supplier Inc. The units are to be delivered by Carrier Inc. to the Final Assembly Plant in "
+                },
+                {
+                    "text": " hours."
+                }
+            ],
+            "templateVariables": [
+                {
+                    "key": "Name",
+                    "valueType": "Text"
+                },
+                {
+                    "key": "Quantity",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "ArticleID",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Amount of money",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Amount of hours",
+                    "valueType": "Integer"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "templateStrings": [
+                {
+                    "text": "I, "
+                },
+                {
+                    "text": " would like to purchase a unit of "
+                },
+                {
+                    "text": " at the price of "
+                },
+                {
+                    "text": " EUR from Component Supplier Inc. The units are to be delivered by Carrier Inc. to the Final Assembly Plant in "
+                },
+                {
+                    "text": " hours."
+                }
+            ],
+            "templateVariables": [
+                {
+                    "key": "Name",
+                    "valueType": "Text"
+                },
+                {
+                    "key": "ArticleID",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Amount of money",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Amount of hours",
+                    "valueType": "Integer"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "templateStrings": [
+                {
+                    "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+                },
+                {
+                    "text": " would like to purchase a unit of "
+                },
+                {
+                    "text": " at the price of "
+                },
+                {
+                    "text": " EUR from Component Supplier Inc. The units are to be delivered by Carrier Inc. to the Final Assembly Plant in "
+                },
+                {
+                    "text": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                }
+            ],
+            "templateVariables": [
+                {
+                    "key": "Name",
+                    "valueType": "Text"
+                },
+                {
+                    "key": "ArticleID",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Amount of money",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Amount of hours",
+                    "valueType": "Integer"
+                }
+            ]
+        }
+    ]
+}

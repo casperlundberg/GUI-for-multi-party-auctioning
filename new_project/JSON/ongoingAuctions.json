@@ -6,7 +6,7 @@
             "ownerID": 1,
             "ownerType" : "Supplier",
             "maxParticipants": 10,
-            "currentParticipants": 0,
+            "currentParticipants": 4,
             "roundTime": 300,
             "material": "Wood",
             "startDate": "2021-02-15T10:30:00.001Z",

@@ -4,7 +4,8 @@ import '../State/mainGUI.dart';
 
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   final Function navigate;
-  NavigationBar(this.navigate);
+  final Function showContractTemplateGUI;
+  NavigationBar(this.navigate, this.showContractTemplateGUI);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,12 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
       ),
 
       actions: <Widget>[
+        ElevatedButton(
+          onPressed: () {
+            showContractTemplateGUI();
+          },
+          child: Text("Create new contract template"),
+        ),
         IconButton(
           icon: Icon(Icons.notifications),
           tooltip: 'Notifications',

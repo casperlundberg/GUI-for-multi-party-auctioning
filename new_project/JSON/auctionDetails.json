@@ -4,50 +4,23 @@
     "ownerID": 1,
     "ownerType" : "Supplier",
     "maxParticipants": 10,
+    "participants": [
+        {
+            "userID": 2
+        },
+        {
+            "userID": 3
+        },
+        {
+            "userID": 4
+        },
+        {
+            "userID": 5
+        }
+    ],
     "roundTime": 300,
     "material": "Wood",
-    "templateStrings": [
-        {
-            "text": "I, "
-        },
-        {
-            "text": " hereby makes an order for "
-        },
-        {
-            "text": " units of "
-        },
-        {
-            "text": " at the unit price of "
-        },
-        {
-            "text": " EUR from Component Supplier Inc. The units are to be delivered by Carrier Inc. to the Final Assembly Plant in "
-        },
-        {
-            "text": " hours."
-        }
-    ],
-    "templateVariables": [
-        {
-            "key": "Name",
-            "valueType": "Text"
-        },
-        {
-            "key": "Quantity",
-            "valueType": "Integer"
-        },
-        {
-            "key": "ArticleID",
-            "valueType": "Integer"
-        },
-        {
-            "key": "Amount of money",
-            "valueType": "Integer"
-        },
-        {
-            "key": "Amount of hours",
-            "valueType": "Integer"
-        }
-    ],
+    "contractTemplateID": 1,
     "bids": [
         {
             "userID": 2,
