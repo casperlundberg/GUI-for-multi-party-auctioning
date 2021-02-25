@@ -395,7 +395,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     return FadeTransition(
       opacity: _animation,
       child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
-          _ongoingAuctionList, _finishedAuctionList, _createAuction, _setCurrentAuction, _getContractTemplates, _auctionDetailsList),
+          _ongoingAuctionList, _finishedAuctionList, _createAuction, _setCurrentAuction, _getContractTemplates, _auctionDetailsList, _user),
     );
   }
 

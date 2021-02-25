@@ -39,7 +39,10 @@ String userNullString = '''{
     "company": "",
     "participatingAuctions": [
         {
-            "auctionID": null
+            "auctionID": 1
+        },
+        {
+            "auctionID": 2
         }
     ]
 }''';
