@@ -14,6 +14,35 @@ void set(String newString) {
 
 /*
 ========================
+NULL USER
+========================
+*/
+String userNullString = '''{
+    "userId": null,
+    "userName": "",
+    "email": "",
+    "password": {
+        "type": "",
+        "encryption": ""
+    },
+    "age": null,
+    "address": {
+        "streetAddress": "",
+        "city": "",
+        "state": "",
+        "postalCode": ""
+    },
+    "homePhoneNumber": "",
+    "mobilePhoneNumber": "",
+    "officePhoneNumber": "",
+    "currentType": ""
+}''';
+String getNullUserString() {
+  return userNullString;
+}
+
+/*
+========================
 USER
 ========================
 */

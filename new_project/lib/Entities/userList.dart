@@ -5,18 +5,18 @@
 import 'dart:convert';
 import 'localJSONUserPage.dart';
 
-LocalJsonUserList localJsonUserListFromJson(String str) => LocalJsonUserList.fromJson(json.decode(str));
+UserList userListFromJson(String str) => UserList.fromJson(json.decode(str));
 
-String localJsonUserListToJson(LocalJsonUserList data) => json.encode(data.toJson());
+String userListToJson(UserList data) => json.encode(data.toJson());
 
-class LocalJsonUserList {
-  LocalJsonUserList({
+class UserList {
+  UserList({
     this.users,
   });
 
   List<LocalJsonUserPage> users;
 
-  factory LocalJsonUserList.fromJson(Map<String, dynamic> json) => LocalJsonUserList(
+  factory UserList.fromJson(Map<String, dynamic> json) => UserList(
         users: List<LocalJsonUserPage>.from(json["users"].map((x) => LocalJsonUserPage.fromJson(x))),
       );
 

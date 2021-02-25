@@ -21,7 +21,7 @@ class ProfileGUI extends StatefulWidget {
 
 class Profile extends State<ProfileGUI> {
   final Function navigate;
-
+  LocalJsonUserPage user;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   final TextEditingController _controllerUserName = new TextEditingController();
@@ -34,8 +34,6 @@ class Profile extends State<ProfileGUI> {
   final TextEditingController _controllerHomePhoneNumber = new TextEditingController();
   final TextEditingController _controllerMobilePhoneNumber = new TextEditingController();
   final TextEditingController _controllerOfficePhoneNumber = new TextEditingController();
-
-  LocalJsonUserPage user;
 
   Profile(this.navigate, this.user);
 
