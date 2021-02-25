@@ -202,7 +202,7 @@ class Profile extends State<ProfileGUI> {
                                   new DropdownButton<String>(
                                     icon: Icon(Icons.arrow_downward),
                                     iconSize: 24,
-                                    value: user.currentType,
+                                    value: user.currentType == "Supplier" || user.currentType == "Demander" ? user.currentType : "Supplier",
                                     elevation: 16,
                                     style: TextStyle(color: Colors.white),
                                     items: <String>['Supplier', 'Demander'].map((String value) {
