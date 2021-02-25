@@ -7,7 +7,7 @@ import 'contractGUI.dart';
 
 class Room extends StatefulWidget {
   final Function navigate;
-  final Function getAuctionDetails;
+  AuctionDetails getAuctionDetails;
   final Function getContractTemplates;
 
   Room(this.navigate, this.getAuctionDetails, this.getContractTemplates);
@@ -18,17 +18,16 @@ class Room extends StatefulWidget {
 
 class _RoomState extends State<Room> {
   final Function navigate;
-  final Function getAuctionDetails;
+  AuctionDetails getAuctionDetails;
   final Function getContractTemplates;
-  AuctionDetails auctionDetails;
   ContractTemplate contractTemplate;
   List<TextEditingController> controllers = [];
 
   _RoomState(this.navigate, this.getAuctionDetails, this.getContractTemplates) {
-    this.auctionDetails = getAuctionDetails();
-    ContractTemplates contractTemplates = this.getContractTemplates(this.auctionDetails.ownerType);
+    this.getAuctionDetails = getAuctionDetails;
+    ContractTemplates contractTemplates = this.getContractTemplates(this.getAuctionDetails.ownerType);
     for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
-      if (contractTemplates.contractTemplates[i].id == this.auctionDetails.contractTemplateId) {
+      if (contractTemplates.contractTemplates[i].id == this.getAuctionDetails.contractTemplateId) {
         this.contractTemplate = contractTemplates.contractTemplates[i];
       }
     }
@@ -381,7 +380,6 @@ class _RoomState extends State<Room> {
 
                       //height: 300,
                       child: Scrollbar(
-                        isAlwaysShown: true,
                         child: CustomScrollView(
                           slivers: <Widget>[
                             SliverAppBar(

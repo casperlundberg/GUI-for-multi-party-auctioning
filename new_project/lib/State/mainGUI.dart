@@ -73,7 +73,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   UserList _userListObject;
 
   // AUCTION JSON
-  List<AuctionDetails> _auctionDetailsList;
+  AuctionDetails _auctionDetailsList;
   AuctionList _ongoingAuctionList;
   AuctionList _finishedAuctionList;
   int _currentAuction;
@@ -95,10 +95,9 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     _auctionFuture.then((ongoingauctions) {
       _ongoingAuctionList = ongoingauctions;
     });
-    _auctionDetailsList = [];
     _auctionDetailsFuture = getAuctionDetails();
     _auctionDetailsFuture.then((auctionDetails) {
-      _auctionDetailsList.add(auctionDetails);
+      _auctionDetailsList = auctionDetails;
     });
     _contractTemplatesFuture1 = getSupplierContractTemplates();
     _contractTemplatesFuture1.then((contractTemplates) {
@@ -314,18 +313,18 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         referenceType: "material");
 
     setState(() {
-      _auctionDetailsList.add(newAuctionDetails);
+      //_auctionDetailsList.auctionsDetails.add(newAuctionDetails);
       _ongoingAuctionList.auctionList.add(newAuction);
     });
   }
 
-  AuctionDetails _getAuctionDetails() {
+  /*AuctionDetails _getAuctionDetails() {
     for (int i = 0; i < _auctionDetailsList.length; i++) {
       if (_auctionDetailsList[i].id == _currentAuction) {
         return _auctionDetailsList[i];
       }
     }
-  }
+  }*/
 
   //NAVIGATION METHODS
 
@@ -393,7 +392,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     return FadeTransition(
       opacity: _animation,
       child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
-          _ongoingAuctionList, _finishedAuctionList, _createAuction, _setCurrentAuction, _getContractTemplates),
+          _ongoingAuctionList, _finishedAuctionList, _createAuction, _setCurrentAuction, _getContractTemplates, _auctionDetailsList),
     );
   }
 
@@ -428,7 +427,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getRoomContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: Room(_navigate, _getAuctionDetails, _getContractTemplates),
+      child: Room(_navigate, _auctionDetailsList, _getContractTemplates),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/Entities/auctionDetailsJSON.dart';
 
 import '../State/filtersGUI.dart';
 import '../Auctions/auctions.dart';
@@ -24,9 +25,23 @@ class AuctionsGUI extends StatelessWidget {
   //AUCTION JSON
   final AuctionList ongoingAuctionList;
   final AuctionList finishedAuctionList;
+  final AuctionDetails auctionDetails;
 
-  AuctionsGUI(this.navigate, this.availableFilters, this.activeFilters, this.inactiveFilters, this.updateFilters, this.deleteFilter, this.activateFilter,
-      this.deactivateFilter, this.ongoingAuctionList, this.finishedAuctionList, this.createAuction, this.setCurrentAuction, this.getContractTemplates);
+  AuctionsGUI(
+      this.navigate,
+      this.availableFilters,
+      this.activeFilters,
+      this.inactiveFilters,
+      this.updateFilters,
+      this.deleteFilter,
+      this.activateFilter,
+      this.deactivateFilter,
+      this.ongoingAuctionList,
+      this.finishedAuctionList,
+      this.createAuction,
+      this.setCurrentAuction,
+      this.getContractTemplates,
+      this.auctionDetails);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +51,7 @@ class AuctionsGUI extends StatelessWidget {
       children: <Widget>[
         FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
         Center(child: Auctions(navigate, ongoingAuctionList, finishedAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates)),
-        Center(child: MyAuctions(navigate)),
+        Center(child: MyAuctions(navigate, auctionDetails)),
       ],
     );
   }
