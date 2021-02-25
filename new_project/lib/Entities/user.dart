@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final localJsonUserPage = localJsonUserPageFromJson(jsonString);
+//     final user = userFromJson(jsonString);
 
 import 'dart:convert';
 
-LocalJsonUserPage localJsonUserPageFromJson(String str) => LocalJsonUserPage.fromJson(json.decode(str));
+User userFromJson(String str) => User.fromJson(json.decode(str));
 
-String localJsonUserPageToJson(LocalJsonUserPage data) => json.encode(data.toJson());
+String userToJson(User data) => json.encode(data.toJson());
 
-class LocalJsonUserPage {
-  LocalJsonUserPage({
+class User {
+  User({
     this.userId,
     this.userName,
     this.email,
@@ -20,6 +20,7 @@ class LocalJsonUserPage {
     this.mobilePhoneNumber,
     this.officePhoneNumber,
     this.currentType,
+    this.participatingAuctions,
   });
 
   int userId;
@@ -32,8 +33,9 @@ class LocalJsonUserPage {
   String mobilePhoneNumber;
   String officePhoneNumber;
   String currentType;
+  List<ParticipatingAuction> participatingAuctions;
 
-  factory LocalJsonUserPage.fromJson(Map<String, dynamic> json) => LocalJsonUserPage(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         userId: json["userId"],
         userName: json["userName"],
         email: json["email"],
@@ -44,6 +46,7 @@ class LocalJsonUserPage {
         mobilePhoneNumber: json["mobilePhoneNumber"],
         officePhoneNumber: json["officePhoneNumber"],
         currentType: json["currentType"],
+        participatingAuctions: List<ParticipatingAuction>.from(json["participatingAuctions"].map((x) => ParticipatingAuction.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -57,6 +60,7 @@ class LocalJsonUserPage {
         "mobilePhoneNumber": mobilePhoneNumber,
         "officePhoneNumber": officePhoneNumber,
         "currentType": currentType,
+        "participatingAuctions": List<dynamic>.from(participatingAuctions.map((x) => x.toJson())),
       };
 }
 
@@ -85,6 +89,22 @@ class Address {
         "city": city,
         "state": state,
         "postalCode": postalCode,
+      };
+}
+
+class ParticipatingAuction {
+  ParticipatingAuction({
+    this.auctionId,
+  });
+
+  int auctionId;
+
+  factory ParticipatingAuction.fromJson(Map<String, dynamic> json) => ParticipatingAuction(
+        auctionId: json["auctionID"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "auctionID": auctionId,
       };
 }
 

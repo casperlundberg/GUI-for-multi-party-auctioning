@@ -4,25 +4,31 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../State/mainGUI.dart';
-import '../Entities/localJSONUserPage.dart';
+import '../Entities/user.dart';
 import '../jsonUtilities.dart';
+import 'userInfoHandler.dart';
 
 class ProfileGUI extends StatefulWidget {
   final Function navigate;
-  final LocalJsonUserPage user;
+  final User user;
+  final UserInfoHandler userHandler;
 
   const ProfileGUI(
     this.navigate,
     this.user,
+    this.userHandler,
   );
   @override
-  Profile createState() => Profile(navigate, user);
+  Profile createState() => Profile(navigate, user, userHandler);
 }
 
 class Profile extends State<ProfileGUI> {
   final Function navigate;
-  LocalJsonUserPage user;
+  User user;
+  final UserInfoHandler userHandler;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+  Profile(this.navigate, this.user, this.userHandler);
 
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
@@ -34,8 +40,6 @@ class Profile extends State<ProfileGUI> {
   final TextEditingController _controllerHomePhoneNumber = new TextEditingController();
   final TextEditingController _controllerMobilePhoneNumber = new TextEditingController();
   final TextEditingController _controllerOfficePhoneNumber = new TextEditingController();
-
-  Profile(this.navigate, this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +233,7 @@ class Profile extends State<ProfileGUI> {
                       child: ElevatedButton(
                         child: Text("Save changes"),
                         onPressed: () {
-                          setUserString(localJsonUserPageToJson(user));
+                          setUserString(userToJson(user));
                           navigate(WidgetMarker.auctions);
                         },
                       ),

@@ -16,5 +16,19 @@
     "homePhoneNumber": "212 555-1234",
     "mobilePhoneNumber": "212 555-1234",
     "officePhoneNumber": "212 555-1234",
-    "currentType": "Demander"
+    "currentType": "Demander",
+    "auctions": [
+        {
+            "auctionID": 2
+        },
+        {
+            "auctionID": 3
+        },
+        {
+            "auctionID": 4
+        },
+        {
+            "auctionID": 5
+        }
+    ]
 }

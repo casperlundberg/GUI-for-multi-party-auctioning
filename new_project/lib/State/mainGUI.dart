@@ -11,7 +11,7 @@ import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
 import '../Entities/auctionListJSON.dart';
 import '../Entities/auctionDetailsJSON.dart';
-import '../Entities/localJSONUserPage.dart';
+import '../Entities/user.dart';
 import '../Entities/contractTemplatesJSON.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
@@ -70,7 +70,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Future _filterFuture;
 
   // USER
-  LocalJsonUserPage _user;
+  User _user;
   UserList _userListObject;
   UserInfoHandler _userHandler;
 
@@ -122,7 +122,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     });
 
     // USER VARIABLES
-    _user = localJsonUserPageFromJson(getNullUserString());
+    _user = userFromJson(getNullUserString());
     _userListObject = userListFromJson(getUserListString());
     _userHandler = new UserInfoHandler(_userListObject);
   }
@@ -424,7 +424,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: ProfileGUI(_navigate, _user),
+      child: ProfileGUI(_navigate, _user, _userHandler),
     );
   }
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:crypt/crypt.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import '../Entities/localJSONUserPage.dart';
+import '../Entities/user.dart';
 import '../Entities/userList.dart';
 import '../jsonUtilities.dart';
 import 'userInfoHandler.dart';
@@ -10,7 +10,7 @@ import '../State/mainGUI.dart';
 
 class RegisterScreen extends StatefulWidget {
   final Function navigate;
-  final LocalJsonUserPage user;
+  final User user;
   final UserList userListObject;
   final UserInfoHandler userHandler;
   const RegisterScreen(this.navigate, this.user, this.userListObject, this.userHandler);
@@ -21,7 +21,7 @@ class RegisterScreen extends StatefulWidget {
 
 class Register extends State<RegisterScreen> {
   final Function navigate;
-  final LocalJsonUserPage user;
+  final User user;
   final UserList userListObject;
   final UserInfoHandler userHandler;
 
