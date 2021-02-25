@@ -144,7 +144,6 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
     List<Auction> output = [];
     var now = new DateTime.now();
 
-    for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {}
     if (activeFilters.length == 0) {
       for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
         if (now.isBefore(ongoingAuctionList.auctionList[i].stopDate)) {
@@ -191,10 +190,21 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   SliverFixedExtentList _getFinished() {
     List<Auction> output = [];
     var now = new DateTime.now();
-
-    for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
-      if (now.isAfter(ongoingAuctionList.auctionList[i].stopDate)) {
-        output.add(ongoingAuctionList.auctionList[i]);
+    if (activeFilters.length == 0) {
+      for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
+        if (now.isAfter(ongoingAuctionList.auctionList[i].stopDate)) {
+          output.add(ongoingAuctionList.auctionList[i]);
+        }
+      }
+    } else {
+      for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
+        for (int y = 0; y < activeFilters.length; y++) {
+          if (ongoingAuctionList.auctionList[i].material == activeFilters[y].name) {
+            if (now.isAfter(ongoingAuctionList.auctionList[i].stopDate)) {
+              output.add(ongoingAuctionList.auctionList[i]);
+            }
+          }
+        }
       }
     }
 
