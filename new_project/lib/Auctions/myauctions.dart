@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/Entities/auctionDetailsJSON.dart';
 import '../State/mainGUI.dart';
 
 class MyAuctions extends StatelessWidget {
   final Function navigate;
-  MyAuctions(this.navigate);
+  AuctionDetails auctionDetails;
+  MyAuctions(this.navigate, this.auctionDetails);
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    List<AuctionDetails> output = [];
+    for (int i = 0; i < auctionDetails.participants.length ; i++) {
+        if (auctionDetails.participants[i] == ) {
 
+        }
+      }
+    final ThemeData themeData = Theme.of(context);
+    print(auctionDetails.participants[1]);
     return new Container(
       color: Colors.grey[900],
       height: MediaQuery.of(context).size.height * 0.9,
