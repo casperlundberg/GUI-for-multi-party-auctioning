@@ -20,6 +20,7 @@ class User {
     this.mobilePhoneNumber,
     this.officePhoneNumber,
     this.currentType,
+    this.company,
     this.participatingAuctions,
   });
 
@@ -33,6 +34,7 @@ class User {
   String mobilePhoneNumber;
   String officePhoneNumber;
   String currentType;
+  String company;
   List<ParticipatingAuction> participatingAuctions;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -46,6 +48,7 @@ class User {
         mobilePhoneNumber: json["mobilePhoneNumber"],
         officePhoneNumber: json["officePhoneNumber"],
         currentType: json["currentType"],
+        company: json["company"],
         participatingAuctions: List<ParticipatingAuction>.from(json["participatingAuctions"].map((x) => ParticipatingAuction.fromJson(x))),
       );
 
@@ -60,6 +63,7 @@ class User {
         "mobilePhoneNumber": mobilePhoneNumber,
         "officePhoneNumber": officePhoneNumber,
         "currentType": currentType,
+        "company": company,
         "participatingAuctions": List<dynamic>.from(participatingAuctions.map((x) => x.toJson())),
       };
 }
