@@ -304,12 +304,7 @@ class Profile extends State<ProfileGUI> {
                                 user.password.encryption = pw;
                                 setUserString(userToJson(user));
                                 navigate(WidgetMarker.auctions);
-                              } else {
-                                print("Wrong Password");
                               }
-                            } else {
-                              // Password missmatch pop-up
-                              print("Password and repat password missmatch");
                             }
                           }
                         },

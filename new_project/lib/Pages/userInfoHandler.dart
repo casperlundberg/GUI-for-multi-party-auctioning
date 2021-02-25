@@ -33,6 +33,7 @@ class UserInfoHandler {
   bool userCheck(String userName, String email) {
     // Null or empty string is invalid
     if (userName == null || userName.isEmpty) {
+      print("Please enter a valid username");
       return false;
     }
     // check if email or username is taken, uses userList from json
@@ -76,17 +77,23 @@ class UserInfoHandler {
     print("Repeated password: " + hashRepeat);
 
     if (hash == null || hash.isEmpty || hashRepeat == null || hashRepeat.isEmpty) {
+      print("Please enter valid passwords");
       return false;
     }
 
     if (hash == hashRepeat) {
       return true;
     }
+    print("Password and repat password missmatch");
     return false;
   }
 
   bool phoneCheck(String mobilePhoneNumber) {
-    // check if email or username is taken, uses userList from json
+    // Null or empty string is invalid
+    if (mobilePhoneNumber == null || mobilePhoneNumber.isEmpty) {
+      print("Please enter a valid mobile phonenumber");
+      return false;
+    }
     bool usermobilePhoneNumberOK = false;
     for (int i = 0; i < userListObject.users.length; i++) {
       if (userListObject.users[i] != user) {
@@ -101,6 +108,7 @@ class UserInfoHandler {
     if (usermobilePhoneNumberOK) {
       return true;
     }
+    print("Please enter a valid mobile phonenumber");
     return false;
   }
 
@@ -120,24 +128,22 @@ class UserInfoHandler {
     print("Password: " + hash);
 
     if (hash == null || hash.isEmpty) {
+      print("Invalid password");
       return false;
     }
 
     if (hash == user.password.encryption) {
       return true;
     }
+    print("Password and repat password missmatch");
     return false;
   }
 
   User loginValidator(String userName, String hash) {
-    // Null or empty string is invalid
-    print("Password: " + hash);
-
-    if (hash == null || hash.isEmpty || userName == null || userName.isEmpty) {
-      print("Please fill in your credentials");
+    if (userName == null || hash == null || userName.isEmpty || hash.isEmpty) {
+      print("Please fill all credentials");
       return null;
     }
-
     for (int i = 0; i < userListObject.users.length; i++) {
       if (userListObject.users[i].userName == userName && userListObject.users[i].password.encryption == hash) {
         return userListObject.users[i];

@@ -109,14 +109,8 @@ class Register extends State<RegisterScreen> {
                             userListObject.users.add(user);
                             print(userListToJson(userListObject));
                             navigate(WidgetMarker.auctions);
-                          } else {
-                            // Password missmatch pop-up
-                            print("Password and repat password missmatch");
                           }
                         }
-                      } else {
-                        // Email format error pop-up
-                        print("Email format error");
                       }
                     },
                   ),
