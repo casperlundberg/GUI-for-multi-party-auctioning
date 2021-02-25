@@ -11,21 +11,25 @@ enum PageMarker { ongoing, finished }
 
 class Auctions extends StatefulWidget {
   final AuctionList ongoingAuctionList;
+  final AuctionList finishedAuctionList;
   final Function navigate;
   final Function createAuction;
   final Function setCurrentAuction;
   final List<Filter> activeFilters;
   final Function getContractTemplates;
 
-  Auctions(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters, this.getContractTemplates);
+  Auctions(this.navigate, this.ongoingAuctionList, this.finishedAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters,
+      this.getContractTemplates);
 
   @override
-  _AuctionsState createState() => _AuctionsState(navigate, ongoingAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates);
+  _AuctionsState createState() =>
+      _AuctionsState(navigate, ongoingAuctionList, finishedAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates);
 }
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
   final AuctionList ongoingAuctionList;
+  final AuctionList finishedAuctionList;
   Auction auction;
 
   final Function navigate;
@@ -44,7 +48,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   List<String> contractIDs = [];
   String contractDropdownValue;
 
-  _AuctionsState(this.navigate, this.ongoingAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters, this.getContractTemplates) {
+  _AuctionsState(this.navigate, this.ongoingAuctionList, this.finishedAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters,
+      this.getContractTemplates) {
     contractTemplates = getContractTemplates("Supplier");
     contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
     contractTemplate = contractTemplates.contractTemplates[0];
@@ -137,13 +142,22 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
 
   SliverFixedExtentList _getOngoing() {
     List<Auction> output = [];
+    var now = new DateTime.now();
+
+    for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {}
     if (activeFilters.length == 0) {
-      output.addAll(ongoingAuctionList.auctionList);
+      for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
+        if (now.isBefore(ongoingAuctionList.auctionList[i].stopDate)) {
+          output.add(ongoingAuctionList.auctionList[i]);
+        }
+      }
     } else {
       for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
         for (int y = 0; y < activeFilters.length; y++) {
           if (ongoingAuctionList.auctionList[i].material == activeFilters[y].name) {
-            output.add(ongoingAuctionList.auctionList[i]);
+            if (now.isBefore(ongoingAuctionList.auctionList[i].stopDate)) {
+              output.add(ongoingAuctionList.auctionList[i]);
+            }
           }
         }
       }
@@ -156,7 +170,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
             return Container(
               alignment: Alignment.center,
               margin: EdgeInsets.all(5.0),
-              color: Colors.lightGreen[100 * (index % 9)],
+              color: Colors.lightGreen[600],
               child: Column(children: [
                 Text('Name: Room ' + output[index].id.toString()),
                 Text('Material: ' + output[index].material),
@@ -175,6 +189,15 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   }
 
   SliverFixedExtentList _getFinished() {
+    List<Auction> output = [];
+    var now = new DateTime.now();
+
+    for (int i = 0; i < ongoingAuctionList.auctionList.length; i++) {
+      if (now.isAfter(ongoingAuctionList.auctionList[i].stopDate)) {
+        output.add(ongoingAuctionList.auctionList[i]);
+      }
+    }
+
     return SliverFixedExtentList(
         itemExtent: 100.0,
         delegate: SliverChildBuilderDelegate(
@@ -182,20 +205,21 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
             return Container(
               alignment: Alignment.center,
               margin: EdgeInsets.all(5.0),
-              color: Colors.yellow[100 * (index % 9)],
+              color: Colors.yellow[800],
               child: Column(children: [
-                Text('Name: Room $index'),
-                Text('Material: Wood'),
-                Text('Participants: 5'),
+                Text('Name: Room ' + output[index].id.toString()),
+                Text('Material: ' + output[index].material),
+                Text('Participants: ' + output[index].currentParticipants.toString()),
                 TextButton(
                     child: Text('Visit room'),
                     onPressed: () {
+                      setCurrentAuction(output[index].id);
                       navigate(WidgetMarker.room);
                     }),
               ]),
             );
           },
-          childCount: 10,
+          childCount: output.length,
         ));
   }
 

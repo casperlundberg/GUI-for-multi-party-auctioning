@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../Entities/auctionDetailsJSON.dart';
 import '../Entities/contractTemplatesJSON.dart';
 import '../State/mainGUI.dart';
@@ -37,6 +36,16 @@ class _RoomState extends State<Room> {
       this.controllers.add(TextEditingController());
     }
   }
+
+  final TextStyle smallText = TextStyle(
+    fontSize: 24.0,
+  );
+  final TextStyle bigText = TextStyle(
+    fontSize: 30.0,
+  );
+  final TextStyle boldText = TextStyle(
+    fontWeight: FontWeight.bold,
+  );
 
   void showContractGUI() {
     showDialog(
@@ -270,11 +279,12 @@ class _RoomState extends State<Room> {
                 ),
                 Container(
                   child: Text(
-                    'GROUP13',
-                    style: TextStyle(fontSize: 30),
+                    //if usertype is supplier
+                    'Provided: {title}',
+                    //else 'Requested: {title}'
+                    style: bigText,
                   ),
                   height: 40.0,
-                  color: Colors.blue[300],
                   margin: EdgeInsets.all(5.0),
                 ),
                 Spacer(),
@@ -286,12 +296,12 @@ class _RoomState extends State<Room> {
                       message: "Copy to clipboard",
                       child: TextButton(
                           child: Text(
-                            'ROOM CODE: 1337',
+                            'ROOM CODE: {id}',
                             textAlign: TextAlign.end,
-                            style: TextStyle(fontSize: 30),
+                            style: bigText,
                           ),
                           onPressed: () {
-                            Clipboard.setData(new ClipboardData(text: "1337")).then((_) {
+                            Clipboard.setData(new ClipboardData(text: "{id}")).then((_) {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: Colors.grey[900], content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
                             });
@@ -300,99 +310,117 @@ class _RoomState extends State<Room> {
               ]),
               Container(
                 child: Text(
-                  'REQUESTED SERVICE: XXX',
-                  style: TextStyle(fontSize: 30),
+                  '{companyname}',
+                  style: bigText,
                 ),
                 width: 1400.0,
                 height: MediaQuery.of(context).size.height * 0.05,
-                color: Colors.red,
-                margin: EdgeInsets.all(5.0),
+                //color: Colors.black,
+                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  boxShadow: [BoxShadow(blurRadius: 3, offset: Offset(0, 4))],
+                ),
               ),
-              Container(
-                color: Colors.blue,
-                margin: EdgeInsets.all(5.0),
-                height: MediaQuery.of(context).size.height * 0.7,
-                child: CustomScrollView(
-                  slivers: <Widget>[
-                    SliverAppBar(
-                      pinned: true,
-                      expandedHeight: 250.0,
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                color: Colors.amber[700],
-                                width: 650.0,
-                                height: MediaQuery.of(context).size.height * 0.1,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Specific Auction info',
-                                  textAlign: TextAlign.center,
-                                )),
-                            Spacer(),
-                            Container(
-                              color: Colors.amber[900],
-                              width: 650.0,
-                              height: MediaQuery.of(context).size.height * 0.1,
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Time remaining, current bid, graph of bid history?',
-                                textAlign: TextAlign.center,
+              Expanded(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                      child: Container(
+                          padding: EdgeInsets.all(5.0),
+                          margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                          //color: Colors.amber[700],
+                          alignment: Alignment.centerLeft,
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+                            Text(
+                              'Specific Auction info',
+                              textAlign: TextAlign.start,
+                              style: smallText,
+                            ),
+                            Text(
+                              'Company: {Name}',
+                              textAlign: TextAlign.start,
+                              style: smallText,
+                            ),
+                            Text(
+                              'Quantity: {Quantity}',
+                              textAlign: TextAlign.start,
+                              style: smallText,
+                            ),
+                            Text(
+                              'Material: {Material}',
+                              textAlign: TextAlign.start,
+                              style: smallText,
+                            ),
+                            Text(
+                              'Specific Auction info',
+                              textAlign: TextAlign.start,
+                              style: smallText,
+                            ),
+                          ]))),
+                  //Spacer(),
+                  Expanded(
+                    child: Container(
+                      color: Colors.white70,
+                      margin: EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Time remaining, current bid, graph of bid history?',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+                ],
+              )),
+              Expanded(
+                  child: Container(
+                      color: Colors.grey[900],
+                      margin: EdgeInsets.all(5.0),
+
+                      //height: 300,
+                      child: Scrollbar(
+                        isAlwaysShown: true,
+                        child: CustomScrollView(
+                          slivers: <Widget>[
+                            SliverAppBar(
+                              floating: true,
+                              pinned: true,
+                              snap: true,
+                              expandedHeight: 50.0,
+                              title: Row(children: [
+                                Text(
+                                  'Bids',
+                                  textAlign: TextAlign.start,
+                                ),
+                                Spacer(),
+                                IconButton(
+                                  icon: Icon(Icons.add),
+                                  tooltip: 'New bid',
+                                  onPressed: () {
+                                    showContractGUI();
+                                  },
+                                ),
+                              ]),
+                            ),
+                            SliverFixedExtentList(
+                              itemExtent: 25.0,
+                              delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                                  return Container(
+                                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                    alignment: Alignment.centerLeft,
+                                    color: Colors.grey[850 + (50 * (index % 2))],
+                                    child: Text('[14:20] COMPANYNAME placed bid for $index SEK', style: TextStyle(fontFamily: 'Consolas')),
+                                  );
+                                },
+                                childCount: 50,
                               ),
                             ),
                           ],
                         ),
-                        title: Row(children: [
-                          Text(
-                            'Bids',
-                            textAlign: TextAlign.start,
-                          ),
-                          Spacer(),
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            tooltip: 'New bid',
-                            onPressed: () {
-                              showContractGUI();
-                            },
-                          ),
-                        ]),
-                      ),
-                    ),
-                    SliverGrid(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 410.0,
-                        mainAxisSpacing: 10.0,
-                        crossAxisSpacing: 10.0,
-                        childAspectRatio: 4.0,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return Container(
-                            alignment: Alignment.center,
-                            color: Colors.teal[100 * (index % 9)],
-                            child: Text('Company $index'),
-                          );
-                        },
-                        childCount: 50,
-                      ),
-                    ),
-                    // SliverFixedExtentList(
-                    //   itemExtent: 50.0,
-                    //   delegate: SliverChildBuilderDelegate(
-                    //     (BuildContext context, int index) {
-                    //       return Container(
-                    //         alignment: Alignment.center,
-                    //         color: Colors.lightBlue[100 * (index % 9)],
-                    //         child: Text('List Item $index'),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
+                      ))),
             ],
           ),
         ),

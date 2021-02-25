@@ -3,47 +3,32 @@
         {
             "id": 1,
             "name": "Wood",
-            "description": "Soft material which often is used i the paper industri."
+            "description": "Soft material which often is used in the paper industry"
         },
         {
             "id": 2,
             "name": "Metals",
-            "description": "Metal is stronger than most materials."
+            "description": "Metal is stronger than most materials"
         },
         {
             "id": 3,
             "name": "Soil",
-            "description": "Soil is used to grow plants and trees."
+            "description": "Soil is used to grow plants and trees"
         },
         {
             "id": 4,
             "name": "Stone",
-            "description": "test"
+            "description": "Description for stone"
         },
         {
             "id": 5,
             "name": "Gold",
-            "description": "test"
+            "description": "Description for gold"
         },
         {
             "id": 6,
             "name": "Silver",
-            "description": "test"
-        },
-        {
-            "id": 7,
-            "name": "test4",
-            "description": "test"
-        },
-        {
-            "id": 8,
-            "name": "test5",
-            "description": "test"
-        },
-        {
-            "id": 9,
-            "name": "test6",
-            "description": "test"
+            "description": "Description for silver"
         }
     ]
 }

@@ -10,44 +10,39 @@ String localJsonUserPageToJson(LocalJsonUserPage data) => json.encode(data.toJso
 
 class LocalJsonUserPage {
   LocalJsonUserPage({
-    this.userInfo,
-    this.statusCode,
-  });
-
-  UserInfo userInfo;
-  int statusCode;
-
-  factory LocalJsonUserPage.fromJson(Map<String, dynamic> json) => LocalJsonUserPage(
-        userInfo: UserInfo.fromJson(json["userInfo"]),
-        statusCode: json["statusCode"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "userInfo": userInfo.toJson(),
-        "statusCode": statusCode,
-      };
-}
-
-class UserInfo {
-  UserInfo({
     this.userId,
     this.userName,
     this.email,
+    this.password,
     this.age,
+    this.address,
+    this.homePhoneNumber,
+    this.mobilePhoneNumber,
+    this.officePhoneNumber,
     this.currentType,
   });
 
   int userId;
   String userName;
   String email;
+  Password password;
   int age;
+  Address address;
+  String homePhoneNumber;
+  String mobilePhoneNumber;
+  String officePhoneNumber;
   String currentType;
 
-  factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
+  factory LocalJsonUserPage.fromJson(Map<String, dynamic> json) => LocalJsonUserPage(
         userId: json["userId"],
         userName: json["userName"],
         email: json["email"],
+        password: Password.fromJson(json["password"]),
         age: json["age"],
+        address: Address.fromJson(json["address"]),
+        homePhoneNumber: json["homePhoneNumber"],
+        mobilePhoneNumber: json["mobilePhoneNumber"],
+        officePhoneNumber: json["officePhoneNumber"],
         currentType: json["currentType"],
       );
 
@@ -55,7 +50,60 @@ class UserInfo {
         "userId": userId,
         "userName": userName,
         "email": email,
+        "password": password.toJson(),
         "age": age,
+        "address": address.toJson(),
+        "homePhoneNumber": homePhoneNumber,
+        "mobilePhoneNumber": mobilePhoneNumber,
+        "officePhoneNumber": officePhoneNumber,
         "currentType": currentType,
+      };
+}
+
+class Address {
+  Address({
+    this.streetAddress,
+    this.city,
+    this.state,
+    this.postalCode,
+  });
+
+  String streetAddress;
+  String city;
+  String state;
+  String postalCode;
+
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
+        streetAddress: json["streetAddress"],
+        city: json["city"],
+        state: json["state"],
+        postalCode: json["postalCode"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "streetAddress": streetAddress,
+        "city": city,
+        "state": state,
+        "postalCode": postalCode,
+      };
+}
+
+class Password {
+  Password({
+    this.type,
+    this.encryption,
+  });
+
+  String type;
+  String encryption;
+
+  factory Password.fromJson(Map<String, dynamic> json) => Password(
+        type: json["type"],
+        encryption: json["encryption"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+        "encryption": encryption,
       };
 }
