@@ -58,7 +58,7 @@ String userString = '''{
     "email": "thule@gmail.com",
     "password": {
         "type": "sha1",
-        "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+        "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
     },
     "age": 35,
     "address": {
@@ -108,7 +108,7 @@ String userListString = '''{
             "email": "thule@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -143,7 +143,7 @@ String userListString = '''{
             "email": "casper@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -178,7 +178,7 @@ String userListString = '''{
             "email": "elliot@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -213,7 +213,7 @@ String userListString = '''{
             "email": "erik@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -248,7 +248,7 @@ String userListString = '''{
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
