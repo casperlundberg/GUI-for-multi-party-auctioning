@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
 
 import '../State/mainGUI.dart';
+import '../Entities/user.dart';
+import '../Entities/userList.dart';
+import 'userInfoHandler.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   final Function navigate;
-  LoginScreen(this.navigate);
+  final User user;
+  final UserList userListObject;
+  final UserInfoHandler userHandler;
+  const LoginScreen(this.navigate, this.user, this.userListObject, this.userHandler);
+
+  @override
+  Login createState() => Login(navigate, user, userListObject, userHandler);
+}
+
+class Login extends State<LoginScreen> {
+  final Function navigate;
+  User user;
+  final UserList userListObject;
+  final UserInfoHandler userHandler;
+
+  Login(this.navigate, this.user, this.userListObject, this.userHandler);
+
+  final TextEditingController _controllerUserName = new TextEditingController();
+  final TextEditingController _controllerPW = new TextEditingController();
+
+  String loginUserName;
+  String loginPW;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +48,10 @@ class LoginScreen extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: TextFormField(
                     decoration: InputDecoration(hintText: 'Username'),
+                    controller: _controllerUserName,
+                    onChanged: (String value) {
+                      loginUserName = value;
+                    },
                   ),
                 ),
                 Padding(
@@ -31,6 +59,10 @@ class LoginScreen extends StatelessWidget {
                   child: TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(hintText: 'Password'),
+                    controller: _controllerPW,
+                    onChanged: (String value) {
+                      loginPW = userHandler.passHasher(value);
+                    },
                   ),
                 ),
                 TextButton(
@@ -39,15 +71,20 @@ class LoginScreen extends StatelessWidget {
                       navigate(WidgetMarker.register);
                     }),
                 TextButton(
-                    child: Text('Login'),
-                    onPressed: () {
+                  child: Text('Login'),
+                  onPressed: () {
+                    if (userHandler.loginValidator(loginUserName, loginPW) != null) {
+                      user = userHandler.loginValidator(loginUserName, loginPW);
                       navigate(WidgetMarker.auctions);
-                    }),
+                    }
+                  },
+                ),
                 TextButton(
-                    child: Text('Forgot password?'),
-                    onPressed: () {
-                      navigate(WidgetMarker.forgotPass);
-                    }),
+                  child: Text('Forgot password?'),
+                  onPressed: () {
+                    navigate(WidgetMarker.forgotPass);
+                  },
+                ),
               ],
             ),
           ),

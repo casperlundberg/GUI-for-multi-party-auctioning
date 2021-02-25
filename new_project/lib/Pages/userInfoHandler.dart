@@ -2,18 +2,21 @@ import 'dart:convert';
 
 import 'package:crypt/crypt.dart';
 import '../Entities/userList.dart';
+import '../Entities/user.dart';
 import 'package:crypto/crypto.dart';
 
 class UserInfoHandler {
   final UserList userListObject;
+  final User user;
 
-  UserInfoHandler(this.userListObject);
+  UserInfoHandler(this.userListObject, this.user);
 
   // Check if a String is a valid email.
   // Return true if it is valid.
   bool isEmail(String email) {
     // Null or empty string is invalid
     if (email == null || email.isEmpty) {
+      print("Please enter a valid e-mail");
       return false;
     }
 
@@ -21,6 +24,7 @@ class UserInfoHandler {
     final regExp = RegExp(pattern);
 
     if (!regExp.hasMatch(email)) {
+      print("Please enter a valid e-mail");
       return false;
     }
     return true;
@@ -79,5 +83,67 @@ class UserInfoHandler {
       return true;
     }
     return false;
+  }
+
+  bool phoneCheck(String mobilePhoneNumber) {
+    // check if email or username is taken, uses userList from json
+    bool usermobilePhoneNumberOK = false;
+    for (int i = 0; i < userListObject.users.length; i++) {
+      if (userListObject.users[i] != user) {
+        if (userListObject.users[i].mobilePhoneNumber == mobilePhoneNumber) {
+          print("Mobile phonenumber is already taken");
+          break;
+        } else {
+          usermobilePhoneNumberOK = true;
+        }
+      }
+    }
+    if (usermobilePhoneNumberOK) {
+      return true;
+    }
+    return false;
+  }
+
+  bool profileEditCheck(String userName, String email, String mobilePhoneNumber) {
+    if (userCheck(userName, email)) {
+      if (isEmail(email)) {
+        if (phoneCheck(mobilePhoneNumber)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  bool passwordValidator(String hash) {
+    // Null or empty string is invalid
+    print("Password: " + hash);
+
+    if (hash == null || hash.isEmpty) {
+      return false;
+    }
+
+    if (hash == user.password.encryption) {
+      return true;
+    }
+    return false;
+  }
+
+  User loginValidator(String userName, String hash) {
+    // Null or empty string is invalid
+    print("Password: " + hash);
+
+    if (hash == null || hash.isEmpty || userName == null || userName.isEmpty) {
+      print("Please fill in your credentials");
+      return null;
+    }
+
+    for (int i = 0; i < userListObject.users.length; i++) {
+      if (userListObject.users[i].userName == userName && userListObject.users[i].password.encryption == hash) {
+        return userListObject.users[i];
+      }
+    }
+    print("Invalid credentials");
+    return null;
   }
 }

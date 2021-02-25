@@ -125,7 +125,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     // USER VARIABLES
     _user = userFromJson(getNullUserString());
     _userListObject = userListFromJson(getUserListString());
-    _userHandler = new UserInfoHandler(_userListObject);
+    _userHandler = new UserInfoHandler(_userListObject, _user);
   }
 
   @override
@@ -404,7 +404,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getLoginContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: LoginScreen(_navigate),
+      child: LoginScreen(_navigate, _user, _userListObject, _userHandler),
     );
   }
 

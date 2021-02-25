@@ -40,6 +40,24 @@ class Profile extends State<ProfileGUI> {
   final TextEditingController _controllerHomePhoneNumber = new TextEditingController();
   final TextEditingController _controllerMobilePhoneNumber = new TextEditingController();
   final TextEditingController _controllerOfficePhoneNumber = new TextEditingController();
+  final TextEditingController _controllerCompany = new TextEditingController();
+  final TextEditingController _controllerPW = new TextEditingController();
+  final TextEditingController _controllerRPW = new TextEditingController();
+
+  String newUserName;
+  String newEmail;
+  int newAge;
+  String newAddress;
+  String newCity;
+  String newState;
+  String newPostalCode;
+  String newHomePhoneNumber;
+  String newMobilePhoneNumber;
+  String newOfficePhoneNumber;
+  String newCurrentType;
+  String newCompany;
+  String pw;
+  String rpw;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +91,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerUserName..text = user.userName,
                         onChanged: (String value) {
-                          user.userName = value;
+                          newUserName = value;
                         },
                       ),
                     ),
@@ -86,7 +104,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerEmail..text = user.email,
                         onChanged: (String value) {
-                          user.email = value;
+                          newEmail = value;
                         },
                       ),
                     ),
@@ -99,7 +117,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerAge..text = user.age.toString(),
                         onChanged: (String value) {
-                          user.age = value as int;
+                          newAge = value as int;
                         },
                       ),
                     ),
@@ -112,7 +130,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerAddress..text = user.address.streetAddress,
                         onChanged: (String value) {
-                          user.address.streetAddress = value;
+                          newAddress = value;
                         },
                       ),
                     ),
@@ -125,7 +143,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerCity..text = user.address.city,
                         onChanged: (String value) {
-                          user.address.city = value;
+                          newCity = value;
                         },
                       ),
                     ),
@@ -138,7 +156,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerState..text = user.address.state,
                         onChanged: (String value) {
-                          user.address.state = value;
+                          newState = value;
                         },
                       ),
                     ),
@@ -151,7 +169,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerPostalCode..text = user.address.postalCode,
                         onChanged: (String value) {
-                          user.address.postalCode = value;
+                          newPostalCode = value;
                         },
                       ),
                     ),
@@ -164,7 +182,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerHomePhoneNumber..text = user.homePhoneNumber,
                         onChanged: (String value) {
-                          user.homePhoneNumber = value;
+                          newHomePhoneNumber = value;
                         },
                       ),
                     ),
@@ -177,7 +195,7 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerMobilePhoneNumber..text = user.mobilePhoneNumber,
                         onChanged: (String value) {
-                          user.mobilePhoneNumber = value;
+                          newMobilePhoneNumber = value;
                         },
                       ),
                     ),
@@ -190,7 +208,20 @@ class Profile extends State<ProfileGUI> {
                         autocorrect: false,
                         controller: _controllerOfficePhoneNumber..text = user.officePhoneNumber,
                         onChanged: (String value) {
-                          user.officePhoneNumber = value;
+                          newOfficePhoneNumber = value;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: new TextField(
+                        decoration: const InputDecoration(
+                          labelText: "Company",
+                        ),
+                        autocorrect: false,
+                        controller: _controllerCompany..text = user.company,
+                        onChanged: (String value) {
+                          newCompany = value;
                         },
                       ),
                     ),
@@ -217,7 +248,7 @@ class Profile extends State<ProfileGUI> {
                                     }).toList(),
                                     onChanged: (String newValue) {
                                       setState(() {
-                                        user.currentType = newValue;
+                                        newCurrentType = newValue;
                                       });
                                     },
                                   )
@@ -230,11 +261,57 @@ class Profile extends State<ProfileGUI> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(hintText: 'Password'),
+                        controller: _controllerPW,
+                        onChanged: (String value) {
+                          pw = userHandler.passHasher(value);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(hintText: 'Repeat password'),
+                        controller: _controllerRPW,
+                        onChanged: (String value) {
+                          rpw = userHandler.passHasher(value);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         child: Text("Save changes"),
                         onPressed: () {
-                          setUserString(userToJson(user));
-                          navigate(WidgetMarker.auctions);
+                          if (userHandler.profileEditCheck(newUserName, newEmail, newMobilePhoneNumber)) {
+                            if (userHandler.passwordChecker(pw, rpw)) {
+                              if (userHandler.passwordValidator(pw)) {
+                                user.userName = newUserName;
+                                user.email = newEmail;
+                                user.age = newAge;
+                                user.address.streetAddress = newAddress;
+                                user.address.city = newCity;
+                                user.address.state = newState;
+                                user.address.postalCode = newPostalCode;
+                                user.homePhoneNumber = newHomePhoneNumber;
+                                user.mobilePhoneNumber = newMobilePhoneNumber;
+                                user.officePhoneNumber = newOfficePhoneNumber;
+                                user.currentType = newCurrentType;
+                                user.company = newCompany;
+                                user.password.encryption = pw;
+                                setUserString(userToJson(user));
+                                navigate(WidgetMarker.auctions);
+                              } else {
+                                print("Wrong Password");
+                              }
+                            } else {
+                              // Password missmatch pop-up
+                              print("Password and repat password missmatch");
+                            }
+                          }
                         },
                       ),
                     ),

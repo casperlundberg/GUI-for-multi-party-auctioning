@@ -25,6 +25,8 @@ class Register extends State<RegisterScreen> {
   final UserList userListObject;
   final UserInfoHandler userHandler;
 
+  Register(this.navigate, this.user, this.userListObject, this.userHandler);
+
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerPW = new TextEditingController();
@@ -34,8 +36,6 @@ class Register extends State<RegisterScreen> {
   String newEmail;
   String pw;
   String rpw;
-
-  Register(this.navigate, this.user, this.userListObject, this.userHandler);
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class Register extends State<RegisterScreen> {
                             navigate(WidgetMarker.auctions);
                           } else {
                             // Password missmatch pop-up
-                            print("Password missmatch");
+                            print("Password and repat password missmatch");
                           }
                         }
                       } else {
