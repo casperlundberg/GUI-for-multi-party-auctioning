@@ -3,7 +3,9 @@
 //     final localJsonUserList = localJsonUserListFromJson(jsonString);
 
 import 'dart:convert';
-import 'localJSONUserPage.dart';
+import 'package:new_project/Entities/user.dart';
+
+import 'user.dart';
 
 UserList userListFromJson(String str) => UserList.fromJson(json.decode(str));
 
@@ -14,10 +16,10 @@ class UserList {
     this.users,
   });
 
-  List<LocalJsonUserPage> users;
+  List<User> users;
 
   factory UserList.fromJson(Map<String, dynamic> json) => UserList(
-        users: List<LocalJsonUserPage>.from(json["users"].map((x) => LocalJsonUserPage.fromJson(x))),
+        users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

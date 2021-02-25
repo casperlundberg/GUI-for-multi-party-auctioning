@@ -11,7 +11,7 @@ import '../Auctions/room.dart';
 import '../Entities/filtersJSON.dart';
 import '../Entities/auctionListJSON.dart';
 import '../Entities/auctionDetailsJSON.dart';
-import '../Entities/localJSONUserPage.dart';
+import '../Entities/user.dart';
 import '../Entities/contractTemplatesJSON.dart';
 import '../Pages/auctionsGUI.dart';
 import '../Pages/forgotPass.dart';
@@ -20,6 +20,7 @@ import '../Pages/profile.dart';
 import '../Pages/register.dart';
 import '../jsonUtilities.dart';
 import '../Entities/userList.dart';
+import '../Pages/userInfoHandler.dart';
 
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
 //https://github.com/TechieBlossom/flutter-samples/blob/master/widgetswitchdemo.dart
@@ -69,8 +70,9 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Future _filterFuture;
 
   // USER
-  LocalJsonUserPage _user;
+  User _user;
   UserList _userListObject;
+  UserInfoHandler _userHandler;
 
   // AUCTION JSON
   AuctionDetails _auctionDetailsList;
@@ -119,8 +121,9 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     });
 
     // USER VARIABLES
-    _user = localJsonUserPageFromJson(getNullUserString());
+    _user = userFromJson(getNullUserString());
     _userListObject = userListFromJson(getUserListString());
+    _userHandler = new UserInfoHandler(_userListObject);
   }
 
   @override
@@ -406,7 +409,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getRegisterContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: RegisterScreen(_navigate, _user, _userListObject),
+      child: RegisterScreen(_navigate, _user, _userListObject, _userHandler),
     );
   }
 
@@ -420,7 +423,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: ProfileGUI(_navigate, _user),
+      child: ProfileGUI(_navigate, _user, _userHandler),
     );
   }
 

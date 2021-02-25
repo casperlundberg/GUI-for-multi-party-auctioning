@@ -35,7 +35,13 @@ String userNullString = '''{
     "homePhoneNumber": "",
     "mobilePhoneNumber": "",
     "officePhoneNumber": "",
-    "currentType": ""
+    "currentType": "",
+    "company": "",
+    "participatingAuctions": [
+        {
+            "auctionID": null
+        }
+    ]
 }''';
 String getNullUserString() {
   return userNullString;
@@ -64,7 +70,22 @@ String userString = '''{
     "homePhoneNumber": "212 555-1234",
     "mobilePhoneNumber": "212 555-1234",
     "officePhoneNumber": "212 555-1234",
-    "currentType": "Demander"
+    "currentType": "Demander",
+    "company": "Teknologkåren",
+    "participatingAuctions": [
+        {
+            "auctionID": 2
+        },
+        {
+            "auctionID": 3
+        },
+        {
+            "auctionID": 4
+        },
+        {
+            "auctionID": 5
+        }
+    ]
 }''';
 String getUserString() {
   return userString;
@@ -100,7 +121,21 @@ String userListString = '''{
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+        {
+            "auctionID": 2
+        },
+        {
+            "auctionID": 3
+        },
+        {
+            "auctionID": 4
+        },
+        {
+            "auctionID": 5
+        }
+    ]
         },
         {
             "userId": 2,
@@ -121,7 +156,21 @@ String userListString = '''{
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
-            "company": "Netlight"
+            "company": "Netlight",
+            "participatingAuctions": [
+        {
+            "auctionID": 2
+        },
+        {
+            "auctionID": 3
+        },
+        {
+            "auctionID": 4
+        },
+        {
+            "auctionID": 5
+        }
+    ]
         },
         {
             "userId": 3,
@@ -142,7 +191,21 @@ String userListString = '''{
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+        {
+            "auctionID": 2
+        },
+        {
+            "auctionID": 3
+        },
+        {
+            "auctionID": 4
+        },
+        {
+            "auctionID": 5
+        }
+    ]
         },
         {
             "userId": 4,
@@ -163,7 +226,21 @@ String userListString = '''{
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+        {
+            "auctionID": 2
+        },
+        {
+            "auctionID": 3
+        },
+        {
+            "auctionID": 4
+        },
+        {
+            "auctionID": 5
+        }
+    ]
         },
         {
             "userId": 5,
@@ -184,7 +261,21 @@ String userListString = '''{
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+        {
+            "auctionID": 2
+        },
+        {
+            "auctionID": 3
+        },
+        {
+            "auctionID": 4
+        },
+        {
+            "auctionID": 5
+        }
+    ]
         }
     ]
 }''';
