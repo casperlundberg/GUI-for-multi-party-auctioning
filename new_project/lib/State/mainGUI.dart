@@ -20,6 +20,7 @@ import '../Pages/profile.dart';
 import '../Pages/register.dart';
 import '../jsonUtilities.dart';
 import '../Entities/userList.dart';
+import '../Pages/userInfoHandler.dart';
 
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
 //https://github.com/TechieBlossom/flutter-samples/blob/master/widgetswitchdemo.dart
@@ -71,6 +72,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   // USER
   LocalJsonUserPage _user;
   UserList _userListObject;
+  UserInfoHandler _userHandler;
 
   // AUCTION JSON
   List<AuctionDetails> _auctionDetailsList;
@@ -122,6 +124,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     // USER VARIABLES
     _user = localJsonUserPageFromJson(getNullUserString());
     _userListObject = userListFromJson(getUserListString());
+    _userHandler = new UserInfoHandler(_userListObject);
   }
 
   @override
@@ -407,7 +410,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getRegisterContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: RegisterScreen(_navigate, _user, _userListObject),
+      child: RegisterScreen(_navigate, _user, _userListObject, _userHandler),
     );
   }
 
