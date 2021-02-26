@@ -84,8 +84,6 @@ class Profile extends State<ProfileGUI> {
       newCompany = user.company;
       userHandler = new UserInfoHandler(userListObject, user);
 
-      print(user.userId);
-
       return Center(
         child: Container(
           height: MediaQuery.of(context).size.height * 0.85,

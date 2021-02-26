@@ -21,8 +21,8 @@ class RegisterScreen extends StatefulWidget {
 
 class Register extends State<RegisterScreen> {
   final Function navigate;
-  final User user;
-  final UserList userListObject;
+  User user;
+  UserList userListObject;
   final UserInfoHandler userHandler;
 
   Register(this.navigate, this.user, this.userListObject, this.userHandler);

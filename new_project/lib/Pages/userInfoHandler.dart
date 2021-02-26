@@ -91,10 +91,10 @@ class UserInfoHandler {
 
   bool phoneCheck(String mobilePhoneNumber) {
     // Null or empty string is invalid
-    if (mobilePhoneNumber == null || mobilePhoneNumber.isEmpty) {
+    /* if (mobilePhoneNumber == null || mobilePhoneNumber.isEmpty) {
       print("Please enter a valid mobile phonenumber");
       return false;
-    }
+    } */
     bool usermobilePhoneNumberOK = false;
     for (int i = 0; i < userListObject.users.length; i++) {
       if (userListObject.users[i].userId != user.userId) {

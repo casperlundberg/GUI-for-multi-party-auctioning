@@ -72,7 +72,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    print(user.userId); // printa något från user för att se att den är uppdaterad från login
+    print("logged in userid: " + user.userId.toString()); // printa något från user för att se att den är uppdaterad från login
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
       width: MediaQuery.of(context).size.width * 0.4,
