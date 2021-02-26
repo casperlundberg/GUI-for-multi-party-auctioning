@@ -21,7 +21,17 @@ class MyAuctions extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            title: Center(child: Text("My Auctions")),
+            title: Row(children: [
+              Text("My Auctions"),
+              Spacer(),
+              IconButton(
+                icon: Icon(Icons.add),
+                tooltip: 'New auction',
+                onPressed: () {
+                  //Add auction code goes here
+                },
+              ),
+            ]),
           ),
           SliverFixedExtentList(
               itemExtent: 100.0,
@@ -32,9 +42,11 @@ class MyAuctions extends StatelessWidget {
                     margin: EdgeInsets.all(5.0),
                     color: Colors.pink[600],
                     child: Column(children: [
-                      Text('Name: Room ${user.participatingAuctions[index].auctionId}'),
+                      Text(
+                          'Name: Room ${user.participatingAuctions[index].auctionId}'),
                       Text('Material: ${auctionDetails.material}'),
-                      Text('Participants: ${auctionDetails.participants.length}'),
+                      Text(
+                          'Participants: ${auctionDetails.participants.length}'),
                       TextButton(
                           child: Text('Visit room'),
                           onPressed: () {
