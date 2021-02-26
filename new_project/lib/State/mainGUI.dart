@@ -123,7 +123,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     // USER VARIABLES
     _user = userFromJson(getNullUserString());
     _userListObject = userListFromJson(getUserListString());
-    _userHandler = new UserInfoHandler(_userListObject);
+    _userHandler = new UserInfoHandler(_userListObject, _user);
   }
 
   @override
@@ -395,14 +395,14 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     return FadeTransition(
       opacity: _animation,
       child: AuctionsGUI(_navigate, _availableFilters, _activeFilters, _inactiveFilters, _updateFilters, _deleteFilter, _activateFilter, _deactivateFilter,
-          _ongoingAuctionList, _finishedAuctionList, _createAuction, _setCurrentAuction, _getContractTemplates, _auctionDetailsList),
+          _ongoingAuctionList, _finishedAuctionList, _createAuction, _setCurrentAuction, _getContractTemplates, _auctionDetailsList, _user),
     );
   }
 
   Widget getLoginContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: LoginScreen(_navigate),
+      child: LoginScreen(_navigate, _user, _userListObject, _userHandler),
     );
   }
 

@@ -6,6 +6,10 @@ import 'contractGUI.dart';
 import '../Entities/auctionListJSON.dart';
 import '../Entities/filtersJSON.dart';
 import '../Entities/contractTemplatesJSON.dart';
+import '../jsonUtilities.dart';
+import '../Entities/userList.dart';
+import '../Pages/userInfoHandler.dart';
+import '../Entities/user.dart';
 
 enum PageMarker { ongoing, finished }
 
@@ -17,20 +21,21 @@ class Auctions extends StatefulWidget {
   final Function setCurrentAuction;
   final List<Filter> activeFilters;
   final Function getContractTemplates;
+  final User user;
 
   Auctions(this.navigate, this.ongoingAuctionList, this.finishedAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters,
-      this.getContractTemplates);
+      this.getContractTemplates, this.user);
 
   @override
   _AuctionsState createState() =>
-      _AuctionsState(navigate, ongoingAuctionList, finishedAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates);
+      _AuctionsState(navigate, ongoingAuctionList, finishedAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates, user);
 }
 
 class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
   PageMarker _currentPage;
   final AuctionList ongoingAuctionList;
   final AuctionList finishedAuctionList;
-  Auction auction;
+  final User user;
 
   final Function navigate;
   final Function createAuction;
@@ -49,7 +54,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   String contractDropdownValue;
 
   _AuctionsState(this.navigate, this.ongoingAuctionList, this.finishedAuctionList, this.createAuction, this.setCurrentAuction, this.activeFilters,
-      this.getContractTemplates) {
+      this.getContractTemplates, this.user) {
     contractTemplates = getContractTemplates("Supplier");
     contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
     contractTemplate = contractTemplates.contractTemplates[0];

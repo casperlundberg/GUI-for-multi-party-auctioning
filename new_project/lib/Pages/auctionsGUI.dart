@@ -6,6 +6,7 @@ import '../Auctions/auctions.dart';
 import '../Auctions/myauctions.dart';
 import '../Entities/filtersJSON.dart';
 import '../Entities/auctionListJSON.dart';
+import '../Entities/user.dart';
 
 class AuctionsGUI extends StatelessWidget {
   final Function navigate;
@@ -26,6 +27,7 @@ class AuctionsGUI extends StatelessWidget {
   final AuctionList ongoingAuctionList;
   final AuctionList finishedAuctionList;
   final AuctionDetails auctionDetails;
+  final User user;
 
   AuctionsGUI(
       this.navigate,
@@ -41,7 +43,8 @@ class AuctionsGUI extends StatelessWidget {
       this.createAuction,
       this.setCurrentAuction,
       this.getContractTemplates,
-      this.auctionDetails);
+      this.auctionDetails,
+      this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +53,8 @@ class AuctionsGUI extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
         FiltersGUI(availableFilters, activeFilters, inactiveFilters, updateFilters, deleteFilter, activateFilter, deactivateFilter),
-        Center(child: Auctions(navigate, ongoingAuctionList, finishedAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates)),
-        Center(child: MyAuctions(navigate, auctionDetails)),
+        Center(child: Auctions(navigate, ongoingAuctionList, finishedAuctionList, createAuction, setCurrentAuction, activeFilters, getContractTemplates, user)),
+        Center(child: MyAuctions(navigate, auctionDetails, user)),
       ],
     );
   }
