@@ -107,7 +107,8 @@ class Register extends State<RegisterScreen> {
                             user.password.encryption = pw;
                             user.password.type = "sha256";
                             userListObject.users.add(user);
-                            print(userListToJson(userListObject));
+                            setUserString(userToJson(user));
+                            setUserListString(userListToJson(userListObject));
                             navigate(WidgetMarker.auctions);
                           }
                         }

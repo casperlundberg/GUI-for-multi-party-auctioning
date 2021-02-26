@@ -340,6 +340,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
       case WidgetMarker.auctions:
         setState(() {
           _filterFuture = getFilters();
+          _user = userFromJson(getUserString());
+          _userListObject = userListFromJson(getUserListString());
           _filterFuture.then((filters) {
             _availableFilters = filters.filters;
           });
