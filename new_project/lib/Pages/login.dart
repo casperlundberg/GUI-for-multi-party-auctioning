@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../State/mainGUI.dart';
 import '../Entities/user.dart';
 import '../Entities/userList.dart';
+import '../jsonUtilities.dart';
 import 'userInfoHandler.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -75,6 +76,7 @@ class Login extends State<LoginScreen> {
                   onPressed: () {
                     if (userHandler.loginValidator(loginUserName, loginPW) != null) {
                       user = userHandler.loginValidator(loginUserName, loginPW);
+                      setUserString(userToJson(user));
                       navigate(WidgetMarker.auctions);
                     }
                   },
