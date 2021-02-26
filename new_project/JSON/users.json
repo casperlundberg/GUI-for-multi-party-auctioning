@@ -6,7 +6,7 @@
             "email": "thule@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -16,18 +16,32 @@
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-98",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 2,
-            "userName": "Casper Lundberg",
+            "userName": "casper",
             "email": "casper@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -40,7 +54,21 @@
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
-            "company": "Netlight"
+            "company": "Netlight",
+            "participatingAuctions": [
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 3,
@@ -48,7 +76,7 @@
             "email": "elliot@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -58,10 +86,24 @@
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 4,
@@ -69,7 +111,7 @@
             "email": "erik@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -79,10 +121,24 @@
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-1",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 5,
@@ -90,7 +146,7 @@
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",
-                "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
+                "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
             },
             "age": 35,
             "address": {
@@ -100,10 +156,24 @@
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-3",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
-            "company": "Teknologkåren"
+            "company": "Teknologkåren",
+            "participatingAuctions": [
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         }
     ]
 }
