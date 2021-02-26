@@ -126,19 +126,19 @@ String userListString = '''{
             "currentType": "Demander",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 2,
@@ -161,19 +161,19 @@ String userListString = '''{
             "currentType": "Demander",
             "company": "Netlight",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 3,
@@ -196,19 +196,19 @@ String userListString = '''{
             "currentType": "Demander",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 4,
@@ -231,19 +231,19 @@ String userListString = '''{
             "currentType": "Supplier",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 5,
@@ -266,19 +266,19 @@ String userListString = '''{
             "currentType": "Supplier",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         }
     ]
 }''';
