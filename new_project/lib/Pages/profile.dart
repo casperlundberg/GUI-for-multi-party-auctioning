@@ -3,6 +3,7 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_project/Entities/userList.dart';
 import '../State/mainGUI.dart';
 import '../Entities/user.dart';
 import '../jsonUtilities.dart';
@@ -12,23 +13,26 @@ class ProfileGUI extends StatefulWidget {
   final Function navigate;
   final User user;
   final UserInfoHandler userHandler;
+  final UserList userListObject;
 
   const ProfileGUI(
     this.navigate,
     this.user,
+    this.userListObject,
     this.userHandler,
   );
   @override
-  Profile createState() => Profile(navigate, user, userHandler);
+  Profile createState() => Profile(navigate, user, userListObject, userHandler);
 }
 
 class Profile extends State<ProfileGUI> {
   final Function navigate;
   User user;
-  final UserInfoHandler userHandler;
+  UserList userListObject;
+  UserInfoHandler userHandler;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  Profile(this.navigate, this.user, this.userHandler);
+  Profile(this.navigate, this.user, this.userListObject, this.userHandler);
 
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
@@ -41,6 +45,7 @@ class Profile extends State<ProfileGUI> {
   final TextEditingController _controllerMobilePhoneNumber = new TextEditingController();
   final TextEditingController _controllerOfficePhoneNumber = new TextEditingController();
   final TextEditingController _controllerCompany = new TextEditingController();
+  final TextEditingController _controllerOPW = new TextEditingController();
   final TextEditingController _controllerPW = new TextEditingController();
   final TextEditingController _controllerRPW = new TextEditingController();
 
@@ -56,6 +61,7 @@ class Profile extends State<ProfileGUI> {
   String newOfficePhoneNumber;
   String newCurrentType;
   String newCompany;
+  String opw;
   String pw;
   String rpw;
 
@@ -63,8 +69,21 @@ class Profile extends State<ProfileGUI> {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     //final DateTime today = new DateTime.now();
-
     if (user != null) {
+      newUserName = user.userName;
+      newEmail = user.email;
+      newAge = user.age;
+      newAddress = user.address.streetAddress;
+      newCity = user.address.city;
+      newState = user.address.state;
+      newPostalCode = user.address.postalCode;
+      newHomePhoneNumber = user.homePhoneNumber;
+      newMobilePhoneNumber = user.mobilePhoneNumber;
+      newOfficePhoneNumber = user.officePhoneNumber;
+      newCurrentType = user.currentType;
+      newCompany = user.company;
+      userHandler = new UserInfoHandler(userListObject, user);
+
       return Center(
         child: Container(
           height: MediaQuery.of(context).size.height * 0.85,
@@ -81,6 +100,7 @@ class Profile extends State<ProfileGUI> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
+                    Text('Edit Profile', style: themeData.textTheme.headline4),
                     Padding(
                       padding: EdgeInsets.only(left: 8.0, top: 8.0, right: 8.0, bottom: 8.0),
                       child: new TextField(
@@ -263,7 +283,18 @@ class Profile extends State<ProfileGUI> {
                       padding: EdgeInsets.all(8.0),
                       child: TextFormField(
                         obscureText: true,
-                        decoration: InputDecoration(hintText: 'Password'),
+                        decoration: InputDecoration(hintText: 'Old password'),
+                        controller: _controllerOPW,
+                        onChanged: (String value) {
+                          opw = userHandler.passHasher(value);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(hintText: 'New password'),
                         controller: _controllerPW,
                         onChanged: (String value) {
                           pw = userHandler.passHasher(value);
@@ -288,7 +319,7 @@ class Profile extends State<ProfileGUI> {
                         onPressed: () {
                           if (userHandler.profileEditCheck(newUserName, newEmail, newMobilePhoneNumber)) {
                             if (userHandler.passwordChecker(pw, rpw)) {
-                              if (userHandler.passwordValidator(pw)) {
+                              if (userHandler.passwordValidator(opw)) {
                                 user.userName = newUserName;
                                 user.email = newEmail;
                                 user.age = newAge;
