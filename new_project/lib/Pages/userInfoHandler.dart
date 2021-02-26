@@ -40,21 +40,22 @@ class UserInfoHandler {
     bool emailOK = false;
     bool userNameOK = false;
     for (int i = 0; i < userListObject.users.length; i++) {
-      if (userListObject.users[i].email == email) {
-        //email already taken pop-up
+      if (userListObject.users[i].userId != user.userId) {
+        if (userListObject.users[i].email == email) {
+          //email already taken pop-up
+          print("Email is already taken");
+          break;
+        } else {
+          emailOK = true;
+        }
 
-        print("Email is already taken");
-        break;
-      } else {
-        emailOK = true;
-      }
-
-      if (userListObject.users[i].userName == userName) {
-        //username already taken pop-up
-        print("Username is already taken");
-        break;
-      } else {
-        userNameOK = true;
+        if (userListObject.users[i].userName == userName) {
+          //username already taken pop-up
+          print("Username is already taken");
+          break;
+        } else {
+          userNameOK = true;
+        }
       }
     }
     if (emailOK && userNameOK) {
@@ -73,13 +74,13 @@ class UserInfoHandler {
 
   bool passwordChecker(String hash, String hashRepeat) {
     // Null or empty string is invalid
-    print("Password: " + hash);
-    print("Repeated password: " + hashRepeat);
-
     if (hash == null || hash.isEmpty || hashRepeat == null || hashRepeat.isEmpty) {
       print("Please enter valid passwords");
       return false;
     }
+
+    print("Password: " + hash);
+    print("Repeated password: " + hashRepeat);
 
     if (hash == hashRepeat) {
       return true;
@@ -96,7 +97,7 @@ class UserInfoHandler {
     }
     bool usermobilePhoneNumberOK = false;
     for (int i = 0; i < userListObject.users.length; i++) {
-      if (userListObject.users[i] != user) {
+      if (userListObject.users[i].userId != user.userId) {
         if (userListObject.users[i].mobilePhoneNumber == mobilePhoneNumber) {
           print("Mobile phonenumber is already taken");
           break;
@@ -108,7 +109,6 @@ class UserInfoHandler {
     if (usermobilePhoneNumberOK) {
       return true;
     }
-    print("Please enter a valid mobile phonenumber");
     return false;
   }
 
@@ -128,14 +128,14 @@ class UserInfoHandler {
     print("Password: " + hash);
 
     if (hash == null || hash.isEmpty) {
-      print("Invalid password");
+      print("Password field empty");
       return false;
     }
 
     if (hash == user.password.encryption) {
       return true;
     }
-    print("Password and repat password missmatch");
+    print("Invalid password");
     return false;
   }
 

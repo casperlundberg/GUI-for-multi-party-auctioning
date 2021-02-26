@@ -121,7 +121,7 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-98",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
             "company": "Teknologkåren",
@@ -142,7 +142,7 @@ String userListString = '''{
         },
         {
             "userId": 2,
-            "userName": "Casper Lundberg",
+            "userName": "casper",
             "email": "casper@gmail.com",
             "password": {
                 "type": "sha1",
@@ -191,7 +191,7 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
             "company": "Teknologkåren",
@@ -226,7 +226,7 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-1",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
             "company": "Teknologkåren",
@@ -261,7 +261,7 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-3",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
             "company": "Teknologkåren",
