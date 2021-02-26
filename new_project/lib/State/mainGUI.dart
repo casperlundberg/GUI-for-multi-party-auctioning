@@ -57,8 +57,6 @@ class MainGUI extends StatefulWidget {
   State<StatefulWidget> createState() => MainGUIState();
 }
 
-//TEST COMMENT
-
 class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<MainGUI> {
   WidgetMarker _selectedWidgetMarker;
   AnimationController _controller;
