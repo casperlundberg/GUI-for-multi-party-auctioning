@@ -216,30 +216,7 @@ class _AuctionsState extends State<Auctions>
       }
     }
 
-    return SliverFixedExtentList(
-        itemExtent: 100.0,
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            return Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.all(5.0),
-              color: Colors.lightGreen[600],
-              child: Column(children: [
-                Text('Name: Room ' + output[index].id.toString()),
-                Text('Material: ' + output[index].material),
-                Text('Participants: ' +
-                    output[index].currentParticipants.toString()),
-                TextButton(
-                    child: Text('Visit room'),
-                    onPressed: () {
-                      setCurrentAuction(output[index].id);
-                      navigate(WidgetMarker.room);
-                    }),
-              ]),
-            );
-          },
-          childCount: output.length,
-        ));
+    return _generateBoxes(output);
   }
 
   SliverFixedExtentList _getFinished() {
@@ -264,27 +241,41 @@ class _AuctionsState extends State<Auctions>
       }
     }
 
+    return _generateBoxes(output);
+  }
+
+  //Generates the auctionboxes themselves
+  SliverFixedExtentList _generateBoxes(output) {
     return SliverFixedExtentList(
         itemExtent: 100.0,
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.all(5.0),
-              color: Colors.yellow[800],
-              child: Column(children: [
-                Text('Name: Room ' + output[index].id.toString()),
-                Text('Material: ' + output[index].material),
-                Text('Participants: ' +
-                    output[index].currentParticipants.toString()),
-                TextButton(
-                    child: Text('Visit room'),
-                    onPressed: () {
-                      setCurrentAuction(output[index].id);
-                      navigate(WidgetMarker.room);
-                    }),
-              ]),
-            );
+                alignment: Alignment.center,
+                margin: EdgeInsets.all(5.0),
+                padding: EdgeInsets.only(left: 10, right: 10),
+                color: Colors.lightGreen[600],
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Name: Room ' + output[index].id.toString()),
+                        Text('Material: ' + output[index].material),
+                        Text('Participants: ' +
+                            output[index].currentParticipants.toString()),
+                      ]),
+                  Spacer(),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: ElevatedButton(
+                        child: Text('Visit room'),
+                        onPressed: () {
+                          setCurrentAuction(output[index].id);
+                          navigate(WidgetMarker.room);
+                        }),
+                  ),
+                ]));
           },
           childCount: output.length,
         ));

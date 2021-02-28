@@ -38,25 +38,35 @@ class MyAuctions extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.all(5.0),
-                    color: Colors.pink[600],
-                    child: Column(children: [
-                      Text(
-                          'Name: Room ${user.participatingAuctions[index].auctionId}'),
-                      Text('Material: ${auctionDetails.material}'),
-                      Text(
-                          'Participants: ${auctionDetails.participants.length}'),
-                      TextButton(
-                          child: Text('Visit room'),
-                          onPressed: () {
-                            navigate(WidgetMarker.room);
-                          }),
-                    ]),
-                  );
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.all(5.0),
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      color: Colors.lightGreen[600],
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      'Name: Room ${user.participatingAuctions[index].auctionId}'),
+                                  Text('Material: ${auctionDetails.material}'),
+                                  Text(
+                                      'Participants: ${auctionDetails.participants.length}'),
+                                ]),
+                            Spacer(),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: ElevatedButton(
+                                  child: Text('Visit room'),
+                                  onPressed: () {
+                                    navigate(WidgetMarker.room);
+                                  }),
+                            ),
+                          ]));
                 },
                 childCount: user.participatingAuctions.length,
-              )),
+              ))
         ],
       ),
     );
