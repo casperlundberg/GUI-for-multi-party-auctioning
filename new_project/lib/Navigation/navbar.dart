@@ -25,11 +25,13 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
       ),
 
       actions: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            showContractTemplateGUI();
-          },
-          child: Text("Create new contract template"),
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: ElevatedButton(
+              onPressed: () {
+                showContractTemplateGUI();
+              },
+              child: Text("New Contract Template")),
         ),
         IconButton(
           icon: Icon(Icons.notifications),

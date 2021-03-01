@@ -425,7 +425,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: ProfileGUI(_navigate, _user, _userHandler),
+      child: ProfileGUI(_navigate, _user, _userListObject, _userHandler),
     );
   }
 

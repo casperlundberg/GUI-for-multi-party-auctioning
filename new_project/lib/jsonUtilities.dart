@@ -121,28 +121,28 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-98",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 2,
-            "userName": "Casper Lundberg",
+            "userName": "casper",
             "email": "casper@gmail.com",
             "password": {
                 "type": "sha1",
@@ -161,19 +161,19 @@ String userListString = '''{
             "currentType": "Demander",
             "company": "Netlight",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 3,
@@ -191,24 +191,24 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-234",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Demander",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 4,
@@ -226,24 +226,24 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-1",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         },
         {
             "userId": 5,
@@ -261,24 +261,24 @@ String userListString = '''{
                 "postalCode": "971 83"
             },
             "homePhoneNumber": "212 555-1234",
-            "mobilePhoneNumber": "212 555-1234",
+            "mobilePhoneNumber": "212 555-3",
             "officePhoneNumber": "212 555-1234",
             "currentType": "Supplier",
             "company": "Teknologkåren",
             "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
+                {
+                    "auctionID": 2
+                },
+                {
+                    "auctionID": 3
+                },
+                {
+                    "auctionID": 4
+                },
+                {
+                    "auctionID": 5
+                }
+            ]
         }
     ]
 }''';
