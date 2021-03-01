@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../State/mainGUI.dart';
+import '../mainGUI.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   final Function navigate;
@@ -20,8 +20,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Forgot Password',
-                      style: Theme.of(context).textTheme.headline4),
+                  Text('Forgot Password', style: Theme.of(context).textTheme.headline4),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextFormField(

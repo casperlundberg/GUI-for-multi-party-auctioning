@@ -1,31 +1,24 @@
-import 'dart:convert';
-import 'package:crypt/crypt.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import '../Entities/user.dart';
-import '../Entities/userList.dart';
-import '../jsonUtilities.dart';
-import 'userInfoHandler.dart';
-import '../State/mainGUI.dart';
+
+import '../Handlers/userInfoHandler.dart';
+import '../mainGUI.dart';
 
 class RegisterScreen extends StatefulWidget {
   final Function navigate;
-  final User user;
-  final UserList userListObject;
   final UserInfoHandler userHandler;
-  const RegisterScreen(this.navigate, this.user, this.userListObject, this.userHandler);
+  final Function userToAuction;
+  const RegisterScreen(this.navigate, this.userHandler, this.userToAuction);
 
   @override
-  Register createState() => Register(navigate, user, userListObject, userHandler);
+  Register createState() => Register(navigate, userHandler, userToAuction);
 }
 
 class Register extends State<RegisterScreen> {
   final Function navigate;
-  User user;
-  UserList userListObject;
   final UserInfoHandler userHandler;
+  final Function userToAuction;
 
-  Register(this.navigate, this.user, this.userListObject, this.userHandler);
+  Register(this.navigate, this.userHandler, this.userToAuction);
 
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
@@ -101,14 +94,7 @@ class Register extends State<RegisterScreen> {
                         // test to check if email & username is taken
                         if (userHandler.userCheck(newUserName, newEmail)) {
                           if (userHandler.passwordChecker(pw, rpw)) {
-                            user.userId = userListObject.users.length + 1;
-                            user.userName = newUserName;
-                            user.email = newEmail;
-                            user.password.encryption = pw;
-                            user.password.type = "sha256";
-                            userListObject.users.add(user);
-                            setUserString(userToJson(user));
-                            setUserListString(userListToJson(userListObject));
+                            userHandler.register(newUserName, newEmail, pw);
                             navigate(WidgetMarker.auctions);
                           }
                         }

@@ -1,80 +1,84 @@
 {
-    "id": 1,
-    "title": "Testauction 1",
-    "ownerID": 1,
-    "ownerType" : "Supplier",
-    "maxParticipants": 10,
-    "participants": [
+    "auctionDetailsList": [
         {
-            "userID": 2
-        },
-        {
-            "userID": 3
-        },
-        {
-            "userID": 4
-        },
-        {
-            "userID": 5
-        }
-    ],
-    "roundTime": 300,
-    "material": "Wood",
-    "contractTemplateID": 1,
-    "bids": [
-        {
-            "userID": 2,
-            "keyValuePairs": [
+            "id": 1,
+            "title": "Testauction 1",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
                 {
-                    "key": "Name",
-                    "value": "Thule Thulesson"
+                    "userID": 2
                 },
                 {
-                    "key": "Quantity",
-                    "value": 5
+                    "userID": 3
                 },
                 {
-                    "key": "ArticleID",
-                    "value": 726387327
+                    "userID": 4
                 },
                 {
-                    "key": "Amount of money",
-                    "value": 25
-                },
-                {
-                    "key": "Amount of hours",
-                    "value": 10
+                    "userID": 5
                 }
-            ]
-        },
-        {
-            "userID": 3,
-            "keyValuePairs": [
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
                 {
-                    "key": "Name",
-                    "value": "Sven Svensson"
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
                 },
                 {
-                    "key": "Quantity",
-                    "value": 1
-                },
-                {
-                    "key": "ArticleID",
-                    "value": 726387327
-                },
-                {
-                    "key": "Amount of money",
-                    "value": 55
-                },
-                {
-                    "key": "Amount of hours",
-                    "value": 2
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
                 }
-            ]
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
         }
-    ],
-    "startDate": "2021-02-15T10:30:00.001Z",
-    "stopDate": "2021-02-15T11:30:00.001Z",
-    "referenceSector": "composites",
-    "referenceType": "material"
+    ]
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../State/mainGUI.dart';
+import '../mainGUI.dart';
 
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   final Function navigate;
@@ -29,7 +29,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
           margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
           child: ElevatedButton(
               onPressed: () {
-                showContractTemplateGUI();
+                showContractTemplateGUI(context);
               },
               child: Text("New Contract Template")),
         ),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/Entities/auctionDetailsJSON.dart';
-import '../State/mainGUI.dart';
-import '../Entities/user.dart';
+
+import '../Handlers/auctionHandler.dart';
+import '../mainGUI.dart';
 
 class MyAuctions extends StatelessWidget {
   final Function navigate;
-  AuctionDetails auctionDetails;
-  User user;
-  MyAuctions(this.navigate, this.auctionDetails, this.user);
+  final AuctionHandler auctionHandler;
+  MyAuctions(this.navigate, this.auctionHandler);
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +41,26 @@ class MyAuctions extends StatelessWidget {
                       margin: EdgeInsets.all(5.0),
                       padding: EdgeInsets.only(left: 10, right: 10),
                       color: Colors.lightGreen[600],
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      'Name: Room ${user.participatingAuctions[index].auctionId}'),
-                                  Text('Material: ${auctionDetails.material}'),
-                                  Text(
-                                      'Participants: ${auctionDetails.participants.length}'),
-                                ]),
-                            Spacer(),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: ElevatedButton(
-                                  child: Text('Visit room'),
-                                  onPressed: () {
-                                    navigate(WidgetMarker.room);
-                                  }),
-                            ),
-                          ]));
+                      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          /*
+                          Text('Name: Room ${user.participatingAuctions[index].auctionId}'),
+                          Text('Material: ${auctionDetails.material}'),
+                          Text('Participants: ${auctionDetails.participants.length}'),
+                          */
+                        ]),
+                        Spacer(),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: ElevatedButton(
+                              child: Text('Visit room'),
+                              onPressed: () {
+                                navigate(WidgetMarker.room);
+                              }),
+                        ),
+                      ]));
                 },
-                childCount: user.participatingAuctions.length,
+                childCount: auctionHandler.myAuctions.auctionList.length,
               ))
         ],
       ),

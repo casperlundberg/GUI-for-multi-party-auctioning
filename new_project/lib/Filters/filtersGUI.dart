@@ -1,63 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../Handlers/filterHandler.dart';
 import '../Entities/filtersJSON.dart';
 
 class FiltersGUI extends StatefulWidget {
-  final List<Filter> availableFilters;
-  final List<Filter> activeFilters;
-  final List<Filter> inactiveFilters;
-  final Function updateFilters;
-  final Function deleteFilter;
-  final Function activateFilter;
-  final Function deactivateFilter;
+  final Function setMainState;
+  final FilterHandler filterHandler;
 
-  FiltersGUI(
-      this.availableFilters,
-      this.activeFilters,
-      this.inactiveFilters,
-      this.updateFilters,
-      this.deleteFilter,
-      this.activateFilter,
-      this.deactivateFilter);
+  FiltersGUI(this.setMainState, this.filterHandler);
 
   @override
-  _FiltersState createState() => _FiltersState(
-      availableFilters,
-      activeFilters,
-      inactiveFilters,
-      updateFilters,
-      deleteFilter,
-      activateFilter,
-      deactivateFilter);
+  _FiltersState createState() => _FiltersState(setMainState, filterHandler);
 }
 
 class _FiltersState extends State<FiltersGUI> {
-  final List<Filter> availableFilters;
-  List<Filter> activeFilters;
-  List<Filter> inactiveFilters;
-  final Function updateFilters;
-  final Function deleteFilter;
-  final Function activateFilter;
-  final Function deactivateFilter;
+  final Function setMainState;
+  final FilterHandler filterHandler;
   final myController = TextEditingController();
   Filter filter;
 
-  _FiltersState(
-      this.availableFilters,
-      this.activeFilters,
-      this.inactiveFilters,
-      this.updateFilters,
-      this.deleteFilter,
-      this.activateFilter,
-      this.deactivateFilter);
+  _FiltersState(this.setMainState, this.filterHandler);
 
   void showFilterTemplateGUI() {
     if (filter == null) {
       filter = new Filter(
-          id: availableFilters[0].id,
-          name: availableFilters[0].name,
-          description: availableFilters[0].description);
+          id: filterHandler.availableFilters[0].id, name: filterHandler.availableFilters[0].name, description: filterHandler.availableFilters[0].description);
     }
 
     if (filter.distance != null) {
@@ -70,8 +38,7 @@ class _FiltersState extends State<FiltersGUI> {
         final ThemeData themeData = Theme.of(context);
 
         return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           child: Container(
@@ -87,8 +54,7 @@ class _FiltersState extends State<FiltersGUI> {
                   margin: EdgeInsets.only(top: 13.0, right: 8.0),
                   decoration: BoxDecoration(
                     //color: Colors.red,
-                    color: Colors.grey[
-                        900], //Couldn't import from theme as "Dialog" is transparent
+                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(16.0),
                     boxShadow: <BoxShadow>[
@@ -119,15 +85,12 @@ class _FiltersState extends State<FiltersGUI> {
                             height: 300,
                             child: StatefulBuilder(
                               builder: (context, setState) {
-                                if (availableFilters != null &&
-                                    availableFilters.length > 0) {
+                                if (filterHandler.availableFilters != null && filterHandler.availableFilters.length > 0) {
                                   String dropdownValue = filter.name;
                                   List<String> names = [];
 
-                                  for (int i = 0;
-                                      i < availableFilters.length;
-                                      i++) {
-                                    names.add(availableFilters[i].name);
+                                  for (int i = 0; i < filterHandler.availableFilters.length; i++) {
+                                    names.add(filterHandler.availableFilters[i].name);
                                   }
                                   return Column(
                                     children: [
@@ -139,36 +102,23 @@ class _FiltersState extends State<FiltersGUI> {
                                             iconSize: 24,
                                             value: dropdownValue,
                                             elevation: 16,
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(color: Colors.white),
                                             onChanged: (String newValue) {
                                               setState(() {
-                                                for (int i = 0;
-                                                    i < availableFilters.length;
-                                                    i++) {
-                                                  if (availableFilters[i]
-                                                          .name ==
-                                                      newValue) {
-                                                    int localid =
-                                                        filter.localid;
+                                                for (int i = 0; i < filterHandler.availableFilters.length; i++) {
+                                                  if (filterHandler.availableFilters[i].name == newValue) {
+                                                    int localid = filter.localid;
                                                     filter = new Filter(
-                                                        id: availableFilters[i]
-                                                            .id,
-                                                        name:
-                                                            availableFilters[i]
-                                                                .name,
-                                                        description:
-                                                            availableFilters[i]
-                                                                .description);
+                                                        id: filterHandler.availableFilters[i].id,
+                                                        name: filterHandler.availableFilters[i].name,
+                                                        description: filterHandler.availableFilters[i].description);
                                                     filter.localid = localid;
                                                     dropdownValue = newValue;
                                                   }
                                                 }
                                               });
                                             },
-                                            items: names
-                                                .map<DropdownMenuItem<String>>(
-                                                    (String value) {
+                                            items: names.map<DropdownMenuItem<String>>((String value) {
                                               return DropdownMenuItem<String>(
                                                 value: value,
                                                 child: Text(value),
@@ -177,21 +127,15 @@ class _FiltersState extends State<FiltersGUI> {
                                           ),
                                         ],
                                       ),
-                                      Text(
-                                          'Description: ' + filter.description),
+                                      Text('Description: ' + filter.description),
                                       Row(
                                         children: [
                                           Text('Max distance: '),
                                           Expanded(
                                             child: TextField(
                                               controller: myController,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              inputFormatters: <
-                                                  TextInputFormatter>[
-                                                FilteringTextInputFormatter
-                                                    .digitsOnly
-                                              ],
+                                              keyboardType: TextInputType.number,
+                                              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                             ),
                                           ),
                                         ],
@@ -220,7 +164,8 @@ class _FiltersState extends State<FiltersGUI> {
                             filter.distance = int.parse(myController.text);
                             myController.clear();
                             //print("localid: " + filter.localid.toString());
-                            updateFilters(filter);
+                            filterHandler.updateFilters(filter);
+                            setMainState();
                             Navigator.pop(context);
                           },
                         ),
@@ -263,8 +208,8 @@ class _FiltersState extends State<FiltersGUI> {
     final ThemeData themeData = Theme.of(context);
 
     List<Filter> allfilters = [];
-    allfilters.addAll(activeFilters);
-    allfilters.addAll(inactiveFilters);
+    allfilters.addAll(filterHandler.activeFilters);
+    allfilters.addAll(filterHandler.inactiveFilters);
 
     return new Container(
       height: MediaQuery.of(context).size.height * 0.9,
@@ -300,8 +245,7 @@ class _FiltersState extends State<FiltersGUI> {
           Container(
             //Content
             height: MediaQuery.of(context).size.height * 0.7,
-            child: ReturnContent(
-                context, allfilters, activeFilters, inactiveFilters),
+            child: ReturnContent(context, allfilters, filterHandler.activeFilters, filterHandler.inactiveFilters),
           ),
         ],
       ),
@@ -309,8 +253,7 @@ class _FiltersState extends State<FiltersGUI> {
   }
 
   Widget ReturnContent(context, allfilters, activeFilters, inactiveFilters) {
-    if ((activeFilters != null && activeFilters.length > 0) ||
-        (inactiveFilters != null && inactiveFilters.length > 0)) {
+    if ((activeFilters != null && activeFilters.length > 0) || (inactiveFilters != null && inactiveFilters.length > 0)) {
       return Scrollbar(
         child: ListView.builder(
           itemCount: allfilters.length,
@@ -320,8 +263,7 @@ class _FiltersState extends State<FiltersGUI> {
               children: <Widget>[
                 new Container(
                   height: 110.0,
-                  color:
-                      index >= activeFilters.length ? Colors.grey : Colors.blue,
+                  color: index >= activeFilters.length ? Colors.grey : Colors.blue,
                   margin: EdgeInsets.all(5.0),
                   child: Column(
                     children: [
@@ -339,7 +281,8 @@ class _FiltersState extends State<FiltersGUI> {
                           ElevatedButton(
                             onPressed: index >= activeFilters.length
                                 ? () {
-                                    activateFilter(allfilters[index]);
+                                    filterHandler.activateFilter(allfilters[index]);
+                                    setMainState();
                                   }
                                 : null,
                             child: Text('Activate'),
@@ -347,14 +290,16 @@ class _FiltersState extends State<FiltersGUI> {
                           ElevatedButton(
                             onPressed: index < activeFilters.length
                                 ? () {
-                                    deactivateFilter(allfilters[index]);
+                                    filterHandler.deactivateFilter(allfilters[index]);
+                                    setMainState();
                                   }
                                 : null,
                             child: Text('Deactivate'),
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              deleteFilter(allfilters[index]);
+                              filterHandler.deleteFilter(allfilters[index]);
+                              setMainState();
                             },
                             child: Text('Delete'),
                           ),

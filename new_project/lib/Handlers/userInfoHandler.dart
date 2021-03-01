@@ -1,15 +1,16 @@
 import 'dart:convert';
 
-import 'package:crypt/crypt.dart';
 import '../Entities/userList.dart';
 import '../Entities/user.dart';
 import 'package:crypto/crypto.dart';
+import '../jsonUtilities.dart';
 
 class UserInfoHandler {
+  final Function userToAuction;
   final UserList userListObject;
   final User user;
 
-  UserInfoHandler(this.userListObject, this.user);
+  UserInfoHandler(this.userToAuction, this.userListObject, this.user);
 
   // Check if a String is a valid email.
   // Return true if it is valid.
@@ -151,5 +152,44 @@ class UserInfoHandler {
     }
     print("Invalid credentials");
     return null;
+  }
+
+  void login(User user) {
+    this.user.address = user.address;
+    this.user.age = user.age;
+    this.user.company = user.company;
+    this.user.currentType = user.currentType;
+    this.user.email = user.email;
+    this.user.homePhoneNumber = user.homePhoneNumber;
+    this.user.mobilePhoneNumber = user.mobilePhoneNumber;
+    this.user.officePhoneNumber = user.officePhoneNumber;
+    this.user.participatingAuctions = user.participatingAuctions;
+    this.user.password = user.password;
+    this.user.userId = user.userId;
+    this.user.userName = user.userName;
+    userToAuction();
+  }
+
+  void register(String userName, String email, String pw) {
+    this.user.userId = userListObject.users.length + 1;
+    this.user.userName = userName;
+    this.user.email = email;
+    this.user.password = new Password(encryption: pw, type: "sha256");
+    this.user.address = new Address();
+    this.user.currentType = "Consumer";
+    this.user.participatingAuctions = [];
+    userListObject.users.add(user);
+    setUserListString(userListToJson(userListObject));
+    userToAuction();
+  }
+
+  void updateProfile() {
+    for (int i = 0; i < userListObject.users.length; i++) {
+      if (userListObject.users[i].userId == user.userId) {
+        userListObject.users[i] = user;
+      }
+    }
+    setUserListString(userListToJson(userListObject));
+    userToAuction();
   }
 }

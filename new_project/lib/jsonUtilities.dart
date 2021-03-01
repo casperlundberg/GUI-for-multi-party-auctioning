@@ -14,92 +14,6 @@ void set(String newString) {
 
 /*
 ========================
-NULL USER
-========================
-*/
-String userNullString = '''{
-    "userId": null,
-    "userName": "",
-    "email": "",
-    "password": {
-        "type": "",
-        "encryption": ""
-    },
-    "age": null,
-    "address": {
-        "streetAddress": "",
-        "city": "",
-        "state": "",
-        "postalCode": ""
-    },
-    "homePhoneNumber": "",
-    "mobilePhoneNumber": "",
-    "officePhoneNumber": "",
-    "currentType": "",
-    "company": "",
-    "participatingAuctions": [
-        {
-            "auctionID": 1
-        },
-        {
-            "auctionID": 2
-        }
-    ]
-}''';
-String getNullUserString() {
-  return userNullString;
-}
-
-/*
-========================
-USER
-========================
-*/
-String userString = '''{
-    "userId": 1,
-    "userName": "Thule Thulesson",
-    "email": "thule@gmail.com",
-    "password": {
-        "type": "sha1",
-        "encryption": "d61525efc3eb135288f6be621fcd7e8a6f1c6f336dab46fac2f7faf9bbb94d6c"
-    },
-    "age": 35,
-    "address": {
-        "streetAddress": "Tekniktorget 3",
-        "city": "Luleå",
-        "state": "Norrbotten",
-        "postalCode": "971 83"
-    },
-    "homePhoneNumber": "212 555-1234",
-    "mobilePhoneNumber": "212 555-1234",
-    "officePhoneNumber": "212 555-1234",
-    "currentType": "Demander",
-    "company": "Teknologkåren",
-    "participatingAuctions": [
-        {
-            "auctionID": 2
-        },
-        {
-            "auctionID": 3
-        },
-        {
-            "auctionID": 4
-        },
-        {
-            "auctionID": 5
-        }
-    ]
-}''';
-String getUserString() {
-  return userString;
-}
-
-void setUserString(String newString) {
-  userString = newString;
-}
-
-/*
-========================
 USERLIST
 ========================
 */
@@ -295,92 +209,96 @@ void setUserListString(String newString) {
 AUCTIONDETAILS
 ========================
 */
-String auctionDetailsString = '''{
-    "id": 1,
-    "title": "Testauction 1",
-    "ownerID": 1,
-    "ownerType" : "Supplier",
-    "maxParticipants": 10,
-    "participants": [
+String auctionDetailsListString = '''{
+    "auctionDetailsList": [
         {
-            "userID": 2
-        },
-        {
-            "userID": 3
-        },
-        {
-            "userID": 4
-        },
-        {
-            "userID": 5
-        }
-    ],
-    "roundTime": 300,
-    "material": "Wood",
-    "contractTemplateID": 1,
-    "bids": [
-        {
-            "userID": 2,
-            "keyValuePairs": [
+            "id": 1,
+            "title": "Testauction 1",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
                 {
-                    "key": "Name",
-                    "value": "Thule Thulesson"
+                    "userID": 2
                 },
                 {
-                    "key": "Quantity",
-                    "value": 5
+                    "userID": 3
                 },
                 {
-                    "key": "ArticleID",
-                    "value": 726387327
+                    "userID": 4
                 },
                 {
-                    "key": "Amount of money",
-                    "value": 25
-                },
-                {
-                    "key": "Amount of hours",
-                    "value": 10
+                    "userID": 5
                 }
-            ]
-        },
-        {
-            "userID": 3,
-            "keyValuePairs": [
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
                 {
-                    "key": "Name",
-                    "value": "Sven Svensson"
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
                 },
                 {
-                    "key": "Quantity",
-                    "value": 1
-                },
-                {
-                    "key": "ArticleID",
-                    "value": 726387327
-                },
-                {
-                    "key": "Amount of money",
-                    "value": 55
-                },
-                {
-                    "key": "Amount of hours",
-                    "value": 2
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
                 }
-            ]
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
         }
-    ],
-    "startDate": "2021-02-15T10:30:00.001Z",
-    "stopDate": "2021-02-15T11:30:00.001Z",
-    "referenceSector": "composites",
-    "referenceType": "material"
+    ]
 }''';
-String getAuctionDetailsString() {
-  return name;
+String getAuctionDetailsListString() {
+  return auctionDetailsListString;
 }
 
-void setAuctionDetailsString(String newString) {
-  auctionDetailsString = newString;
+void setAuctionDetailsListString(String newString) {
+  auctionDetailsListString = newString;
 }
 
 /*

@@ -1,37 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../Entities/auctionDetailsJSON.dart';
-import '../Entities/contractTemplatesJSON.dart';
-import '../State/mainGUI.dart';
-import 'contractGUI.dart';
+import 'package:new_project/Handlers/auctionHandler.dart';
+
+import '../mainGUI.dart';
 
 class Room extends StatefulWidget {
   final Function navigate;
-  AuctionDetails getAuctionDetails;
-  final Function getContractTemplates;
+  final AuctionHandler auctionHandler;
 
-  Room(this.navigate, this.getAuctionDetails, this.getContractTemplates);
+  Room(this.navigate, this.auctionHandler);
 
   @override
-  _RoomState createState() => _RoomState(navigate, getAuctionDetails, getContractTemplates);
+  _RoomState createState() => _RoomState(navigate, auctionHandler);
 }
 
 class _RoomState extends State<Room> {
   final Function navigate;
-  AuctionDetails getAuctionDetails;
-  final Function getContractTemplates;
-  ContractTemplate contractTemplate;
+  final AuctionHandler auctionHandler;
   List<TextEditingController> controllers = [];
 
-  _RoomState(this.navigate, this.getAuctionDetails, this.getContractTemplates) {
-    this.getAuctionDetails = getAuctionDetails;
-    ContractTemplates contractTemplates = this.getContractTemplates(this.getAuctionDetails.ownerType);
-    for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
-      if (contractTemplates.contractTemplates[i].id == this.getAuctionDetails.contractTemplateId) {
-        this.contractTemplate = contractTemplates.contractTemplates[i];
-      }
-    }
-    for (int i = 0; i < this.contractTemplate.templateVariables.length; i++) {
+  _RoomState(this.navigate, this.auctionHandler) {
+    for (int i = 0; i < auctionHandler.currentAuction.contractTemplate.templateVariables.length; i++) {
       this.controllers.add(TextEditingController());
     }
   }
@@ -91,14 +80,14 @@ class _RoomState extends State<Room> {
                       SizedBox(height: 20.0),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: contractTemplate.templateVariables.length,
+                          itemCount: auctionHandler.currentAuction.contractTemplate.templateVariables.length,
                           itemBuilder: (context, index) {
                             if (index == 0) {
-                              if (contractTemplate.templateVariables[0].valueType == "Text") {
+                              if (auctionHandler.currentAuction.contractTemplate.templateVariables[0].valueType == "Text") {
                                 return Column(
                                   children: [
                                     Text(
-                                      contractTemplate.templateStrings[0].text,
+                                      auctionHandler.currentAuction.contractTemplate.templateStrings[0].text,
                                       textAlign: TextAlign.center,
                                     ),
                                     SizedBox(height: 10.0),
@@ -111,7 +100,7 @@ class _RoomState extends State<Room> {
                                           child: TextField(
                                             controller: controllers[0],
                                             decoration: InputDecoration(
-                                              hintText: contractTemplate.templateVariables[0].key,
+                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[0].key,
                                             ),
                                           ),
                                         ),
@@ -119,16 +108,16 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      contractTemplate.templateStrings[1].text,
+                                      auctionHandler.currentAuction.contractTemplate.templateStrings[1].text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
                                 );
-                              } else if (contractTemplate.templateVariables[0].valueType == "Integer") {
+                              } else if (auctionHandler.currentAuction.contractTemplate.templateVariables[0].valueType == "Integer") {
                                 return Column(
                                   children: [
                                     Text(
-                                      contractTemplate.templateStrings[0].text,
+                                      auctionHandler.currentAuction.contractTemplate.templateStrings[0].text,
                                       textAlign: TextAlign.center,
                                     ),
                                     SizedBox(height: 10.0),
@@ -143,7 +132,7 @@ class _RoomState extends State<Room> {
                                             keyboardType: TextInputType.number,
                                             inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                             decoration: InputDecoration(
-                                              hintText: contractTemplate.templateVariables[0].key,
+                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[0].key,
                                             ),
                                           ),
                                         ),
@@ -151,14 +140,14 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      contractTemplate.templateStrings[1].text,
+                                      auctionHandler.currentAuction.contractTemplate.templateStrings[1].text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
                                 );
                               }
                             } else {
-                              if (contractTemplate.templateVariables[index].valueType == "Text") {
+                              if (auctionHandler.currentAuction.contractTemplate.templateVariables[index].valueType == "Text") {
                                 return Column(
                                   children: [
                                     SizedBox(height: 10.0),
@@ -171,7 +160,7 @@ class _RoomState extends State<Room> {
                                           child: TextField(
                                             controller: controllers[index],
                                             decoration: InputDecoration(
-                                              hintText: contractTemplate.templateVariables[index].key,
+                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[index].key,
                                             ),
                                           ),
                                         ),
@@ -179,12 +168,12 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      contractTemplate.templateStrings[index + 1].text,
+                                      auctionHandler.currentAuction.contractTemplate.templateStrings[index + 1].text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
                                 );
-                              } else if (contractTemplate.templateVariables[index].valueType == "Integer") {
+                              } else if (auctionHandler.currentAuction.contractTemplate.templateVariables[index].valueType == "Integer") {
                                 return Column(
                                   children: [
                                     SizedBox(height: 10.0),
@@ -199,7 +188,7 @@ class _RoomState extends State<Room> {
                                             keyboardType: TextInputType.number,
                                             inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                             decoration: InputDecoration(
-                                              hintText: contractTemplate.templateVariables[index].key,
+                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[index].key,
                                             ),
                                           ),
                                         ),
@@ -207,7 +196,7 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      contractTemplate.templateStrings[index + 1].text,
+                                      auctionHandler.currentAuction.contractTemplate.templateStrings[index + 1].text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],

@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../State/mainGUI.dart';
-import '../Entities/user.dart';
-import '../Entities/userList.dart';
-import '../jsonUtilities.dart';
-import 'userInfoHandler.dart';
+import '../mainGUI.dart';
+import '../Handlers/userInfoHandler.dart';
 
 class LoginScreen extends StatefulWidget {
+  final Function setMainState;
   final Function navigate;
-  final User user;
-  final UserList userListObject;
   final UserInfoHandler userHandler;
-  const LoginScreen(this.navigate, this.user, this.userListObject, this.userHandler);
+  const LoginScreen(this.setMainState, this.navigate, this.userHandler);
 
   @override
-  Login createState() => Login(navigate, user, userListObject, userHandler);
+  Login createState() => Login(setMainState, navigate, userHandler);
 }
 
 class Login extends State<LoginScreen> {
+  final Function setMainState;
   final Function navigate;
-  User user;
-  final UserList userListObject;
   final UserInfoHandler userHandler;
 
-  Login(this.navigate, this.user, this.userListObject, this.userHandler);
+  Login(this.setMainState, this.navigate, this.userHandler);
 
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerPW = new TextEditingController();
@@ -75,8 +70,7 @@ class Login extends State<LoginScreen> {
                   child: Text('Login'),
                   onPressed: () {
                     if (userHandler.loginValidator(loginUserName, loginPW) != null) {
-                      user = userHandler.loginValidator(loginUserName, loginPW);
-                      setUserString(userToJson(user));
+                      userHandler.login(userHandler.loginValidator(loginUserName, loginPW));
                       navigate(WidgetMarker.auctions);
                     }
                   },

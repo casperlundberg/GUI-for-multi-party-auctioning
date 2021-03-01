@@ -3,7 +3,6 @@
 //     final localJsonUserList = localJsonUserListFromJson(jsonString);
 
 import 'dart:convert';
-import 'package:new_project/Entities/user.dart';
 
 import 'user.dart';
 

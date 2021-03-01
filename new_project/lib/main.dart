@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'State/mainGUI.dart';
+import 'mainGUI.dart';
 
 void main() => runApp(MyApp());
 
