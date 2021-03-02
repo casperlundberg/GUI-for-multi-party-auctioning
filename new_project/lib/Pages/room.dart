@@ -269,7 +269,7 @@ class _RoomState extends State<Room> {
                 Container(
                   child: Text(
                     //if usertype is supplier
-                    'Provided: {title}',
+                    'Provided: ${auctionHandler.currentAuction.material}',
                     //else 'Requested: {title}'
                     style: bigText,
                   ),
@@ -285,7 +285,7 @@ class _RoomState extends State<Room> {
                       message: "Copy to clipboard",
                       child: TextButton(
                           child: Text(
-                            'ROOM CODE: {id}' + auctionHandler.currentAuction.material,
+                            'ROOM CODE: ${auctionHandler.currentAuction.id}',
                             textAlign: TextAlign.end,
                             style: bigText,
                           ),
