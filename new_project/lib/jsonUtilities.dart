@@ -312,7 +312,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "roundTime": 300,
-            "material": "Wood",
+            "material": "Stone",
             "contractTemplateID": 1,
             "bids": [
                 {
@@ -392,7 +392,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "roundTime": 300,
-            "material": "Wood",
+            "material": "Gold",
             "contractTemplateID": 1,
             "bids": [
                 {
@@ -472,7 +472,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "roundTime": 300,
-            "material": "Wood",
+            "material": "Silver",
             "contractTemplateID": 1,
             "bids": [
                 {

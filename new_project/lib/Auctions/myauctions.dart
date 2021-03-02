@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/Handlers/userInfoHandler.dart';
 
 import '../Handlers/auctionHandler.dart';
 import '../mainGUI.dart';
@@ -43,11 +44,9 @@ class MyAuctions extends StatelessWidget {
                       color: Colors.lightGreen[600],
                       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          /*
-                          Text('Name: Room ${user.participatingAuctions[index].auctionId}'),
-                          Text('Material: ${auctionDetails.material}'),
-                          Text('Participants: ${auctionDetails.participants.length}'),
-                          */
+                          Text('Name: Room ${auctionHandler.myAuctions.auctionList[index].id}'),
+                          Text('Material: ${auctionHandler.myAuctions.auctionList[index].material}'),
+                          Text('Participants: ${auctionHandler.myAuctions.auctionList[index].currentParticipants}'),
                         ]),
                         Spacer(),
                         Container(
@@ -55,6 +54,7 @@ class MyAuctions extends StatelessWidget {
                           child: ElevatedButton(
                               child: Text('Visit room'),
                               onPressed: () {
+                                auctionHandler.setCurrentAuction(auctionHandler.myAuctions.auctionList[index].id);
                                 navigate(WidgetMarker.room);
                               }),
                         ),
