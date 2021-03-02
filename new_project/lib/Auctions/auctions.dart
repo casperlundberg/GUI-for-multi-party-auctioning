@@ -17,13 +17,16 @@ class Auctions extends StatefulWidget {
   final AuctionHandler auctionHandler;
   final UserInfoHandler userHandler;
 
-  Auctions(this.setMainState, this.navigate, this.filterHandler, this.auctionHandler, this.userHandler);
+  Auctions(this.setMainState, this.navigate, this.filterHandler,
+      this.auctionHandler, this.userHandler);
 
   @override
-  _AuctionsState createState() => _AuctionsState(setMainState, navigate, filterHandler, auctionHandler, userHandler);
+  _AuctionsState createState() => _AuctionsState(
+      setMainState, navigate, filterHandler, auctionHandler, userHandler);
 }
 
-class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin<Auctions> {
+class _AuctionsState extends State<Auctions>
+    with SingleTickerProviderStateMixin<Auctions> {
   final Function setMainState;
   final Function navigate;
   final FilterHandler filterHandler;
@@ -36,19 +39,28 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   TextEditingController maxParticipants = TextEditingController();
   TextEditingController roundTime = TextEditingController();
   TextEditingController rounds = TextEditingController();
-  List<String> materialTypes = ["Wood", "Metals", "Soil", "Stone", "Gold", "Silver"];
+  List<String> materialTypes = [
+    "Wood",
+    "Metals",
+    "Soil",
+    "Stone",
+    "Gold",
+    "Silver"
+  ];
   String materialDropdownValue = "Wood";
   List<String> contractIDs = [];
   String contractDropdownValue;
 
-  _AuctionsState(this.setMainState, this.navigate, this.filterHandler, this.auctionHandler, this.userHandler) {
+  _AuctionsState(this.setMainState, this.navigate, this.filterHandler,
+      this.auctionHandler, this.userHandler) {
     if (userHandler.user.currentType == "Supplier") {
       contractTemplates = auctionHandler.supplierContractTemplates;
     }
     if (userHandler.user.currentType == "Consumer") {
       contractTemplates = auctionHandler.consumerContractTemplates;
     }
-    contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
+    contractDropdownValue =
+        contractTemplates.contractTemplates[0].id.toString();
     contractTemplate = contractTemplates.contractTemplates[0];
     for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
       contractIDs.add(contractTemplates.contractTemplates[i].id.toString());
@@ -84,32 +96,54 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               Expanded(
                   child: Container(
                 height: double.infinity,
-                color: (_currentPage == PageMarker.ongoing) ? Colors.black : themeData.primaryColor,
+                color: (_currentPage == PageMarker.ongoing)
+                    ? Colors.black
+                    : themeData.primaryColor,
                 child: TextButton(
                   onPressed: () {
                     setState(() {
                       _currentPage = PageMarker.ongoing;
                     });
                   },
-                  child: Text("Ongoing", style: TextStyle(fontSize: 20, color: (_currentPage == PageMarker.ongoing) ? Colors.white : Colors.white60)),
+                  child: Text("Ongoing",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: (_currentPage == PageMarker.ongoing)
+                              ? Colors.white
+                              : Colors.white60)),
                 ),
               )),
               Expanded(
                   child: Container(
                 height: double.infinity,
-                color: (_currentPage == PageMarker.finished) ? Colors.black : themeData.primaryColor,
+                color: (_currentPage == PageMarker.finished)
+                    ? Colors.black
+                    : themeData.primaryColor,
                 child: TextButton(
                   onPressed: () {
                     setState(() {
                       _currentPage = PageMarker.finished;
                     });
                   },
-                  child: Text("Finished", style: TextStyle(fontSize: 20, color: (_currentPage == PageMarker.finished) ? Colors.white : Colors.white60)),
+                  child: Text("Finished",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: (_currentPage == PageMarker.finished)
+                              ? Colors.white
+                              : Colors.white60)),
                 ),
               ))
             ],
           ),
-          FutureBuilder(builder: (BuildContext context, AsyncSnapshot snaptshot) {
+          SliverToBoxAdapter(
+              //--------------CASPER KOLLA HIT
+              child: Container(
+            width: double.infinity,
+            height: 50,
+            color: Colors.pink,
+          )),
+          FutureBuilder(
+              builder: (BuildContext context, AsyncSnapshot snaptshot) {
             return _getPageContainer();
           })
         ],
@@ -140,8 +174,10 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
     } else {
       for (int i = 0; i < auctionHandler.allAuctions.auctionList.length; i++) {
         for (int y = 0; y < filterHandler.activeFilters.length; y++) {
-          if (auctionHandler.allAuctions.auctionList[i].material == filterHandler.activeFilters[y].name) {
-            if (now.isBefore(auctionHandler.allAuctions.auctionList[i].stopDate)) {
+          if (auctionHandler.allAuctions.auctionList[i].material ==
+              filterHandler.activeFilters[y].name) {
+            if (now
+                .isBefore(auctionHandler.allAuctions.auctionList[i].stopDate)) {
               output.add(auctionHandler.allAuctions.auctionList[i]);
             }
           }
@@ -164,8 +200,10 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
     } else {
       for (int i = 0; i < auctionHandler.allAuctions.auctionList.length; i++) {
         for (int y = 0; y < filterHandler.activeFilters.length; y++) {
-          if (auctionHandler.allAuctions.auctionList[i].material == filterHandler.activeFilters[y].name) {
-            if (now.isAfter(auctionHandler.allAuctions.auctionList[i].stopDate)) {
+          if (auctionHandler.allAuctions.auctionList[i].material ==
+              filterHandler.activeFilters[y].name) {
+            if (now
+                .isAfter(auctionHandler.allAuctions.auctionList[i].stopDate)) {
               output.add(auctionHandler.allAuctions.auctionList[i]);
             }
           }
@@ -187,12 +225,16 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                 margin: EdgeInsets.all(5.0),
                 padding: EdgeInsets.only(left: 10, right: 10),
                 color: Colors.lightGreen[600],
-                child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text('Name: Room ' + output[index].id.toString()),
-                    Text('Material: ' + output[index].material),
-                    Text('Participants: ' + output[index].currentParticipants.toString()),
-                  ]),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Name: Room ' + output[index].id.toString()),
+                        Text('Material: ' + output[index].material),
+                        Text('Participants: ' +
+                            output[index].currentParticipants.toString()),
+                      ]),
                   Spacer(),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -216,7 +258,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
         final ThemeData themeData = Theme.of(context);
 
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           child: Container(
@@ -232,7 +275,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                   margin: EdgeInsets.only(top: 13.0, right: 8.0),
                   decoration: BoxDecoration(
                     //color: Colors.red,
-                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
+                    color: Colors.grey[
+                        900], //Couldn't import from theme as "Dialog" is transparent
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(16.0),
                     boxShadow: <BoxShadow>[
@@ -259,7 +303,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                   Text(
                                     "Create new auction",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 2,
                                   ),
                                   SizedBox(height: 10.0),
@@ -268,8 +313,12 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                     children: [
                                       Text("Auction Title: "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.25,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: auctionTitle,
                                         ),
@@ -281,34 +330,55 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                     children: [
                                       Text("Max Participants: "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.03,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: maxParticipants,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
                                       ),
                                       SizedBox(width: 30.0),
                                       Text("Round Time (s): "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.03,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: roundTime,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
                                       ),
                                       SizedBox(width: 30.0),
                                       Text("Number of rounds: "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.03,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: rounds,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -328,7 +398,9 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                             materialDropdownValue = newValue;
                                           });
                                         },
-                                        items: materialTypes.map<DropdownMenuItem<String>>((String value) {
+                                        items: materialTypes
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -351,14 +423,26 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                         onChanged: (String newValue) {
                                           setState(() {
                                             contractDropdownValue = newValue;
-                                            for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
-                                              if (contractTemplates.contractTemplates[i].id.toString() == newValue) {
-                                                contractTemplate = contractTemplates.contractTemplates[i];
+                                            for (int i = 0;
+                                                i <
+                                                    contractTemplates
+                                                        .contractTemplates
+                                                        .length;
+                                                i++) {
+                                              if (contractTemplates
+                                                      .contractTemplates[i].id
+                                                      .toString() ==
+                                                  newValue) {
+                                                contractTemplate =
+                                                    contractTemplates
+                                                        .contractTemplates[i];
                                               }
                                             }
                                           });
                                         },
-                                        items: contractIDs.map<DropdownMenuItem<String>>((String value) {
+                                        items: contractIDs
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -371,46 +455,63 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                   Text(
                                     "Contract Template",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 1.5,
                                   ),
                                   SizedBox(height: 20.0),
                                   Expanded(
                                     child: ListView.builder(
-                                      itemCount: contractTemplate.templateVariables.length,
+                                      itemCount: contractTemplate
+                                          .templateVariables.length,
                                       itemBuilder: (context, index) {
                                         if (index == 0) {
                                           return Column(
                                             children: [
                                               Text(
-                                                contractTemplate.templateStrings[0].text,
+                                                contractTemplate
+                                                    .templateStrings[0].text,
                                                 textAlign: TextAlign.center,
                                               ),
                                               SizedBox(height: 20.0),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     "Key: ",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                   Text(
-                                                    contractTemplate.templateVariables[0].key,
-                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                    contractTemplate
+                                                        .templateVariables[0]
+                                                        .key,
+                                                    style: TextStyle(
+                                                        fontStyle:
+                                                            FontStyle.italic),
                                                   ),
                                                   Text(
                                                     " Value Type: ",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                   Text(
-                                                    contractTemplate.templateVariables[0].valueType,
-                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                    contractTemplate
+                                                        .templateVariables[0]
+                                                        .valueType,
+                                                    style: TextStyle(
+                                                        fontStyle:
+                                                            FontStyle.italic),
                                                   ),
                                                 ],
                                               ),
                                               SizedBox(height: 20.0),
                                               Text(
-                                                contractTemplate.templateStrings[1].text,
+                                                contractTemplate
+                                                    .templateStrings[1].text,
                                                 textAlign: TextAlign.center,
                                               ),
                                             ],
@@ -420,29 +521,44 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                                           children: [
                                             SizedBox(height: 20.0),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   "Key: ",
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  contractTemplate.templateVariables[index].key,
-                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                  contractTemplate
+                                                      .templateVariables[index]
+                                                      .key,
+                                                  style: TextStyle(
+                                                      fontStyle:
+                                                          FontStyle.italic),
                                                 ),
                                                 Text(
                                                   " Value Type: ",
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  contractTemplate.templateVariables[index].valueType,
-                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                  contractTemplate
+                                                      .templateVariables[index]
+                                                      .valueType,
+                                                  style: TextStyle(
+                                                      fontStyle:
+                                                          FontStyle.italic),
                                                 ),
                                               ],
                                             ),
                                             SizedBox(height: 20.0),
                                             Text(
-                                              contractTemplate.templateStrings[index + 1].text,
+                                              contractTemplate
+                                                  .templateStrings[index + 1]
+                                                  .text,
                                               textAlign: TextAlign.center,
                                             ),
                                           ],
@@ -463,16 +579,24 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                           child: Text("Create auction"),
                           onPressed: () {
                             setState(() {
-                              auctionHandler.createAuction(int.parse(contractDropdownValue), auctionTitle.text, int.parse(maxParticipants.text),
-                                  int.parse(roundTime.text), int.parse(rounds.text), materialDropdownValue);
+                              auctionHandler.createAuction(
+                                  int.parse(contractDropdownValue),
+                                  auctionTitle.text,
+                                  int.parse(maxParticipants.text),
+                                  int.parse(roundTime.text),
+                                  int.parse(rounds.text),
+                                  materialDropdownValue);
 
                               auctionTitle.clear();
                               maxParticipants.clear();
                               roundTime.clear();
                               rounds.clear();
                               materialDropdownValue = "Wood";
-                              contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
-                              contractTemplate = contractTemplates.contractTemplates[0];
+                              contractDropdownValue = contractTemplates
+                                  .contractTemplates[0].id
+                                  .toString();
+                              contractTemplate =
+                                  contractTemplates.contractTemplates[0];
                             });
                             setMainState();
                             Navigator.pop(context);
@@ -492,8 +616,11 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                         roundTime.clear();
                         rounds.clear();
                         materialDropdownValue = "Wood";
-                        contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
-                        contractTemplate = contractTemplates.contractTemplates[0];
+                        contractDropdownValue = contractTemplates
+                            .contractTemplates[0].id
+                            .toString();
+                        contractTemplate =
+                            contractTemplates.contractTemplates[0];
                       });
                       Navigator.of(context).pop();
                     },
