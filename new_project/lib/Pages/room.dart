@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_project/Entities/auctionListJSON.dart';
 import 'package:new_project/Handlers/auctionHandler.dart';
 
 import '../mainGUI.dart';
@@ -284,7 +285,7 @@ class _RoomState extends State<Room> {
                       message: "Copy to clipboard",
                       child: TextButton(
                           child: Text(
-                            'ROOM CODE: {id}',
+                            'ROOM CODE: {id}' + auctionHandler.currentAuction.material,
                             textAlign: TextAlign.end,
                             style: bigText,
                           ),
