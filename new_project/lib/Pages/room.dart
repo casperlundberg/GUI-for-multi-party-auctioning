@@ -20,7 +20,11 @@ class _RoomState extends State<Room> {
   List<TextEditingController> controllers = [];
 
   _RoomState(this.navigate, this.auctionHandler) {
-    for (int i = 0; i < auctionHandler.currentAuction.contractTemplate.templateVariables.length; i++) {
+    for (int i = 0;
+        i <
+            auctionHandler
+                .currentAuction.contractTemplate.templateVariables.length;
+        i++) {
       this.controllers.add(TextEditingController());
     }
   }
@@ -42,7 +46,8 @@ class _RoomState extends State<Room> {
         final ThemeData themeData = Theme.of(context);
 
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           child: Container(
@@ -58,7 +63,8 @@ class _RoomState extends State<Room> {
                   margin: EdgeInsets.only(top: 13.0, right: 8.0),
                   decoration: BoxDecoration(
                     //color: Colors.red,
-                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
+                    color: Colors.grey[
+                        900], //Couldn't import from theme as "Dialog" is transparent
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(16.0),
                     boxShadow: <BoxShadow>[
@@ -80,27 +86,45 @@ class _RoomState extends State<Room> {
                       SizedBox(height: 20.0),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: auctionHandler.currentAuction.contractTemplate.templateVariables.length,
+                          itemCount: auctionHandler.currentAuction
+                              .contractTemplate.templateVariables.length,
                           itemBuilder: (context, index) {
                             if (index == 0) {
-                              if (auctionHandler.currentAuction.contractTemplate.templateVariables[0].valueType == "Text") {
+                              if (auctionHandler.currentAuction.contractTemplate
+                                      .templateVariables[0].valueType ==
+                                  "Text") {
                                 return Column(
                                   children: [
                                     Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[0].text,
+                                      auctionHandler
+                                          .currentAuction
+                                          .contractTemplate
+                                          .templateStrings[0]
+                                          .text,
                                       textAlign: TextAlign.center,
                                     ),
                                     SizedBox(height: 10.0),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.05,
                                           child: TextField(
                                             controller: controllers[0],
                                             decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[0].key,
+                                              hintText: auctionHandler
+                                                  .currentAuction
+                                                  .contractTemplate
+                                                  .templateVariables[0]
+                                                  .key,
                                             ),
                                           ),
                                         ),
@@ -108,31 +132,59 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[1].text,
+                                      auctionHandler
+                                          .currentAuction
+                                          .contractTemplate
+                                          .templateStrings[1]
+                                          .text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
                                 );
-                              } else if (auctionHandler.currentAuction.contractTemplate.templateVariables[0].valueType == "Integer") {
+                              } else if (auctionHandler
+                                      .currentAuction
+                                      .contractTemplate
+                                      .templateVariables[0]
+                                      .valueType ==
+                                  "Integer") {
                                 return Column(
                                   children: [
                                     Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[0].text,
+                                      auctionHandler
+                                          .currentAuction
+                                          .contractTemplate
+                                          .templateStrings[0]
+                                          .text,
                                       textAlign: TextAlign.center,
                                     ),
                                     SizedBox(height: 10.0),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.05,
                                           child: TextField(
                                             controller: controllers[0],
                                             keyboardType: TextInputType.number,
-                                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                            inputFormatters: <
+                                                TextInputFormatter>[
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
                                             decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[0].key,
+                                              hintText: auctionHandler
+                                                  .currentAuction
+                                                  .contractTemplate
+                                                  .templateVariables[0]
+                                                  .key,
                                             ),
                                           ),
                                         ),
@@ -140,27 +192,44 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[1].text,
+                                      auctionHandler
+                                          .currentAuction
+                                          .contractTemplate
+                                          .templateStrings[1]
+                                          .text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
                                 );
                               }
                             } else {
-                              if (auctionHandler.currentAuction.contractTemplate.templateVariables[index].valueType == "Text") {
+                              if (auctionHandler.currentAuction.contractTemplate
+                                      .templateVariables[index].valueType ==
+                                  "Text") {
                                 return Column(
                                   children: [
                                     SizedBox(height: 10.0),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.05,
                                           child: TextField(
                                             controller: controllers[index],
                                             decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[index].key,
+                                              hintText: auctionHandler
+                                                  .currentAuction
+                                                  .contractTemplate
+                                                  .templateVariables[index]
+                                                  .key,
                                             ),
                                           ),
                                         ),
@@ -168,27 +237,51 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[index + 1].text,
+                                      auctionHandler
+                                          .currentAuction
+                                          .contractTemplate
+                                          .templateStrings[index + 1]
+                                          .text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
                                 );
-                              } else if (auctionHandler.currentAuction.contractTemplate.templateVariables[index].valueType == "Integer") {
+                              } else if (auctionHandler
+                                      .currentAuction
+                                      .contractTemplate
+                                      .templateVariables[index]
+                                      .valueType ==
+                                  "Integer") {
                                 return Column(
                                   children: [
                                     SizedBox(height: 10.0),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.05,
                                           child: TextField(
                                             controller: controllers[index],
                                             keyboardType: TextInputType.number,
-                                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                            inputFormatters: <
+                                                TextInputFormatter>[
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
                                             decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[index].key,
+                                              hintText: auctionHandler
+                                                  .currentAuction
+                                                  .contractTemplate
+                                                  .templateVariables[index]
+                                                  .key,
                                             ),
                                           ),
                                         ),
@@ -196,7 +289,11 @@ class _RoomState extends State<Room> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[index + 1].text,
+                                      auctionHandler
+                                          .currentAuction
+                                          .contractTemplate
+                                          .templateStrings[index + 1]
+                                          .text,
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
@@ -290,9 +387,17 @@ class _RoomState extends State<Room> {
                             style: bigText,
                           ),
                           onPressed: () {
-                            Clipboard.setData(new ClipboardData(text: "{id}")).then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  backgroundColor: Colors.grey[900], content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
+                            Clipboard.setData(new ClipboardData(
+                                    text:
+                                        "${auctionHandler.currentAuction.id}"))
+                                .then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: Colors.grey[900],
+                                      content: Text(
+                                          "Room code copied to clipboard",
+                                          style:
+                                              TextStyle(color: Colors.white))));
                             });
                           }),
                     )),
@@ -322,33 +427,36 @@ class _RoomState extends State<Room> {
                           margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
                           //color: Colors.amber[700],
                           alignment: Alignment.centerLeft,
-                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Text(
-                              'Specific Auction info',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Company: {Name}',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Quantity: {Quantity}',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Material: {Material}',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Specific Auction info',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                          ]))),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Specific Auction info',
+                                  textAlign: TextAlign.start,
+                                  style: smallText,
+                                ),
+                                Text(
+                                  'Company: {Name}',
+                                  textAlign: TextAlign.start,
+                                  style: smallText,
+                                ),
+                                Text(
+                                  'Quantity: {Quantity}',
+                                  textAlign: TextAlign.start,
+                                  style: smallText,
+                                ),
+                                Text(
+                                  'Material: {Material}',
+                                  textAlign: TextAlign.start,
+                                  style: smallText,
+                                ),
+                                Text(
+                                  'Specific Auction info',
+                                  textAlign: TextAlign.start,
+                                  style: smallText,
+                                ),
+                              ]))),
                   //Spacer(),
                   Expanded(
                     child: Container(
@@ -399,8 +507,12 @@ class _RoomState extends State<Room> {
                                   return Container(
                                     padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                                     alignment: Alignment.centerLeft,
-                                    color: Colors.grey[850 + (50 * (index % 2))],
-                                    child: Text('[14:20] COMPANYNAME placed bid for $index SEK', style: TextStyle(fontFamily: 'Consolas')),
+                                    color:
+                                        Colors.grey[850 + (50 * (index % 2))],
+                                    child: Text(
+                                        '[14:20] COMPANYNAME placed bid for $index SEK',
+                                        style:
+                                            TextStyle(fontFamily: 'Consolas')),
                                   );
                                 },
                                 childCount: 50,

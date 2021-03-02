@@ -109,6 +109,13 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               ))
             ],
           ),
+          SliverToBoxAdapter(
+              //--------------CASPER KOLLA HIT
+              child: Container(
+            width: double.infinity,
+            height: 50,
+            color: Colors.pink,
+          )),
           FutureBuilder(builder: (BuildContext context, AsyncSnapshot snaptshot) {
             return _getPageContainer();
           })
