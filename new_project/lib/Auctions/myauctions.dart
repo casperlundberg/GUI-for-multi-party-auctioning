@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/Handlers/userInfoHandler.dart';
-
 import '../Handlers/auctionHandler.dart';
 import '../mainGUI.dart';
 
@@ -11,7 +9,7 @@ class MyAuctions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    var now = new DateTime.now();
     return new Container(
       color: Colors.grey[900],
       height: MediaQuery.of(context).size.height * 0.9,
@@ -41,7 +39,7 @@ class MyAuctions extends StatelessWidget {
                       alignment: Alignment.center,
                       margin: EdgeInsets.all(5.0),
                       padding: EdgeInsets.only(left: 10, right: 10),
-                      color: Colors.lightGreen[600],
+                      color: now.isAfter(auctionHandler.myAuctions.auctionList[index].stopDate) ? Colors.redAccent : Colors.greenAccent[700],
                       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                           Text('Name: Room ${auctionHandler.myAuctions.auctionList[index].id}'),
