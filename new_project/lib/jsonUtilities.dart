@@ -37,7 +37,7 @@ String userListString = '''{
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-98",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Demander",
+            "currentType": "Consumer",
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
@@ -72,7 +72,7 @@ String userListString = '''{
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Demander",
+            "currentType": "Consumer",
             "company": "Netlight",
             "participatingAuctions": [
                 {
@@ -107,7 +107,7 @@ String userListString = '''{
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-234",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Demander",
+            "currentType": "Consumer",
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
@@ -214,6 +214,646 @@ String auctionDetailsListString = '''{
         {
             "id": 1,
             "title": "Testauction 1",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 2,
+            "title": "Testauction 2",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 3,
+            "title": "Testauction 3",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 4,
+            "title": "Testauction 4",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 5,
+            "title": "Testauction 5",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 6,
+            "title": "Testauction 6",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 7,
+            "title": "Testauction 7",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 8,
+            "title": "Testauction 8",
+            "ownerID": 1,
+            "ownerType" : "Supplier",
+            "maxParticipants": 10,
+            "participants": [
+                {
+                    "userID": 2
+                },
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "roundTime": 300,
+            "material": "Wood",
+            "contractTemplateID": 1,
+            "bids": [
+                {
+                    "userID": 2,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Thule Thulesson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 5
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 25
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 10
+                        }
+                    ]
+                },
+                {
+                    "userID": 3,
+                    "keyValuePairs": [
+                        {
+                            "key": "Name",
+                            "value": "Sven Svensson"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        },
+        {
+            "id": 9,
+            "title": "Testauction 9",
             "ownerID": 1,
             "ownerType" : "Supplier",
             "maxParticipants": 10,

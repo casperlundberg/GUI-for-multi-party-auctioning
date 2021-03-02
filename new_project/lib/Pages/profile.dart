@@ -304,40 +304,42 @@ class Profile extends State<ProfileGUI> {
                       child: Text("Save changes"),
                       onPressed: () {
                         if (userHandler.profileEditCheck(newUserName, newEmail, newMobilePhoneNumber)) {
-                          if (pw != null) {
-                            if (userHandler.passwordChecker(opw, rpw)) {
-                              userHandler.user.userName = newUserName;
-                              userHandler.user.email = newEmail;
-                              userHandler.user.age = newAge;
-                              userHandler.user.address.streetAddress = newAddress;
-                              userHandler.user.address.city = newCity;
-                              userHandler.user.address.state = newState;
-                              userHandler.user.address.postalCode = newPostalCode;
-                              userHandler.user.homePhoneNumber = newHomePhoneNumber;
-                              userHandler.user.mobilePhoneNumber = newMobilePhoneNumber;
-                              userHandler.user.officePhoneNumber = newOfficePhoneNumber;
-                              userHandler.user.currentType = newCurrentType;
-                              userHandler.user.company = newCompany;
-                              userHandler.user.password.encryption = pw;
-                              userHandler.updateProfile();
-                              navigate(WidgetMarker.auctions);
-                            }
-                          } else {
-                            if (userHandler.passwordChecker(opw, rpw)) {
-                              userHandler.user.userName = newUserName;
-                              userHandler.user.email = newEmail;
-                              userHandler.user.age = newAge;
-                              userHandler.user.address.streetAddress = newAddress;
-                              userHandler.user.address.city = newCity;
-                              userHandler.user.address.state = newState;
-                              userHandler.user.address.postalCode = newPostalCode;
-                              userHandler.user.homePhoneNumber = newHomePhoneNumber;
-                              userHandler.user.mobilePhoneNumber = newMobilePhoneNumber;
-                              userHandler.user.officePhoneNumber = newOfficePhoneNumber;
-                              userHandler.user.currentType = newCurrentType;
-                              userHandler.user.company = newCompany;
-                              userHandler.updateProfile();
-                              navigate(WidgetMarker.auctions);
+                          if (userHandler.loginValidator(userHandler.user.userName, opw) != null) {
+                            if (pw != null) {
+                              if (userHandler.passwordChecker(opw, rpw)) {
+                                userHandler.user.userName = newUserName;
+                                userHandler.user.email = newEmail;
+                                userHandler.user.age = newAge;
+                                userHandler.user.address.streetAddress = newAddress;
+                                userHandler.user.address.city = newCity;
+                                userHandler.user.address.state = newState;
+                                userHandler.user.address.postalCode = newPostalCode;
+                                userHandler.user.homePhoneNumber = newHomePhoneNumber;
+                                userHandler.user.mobilePhoneNumber = newMobilePhoneNumber;
+                                userHandler.user.officePhoneNumber = newOfficePhoneNumber;
+                                userHandler.user.currentType = newCurrentType;
+                                userHandler.user.company = newCompany;
+                                userHandler.user.password.encryption = pw;
+                                userHandler.updateProfile();
+                                navigate(WidgetMarker.auctions);
+                              }
+                            } else {
+                              if (userHandler.passwordChecker(opw, rpw)) {
+                                userHandler.user.userName = newUserName;
+                                userHandler.user.email = newEmail;
+                                userHandler.user.age = newAge;
+                                userHandler.user.address.streetAddress = newAddress;
+                                userHandler.user.address.city = newCity;
+                                userHandler.user.address.state = newState;
+                                userHandler.user.address.postalCode = newPostalCode;
+                                userHandler.user.homePhoneNumber = newHomePhoneNumber;
+                                userHandler.user.mobilePhoneNumber = newMobilePhoneNumber;
+                                userHandler.user.officePhoneNumber = newOfficePhoneNumber;
+                                userHandler.user.currentType = newCurrentType;
+                                userHandler.user.company = newCompany;
+                                userHandler.updateProfile();
+                                navigate(WidgetMarker.auctions);
+                              }
                             }
                           }
                         }
