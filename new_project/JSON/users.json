@@ -18,7 +18,7 @@
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-98",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Demander",
+            "currentType": "Consumer",
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
@@ -91,7 +91,7 @@
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-1234",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Demander",
+            "currentType": "Consumer",
             "company": "Netlight",
             "participatingAuctions": [
                 {
@@ -137,7 +137,7 @@
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-234",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Demander",
+            "currentType": "Consumer",
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {

@@ -13,7 +13,6 @@ import 'Pages/room.dart';
 import 'Entities/filtersJSON.dart';
 import 'Entities/auctionListJSON.dart';
 import 'Entities/auctionDetailsListJSON.dart';
-import 'Entities/user.dart';
 import 'Entities/contractTemplatesJSON.dart';
 import 'Pages/auctionsGUI.dart';
 import 'Pages/forgotPass.dart';

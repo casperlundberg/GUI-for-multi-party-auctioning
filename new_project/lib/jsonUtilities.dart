@@ -52,6 +52,44 @@ String userListString = '''{
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers": [
+                {
+                    "offerID": 1
+                },
+                {
+                    "offerID": 2
+                }
+            ],
+            "requestInbox": [
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Pending",
+                    "auctionID": 3,
+                    "userID": 2
+                },
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Declined",
+                    "auctionID": 9,
+                    "userID": 2
+                }
+            ],
+            "inviteInbox": [
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Pending",
+                    "auctionID": 8,
+                    "userID": 2,
+                    "offerID": 1
+                },
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Accepted",
+                    "auctionID": 7,
+                    "userID": 2,
+                    "offerID": 3
+                }
             ]
         },
         {
@@ -87,6 +125,17 @@ String userListString = '''{
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+                {
+                    "offerID": 3
+                }
+            ],
+            "requestInbox":[
+
+            ],
+            "inviteInbox":[
+
             ]
         },
         {
@@ -122,6 +171,15 @@ String userListString = '''{
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+
+            ],
+            "requestInbox":[
+
+            ],
+            "inviteInbox":[
+
             ]
         },
         {
@@ -157,11 +215,20 @@ String userListString = '''{
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+
+            ],
+            "requestInbox":[
+
+            ],
+            "inviteInbox":[
+
             ]
         },
         {
             "userId": 5,
-            "userName": "g",
+            "userName": "Gustav Curan",
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",
@@ -177,7 +244,7 @@ String userListString = '''{
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-3",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Consumer",
+            "currentType": "Supplier",
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
@@ -192,6 +259,15 @@ String userListString = '''{
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+
+            ],
+            "requestInbox":[
+
+            ],
+            "inviteInbox":[
+
             ]
         }
     ]
@@ -236,6 +312,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
                         {
@@ -261,6 +338,7 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -316,6 +394,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
                         {
@@ -341,6 +420,7 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -393,6 +473,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -448,6 +529,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
                         {
@@ -473,6 +555,7 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -528,6 +611,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
                         {
@@ -553,6 +637,7 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -608,6 +693,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
                         {
@@ -633,6 +719,7 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -688,6 +775,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
                         {
@@ -713,6 +801,7 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -765,6 +854,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {
@@ -817,6 +907,7 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
+                    "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
                         {

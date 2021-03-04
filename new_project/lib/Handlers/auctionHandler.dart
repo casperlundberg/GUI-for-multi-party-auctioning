@@ -4,7 +4,6 @@ import '../Entities/auctionListJSON.dart';
 import '../Entities/auctionDetailsListJSON.dart';
 import '../Entities/contractTemplatesJSON.dart';
 import '../Entities/userList.dart';
-import '../Entities/user.dart';
 import 'userInfoHandler.dart';
 import '../jsonUtilities.dart';
 
