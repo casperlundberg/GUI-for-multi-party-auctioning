@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_project/Entities/auctionDetailsListJSON.dart';
 import 'package:new_project/Handlers/auctionHandler.dart';
 
 import '../mainGUI.dart';
@@ -88,6 +89,7 @@ class _RoomState extends State<Room> {
                         child: ListView.builder(
                           itemCount: auctionHandler.currentAuction
                               .contractTemplate.templateVariables.length,
+                          // ignore: missing_return
                           itemBuilder: (context, index) {
                             if (index == 0) {
                               if (auctionHandler.currentAuction.contractTemplate
@@ -309,7 +311,10 @@ class _RoomState extends State<Room> {
                         child: ElevatedButton(
                           child: Text("Make bid"),
                           onPressed: () {
-                            Navigator.pop(context);
+                            setState(() {
+                              auctionHandler.createBid(controllers);
+                              Navigator.pop(context);
+                            });
                           },
                         ),
                       ),
@@ -503,18 +508,29 @@ class _RoomState extends State<Room> {
                               itemExtent: 25.0,
                               delegate: SliverChildBuilderDelegate(
                                 (BuildContext context, int index) {
+                                  List<KeyValuePair> currentBid = auctionHandler
+                                      .currentAuction.bids[index].keyValuePairs;
+                                  //[0] : Name
+                                  //[1] : Quantity
+                                  //[2] : ArticleID
+                                  //[3] : Money
+                                  //[4] : Hours
+
+                                  //TODO: Add timestamp to JSON
                                   return Container(
                                     padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                                     alignment: Alignment.centerLeft,
                                     color:
                                         Colors.grey[850 + (50 * (index % 2))],
                                     child: Text(
-                                        '[14:20] COMPANYNAME placed bid for $index SEK',
+                                        //Sample string, could be reworked
+                                        '[14:20] ${currentBid[0].value} placed bid for ${currentBid[3].value} SEK',
                                         style:
                                             TextStyle(fontFamily: 'Consolas')),
                                   );
                                 },
-                                childCount: 50,
+                                childCount:
+                                    auctionHandler.currentAuction.bids.length,
                               ),
                             ),
                           ],
