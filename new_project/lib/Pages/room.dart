@@ -1,14 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:new_project/Entities/auctionDetailsListJSON.dart';
 import 'package:new_project/Handlers/auctionHandler.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 import '../mainGUI.dart';
 
 class Room extends StatefulWidget {
   final Function navigate;
   final AuctionHandler auctionHandler;
-
+  CountdownTimerController controller;
   Room(this.navigate, this.auctionHandler);
 
   @override
@@ -19,6 +24,7 @@ class _RoomState extends State<Room> {
   final Function navigate;
   final AuctionHandler auctionHandler;
   List<TextEditingController> controllers = [];
+  int endTime;
 
   _RoomState(this.navigate, this.auctionHandler) {
     for (int i = 0; i < auctionHandler.currentAuction.contractTemplate.templateVariables.length; i++) {
@@ -250,6 +256,7 @@ class _RoomState extends State<Room> {
 
   @override
   Widget build(BuildContext context) {
+    endTime = auctionHandler.currentAuction.stopDate.millisecondsSinceEpoch;
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -360,12 +367,17 @@ class _RoomState extends State<Room> {
                       color: Colors.white70,
                       margin: EdgeInsets.all(10),
                       alignment: Alignment.center,
-                      child: Text(
-                        'Time remaining, current bid, graph of bid history?',
-                        textAlign: TextAlign.center,
+                      child: CountdownTimer(
+                        endTime: endTime,
+                        widgetBuilder: (_, CurrentRemainingTime time) {
+                          if (time == null) {
+                            return Text('Time ended');
+                          }
+                          return Text('Days: ${time.days}, Hours: ${time.hours}, Minute: ${time.min}, Seconds: ${time.sec}');
+                        },
                       ),
                     ),
-                  )
+                  ),
                 ],
               )),
               Expanded(
