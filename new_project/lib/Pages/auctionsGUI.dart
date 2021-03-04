@@ -12,9 +12,8 @@ class AuctionsGUI extends StatelessWidget {
   final Function navigate;
   final FilterHandler filterHandler;
   final AuctionHandler auctionHandler;
-  final UserInfoHandler userHandler;
 
-  AuctionsGUI(this.setMainState, this.navigate, this.filterHandler, this.auctionHandler, this.userHandler);
+  AuctionsGUI(this.setMainState, this.navigate, this.filterHandler, this.auctionHandler);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +22,8 @@ class AuctionsGUI extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically
       children: <Widget>[
         FiltersGUI(setMainState, filterHandler),
-        Center(child: Auctions(setMainState, navigate, filterHandler, auctionHandler, userHandler)),
-        Center(child: MyAuctions(navigate, auctionHandler)),
+        Center(child: Auctions(navigate, filterHandler, auctionHandler)),
+        Center(child: MyAuctions(setMainState, navigate, auctionHandler)),
       ],
     );
   }

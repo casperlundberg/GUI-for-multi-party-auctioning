@@ -361,7 +361,6 @@ class _RoomState extends State<Room> {
                               style: smallText,
                             ),
                           ]))),
-
                   //Spacer(),
                   Expanded(
                     child: Container(

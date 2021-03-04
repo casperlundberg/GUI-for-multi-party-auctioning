@@ -383,9 +383,6 @@ String auctionDetailsListString = '''{
             "maxParticipants": 10,
             "participants": [
                 {
-                    "userID": 2
-                },
-                {
                     "userID": 3
                 },
                 {
@@ -870,13 +867,10 @@ String auctionDetailsListString = '''{
         {
             "id": 9,
             "title": "Testauction 9",
-            "ownerID": 1,
+            "ownerID": 2,
             "ownerType" : "Supplier",
             "maxParticipants": 10,
             "participants": [
-                {
-                    "userID": 2
-                },
                 {
                     "userID": 3
                 },

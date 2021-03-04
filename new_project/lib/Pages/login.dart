@@ -4,21 +4,19 @@ import '../mainGUI.dart';
 import '../Handlers/userInfoHandler.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Function setMainState;
   final Function navigate;
   final UserInfoHandler userHandler;
-  const LoginScreen(this.setMainState, this.navigate, this.userHandler);
+  const LoginScreen(this.navigate, this.userHandler);
 
   @override
-  Login createState() => Login(setMainState, navigate, userHandler);
+  Login createState() => Login(navigate, userHandler);
 }
 
 class Login extends State<LoginScreen> {
-  final Function setMainState;
   final Function navigate;
   final UserInfoHandler userHandler;
 
-  Login(this.setMainState, this.navigate, this.userHandler);
+  Login(this.navigate, this.userHandler);
 
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerPW = new TextEditingController();

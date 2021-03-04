@@ -6,19 +6,20 @@ import '../mainGUI.dart';
 class RegisterScreen extends StatefulWidget {
   final Function navigate;
   final UserInfoHandler userHandler;
-  final Function userToAuction;
-  const RegisterScreen(this.navigate, this.userHandler, this.userToAuction);
+  const RegisterScreen(
+    this.navigate,
+    this.userHandler,
+  );
 
   @override
-  Register createState() => Register(navigate, userHandler, userToAuction);
+  Register createState() => Register(navigate, userHandler);
 }
 
 class Register extends State<RegisterScreen> {
   final Function navigate;
   final UserInfoHandler userHandler;
-  final Function userToAuction;
 
-  Register(this.navigate, this.userHandler, this.userToAuction);
+  Register(this.navigate, this.userHandler);
 
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();

@@ -1,0 +1,15 @@
+{
+    "offers":[
+        {
+            "id": 1,
+            "title": "Supplier Offer",
+            "userID": 1,
+            "material": "Wood",
+            "offerTemplateID": 1,
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-04-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material"
+        }
+    ]
+}

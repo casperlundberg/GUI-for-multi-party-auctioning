@@ -7,20 +7,18 @@ import '../Handlers/userInfoHandler.dart';
 class ProfileGUI extends StatefulWidget {
   final Function navigate;
   final UserInfoHandler userHandler;
-  final Function userToAuction;
 
-  const ProfileGUI(this.navigate, this.userHandler, this.userToAuction);
+  const ProfileGUI(this.navigate, this.userHandler);
   @override
-  Profile createState() => Profile(navigate, userHandler, userToAuction);
+  Profile createState() => Profile(navigate, userHandler);
 }
 
 class Profile extends State<ProfileGUI> {
   final Function navigate;
   final UserInfoHandler userHandler;
-  final Function userToAuction;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  Profile(this.navigate, this.userHandler, this.userToAuction);
+  Profile(this.navigate, this.userHandler);
 
   final TextEditingController _controllerUserName = new TextEditingController();
   final TextEditingController _controllerEmail = new TextEditingController();
