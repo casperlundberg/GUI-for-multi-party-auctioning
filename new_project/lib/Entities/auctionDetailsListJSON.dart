@@ -6,9 +6,11 @@ import 'dart:convert';
 
 import 'contractTemplatesJSON.dart';
 
-AuctionDetailsList auctionDetailsListFromJson(String str) => AuctionDetailsList.fromJson(json.decode(str));
+AuctionDetailsList auctionDetailsListFromJson(String str) =>
+    AuctionDetailsList.fromJson(json.decode(str));
 
-String auctionDetailsListToJson(AuctionDetailsList data) => json.encode(data.toJson());
+String auctionDetailsListToJson(AuctionDetailsList data) =>
+    json.encode(data.toJson());
 
 class AuctionDetailsList {
   AuctionDetailsList({
@@ -17,12 +19,15 @@ class AuctionDetailsList {
 
   List<AuctionDetails> auctionDetailsList;
 
-  factory AuctionDetailsList.fromJson(Map<String, dynamic> json) => AuctionDetailsList(
-        auctionDetailsList: List<AuctionDetails>.from(json["auctionDetailsList"].map((x) => AuctionDetails.fromJson(x))),
+  factory AuctionDetailsList.fromJson(Map<String, dynamic> json) =>
+      AuctionDetailsList(
+        auctionDetailsList: List<AuctionDetails>.from(
+            json["auctionDetailsList"].map((x) => AuctionDetails.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "auctionDetailsList": List<dynamic>.from(auctionDetailsList.map((x) => x.toJson())),
+        "auctionDetailsList":
+            List<dynamic>.from(auctionDetailsList.map((x) => x.toJson())),
       };
 }
 
@@ -66,7 +71,8 @@ class AuctionDetails {
         ownerId: json["ownerID"],
         ownerType: json["ownerType"],
         maxParticipants: json["maxParticipants"],
-        participants: List<Participant>.from(json["participants"].map((x) => Participant.fromJson(x))),
+        participants: List<Participant>.from(
+            json["participants"].map((x) => Participant.fromJson(x))),
         roundTime: json["roundTime"],
         material: json["material"],
         contractTemplateId: json["contractTemplateID"],
@@ -98,20 +104,26 @@ class AuctionDetails {
 class Bid {
   Bid({
     this.userId,
+    this.time,
     this.keyValuePairs,
   });
 
   int userId;
+  DateTime time;
   List<KeyValuePair> keyValuePairs;
 
   factory Bid.fromJson(Map<String, dynamic> json) => Bid(
         userId: json["userID"],
-        keyValuePairs: List<KeyValuePair>.from(json["keyValuePairs"].map((x) => KeyValuePair.fromJson(x))),
+        time: DateTime.parse(json["time"]),
+        keyValuePairs: List<KeyValuePair>.from(
+            json["keyValuePairs"].map((x) => KeyValuePair.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "userID": userId,
-        "keyValuePairs": List<dynamic>.from(keyValuePairs.map((x) => x.toJson())),
+        "time": time.toIso8601String(),
+        "keyValuePairs":
+            List<dynamic>.from(keyValuePairs.map((x) => x.toJson())),
       };
 }
 

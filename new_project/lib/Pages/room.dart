@@ -369,7 +369,9 @@ class _RoomState extends State<Room> {
                 ),
                 Container(
                   child: Text((() {
-                    if (auctionHandler.userHandler.user.currentType.toLowerCase().contains("consumer")) {
+                    if (auctionHandler.userHandler.user.currentType
+                        .toLowerCase()
+                        .contains("consumer")) {
                       return "Requested: ${auctionHandler.currentAuction.material}";
                     } else {
                       return "Provided: ${auctionHandler.currentAuction.material}";
@@ -511,24 +513,41 @@ class _RoomState extends State<Room> {
                                 (BuildContext context, int index) {
                                   List<KeyValuePair> currentBid = auctionHandler
                                       .currentAuction.bids[index].keyValuePairs;
+                                  String timeString = auctionHandler
+                                      .currentAuction.bids[index].time
+                                      .toLocal()
+                                      .toString();
                                   //[0] : Name
                                   //[1] : Quantity
                                   //[2] : ArticleID
                                   //[3] : Money
                                   //[4] : Hours
 
-                                  //TODO: Add timestamp to JSON
                                   return Container(
-                                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                    alignment: Alignment.centerLeft,
-                                    color:
-                                        Colors.grey[850 + (50 * (index % 2))],
-                                    child: Text(
-                                        //Sample string, could be reworked
-                                        '[14:20] ${currentBid[0].value} placed bid for ${currentBid[3].value} SEK',
-                                        style:
-                                            TextStyle(fontFamily: 'Consolas')),
-                                  );
+                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                      alignment: Alignment.centerRight,
+                                      color:
+                                          Colors.grey[850 + (50 * (index % 2))],
+                                      child: Row(children: [
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                              //Sample string, could be reworked
+                                              '[$timeString] ${currentBid[0].value} placed bid for ${currentBid[3].value} SEK',
+                                              style: TextStyle(
+                                                  fontFamily: 'Consolas')),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          alignment: Alignment.centerRight,
+                                          child: TextButton(
+                                            child: Text("Show"),
+                                            onPressed: () {
+                                              //TODO: Show contract popup on press
+                                            },
+                                          ),
+                                        )
+                                      ]));
                                 },
                                 childCount:
                                     auctionHandler.currentAuction.bids.length,

@@ -135,9 +135,13 @@ class AuctionHandler {
       controllers[i].clear();
     }
 
-    Bid bid = Bid(userId: userHandler.user.userId, keyValuePairs: pairs);
+    Bid bid = Bid(
+        userId: userHandler.user.userId,
+        time: DateTime.now(),
+        keyValuePairs: pairs);
 
     //TODO: Add pricechecks, copy-checks, etc
+    //TODO: Check if auction is ongoing, throw exception if not
     currentAuction.bids.add(bid);
 
     //TODO: Push to API

@@ -237,6 +237,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T11:01:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -262,6 +263,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:03:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -286,8 +288,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -317,6 +319,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T11:04:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -342,6 +345,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:05:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -366,8 +370,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -397,6 +401,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T11:03:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -422,6 +427,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:05:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -446,8 +452,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -477,6 +483,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T11:04:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -502,6 +509,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:11:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -526,8 +534,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -557,6 +565,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T11:01:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -582,6 +591,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:03:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -606,8 +616,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -637,6 +647,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T11:06:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -662,6 +673,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:07:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -686,8 +698,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -717,6 +729,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T11:20:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -742,6 +755,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:00:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -766,8 +780,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -797,6 +811,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T10:51:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -822,6 +837,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:01:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -846,8 +862,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -877,6 +893,7 @@ String auctionDetailsListString = '''{
             "bids": [
                 {
                     "userID": 2,
+                    "time" : "2021-02-15T10:44:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -902,6 +919,7 @@ String auctionDetailsListString = '''{
                 },
                 {
                     "userID": 3,
+                    "time" : "2021-02-15T11:29:00+01:00",
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -926,8 +944,8 @@ String auctionDetailsListString = '''{
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         }
@@ -957,8 +975,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Wood",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -971,8 +989,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Stone",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-02-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -985,8 +1003,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Gold",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-06-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -999,8 +1017,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Silver",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-06-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -1013,8 +1031,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Wood",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-06-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -1027,8 +1045,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Wood",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-06-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -1041,8 +1059,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Wood",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-06-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -1055,8 +1073,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Wood",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-06-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -1069,8 +1087,8 @@ String auctionsListString = '''{
             "currentParticipants": 0,
             "roundTime": 300,
             "material": "Wood",
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-06-15T11:30:00.001Z",
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         }
