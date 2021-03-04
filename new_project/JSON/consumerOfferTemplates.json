@@ -1,0 +1,28 @@
+{
+    "offerTemplates": [
+        {
+            "id": 1,
+            "templateStrings": [
+                {
+                    "text": "I, "
+                },
+                {
+                    "text": " am interested in purchasing units at the starting price of "
+                },
+                {
+                    "text": " per kg. "
+                }
+            ],
+            "templateVariables": [
+                {
+                    "key": "Name",
+                    "valueType": "Text"
+                },
+                {
+                    "key": "Amount of money",
+                    "valueType": "Integer"
+                }
+            ]
+        }
+    ]
+}

@@ -41,7 +41,6 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
 
   FilterHandler filterHandler;
   AuctionHandler auctionHandler;
-  UserInfoHandler userHandler;
 
   @override
   void initState() {
@@ -52,7 +51,6 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
 
     // USER VARIABLES
     UserList userListObject = userListFromJson(getUserListString());
-    userHandler = new UserInfoHandler(null, userListObject, new User());
 
     // FILTER VARIABLES
     Filters filters = filtersFromJson(getFilterListString());
@@ -64,9 +62,8 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     AuctionDetailsList auctionDetailsList = auctionDetailsListFromJson(getAuctionDetailsListString());
     ContractTemplates supplierContractTemplates = contractTemplatesFromJson(getSupplierContractTemplatesString());
     ContractTemplates consumerContractTemplates = contractTemplatesFromJson(getConsumerContractTemplatesString());
-    auctionHandler = new AuctionHandler(
-        setMainState, auctionToUser, allAuctions, auctionDetailsList, null, null, supplierContractTemplates, consumerContractTemplates, userHandler);
-    userHandler = new UserInfoHandler(userToAuction, userListObject, new User());
+    auctionHandler = new AuctionHandler(setMainState, allAuctions, auctionDetailsList, null, null, supplierContractTemplates, consumerContractTemplates,
+        new UserInfoHandler(userToAuction, userListObject, new User()));
   }
 
   @override
@@ -127,25 +124,18 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     setState(() {});
   }
 
-  void auctionToUser() {
-    setState(() {
-      userHandler = auctionHandler.userHandler;
-    });
-  }
-
   void userToAuction() {
     setState(() {
-      if (userHandler.user.participatingAuctions != null) {
+      if (auctionHandler.userHandler.user.participatingAuctions != null) {
         auctionHandler.myAuctions = new AuctionList(auctionList: []);
-        for (int i = 0; i < userHandler.user.participatingAuctions.length; i++) {
+        for (int i = 0; i < auctionHandler.userHandler.user.participatingAuctions.length; i++) {
           for (int y = 0; y < auctionHandler.allAuctions.auctionList.length; y++) {
-            if (userHandler.user.participatingAuctions[i].auctionId == auctionHandler.allAuctions.auctionList[y].id) {
+            if (auctionHandler.userHandler.user.participatingAuctions[i].auctionId == auctionHandler.allAuctions.auctionList[y].id) {
               auctionHandler.myAuctions.auctionList.add(auctionHandler.allAuctions.auctionList[y]);
             }
           }
         }
       }
-      auctionHandler.userHandler = userHandler;
     });
   }
 
@@ -207,21 +197,21 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: animation,
-      child: AuctionsGUI(setMainState, navigate, filterHandler, auctionHandler, userHandler),
+      child: AuctionsGUI(setMainState, navigate, filterHandler, auctionHandler),
     );
   }
 
   Widget getLoginContainer() {
     return FadeTransition(
       opacity: animation,
-      child: LoginScreen(setMainState, navigate, userHandler),
+      child: LoginScreen(navigate, auctionHandler.userHandler),
     );
   }
 
   Widget getRegisterContainer() {
     return FadeTransition(
       opacity: animation,
-      child: RegisterScreen(navigate, userHandler, userToAuction),
+      child: RegisterScreen(navigate, auctionHandler.userHandler),
     );
   }
 
@@ -235,7 +225,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: animation,
-      child: ProfileGUI(navigate, userHandler, userToAuction),
+      child: ProfileGUI(navigate, auctionHandler.userHandler),
     );
   }
 

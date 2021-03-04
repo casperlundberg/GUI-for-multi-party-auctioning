@@ -1,0 +1,80 @@
+{
+    "offerTemplates": [
+        {
+            "id": 1,
+            "templateStrings": [
+                {
+                    "text": ""
+                },
+                {
+                    "text": " is willing to sell each unit weighing "
+                },
+                {
+                    "text": " kg, for the buyout price of "
+                },
+                {
+                    "text": " EUR, our supply is for now at around "
+                },
+                {
+                    "text": " units and our average dispatch time is "
+                },
+                {
+                    "text": " hours."
+                }
+            ],
+            "templateVariables": [
+                {
+                    "key": "CompanyName",
+                    "valueType": "Text"
+                },
+                {
+                    "key": "Weight",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Amount of money",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Quantity",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Time",
+                    "valueType": "Integer"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "templateStrings": [
+                {
+                    "text": ""
+                },
+                {
+                    "text": " is willing to sell 100 units of certified quality for minimum "
+                },
+                {
+                    "text": " EUR, our dispatch time is on average "
+                },
+                {
+                    "text": " hours."
+                }
+            ],
+            "templateVariables": [
+                {
+                    "key": "CompanyName",
+                    "valueType": "Text"
+                },
+                {
+                    "key": "Amount of money",
+                    "valueType": "Integer"
+                },
+                {
+                    "key": "Time",
+                    "valueType": "Integer"
+                }
+            ]
+        }
+    ]
+}

@@ -10,7 +10,6 @@ import '../jsonUtilities.dart';
 
 class AuctionHandler {
   Function setMainState;
-  Function auctionToUser;
   AuctionList allAuctions;
   AuctionDetailsList auctionDetailsList;
   AuctionList myAuctions;
@@ -19,8 +18,8 @@ class AuctionHandler {
   ContractTemplates consumerContractTemplates;
   UserInfoHandler userHandler;
 
-  AuctionHandler(this.setMainState, this.auctionToUser, this.allAuctions, this.auctionDetailsList, this.myAuctions, this.currentAuction,
-      this.supplierContractTemplates, this.consumerContractTemplates, this.userHandler);
+  AuctionHandler(this.setMainState, this.allAuctions, this.auctionDetailsList, this.myAuctions, this.currentAuction, this.supplierContractTemplates,
+      this.consumerContractTemplates, this.userHandler);
 
   void createAuction(int contractID, String title, int maxParticipants, int roundTime, int rounds, String material) {
     int highestid = 0;
@@ -78,7 +77,6 @@ class AuctionHandler {
       }
     }
     setUserListString(userListToJson(userHandler.userListObject));
-    auctionToUser();
   }
 
   // Triggers when "visit room" button is pressed. Assumes that user already is a participant of the auction.

@@ -33,6 +33,44 @@
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers": [
+                {
+                    "offerID": 1
+                },
+                {
+                    "offerID": 2
+                }
+            ],
+            "requestInbox": [
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Pending",
+                    "auctionID": 3,
+                    "userID": 2
+                },
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Declined",
+                    "auctionID": 9,
+                    "userID": 2
+                }
+            ],
+            "inviteInbox": [
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Pending",
+                    "auctionID": 8,
+                    "userID": 2,
+                    "offerID": 1
+                },
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "Accepted",
+                    "auctionID": 7,
+                    "userID": 2,
+                    "offerID": 3
+                }
             ]
         },
         {
@@ -68,6 +106,17 @@
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+                {
+                    "offerID": 3
+                }
+            ],
+            "auctionInbox":[
+
+            ],
+            "offerInbox":[
+
             ]
         },
         {
@@ -103,6 +152,15 @@
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+
+            ],
+            "auctionInbox":[
+
+            ],
+            "offerInbox":[
+
             ]
         },
         {

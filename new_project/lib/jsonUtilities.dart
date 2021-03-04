@@ -379,9 +379,6 @@ String auctionDetailsListString = '''{
             "maxParticipants": 10,
             "participants": [
                 {
-                    "userID": 2
-                },
-                {
                     "userID": 3
                 },
                 {
@@ -395,31 +392,6 @@ String auctionDetailsListString = '''{
             "material": "Gold",
             "contractTemplateID": 1,
             "bids": [
-                {
-                    "userID": 2,
-                    "keyValuePairs": [
-                        {
-                            "key": "Name",
-                            "value": "Thule Thulesson"
-                        },
-                        {
-                            "key": "Quantity",
-                            "value": 5
-                        },
-                        {
-                            "key": "ArticleID",
-                            "value": 726387327
-                        },
-                        {
-                            "key": "Amount of money",
-                            "value": 25
-                        },
-                        {
-                            "key": "Amount of hours",
-                            "value": 10
-                        }
-                    ]
-                },
                 {
                     "userID": 3,
                     "keyValuePairs": [
@@ -854,13 +826,10 @@ String auctionDetailsListString = '''{
         {
             "id": 9,
             "title": "Testauction 9",
-            "ownerID": 1,
+            "ownerID": 2,
             "ownerType" : "Supplier",
             "maxParticipants": 10,
             "participants": [
-                {
-                    "userID": 2
-                },
                 {
                     "userID": 3
                 },
@@ -875,31 +844,6 @@ String auctionDetailsListString = '''{
             "material": "Wood",
             "contractTemplateID": 1,
             "bids": [
-                {
-                    "userID": 2,
-                    "keyValuePairs": [
-                        {
-                            "key": "Name",
-                            "value": "Thule Thulesson"
-                        },
-                        {
-                            "key": "Quantity",
-                            "value": 5
-                        },
-                        {
-                            "key": "ArticleID",
-                            "value": 726387327
-                        },
-                        {
-                            "key": "Amount of money",
-                            "value": 25
-                        },
-                        {
-                            "key": "Amount of hours",
-                            "value": 10
-                        }
-                    ]
-                },
                 {
                     "userID": 3,
                     "keyValuePairs": [
