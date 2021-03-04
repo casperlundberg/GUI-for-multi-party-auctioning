@@ -397,8 +397,6 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
-<<<<<<< HEAD
-=======
                     "userID": 2,
                     "time" : "2021-02-15T11:03:00+01:00",
                     "keyValuePairs": [
@@ -425,7 +423,6 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
->>>>>>> def5f37d7f943b10979cb1979859376c814e3f6e
                     "userID": 3,
                     "time" : "2021-02-15T11:05:00+01:00",
                     "keyValuePairs": [
@@ -889,8 +886,6 @@ String auctionDetailsListString = '''{
             "contractTemplateID": 1,
             "bids": [
                 {
-<<<<<<< HEAD
-=======
                     "userID": 2,
                     "time" : "2021-02-15T10:44:00+01:00",
                     "keyValuePairs": [
@@ -917,7 +912,6 @@ String auctionDetailsListString = '''{
                     ]
                 },
                 {
->>>>>>> def5f37d7f943b10979cb1979859376c814e3f6e
                     "userID": 3,
                     "time" : "2021-02-15T11:29:00+01:00",
                     "keyValuePairs": [
