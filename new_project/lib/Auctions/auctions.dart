@@ -109,6 +109,13 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               ))
             ],
           ),
+          SliverToBoxAdapter(
+              //--------------CASPER KOLLA HIT
+              child: Container(
+            width: double.infinity,
+            height: 50,
+            color: Colors.pink,
+          )),
           FutureBuilder(builder: (BuildContext context, AsyncSnapshot snaptshot) {
             return _getPageContainer();
           })
@@ -178,15 +185,15 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
 
   //Generates the auctionboxes themselves
   SliverFixedExtentList _generateBoxes(output) {
+    var now = new DateTime.now();
     return SliverFixedExtentList(
         itemExtent: 100.0,
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Container(
-                alignment: Alignment.center,
                 margin: EdgeInsets.all(5.0),
                 padding: EdgeInsets.only(left: 10, right: 10),
-                color: Colors.lightGreen[600],
+                color: now.isAfter(output[index].stopDate) ? Colors.redAccent : Colors.greenAccent[700],
                 child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Text('Name: Room ' + output[index].id.toString()),
@@ -195,7 +202,6 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                   ]),
                   Spacer(),
                   Container(
-                    alignment: Alignment.centerLeft,
                     child: ElevatedButton(
                         child: Text('Visit room'),
                         onPressed: () {
