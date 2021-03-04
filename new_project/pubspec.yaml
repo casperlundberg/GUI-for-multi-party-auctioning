@@ -24,6 +24,7 @@ dependencies:
   crypt: ^3.0.1
   flutter:
     sdk: flutter
+  flutter_countdown_timer: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -453,7 +453,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-02-15T11:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -535,7 +535,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-02-15T11:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -617,7 +617,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-02-15T11:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -699,7 +699,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-02-15T11:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -781,7 +781,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-02-15T11:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -863,7 +863,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-02-15T11:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         },
@@ -945,7 +945,7 @@ String auctionDetailsListString = '''{
                 }
             ],
             "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-02-15T11:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material"
         }
