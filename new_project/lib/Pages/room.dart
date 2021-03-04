@@ -368,12 +368,13 @@ class _RoomState extends State<Room> {
                   },
                 ),
                 Container(
-                  child: Text(
-                    //if usertype is supplier
-                    'Provided: ${auctionHandler.currentAuction.material}',
-                    //else 'Requested: {title}'
-                    style: bigText,
-                  ),
+                  child: Text((() {
+                    if (auctionHandler.userHandler.user.currentType.toLowerCase().contains("consumer")) {
+                      return "Requested: ${auctionHandler.currentAuction.material}";
+                    } else {
+                      return "Provided: ${auctionHandler.currentAuction.material}";
+                    }
+                  })(), style: bigText),
                   height: 40.0,
                   margin: EdgeInsets.all(5.0),
                 ),
@@ -408,7 +409,7 @@ class _RoomState extends State<Room> {
               ]),
               Container(
                 child: Text(
-                  '{companyname}',
+                  'Company: ${auctionHandler.userHandler.user.company}',
                   style: bigText,
                 ),
                 width: 1400.0,

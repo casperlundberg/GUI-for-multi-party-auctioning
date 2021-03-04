@@ -161,7 +161,7 @@ String userListString = '''{
         },
         {
             "userId": 5,
-            "userName": "Gustav Curan",
+            "userName": "g",
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",
@@ -177,7 +177,7 @@ String userListString = '''{
             "homePhoneNumber": "212 555-1234",
             "mobilePhoneNumber": "212 555-3",
             "officePhoneNumber": "212 555-1234",
-            "currentType": "Supplier",
+            "currentType": "Consumer",
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
