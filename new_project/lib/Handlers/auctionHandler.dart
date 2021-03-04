@@ -102,8 +102,27 @@ class AuctionHandler {
       }
     }
   }
-  // NEW TEMPLATE (administrator)
 
+  void createBid(List<TextEditingController> controllers) {
+    //
+    List<KeyValuePair> pairs = [];
+
+    for (int i = 0; i < controllers.length; i++) {
+      pairs.add(KeyValuePair(key: currentAuction.contractTemplate.templateStrings[i].text, value: controllers[i].text));
+
+      controllers[i].clear();
+    }
+
+    Bid bid = Bid(userId: userHandler.user.userId, time: DateTime.now(), keyValuePairs: pairs);
+
+    //TODO: Add pricechecks, copy-checks, etc
+    //TODO: Check if auction is ongoing, throw exception if not
+    currentAuction.bids.add(bid);
+
+    //TODO: Push to API
+  }
+
+  // NEW TEMPLATE (administrator)
   void createContractTemplate(List<String> strings, List<String> keys, List<String> valueTypes, String userType) {
     ContractTemplates contractTemplates;
     if (userType == "Supplier") {
