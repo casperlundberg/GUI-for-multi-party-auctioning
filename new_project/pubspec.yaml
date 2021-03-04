@@ -20,7 +20,10 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
+ # Dio is not really needed, just used to populate ListView directly from an API-call
 dependencies:
+  flutter_search_bar: ^2.1.0
+  dio: 1.0.0
   crypt: ^3.0.1
   flutter:
     sdk: flutter

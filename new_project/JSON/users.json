@@ -112,10 +112,10 @@
                     "offerID": 3
                 }
             ],
-            "auctionInbox":[
+            "requestInbox":[
 
             ],
-            "offerInbox":[
+            "inviteInbox":[
 
             ]
         },
@@ -156,10 +156,10 @@
             "offers":[
 
             ],
-            "auctionInbox":[
+            "requestInbox":[
 
             ],
-            "offerInbox":[
+            "inviteInbox":[
 
             ]
         },
@@ -196,6 +196,15 @@
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+
+            ],
+            "requestInbox":[
+
+            ],
+            "inviteInbox":[
+
             ]
         },
         {
@@ -231,6 +240,15 @@
                 {
                     "auctionID": 5
                 }
+            ],
+            "offers":[
+
+            ],
+            "requestInbox":[
+
+            ],
+            "inviteInbox":[
+
             ]
         }
     ]
