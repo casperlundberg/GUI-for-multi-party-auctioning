@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import '../Entities/userList.dart';
-import '../Entities/user.dart';
 import 'package:crypto/crypto.dart';
 import '../jsonUtilities.dart';
 
