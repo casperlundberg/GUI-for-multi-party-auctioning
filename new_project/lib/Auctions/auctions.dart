@@ -103,8 +103,8 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
             //--------------CASPER KOLLA HIT
             child: Container(
               width: double.infinity,
-              height: 50,
-              color: Colors.pink,
+              height: 100,
+              //color: Colors.pink,
               child: SearchBarGUI(),
             ),
           ),
