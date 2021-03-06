@@ -4,6 +4,7 @@ import '../Handlers/auctionHandler.dart';
 import '../Handlers/filterHandler.dart';
 import '../mainGUI.dart';
 import '../Entities/auctionListJSON.dart';
+import '../Filters/searchBar.dart';
 
 enum PageMarker { ongoing, finished, offers }
 
@@ -104,6 +105,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               width: double.infinity,
               height: 50,
               color: Colors.pink,
+              child: SearchBarGUI(),
             ),
           ),
           FutureBuilder(
