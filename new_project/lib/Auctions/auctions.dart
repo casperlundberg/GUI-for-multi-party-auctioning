@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/Entities/userList.dart';
 
 import '../Handlers/auctionHandler.dart';
 import '../Handlers/filterHandler.dart';
@@ -227,13 +228,25 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                 ),
                 Spacer(),
                 Container(
-                  child: ElevatedButton(
-                    child: Text('Visit room'),
-                    onPressed: () {
-                      auctionHandler.setCurrentAuction(output[index].id);
-                      navigate(WidgetMarker.room);
-                    },
-                  ),
+                  child: now.isAfter(output[index].stopDate)
+                      ? ElevatedButton(
+                          child: Text('Visit room'),
+                          onPressed: () {
+                            auctionHandler.setCurrentAuction(output[index].id);
+                            navigate(WidgetMarker.room);
+                          },
+                        )
+                      : ElevatedButton(
+                          child: Text('Request to join room'),
+                          onPressed: () {
+                            int auctionOwner = output[index].ownerId;
+                            String status = "Pending";
+                            int auctionID = output[index].id;
+                            int myID = auctionHandler.userHandler.user.userId;
+                            auctionHandler.userHandler.userListObject.users[auctionOwner].requestInbox
+                                .add(new Inbox(time: now, status: status, auctionId: auctionID, userId: myID, offerId: null));
+                          },
+                        ),
                 ),
               ],
             ),
