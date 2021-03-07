@@ -22,7 +22,9 @@ environment:
 
  # Dio is not really needed, just used to populate ListView directly from an API-call
 dependencies:
+  search_widget: ^1.0.2
   flutter_search_bar: ^2.1.0
+  dropdown_search: ^0.4.9
   dio: 1.0.0
   crypt: ^3.0.1
   flutter:
