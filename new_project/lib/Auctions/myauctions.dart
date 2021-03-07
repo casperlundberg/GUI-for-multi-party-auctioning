@@ -2,6 +2,7 @@ import 'dart:html';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
+import 'package:new_project/Entities/auctionListJSON.dart';
 import '../Handlers/auctionHandler.dart';
 import '../mainGUI.dart';
 import '../Entities/contractTemplatesJSON.dart';
@@ -15,10 +16,12 @@ class MyAuctions extends StatefulWidget {
   MyAuctions(this.setMainState, this.navigate, this.auctionHandler);
 
   @override
-  _MyAuctionsState createState() => _MyAuctionsState(setMainState, navigate, auctionHandler);
+  _MyAuctionsState createState() =>
+      _MyAuctionsState(setMainState, navigate, auctionHandler);
 }
 
-class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateMixin<MyAuctions> {
+class _MyAuctionsState extends State<MyAuctions>
+    with SingleTickerProviderStateMixin<MyAuctions> {
   final Function setMainState;
   final Function navigate;
   final AuctionHandler auctionHandler;
@@ -28,7 +31,14 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
   TextEditingController maxParticipants = TextEditingController();
   TextEditingController roundTime = TextEditingController();
   TextEditingController rounds = TextEditingController();
-  List<String> materialTypes = ["Wood", "Metals", "Soil", "Stone", "Gold", "Silver"];
+  List<String> materialTypes = [
+    "Wood",
+    "Metals",
+    "Soil",
+    "Stone",
+    "Gold",
+    "Silver"
+  ];
   String materialDropdownValue = "Wood";
   List<String> contractIDs = [];
   String contractDropdownValue;
@@ -40,7 +50,8 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
     if (auctionHandler.userHandler.user.currentType == "Consumer") {
       contractTemplates = auctionHandler.consumerContractTemplates;
     }
-    contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
+    contractDropdownValue =
+        contractTemplates.contractTemplates[0].id.toString();
     contractTemplate = contractTemplates.contractTemplates[0];
     for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
       contractIDs.add(contractTemplates.contractTemplates[i].id.toString());
@@ -50,6 +61,10 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     var now = new DateTime.now();
+    Map myAuctions = splitAuctions(auctionHandler.myAuctions.auctionList, now);
+    List<Auction> finished = myAuctions["finished"];
+    List<Auction> ongoing = myAuctions["ongoing"];
+
     return new Container(
       color: Colors.grey[900],
       height: MediaQuery.of(context).size.height * 0.9,
@@ -71,38 +86,79 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
               ),
             ]),
           ),
-          SliverFixedExtentList(
-              itemExtent: 100.0,
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.all(5.0),
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      color: now.isAfter(auctionHandler.myAuctions.auctionList[index].stopDate) ? Colors.redAccent : Colors.greenAccent[700],
-                      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Text('Name: Room ${auctionHandler.myAuctions.auctionList[index].id}'),
-                          Text('Material: ${auctionHandler.myAuctions.auctionList[index].material}'),
-                          Text('Participants: ${auctionHandler.myAuctions.auctionList[index].currentParticipants}'),
-                        ]),
-                        Spacer(),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: ElevatedButton(
-                              child: Text('Visit room'),
-                              onPressed: () {
-                                auctionHandler.setCurrentAuction(auctionHandler.myAuctions.auctionList[index].id);
-                                navigate(WidgetMarker.room);
-                              }),
-                        ),
-                      ]));
-                },
-                childCount: auctionHandler.myAuctions.auctionList.length,
-              ))
+          //TODO: Collapseable categories?
+          SliverToBoxAdapter(
+              child: Container(
+                  height: Size.fromHeight(kToolbarHeight).height * 0.5,
+                  margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+                  child: Text("Ongoing"))),
+          buildAuctionList(ongoing, now),
+          SliverToBoxAdapter(
+              child: Container(
+                  height: Size.fromHeight(kToolbarHeight).height * 0.5,
+                  margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+                  child: Text("Finished"))),
+          buildAuctionList(finished, now),
         ],
       ),
     );
+  }
+
+  //Maps the a list of auctions into "finished" and "ongoing"
+  //Pretty straightforward stuff
+  Map splitAuctions(List<Auction> auctionList, DateTime now) {
+    List<Auction> finished = [];
+    List<Auction> ongoing = [];
+
+    for (int i = 0; i < auctionList.length; i++) {
+      Auction current = auctionList[i];
+      now.isAfter(current.stopDate)
+          ? finished.add(current)
+          : ongoing.add(current);
+    }
+
+    return {"finished": finished, "ongoing": ongoing};
+  }
+
+  //Builder function for the auction list
+  SliverFixedExtentList buildAuctionList(
+      List<Auction> auctionList, DateTime now) {
+    return SliverFixedExtentList(
+        itemExtent: 100.0,
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.all(5.0),
+                padding: EdgeInsets.only(left: 10, right: 10),
+                color: now.isAfter(auctionList[index].stopDate)
+                    ? Colors.redAccent
+                    : Colors.greenAccent[700],
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Name: Room ${auctionList[index].id}'),
+                        Text('Material: ${auctionList[index].material}'),
+                        Text(
+                            'Participants: ${auctionList[index].currentParticipants}'),
+                      ]),
+                  Spacer(),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: ElevatedButton(
+                        child: Text('Visit room'),
+                        onPressed: () {
+                          auctionHandler
+                              .setCurrentAuction(auctionList[index].id);
+                          navigate(WidgetMarker.room);
+                        }),
+                  ),
+                ]));
+          },
+          childCount: auctionList.length,
+        ));
   }
 
   void showContractTemplateGUI() {
@@ -112,7 +168,8 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
         final ThemeData themeData = Theme.of(context);
 
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           child: Container(
@@ -128,7 +185,8 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                   margin: EdgeInsets.only(top: 13.0, right: 8.0),
                   decoration: BoxDecoration(
                     //color: Colors.red,
-                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
+                    color: Colors.grey[
+                        900], //Couldn't import from theme as "Dialog" is transparent
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(16.0),
                     boxShadow: <BoxShadow>[
@@ -155,7 +213,8 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                   Text(
                                     "Create new auction",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 2,
                                   ),
                                   SizedBox(height: 10.0),
@@ -164,8 +223,12 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                     children: [
                                       Text("Auction Title: "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.25,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: auctionTitle,
                                         ),
@@ -177,34 +240,55 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                     children: [
                                       Text("Max Participants: "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.03,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: maxParticipants,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
                                       ),
                                       SizedBox(width: 30.0),
                                       Text("Round Time (s): "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.03,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: roundTime,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
                                       ),
                                       SizedBox(width: 30.0),
                                       Text("Number of rounds: "),
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.03,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: TextField(
                                           controller: rounds,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -224,7 +308,9 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                             materialDropdownValue = newValue;
                                           });
                                         },
-                                        items: materialTypes.map<DropdownMenuItem<String>>((String value) {
+                                        items: materialTypes
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -247,14 +333,26 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                         onChanged: (String newValue) {
                                           setState(() {
                                             contractDropdownValue = newValue;
-                                            for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
-                                              if (contractTemplates.contractTemplates[i].id.toString() == newValue) {
-                                                contractTemplate = contractTemplates.contractTemplates[i];
+                                            for (int i = 0;
+                                                i <
+                                                    contractTemplates
+                                                        .contractTemplates
+                                                        .length;
+                                                i++) {
+                                              if (contractTemplates
+                                                      .contractTemplates[i].id
+                                                      .toString() ==
+                                                  newValue) {
+                                                contractTemplate =
+                                                    contractTemplates
+                                                        .contractTemplates[i];
                                               }
                                             }
                                           });
                                         },
-                                        items: contractIDs.map<DropdownMenuItem<String>>((String value) {
+                                        items: contractIDs
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -267,46 +365,63 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                   Text(
                                     "Contract Template",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 1.5,
                                   ),
                                   SizedBox(height: 20.0),
                                   Expanded(
                                     child: ListView.builder(
-                                      itemCount: contractTemplate.templateVariables.length,
+                                      itemCount: contractTemplate
+                                          .templateVariables.length,
                                       itemBuilder: (context, index) {
                                         if (index == 0) {
                                           return Column(
                                             children: [
                                               Text(
-                                                contractTemplate.templateStrings[0].text,
+                                                contractTemplate
+                                                    .templateStrings[0].text,
                                                 textAlign: TextAlign.center,
                                               ),
                                               SizedBox(height: 20.0),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     "Key: ",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                   Text(
-                                                    contractTemplate.templateVariables[0].key,
-                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                    contractTemplate
+                                                        .templateVariables[0]
+                                                        .key,
+                                                    style: TextStyle(
+                                                        fontStyle:
+                                                            FontStyle.italic),
                                                   ),
                                                   Text(
                                                     " Value Type: ",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                   Text(
-                                                    contractTemplate.templateVariables[0].valueType,
-                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                    contractTemplate
+                                                        .templateVariables[0]
+                                                        .valueType,
+                                                    style: TextStyle(
+                                                        fontStyle:
+                                                            FontStyle.italic),
                                                   ),
                                                 ],
                                               ),
                                               SizedBox(height: 20.0),
                                               Text(
-                                                contractTemplate.templateStrings[1].text,
+                                                contractTemplate
+                                                    .templateStrings[1].text,
                                                 textAlign: TextAlign.center,
                                               ),
                                             ],
@@ -316,29 +431,44 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                           children: [
                                             SizedBox(height: 20.0),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   "Key: ",
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  contractTemplate.templateVariables[index].key,
-                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                  contractTemplate
+                                                      .templateVariables[index]
+                                                      .key,
+                                                  style: TextStyle(
+                                                      fontStyle:
+                                                          FontStyle.italic),
                                                 ),
                                                 Text(
                                                   " Value Type: ",
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  contractTemplate.templateVariables[index].valueType,
-                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                  contractTemplate
+                                                      .templateVariables[index]
+                                                      .valueType,
+                                                  style: TextStyle(
+                                                      fontStyle:
+                                                          FontStyle.italic),
                                                 ),
                                               ],
                                             ),
                                             SizedBox(height: 20.0),
                                             Text(
-                                              contractTemplate.templateStrings[index + 1].text,
+                                              contractTemplate
+                                                  .templateStrings[index + 1]
+                                                  .text,
                                               textAlign: TextAlign.center,
                                             ),
                                           ],
@@ -359,16 +489,24 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                           child: Text("Create auction"),
                           onPressed: () {
                             setState(() {
-                              auctionHandler.createAuction(int.parse(contractDropdownValue), auctionTitle.text, int.parse(maxParticipants.text),
-                                  int.parse(roundTime.text), int.parse(rounds.text), materialDropdownValue);
+                              auctionHandler.createAuction(
+                                  int.parse(contractDropdownValue),
+                                  auctionTitle.text,
+                                  int.parse(maxParticipants.text),
+                                  int.parse(roundTime.text),
+                                  int.parse(rounds.text),
+                                  materialDropdownValue);
 
                               auctionTitle.clear();
                               maxParticipants.clear();
                               roundTime.clear();
                               rounds.clear();
                               materialDropdownValue = "Wood";
-                              contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
-                              contractTemplate = contractTemplates.contractTemplates[0];
+                              contractDropdownValue = contractTemplates
+                                  .contractTemplates[0].id
+                                  .toString();
+                              contractTemplate =
+                                  contractTemplates.contractTemplates[0];
                             });
                             setMainState();
                             Navigator.pop(context);
@@ -388,8 +526,11 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                         roundTime.clear();
                         rounds.clear();
                         materialDropdownValue = "Wood";
-                        contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
-                        contractTemplate = contractTemplates.contractTemplates[0];
+                        contractDropdownValue = contractTemplates
+                            .contractTemplates[0].id
+                            .toString();
+                        contractTemplate =
+                            contractTemplates.contractTemplates[0];
                       });
                       Navigator.of(context).pop();
                     },
