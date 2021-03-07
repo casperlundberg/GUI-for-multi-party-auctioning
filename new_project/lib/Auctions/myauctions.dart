@@ -111,10 +111,9 @@ class _MyAuctionsState extends State<MyAuctions>
     List<Auction> ongoing = [];
 
     for (int i = 0; i < auctionList.length; i++) {
-      Auction current = auctionList[i];
-      now.isAfter(current.stopDate)
-          ? finished.add(current)
-          : ongoing.add(current);
+      now.isAfter(auctionList[i].stopDate)
+          ? finished.add(auctionList[i])
+          : ongoing.add(auctionList[i]);
     }
 
     return {"finished": finished, "ongoing": ongoing};
