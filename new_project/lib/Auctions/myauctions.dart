@@ -62,8 +62,6 @@ class _MyAuctionsState extends State<MyAuctions>
   Widget build(BuildContext context) {
     var now = new DateTime.now();
     Map myAuctions = splitAuctions(auctionHandler.myAuctions.auctionList, now);
-    List<Auction> finished = myAuctions["finished"];
-    List<Auction> ongoing = myAuctions["ongoing"];
 
     return new Container(
       color: Colors.grey[900],
@@ -92,13 +90,13 @@ class _MyAuctionsState extends State<MyAuctions>
                   height: Size.fromHeight(kToolbarHeight).height * 0.5,
                   margin: EdgeInsets.only(left: 15, right: 15, top: 15),
                   child: Text("Ongoing"))),
-          buildAuctionList(ongoing, now),
+          buildAuctionList(myAuctions["ongoing"], now),
           SliverToBoxAdapter(
               child: Container(
                   height: Size.fromHeight(kToolbarHeight).height * 0.5,
                   margin: EdgeInsets.only(left: 15, right: 15, top: 15),
                   child: Text("Finished"))),
-          buildAuctionList(finished, now),
+          buildAuctionList(myAuctions["finished"], now),
         ],
       ),
     );
