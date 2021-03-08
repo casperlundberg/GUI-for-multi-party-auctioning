@@ -305,7 +305,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: animation,
-      child: AuctionsGUI(navigate, filterHandler, auctionHandler, offerHandler),
+      child: AuctionsGUI(navigate, filterHandler, auctionHandler, offerHandler, userHandler),
     );
   }
 

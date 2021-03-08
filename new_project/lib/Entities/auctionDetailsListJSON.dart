@@ -3,8 +3,7 @@
 //     final auctionDetailsList = auctionDetailsListFromJson(jsonString);
 
 import 'dart:convert';
-
-import 'package:new_project/Entities/contractTemplatesJSON.dart';
+import '../Entities/templateListJSON.dart';
 
 AuctionDetailsList auctionDetailsListFromJson(String str) => AuctionDetailsList.fromJson(json.decode(str));
 
@@ -29,90 +28,57 @@ class AuctionDetailsList {
 class AuctionDetails {
   AuctionDetails({
     this.id,
-    this.title,
-    this.ownerId,
-    this.ownerType,
-    this.maxParticipants,
     this.participants,
-    this.roundTime,
-    this.material,
-    this.contractTemplateId,
+    this.templateId,
     this.bids,
-    this.startDate,
-    this.stopDate,
-    this.referenceSector,
-    this.referenceType,
+    this.winningBid,
   });
 
   int id;
-  String title;
-  int ownerId;
-  String ownerType;
-  int maxParticipants;
   List<Participant> participants;
-  int roundTime;
-  String material;
-  int contractTemplateId;
+  int templateId;
   List<Bid> bids;
-  DateTime startDate;
-  DateTime stopDate;
-  String referenceSector;
-  String referenceType;
-  ContractTemplate contractTemplate;
+  int winningBid;
 
   factory AuctionDetails.fromJson(Map<String, dynamic> json) => AuctionDetails(
         id: json["id"],
-        title: json["title"],
-        ownerId: json["ownerID"],
-        ownerType: json["ownerType"],
-        maxParticipants: json["maxParticipants"],
         participants: List<Participant>.from(json["participants"].map((x) => Participant.fromJson(x))),
-        roundTime: json["roundTime"],
-        material: json["material"],
-        contractTemplateId: json["contractTemplateID"],
+        templateId: json["templateID"],
         bids: List<Bid>.from(json["bids"].map((x) => Bid.fromJson(x))),
-        startDate: DateTime.parse(json["startDate"]),
-        stopDate: DateTime.parse(json["stopDate"]),
-        referenceSector: json["referenceSector"],
-        referenceType: json["referenceType"],
+        winningBid: json["winningBid"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "title": title,
-        "ownerID": ownerId,
-        "ownerType": ownerType,
-        "maxParticipants": maxParticipants,
         "participants": List<dynamic>.from(participants.map((x) => x.toJson())),
-        "roundTime": roundTime,
-        "material": material,
-        "contractTemplateID": contractTemplateId,
+        "templateID": templateId,
         "bids": List<dynamic>.from(bids.map((x) => x.toJson())),
-        "startDate": startDate.toIso8601String(),
-        "stopDate": stopDate.toIso8601String(),
-        "referenceSector": referenceSector,
-        "referenceType": referenceType,
+        "winningBid": winningBid,
       };
 }
 
 class Bid {
   Bid({
+    this.id,
     this.time,
     this.userId,
     this.keyValuePairs,
   });
 
+  int id;
   DateTime time;
   int userId;
   List<KeyValuePair> keyValuePairs;
 
   factory Bid.fromJson(Map<String, dynamic> json) => Bid(
+        id: json["id"],
         time: DateTime.parse(json["time"]),
         userId: json["userID"],
         keyValuePairs: List<KeyValuePair>.from(json["keyValuePairs"].map((x) => KeyValuePair.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "time": time.toIso8601String(),
         "userID": userId,
         "keyValuePairs": List<dynamic>.from(keyValuePairs.map((x) => x.toJson())),

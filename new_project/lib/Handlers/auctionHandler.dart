@@ -1,73 +1,108 @@
 import 'package:flutter/material.dart';
-
-import '../Entities/auctionListJSON.dart';
+import 'package:new_project/Entities/materialAuctionListJSON.dart';
+import '../Entities/referencetype2AuctionListJSON.dart';
 import '../Entities/auctionDetailsListJSON.dart';
-import '../Entities/contractTemplatesJSON.dart';
-import '../Entities/userList.dart';
+import '../Entities/templateListJSON.dart';
+import '../Entities/userListJSON.dart';
 import 'userInfoHandler.dart';
 import '../jsonUtilities.dart';
 
+class Auctions {
+  MaterialAuctionList materialAuctions;
+  Referencetype2AuctionList referencetype2Auctions;
+
+  Auctions(this.materialAuctions, this.referencetype2Auctions);
+}
+
 class AuctionHandler {
   Function setMainState;
-  AuctionList allAuctions;
-  AuctionDetailsList auctionDetailsList;
-  AuctionList myAuctions;
-  AuctionDetails currentAuction;
-  ContractTemplates supplierContractTemplates;
-  ContractTemplates consumerContractTemplates;
-  UserInfoHandler userHandler;
+  AuctionDetailsList auctionDetails; //NOT STORED LOCALLY
+  Auctions allAuctions; //NOT STORED LOCALLY
+  TemplateList contractTemplates; //NOT STORED LOCALLY
+  Auctions myAuctions; //STORED LOCALLY
+  AuctionDetails currentAuctionDetails; //STORED LOCALLY
+  UserInfoHandler userHandler; //STORED LOCALLY
+  int nextAuctionID;
+  int nextBidID;
+  int nextTemplateID;
 
-  AuctionHandler(this.setMainState, this.allAuctions, this.auctionDetailsList, this.myAuctions, this.currentAuction, this.supplierContractTemplates,
-      this.consumerContractTemplates, this.userHandler);
-
-  void createAuction(int contractID, String title, int maxParticipants, int roundTime, int rounds, String material) {
-    int highestid = 0;
-    for (int i = 0; i < allAuctions.auctionList.length; i++) {
-      if (allAuctions.auctionList[i].id > highestid) {
-        highestid = allAuctions.auctionList[i].id;
+  AuctionHandler(this.setMainState, this.userHandler, this.nextAuctionID, this.nextBidID, this.nextTemplateID) {
+    if (userHandler.user.currentType == "Consumer") {
+      auctionDetails = auctionDetailsListFromJson(getConsumerAuctionDetails());
+      allAuctions.materialAuctions = materialAuctionListFromJson(getConsumerMaterialAuctions());
+      allAuctions.referencetype2Auctions = referencetype2AuctionListFromJson(getConsumerReferencetype2Auctions());
+      contractTemplates = templateListFromJson(getConsumerContractTemplates());
+    } else {
+      auctionDetails = auctionDetailsListFromJson(getSupplierAuctionDetails());
+      allAuctions.materialAuctions = materialAuctionListFromJson(getSupplierMaterialAuctions());
+      allAuctions.referencetype2Auctions = referencetype2AuctionListFromJson(getSupplierReferencetype2Auctions());
+      contractTemplates = templateListFromJson(getSupplierContractTemplates());
+    }
+    // GET MYAUCTIONS
+    if (userHandler.user.participatingAuctions.length != 0) {
+      for (int i = 0; i < userHandler.user.participatingAuctions.length; i++) {
+        bool added = false;
+        for (int y = 0; y < allAuctions.materialAuctions.materialAuctions.length; y++) {
+          if (userHandler.user.participatingAuctions[i].auctionId == allAuctions.materialAuctions.materialAuctions[y].id) {
+            myAuctions.materialAuctions.materialAuctions.add(allAuctions.materialAuctions.materialAuctions[y]);
+            added = true;
+            break;
+          }
+        }
+        if (added) {
+          continue;
+        }
+        for (int y = 0; y < allAuctions.referencetype2Auctions.referencetype2Auctions.length; y++) {
+          if (userHandler.user.participatingAuctions[i].auctionId == allAuctions.referencetype2Auctions.referencetype2Auctions[y].id) {
+            myAuctions.referencetype2Auctions.referencetype2Auctions.add(allAuctions.referencetype2Auctions.referencetype2Auctions[y]);
+            break;
+          }
+        }
       }
     }
-    highestid++;
+  }
 
+  void createMaterialAuction(int templateID, String title, int maxParticipants, int duration, String fibersType, String resinType, int minFiberLength,
+      int maxFiberLength, String recyclingTechnology, String sizing, String additives, int minVolume, int maxVolume) {
     DateTime startDate = new DateTime.now();
-    DateTime stopDate = startDate.add(Duration(seconds: (roundTime * rounds)));
+    DateTime stopDate = startDate.add(Duration(minutes: (duration)));
 
-    AuctionDetails newAuctionDetails = new AuctionDetails(
-        id: highestid,
+    AuctionDetails newAuctionDetails = new AuctionDetails(id: nextAuctionID, participants: [], templateId: templateID, bids: [], winningBid: 0);
+    MaterialAuction newMaterialAuction = new MaterialAuction(
+        id: nextAuctionID,
         title: title,
         ownerId: userHandler.user.userId,
-        ownerType: userHandler.user.currentType,
-        maxParticipants: maxParticipants,
-        participants: [],
-        roundTime: roundTime,
-        material: material,
-        contractTemplateId: contractID,
-        bids: [],
-        startDate: startDate,
-        stopDate: stopDate,
-        referenceSector: "composites",
-        referenceType: "material");
-
-    Auction newAuction = new Auction(
-        id: highestid,
-        title: title,
-        ownerId: userHandler.user.userId,
-        ownerType: userHandler.user.currentType,
         maxParticipants: maxParticipants,
         currentParticipants: 0,
-        roundTime: roundTime,
-        material: material,
         startDate: startDate,
         stopDate: stopDate,
         referenceSector: "composites",
-        referenceType: "material");
+        referenceType: "material",
+        materialReferenceParameters: new MaterialReferenceParameters(
+            fibersType: fibersType,
+            resinType: resinType,
+            minFiberLength: minFiberLength,
+            maxFiberLength: maxFiberLength,
+            recyclingTechnology: recyclingTechnology,
+            sizing: sizing,
+            additives: additives,
+            minVolume: minVolume,
+            maxVolume: maxVolume));
 
-    auctionDetailsList.auctionDetailsList.add(newAuctionDetails);
-    setAuctionDetailsListString(auctionDetailsListToJson(auctionDetailsList));
-    allAuctions.auctionList.add(newAuction);
-    setAuctionsListString(auctionListToJson(allAuctions));
-    myAuctions.auctionList.add(newAuction);
-    ParticipatingAuction a = new ParticipatingAuction(auctionId: highestid);
+    // Add to "database".
+    auctionDetails.auctionDetailsList.add(newAuctionDetails);
+    allAuctions.materialAuctions.materialAuctions.add(newMaterialAuction);
+    if (userHandler.user.currentType == "Consumer") {
+      setConsumerAuctionDetails(auctionDetailsListToJson(auctionDetails));
+      setConsumerMaterialAuctions(materialAuctionListToJson(allAuctions.materialAuctions));
+    } else {
+      setSupplierAuctionDetails(auctionDetailsListToJson(auctionDetails));
+      setSupplierMaterialAuctions(materialAuctionListToJson(allAuctions.materialAuctions));
+    }
+    // Add to myAuctions.
+    myAuctions.materialAuctions.materialAuctions.add(newMaterialAuction);
+    // Add to user's auctions.
+    ParticipatingAuction a = new ParticipatingAuction(auctionId: nextAuctionID);
     userHandler.user.participatingAuctions.add(a);
     for (int i = 0; i < userHandler.userListObject.users.length; i++) {
       if (userHandler.userListObject.users[i].userId == userHandler.user.userId) {
@@ -75,70 +110,75 @@ class AuctionHandler {
         break;
       }
     }
-    setUserListString(userListToJson(userHandler.userListObject));
+    setUsers(userListToJson(userHandler.userListObject));
+    nextAuctionID++;
+    setMainState("Auction");
   }
+
+  void createReferencetype2Auction(
+      int templateID, String title, int maxParticipants, int duration, String parameter1, String parameter2, int minVolume, int maxVolume) {
+    DateTime startDate = new DateTime.now();
+    DateTime stopDate = startDate.add(Duration(minutes: (duration)));
+
+    AuctionDetails newAuctionDetails = new AuctionDetails(id: nextAuctionID, participants: [], templateId: templateID, bids: [], winningBid: 0);
+    Referencetype2Auction newReferencetype2Auction = new Referencetype2Auction(
+        id: nextAuctionID,
+        title: title,
+        ownerId: userHandler.user.userId,
+        maxParticipants: maxParticipants,
+        currentParticipants: 0,
+        startDate: startDate,
+        stopDate: stopDate,
+        referenceSector: "composites",
+        referenceType: "referencetype2",
+        referencetype2ReferenceParameters:
+            new Referencetype2ReferenceParameters(parameter1: parameter1, parameter2: parameter2, minVolume: minVolume, maxVolume: maxVolume));
+
+    // Add to "database".
+    auctionDetails.auctionDetailsList.add(newAuctionDetails);
+    allAuctions.referencetype2Auctions.referencetype2Auctions.add(newReferencetype2Auction);
+    if (userHandler.user.currentType == "Consumer") {
+      setConsumerAuctionDetails(auctionDetailsListToJson(auctionDetails));
+      setConsumerReferencetype2Auctions(referencetype2AuctionListToJson(allAuctions.referencetype2Auctions));
+    } else {
+      setSupplierAuctionDetails(auctionDetailsListToJson(auctionDetails));
+      setSupplierReferencetype2Auctions(referencetype2AuctionListToJson(allAuctions.referencetype2Auctions));
+    }
+    // Add to myAuctions.
+    myAuctions.referencetype2Auctions.referencetype2Auctions.add(newReferencetype2Auction);
+    // Add to user's auctions.
+    ParticipatingAuction a = new ParticipatingAuction(auctionId: nextAuctionID);
+    userHandler.user.participatingAuctions.add(a);
+    for (int i = 0; i < userHandler.userListObject.users.length; i++) {
+      if (userHandler.userListObject.users[i].userId == userHandler.user.userId) {
+        userHandler.userListObject.users[i].participatingAuctions.add(a);
+        break;
+      }
+    }
+    setUsers(userListToJson(userHandler.userListObject));
+    nextAuctionID++;
+    setMainState("Auction");
+  }
+
+  //unimplemented
+  void endAuction() {}
+  void joinAuction() {}
+  void leaveAuction() {}
+  void selectAuctionWinner() {}
 
   // Triggers when "visit room" button is pressed. Assumes that user already is a participant of the auction.
   void setCurrentAuction(int auctionid) {
-    // Retrieve auction details
-    for (int i = 0; i < auctionDetailsList.auctionDetailsList.length; i++) {
-      if (auctionDetailsList.auctionDetailsList[i].id == auctionid) {
-        currentAuction = auctionDetailsList.auctionDetailsList[i];
-      }
-    }
-    // Retrieve contract template
-    if (currentAuction.ownerType == "Supplier") {
-      for (int i = 0; i < supplierContractTemplates.contractTemplates.length; i++) {
-        if (supplierContractTemplates.contractTemplates[i].id == currentAuction.contractTemplateId) {
-          currentAuction.contractTemplate = supplierContractTemplates.contractTemplates[i];
-        }
-      }
-    } else {
-      for (int i = 0; i < consumerContractTemplates.contractTemplates.length; i++) {
-        if (consumerContractTemplates.contractTemplates[i].id == currentAuction.contractTemplateId) {
-          currentAuction.contractTemplate = consumerContractTemplates.contractTemplates[i];
-        }
+    for (int i = 0; i < auctionDetails.auctionDetailsList.length; i++) {
+      if (auctionDetails.auctionDetailsList[i].id == auctionid) {
+        currentAuctionDetails = auctionDetails.auctionDetailsList[i];
       }
     }
   }
 
-  void createBid(List<TextEditingController> controllers) {
-    //
-    List<KeyValuePair> pairs = [];
+  void createBid(List<TextEditingController> controllers) {}
 
-    for (int i = 0; i < controllers.length; i++) {
-      pairs.add(KeyValuePair(key: currentAuction.contractTemplate.templateStrings[i].text, value: controllers[i].text));
-
-      controllers[i].clear();
-    }
-
-    Bid bid = Bid(userId: userHandler.user.userId, time: DateTime.now(), keyValuePairs: pairs);
-
-    //TODO: Add pricechecks, copy-checks, etc
-    //TODO: Check if auction is ongoing, throw exception if not
-    currentAuction.bids.add(bid);
-
-    //TODO: Push to API
-  }
-
-  // NEW TEMPLATE (administrator)
+  // NEW CONTRACT TEMPLATE (administrator, remove?)
   void createContractTemplate(List<String> strings, List<String> keys, List<String> valueTypes, String userType) {
-    ContractTemplates contractTemplates;
-    if (userType == "Supplier") {
-      contractTemplates = supplierContractTemplates;
-    }
-    if (userType == "Consumer") {
-      contractTemplates = consumerContractTemplates;
-    }
-
-    int highestid = 0;
-    for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
-      if (contractTemplates.contractTemplates[i].id > highestid) {
-        highestid = contractTemplates.contractTemplates[i].id;
-      }
-    }
-    highestid++;
-
     List<TemplateString> ts = [];
     for (int i = 0; i < strings.length; i++) {
       ts.add(new TemplateString(text: strings[i]));
@@ -149,16 +189,25 @@ class AuctionHandler {
       tv.add(new TemplateVariable(key: keys[i], valueType: valueTypes[i]));
     }
 
-    ContractTemplate contractTemplate = new ContractTemplate(id: highestid, templateStrings: ts, templateVariables: tv);
+    Template contractTemplate = new Template(id: nextTemplateID, templateStrings: ts, templateVariables: tv);
 
     if (userType == "Supplier") {
-      supplierContractTemplates.contractTemplates.add(contractTemplate);
-      setSupplierContractTemplatesString(contractTemplatesToJson(supplierContractTemplates));
+      TemplateList contractTemplates = templateListFromJson(getSupplierContractTemplates());
+      contractTemplates.templates.add(contractTemplate);
+      setSupplierContractTemplates(templateListToJson(contractTemplates));
+      if (userHandler.user.currentType == "Supplier") {
+        this.contractTemplates.templates.add(contractTemplate);
+      }
     }
     if (userType == "Consumer") {
-      consumerContractTemplates.contractTemplates.add(contractTemplate);
-      setConsumerContractTemplatesString(contractTemplatesToJson(consumerContractTemplates));
+      TemplateList contractTemplates = templateListFromJson(getConsumerContractTemplates());
+      contractTemplates.templates.add(contractTemplate);
+      setConsumerContractTemplates(templateListToJson(contractTemplates));
+      if (userHandler.user.currentType == "Consumer") {
+        this.contractTemplates.templates.add(contractTemplate);
+      }
     }
+    nextTemplateID++;
   }
 
   int templateItemCount = 1;
@@ -411,7 +460,6 @@ class AuctionHandler {
                             controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
                             dropdownValues = ["Text"];
                             dropdownValue = "Supplier";
-                            setMainState();
                             Navigator.pop(context);
                           },
                         ),
@@ -427,7 +475,6 @@ class AuctionHandler {
                       controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
                       dropdownValues = ["Text"];
                       dropdownValue = "Supplier";
-                      setMainState();
                       Navigator.of(context).pop();
                     },
                     child: Align(

@@ -1,31 +1,31 @@
 // To parse this JSON data, do
 //
-//     final contractTemplates = contractTemplatesFromJson(jsonString);
+//     final templateList = templateListFromJson(jsonString);
 
 import 'dart:convert';
 
-ContractTemplates contractTemplatesFromJson(String str) => ContractTemplates.fromJson(json.decode(str));
+TemplateList templateListFromJson(String str) => TemplateList.fromJson(json.decode(str));
 
-String contractTemplatesToJson(ContractTemplates data) => json.encode(data.toJson());
+String templateListToJson(TemplateList data) => json.encode(data.toJson());
 
-class ContractTemplates {
-  ContractTemplates({
-    this.contractTemplates,
+class TemplateList {
+  TemplateList({
+    this.templates,
   });
 
-  List<ContractTemplate> contractTemplates;
+  List<Template> templates;
 
-  factory ContractTemplates.fromJson(Map<String, dynamic> json) => ContractTemplates(
-        contractTemplates: List<ContractTemplate>.from(json["contractTemplates"].map((x) => ContractTemplate.fromJson(x))),
+  factory TemplateList.fromJson(Map<String, dynamic> json) => TemplateList(
+        templates: List<Template>.from(json["templates"].map((x) => Template.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "contractTemplates": List<dynamic>.from(contractTemplates.map((x) => x.toJson())),
+        "templates": List<dynamic>.from(templates.map((x) => x.toJson())),
       };
 }
 
-class ContractTemplate {
-  ContractTemplate({
+class Template {
+  Template({
     this.id,
     this.templateStrings,
     this.templateVariables,
@@ -35,7 +35,7 @@ class ContractTemplate {
   List<TemplateString> templateStrings;
   List<TemplateVariable> templateVariables;
 
-  factory ContractTemplate.fromJson(Map<String, dynamic> json) => ContractTemplate(
+  factory Template.fromJson(Map<String, dynamic> json) => Template(
         id: json["id"],
         templateStrings: List<TemplateString>.from(json["templateStrings"].map((x) => TemplateString.fromJson(x))),
         templateVariables: List<TemplateVariable>.from(json["templateVariables"].map((x) => TemplateVariable.fromJson(x))),

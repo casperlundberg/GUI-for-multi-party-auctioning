@@ -2,38 +2,39 @@ import 'dart:html';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
+import 'package:new_project/Handlers/filterHandler.dart';
+import 'package:new_project/Handlers/offerHandler.dart';
 import '../Handlers/auctionHandler.dart';
 import '../mainGUI.dart';
-import '../Entities/contractTemplatesJSON.dart';
-import '../Handlers/userInfoHandler.dart';
+import '../Entities/templateListJSON.dart';
 
 class MyAuctions extends StatefulWidget {
-  final Function setMainState;
   final Function navigate;
   final AuctionHandler auctionHandler;
+  final OfferHandler offerHandler;
+  final FilterHandler filterHandler;
 
-  MyAuctions(this.setMainState, this.navigate, this.auctionHandler);
+  MyAuctions(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler);
 
   @override
-  _MyAuctionsState createState() => _MyAuctionsState(setMainState, navigate, auctionHandler);
+  _MyAuctionsState createState() => _MyAuctionsState(navigate, auctionHandler, offerHandler, filterHandler);
 }
 
 class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateMixin<MyAuctions> {
-  final Function setMainState;
   final Function navigate;
   final AuctionHandler auctionHandler;
-  ContractTemplates contractTemplates;
-  ContractTemplate contractTemplate;
-  TextEditingController auctionTitle = TextEditingController();
+  final OfferHandler offerHandler;
+  final FilterHandler filterHandler;
+  Template contractTemplate;
+  TextEditingController title = TextEditingController();
   TextEditingController maxParticipants = TextEditingController();
-  TextEditingController roundTime = TextEditingController();
-  TextEditingController rounds = TextEditingController();
+  TextEditingController duration = TextEditingController();
   List<String> materialTypes = ["Wood", "Metals", "Soil", "Stone", "Gold", "Silver"];
   String materialDropdownValue = "Wood";
   List<String> contractIDs = [];
   String contractDropdownValue;
 
-  _MyAuctionsState(this.setMainState, this.navigate, this.auctionHandler) {
+  _MyAuctionsState(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler) {
     if (auctionHandler.userHandler.user.currentType == "Supplier") {
       contractTemplates = auctionHandler.supplierContractTemplates;
     }

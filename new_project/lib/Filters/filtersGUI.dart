@@ -5,22 +5,20 @@ import '../Handlers/filterHandler.dart';
 import '../Entities/filtersJSON.dart';
 
 class FiltersGUI extends StatefulWidget {
-  final Function setMainState;
   final FilterHandler filterHandler;
 
-  FiltersGUI(this.setMainState, this.filterHandler);
+  FiltersGUI(this.filterHandler);
 
   @override
-  _FiltersState createState() => _FiltersState(setMainState, filterHandler);
+  _FiltersState createState() => _FiltersState(filterHandler);
 }
 
 class _FiltersState extends State<FiltersGUI> {
-  final Function setMainState;
   final FilterHandler filterHandler;
   final myController = TextEditingController();
   Filter filter;
 
-  _FiltersState(this.setMainState, this.filterHandler);
+  _FiltersState(this.filterHandler);
 
   void showFilterTemplateGUI() {
     if (filter == null) {

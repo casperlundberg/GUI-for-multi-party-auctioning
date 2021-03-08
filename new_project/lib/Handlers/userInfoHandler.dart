@@ -1,15 +1,18 @@
 import 'dart:convert';
 
-import '../Entities/userList.dart';
+import '../Entities/userListJSON.dart';
 import 'package:crypto/crypto.dart';
 import '../jsonUtilities.dart';
 
 class UserInfoHandler {
-  final Function userToAuction;
-  final UserList userListObject;
-  final User user;
+  final Function updateUser;
+  UserList userListObject; //NOT STORED LOCALLY
+  User user; //STORED LOCALLY
 
-  UserInfoHandler(this.userToAuction, this.userListObject, this.user);
+  UserInfoHandler(this.updateUser) {
+    userListObject = userListFromJson(getUsers());
+    user = new User();
+  }
 
   // Check if a String is a valid email.
   // Return true if it is valid.
@@ -166,7 +169,10 @@ class UserInfoHandler {
     this.user.password = user.password;
     this.user.userId = user.userId;
     this.user.userName = user.userName;
-    userToAuction();
+    this.user.offers = user.offers;
+    this.user.requestInbox = user.requestInbox;
+    this.user.inviteInbox = user.inviteInbox;
+    updateUser();
   }
 
   void register(String userName, String email, String pw) {
@@ -177,9 +183,12 @@ class UserInfoHandler {
     this.user.address = new Address();
     this.user.currentType = "Consumer";
     this.user.participatingAuctions = [];
+    this.user.offers = [];
+    this.user.requestInbox = [];
+    this.user.inviteInbox = [];
     userListObject.users.add(user);
-    setUserListString(userListToJson(userListObject));
-    userToAuction();
+    setUsers(userListToJson(userListObject));
+    updateUser();
   }
 
   void updateProfile() {
@@ -188,7 +197,15 @@ class UserInfoHandler {
         userListObject.users[i] = user;
       }
     }
-    setUserListString(userListToJson(userListObject));
-    userToAuction();
+    setUsers(userListToJson(userListObject));
+    updateUser();
   }
+
+  void logOut() {
+    this.user = new User();
+  }
+
+  // unimplemented
+  void requestToJoin() {}
+  void inviteToAuction() {}
 }
