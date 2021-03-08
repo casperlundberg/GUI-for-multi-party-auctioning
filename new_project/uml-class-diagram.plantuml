@@ -1,7 +1,7 @@
 @startuml
 set namespaceSeparator ::
 
-class "new_project::Auctions::auctions.dart::PageMarker" {
+class "Auctioneer::Auctions::auctions.dart::PageMarker" {
   +int index
   {static} +List<PageMarker> values
   {static} +PageMarker ongoing
@@ -9,20 +9,11 @@ class "new_project::Auctions::auctions.dart::PageMarker" {
   {static} +PageMarker offers
 }
 
-"new_project::Auctions::auctions.dart::PageMarker" o-- "new_project::Auctions::auctions.dart::PageMarker"
+"Auctioneer::Auctions::auctions.dart::PageMarker" o-- "Auctioneer::Auctions::auctions.dart::PageMarker"
 
-class "new_project::Auctions::auctions.dart::Auctions" {
-  +Function navigate
-  +FilterHandler filterHandler
-  +AuctionHandler auctionHandler
-  +_AuctionsState createState()
-}
 
-"new_project::Auctions::auctions.dart::Auctions" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::Auctions::auctions.dart::Auctions" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Auctions::auctions.dart::Auctions"
 
-class "new_project::Auctions::auctions.dart::_AuctionsState" {
+class "Auctioneer::Auctions::auctions.dart::_AuctionsState" {
   +Function navigate
   +FilterHandler filterHandler
   +AuctionHandler auctionHandler
@@ -36,23 +27,12 @@ class "new_project::Auctions::auctions.dart::_AuctionsState" {
   -SliverFixedExtentList _generateBoxes()
 }
 
-"new_project::Auctions::auctions.dart::_AuctionsState" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::Auctions::auctions.dart::_AuctionsState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::Auctions::auctions.dart::_AuctionsState" o-- "new_project::Auctions::auctions.dart::PageMarker"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Auctions::auctions.dart::_AuctionsState"
-"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin<T>" <|-- "new_project::Auctions::auctions.dart::_AuctionsState"
+"Auctioneer::Auctions::auctions.dart::_AuctionsState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Auctions::auctions.dart::_AuctionsState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::Auctions::auctions.dart::_AuctionsState" o-- "Auctioneer::Auctions::auctions.dart::PageMarker"
 
-class "new_project::Auctions::myauctions.dart::MyAuctions" {
-  +Function setMainState
-  +Function navigate
-  +AuctionHandler auctionHandler
-  +_MyAuctionsState createState()
-}
 
-"new_project::Auctions::myauctions.dart::MyAuctions" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Auctions::myauctions.dart::MyAuctions"
-
-class "new_project::Auctions::myauctions.dart::_MyAuctionsState" {
+class "Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" {
   +Function setMainState
   +Function navigate
   +AuctionHandler auctionHandler
@@ -72,19 +52,16 @@ class "new_project::Auctions::myauctions.dart::_MyAuctionsState" {
   +void showContractTemplateGUI()
 }
 
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Entities::contractTemplatesJSON.dart::ContractTemplates"
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Entities::contractTemplatesJSON.dart::ContractTemplate"
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Auctions::myauctions.dart::_MyAuctionsState"
-"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin<T>" <|-- "new_project::Auctions::myauctions.dart::_MyAuctionsState"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplates"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplate"
 
-class "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetailsList" {
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetailsList" {
   +List<AuctionDetails> auctionDetailsList
   +Map toJson()
 }
 
-class "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetails" {
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails" {
   +int id
   +String title
   +int ownerId
@@ -103,32 +80,32 @@ class "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetails" {
   +Map toJson()
 }
 
-"new_project::Entities::auctionDetailsListJSON.dart::AuctionDetails" o-- "new_project::Entities::contractTemplatesJSON.dart::ContractTemplate"
+"Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplate"
 
-class "new_project::Entities::auctionDetailsListJSON.dart::Bid" {
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::Bid" {
   +DateTime time
   +int userId
   +List<KeyValuePair> keyValuePairs
   +Map toJson()
 }
 
-class "new_project::Entities::auctionDetailsListJSON.dart::KeyValuePair" {
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::KeyValuePair" {
   +String key
   +dynamic value
   +Map toJson()
 }
 
-class "new_project::Entities::auctionDetailsListJSON.dart::Participant" {
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::Participant" {
   +int userId
   +Map toJson()
 }
 
-class "new_project::Entities::auctionListJSON.dart::AuctionList" {
+class "Auctioneer::Entities::auctionListJSON.dart::AuctionList" {
   +List<Auction> auctionList
   +Map toJson()
 }
 
-class "new_project::Entities::auctionListJSON.dart::Auction" {
+class "Auctioneer::Entities::auctionListJSON.dart::Auction" {
   +int id
   +String title
   +int ownerId
@@ -144,35 +121,35 @@ class "new_project::Entities::auctionListJSON.dart::Auction" {
   +Map toJson()
 }
 
-class "new_project::Entities::contractTemplatesJSON.dart::ContractTemplates" {
+class "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplates" {
   +List<ContractTemplate> contractTemplates
   +Map toJson()
 }
 
-class "new_project::Entities::contractTemplatesJSON.dart::ContractTemplate" {
+class "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplate" {
   +int id
   +List<TemplateString> templateStrings
   +List<TemplateVariable> templateVariables
   +Map toJson()
 }
 
-class "new_project::Entities::contractTemplatesJSON.dart::TemplateString" {
+class "Auctioneer::Entities::contractTemplatesJSON.dart::TemplateString" {
   +String text
   +Map toJson()
 }
 
-class "new_project::Entities::contractTemplatesJSON.dart::TemplateVariable" {
+class "Auctioneer::Entities::contractTemplatesJSON.dart::TemplateVariable" {
   +String key
   +String valueType
   +Map toJson()
 }
 
-class "new_project::Entities::filtersJSON.dart::Filters" {
+class "Auctioneer::Entities::filtersJSON.dart::Filters" {
   +List<Filter> filters
   +Map toJson()
 }
 
-class "new_project::Entities::filtersJSON.dart::Filter" {
+class "Auctioneer::Entities::filtersJSON.dart::Filter" {
   +int id
   +int localid
   +int distance
@@ -181,12 +158,12 @@ class "new_project::Entities::filtersJSON.dart::Filter" {
   +Map toJson()
 }
 
-class "new_project::Entities::userList.dart::UserList" {
+class "Auctioneer::Entities::userList.dart::UserList" {
   +List<User> users
   +Map toJson()
 }
 
-class "new_project::Entities::userList.dart::User" {
+class "Auctioneer::Entities::userList.dart::User" {
   +int userId
   +String userName
   +String email
@@ -205,10 +182,10 @@ class "new_project::Entities::userList.dart::User" {
   +Map toJson()
 }
 
-"new_project::Entities::userList.dart::User" o-- "new_project::Entities::userList.dart::Password"
-"new_project::Entities::userList.dart::User" o-- "new_project::Entities::userList.dart::Address"
+"Auctioneer::Entities::userList.dart::User" o-- "Auctioneer::Entities::userList.dart::Password"
+"Auctioneer::Entities::userList.dart::User" o-- "Auctioneer::Entities::userList.dart::Address"
 
-class "new_project::Entities::userList.dart::Address" {
+class "Auctioneer::Entities::userList.dart::Address" {
   +String streetAddress
   +String city
   +String state
@@ -216,7 +193,7 @@ class "new_project::Entities::userList.dart::Address" {
   +Map toJson()
 }
 
-class "new_project::Entities::userList.dart::Inbox" {
+class "Auctioneer::Entities::userList.dart::Inbox" {
   +DateTime time
   +String status
   +int auctionId
@@ -225,32 +202,25 @@ class "new_project::Entities::userList.dart::Inbox" {
   +Map toJson()
 }
 
-class "new_project::Entities::userList.dart::Offer" {
+class "Auctioneer::Entities::userList.dart::Offer" {
   +int offerId
   +Map toJson()
 }
 
-class "new_project::Entities::userList.dart::ParticipatingAuction" {
+class "Auctioneer::Entities::userList.dart::ParticipatingAuction" {
   +int auctionId
   +Map toJson()
 }
 
-class "new_project::Entities::userList.dart::Password" {
+class "Auctioneer::Entities::userList.dart::Password" {
   +String type
   +String encryption
   +Map toJson()
 }
 
-class "new_project::Filters::filtersGUI.dart::FiltersGUI" {
-  +Function setMainState
-  +FilterHandler filterHandler
-  +_FiltersState createState()
-}
 
-"new_project::Filters::filtersGUI.dart::FiltersGUI" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Filters::filtersGUI.dart::FiltersGUI"
 
-class "new_project::Filters::filtersGUI.dart::_FiltersState" {
+class "Auctioneer::Filters::filtersGUI.dart::_FiltersState" {
   +Function setMainState
   +FilterHandler filterHandler
   +TextEditingController myController
@@ -260,51 +230,32 @@ class "new_project::Filters::filtersGUI.dart::_FiltersState" {
   +Widget ReturnContent()
 }
 
-"new_project::Filters::filtersGUI.dart::_FiltersState" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::Filters::filtersGUI.dart::_FiltersState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"new_project::Filters::filtersGUI.dart::_FiltersState" o-- "new_project::Entities::filtersJSON.dart::Filter"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Filters::filtersGUI.dart::_FiltersState"
+"Auctioneer::Filters::filtersGUI.dart::_FiltersState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Filters::filtersGUI.dart::_FiltersState" o-- "Auctioneer::Entities::filtersJSON.dart::Filter"
 
-class "new_project::Filters::searchBar.dart::SearchBarGUI" {
-  +_SearchBarGUIState createState()
-}
-
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Filters::searchBar.dart::SearchBarGUI"
-
-class "new_project::Filters::searchBar.dart::_SearchBarGUIState" {
+class "Auctioneer::Filters::searchBar.dart::_SearchBarGUIState" {
   +List<SearchObject> list
   -SearchObject _selectedItem
   -bool _show
   +Widget build()
 }
 
-"new_project::Filters::searchBar.dart::_SearchBarGUIState" o-- "new_project::Filters::searchBar.dart::SearchObject"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Filters::searchBar.dart::_SearchBarGUIState"
+"Auctioneer::Filters::searchBar.dart::_SearchBarGUIState" o-- "Auctioneer::Filters::searchBar.dart::SearchObject"
 
-class "new_project::Filters::searchBar.dart::SearchObject" {
+class "Auctioneer::Filters::searchBar.dart::SearchObject" {
   +dynamic name
   +int id
 }
 
-class "new_project::Filters::searchBar.dart::MyTextField" {
-  +TextEditingController controller
-  +FocusNode focusNode
-  +Widget build()
-}
 
-"new_project::Filters::searchBar.dart::MyTextField" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"new_project::Filters::searchBar.dart::MyTextField" o-- "flutter::src::widgets::focus_manager.dart::FocusNode"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "new_project::Filters::searchBar.dart::MyTextField"
-
-class "new_project::Filters::searchBar.dart::PopupListItemWidget" {
+class "Auctioneer::Filters::searchBar.dart::PopupListItemWidget" {
   +SearchObject item
   +Widget build()
 }
 
-"new_project::Filters::searchBar.dart::PopupListItemWidget" o-- "new_project::Filters::searchBar.dart::SearchObject"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "new_project::Filters::searchBar.dart::PopupListItemWidget"
+"Auctioneer::Filters::searchBar.dart::PopupListItemWidget" o-- "Auctioneer::Filters::searchBar.dart::SearchObject"
 
-class "new_project::Handlers::auctionHandler.dart::AuctionHandler" {
+class "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" {
   +Function setMainState
   +AuctionList allAuctions
   +AuctionDetailsList auctionDetailsList
@@ -326,13 +277,13 @@ class "new_project::Handlers::auctionHandler.dart::AuctionHandler" {
   +void showContractTemplateGUI()
 }
 
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Entities::auctionListJSON.dart::AuctionList"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetailsList"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetails"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Entities::contractTemplatesJSON.dart::ContractTemplates"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionListJSON.dart::AuctionList"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetailsList"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplates"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Handlers::filterHandler.dart::FilterHandler" {
+class "Auctioneer::Handlers::filterHandler.dart::FilterHandler" {
   +Filters filters
   +List<Filter> availableFilters
   +List<Filter> activeFilters
@@ -345,9 +296,9 @@ class "new_project::Handlers::filterHandler.dart::FilterHandler" {
   +void retrieveFilters()
 }
 
-"new_project::Handlers::filterHandler.dart::FilterHandler" o-- "new_project::Entities::filtersJSON.dart::Filters"
+"Auctioneer::Handlers::filterHandler.dart::FilterHandler" o-- "Auctioneer::Entities::filtersJSON.dart::Filters"
 
-class "new_project::Handlers::userInfoHandler.dart::UserInfoHandler" {
+class "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" {
   +Function userToAuction
   +UserList userListObject
   +User user
@@ -364,35 +315,24 @@ class "new_project::Handlers::userInfoHandler.dart::UserInfoHandler" {
   +void updateProfile()
 }
 
-"new_project::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "new_project::Entities::userList.dart::UserList"
-"new_project::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "new_project::Entities::userList.dart::User"
+"Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "Auctioneer::Entities::userList.dart::UserList"
+"Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "Auctioneer::Entities::userList.dart::User"
 
-class "new_project::main.dart::MyApp" {
-  +Widget build()
-}
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "new_project::main.dart::MyApp"
-
-class "new_project::mainGUI.dart::WidgetMarker" {
+class "Auctioneer::mainGUI.dart::WidgetMarker" {
   +int index
   {static} +List<WidgetMarker> values
   {static} +WidgetMarker auctions
   {static} +WidgetMarker login
   {static} +WidgetMarker register
   {static} +WidgetMarker profile
-  {static} +WidgetMarker forgotPass
   {static} +WidgetMarker room
 }
 
-"new_project::mainGUI.dart::WidgetMarker" o-- "new_project::mainGUI.dart::WidgetMarker"
+"Auctioneer::mainGUI.dart::WidgetMarker" o-- "Auctioneer::mainGUI.dart::WidgetMarker"
 
-class "new_project::mainGUI.dart::MainGUI" {
-  +State createState()
-}
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::mainGUI.dart::MainGUI"
-
-class "new_project::mainGUI.dart::MainGUIState" {
+class "Auctioneer::mainGUI.dart::MainGUIState" {
   +WidgetMarker selectedWidgetMarker
   +AnimationController controller
   +Animation animation
@@ -409,38 +349,23 @@ class "new_project::mainGUI.dart::MainGUIState" {
   +Widget getAuctionsGUIContainer()
   +Widget getLoginContainer()
   +Widget getRegisterContainer()
-  +Widget getForgotPassContainer()
   +Widget getProfileContainer()
   +Widget getRoomContainer()
 }
 
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::mainGUI.dart::WidgetMarker"
-"new_project::mainGUI.dart::MainGUIState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
-"new_project::mainGUI.dart::MainGUIState" o-- "flutter::src::animation::animation.dart::Animation"
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::mainGUI.dart::MainGUIState"
-"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin<T>" <|-- "new_project::mainGUI.dart::MainGUIState"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::mainGUI.dart::WidgetMarker"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
 
-class "new_project::Navigation::navbar.dart::NavigationBar" {
+class "Auctioneer::Navigation::navbar.dart::NavigationBar" {
   +Function navigate
   +Function showContractTemplateGUI
   +Size preferredSize
   +Widget build()
 }
 
-"new_project::Navigation::navbar.dart::NavigationBar" o-- "dart::ui::Size"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "new_project::Navigation::navbar.dart::NavigationBar"
-"flutter::src::widgets::preferred_size.dart::PreferredSizeWidget" <|-- "new_project::Navigation::navbar.dart::NavigationBar"
 
-class "new_project::Navigation::nav_item.dart::NavigationItem" {
-  +dynamic title
-  +Widget build()
-}
-
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "new_project::Navigation::nav_item.dart::NavigationItem"
-
-class "new_project::Pages::auctionsGUI.dart::AuctionsGUI" {
+class "Auctioneer::Pages::auctionsGUI.dart::AuctionsGUI" {
   +Function setMainState
   +Function navigate
   +FilterHandler filterHandler
@@ -448,27 +373,12 @@ class "new_project::Pages::auctionsGUI.dart::AuctionsGUI" {
   +Widget build()
 }
 
-"new_project::Pages::auctionsGUI.dart::AuctionsGUI" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::Pages::auctionsGUI.dart::AuctionsGUI" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "new_project::Pages::auctionsGUI.dart::AuctionsGUI"
+"Auctioneer::Pages::auctionsGUI.dart::AuctionsGUI" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Pages::auctionsGUI.dart::AuctionsGUI" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
 
-class "new_project::Pages::forgotPass.dart::ForgotPasswordScreen" {
-  +Function navigate
-  +Widget build()
-}
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "new_project::Pages::forgotPass.dart::ForgotPasswordScreen"
 
-class "new_project::Pages::login.dart::LoginScreen" {
-  +Function navigate
-  +UserInfoHandler userHandler
-  +Login createState()
-}
-
-"new_project::Pages::login.dart::LoginScreen" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Pages::login.dart::LoginScreen"
-
-class "new_project::Pages::login.dart::Login" {
+class "Auctioneer::Pages::login.dart::Login" {
   +Function navigate
   +UserInfoHandler userHandler
   -TextEditingController _controllerUserName
@@ -478,20 +388,9 @@ class "new_project::Pages::login.dart::Login" {
   +Widget build()
 }
 
-"new_project::Pages::login.dart::Login" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"new_project::Pages::login.dart::Login" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Pages::login.dart::Login"
+"Auctioneer::Pages::login.dart::Login" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Pages::profile.dart::ProfileGUI" {
-  +Function navigate
-  +UserInfoHandler userHandler
-  +Profile createState()
-}
-
-"new_project::Pages::profile.dart::ProfileGUI" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Pages::profile.dart::ProfileGUI"
-
-class "new_project::Pages::profile.dart::Profile" {
+class "Auctioneer::Pages::profile.dart::Profile" {
   +Function navigate
   +UserInfoHandler userHandler
   -GlobalKey<FormState> _formKey
@@ -527,21 +426,9 @@ class "new_project::Pages::profile.dart::Profile" {
   +Widget build()
 }
 
-"new_project::Pages::profile.dart::Profile" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"new_project::Pages::profile.dart::Profile" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
-"new_project::Pages::profile.dart::Profile" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Pages::profile.dart::Profile"
+"Auctioneer::Pages::profile.dart::Profile" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Pages::register.dart::RegisterScreen" {
-  +Function navigate
-  +UserInfoHandler userHandler
-  +Register createState()
-}
-
-"new_project::Pages::register.dart::RegisterScreen" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Pages::register.dart::RegisterScreen"
-
-class "new_project::Pages::register.dart::Register" {
+class "Auctioneer::Pages::register.dart::Register" {
   +Function navigate
   +UserInfoHandler userHandler
   -TextEditingController _controllerUserName
@@ -555,22 +442,10 @@ class "new_project::Pages::register.dart::Register" {
   +Widget build()
 }
 
-"new_project::Pages::register.dart::Register" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"new_project::Pages::register.dart::Register" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Pages::register.dart::Register"
+"Auctioneer::Pages::register.dart::Register" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Pages::room.dart::Room" {
-  +Function navigate
-  +AuctionHandler auctionHandler
-  +CountdownTimerController controller
-  +_RoomState createState()
-}
 
-"new_project::Pages::room.dart::Room" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::Pages::room.dart::Room" o-- "flutter_countdown_timer::countdown_timer_controller.dart::CountdownTimerController"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "new_project::Pages::room.dart::Room"
-
-class "new_project::Pages::room.dart::_RoomState" {
+class "Auctioneer::Pages::room.dart::_RoomState" {
   +Function navigate
   +AuctionHandler auctionHandler
   +List<TextEditingController> controllers
@@ -584,9 +459,7 @@ class "new_project::Pages::room.dart::_RoomState" {
   +Widget build()
 }
 
-"new_project::Pages::room.dart::_RoomState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::Pages::room.dart::_RoomState" o-- "flutter::src::painting::text_style.dart::TextStyle"
-"flutter::src::widgets::framework.dart::State<T>" <|-- "new_project::Pages::room.dart::_RoomState"
+"Auctioneer::Pages::room.dart::_RoomState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
 
 
 @enduml
