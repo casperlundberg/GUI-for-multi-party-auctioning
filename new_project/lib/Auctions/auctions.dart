@@ -4,6 +4,7 @@ import 'package:new_project/Entities/userList.dart';
 import '../Handlers/auctionHandler.dart';
 import '../Handlers/filterHandler.dart';
 import '../mainGUI.dart';
+import '../jsonUtilities.dart';
 import '../Entities/auctionListJSON.dart';
 import '../Filters/searchBar.dart';
 
@@ -245,6 +246,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                             int myID = auctionHandler.userHandler.user.userId;
                             auctionHandler.userHandler.userListObject.users[auctionOwner].requestInbox
                                 .add(new Inbox(time: now, status: status, auctionId: auctionID, userId: myID, offerId: null));
+                            setUserListString(userListToJson(auctionHandler.userHandler.userListObject));
                           },
                         ),
                 ),
