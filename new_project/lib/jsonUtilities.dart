@@ -228,7 +228,7 @@ String userListString = '''{
         },
         {
             "userId": 5,
-            "userName": "Gustav Curan",
+            "userName": "g",
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",

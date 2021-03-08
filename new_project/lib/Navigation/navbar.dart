@@ -33,6 +33,15 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
               },
               child: Text("New Contract Template")),
         ),
+        Container(
+          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          child: ElevatedButton(
+              onPressed: () {
+                navigate(WidgetMarker.login);
+              },
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+              child: Text("Log out")),
+        ),
         IconButton(
           icon: Icon(Icons.notifications),
           tooltip: 'Notifications',
