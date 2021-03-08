@@ -132,10 +132,22 @@ String userListString = '''{
                 }
             ],
             "requestInbox":[
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
 
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
@@ -173,13 +185,26 @@ String userListString = '''{
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 4
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
@@ -217,18 +242,31 @@ String userListString = '''{
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 5
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
             "userId": 5,
-            "userName": "g",
+            "userName": "Gustav Curan",
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",
@@ -261,13 +299,26 @@ String userListString = '''{
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 6
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         }
     ]

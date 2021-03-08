@@ -113,10 +113,22 @@
                 }
             ],
             "requestInbox":[
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
 
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
@@ -154,13 +166,26 @@
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 4
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
@@ -198,13 +223,26 @@
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 5
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
@@ -242,13 +280,26 @@
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 6
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         }
     ]

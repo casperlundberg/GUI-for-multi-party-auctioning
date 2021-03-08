@@ -1,13 +1,15 @@
 import 'dart:convert';
 
+import 'package:new_project/Handlers/notificationHandler.dart';
+
 import '../Entities/userList.dart';
 import 'package:crypto/crypto.dart';
 import '../jsonUtilities.dart';
 
 class UserInfoHandler {
   final Function userToAuction;
-  final UserList userListObject;
-  final User user;
+  UserList userListObject;
+  User user;
 
   UserInfoHandler(this.userToAuction, this.userListObject, this.user);
 
@@ -166,6 +168,9 @@ class UserInfoHandler {
     this.user.password = user.password;
     this.user.userId = user.userId;
     this.user.userName = user.userName;
+    this.user.inviteInbox = user.inviteInbox;
+    this.user.requestInbox = user.requestInbox;
+    this.user.offers = user.offers;
     userToAuction();
   }
 
@@ -190,5 +195,14 @@ class UserInfoHandler {
     }
     setUserListString(userListToJson(userListObject));
     userToAuction();
+  }
+
+  List<Inbox> getInbox() {
+    print(this.user.requestInbox.toString());
+    print(this.user.offers.toString());
+    print(this.user.toJson());
+    List<Inbox> list = this.user.requestInbox;
+    list.addAll(this.user.inviteInbox);
+    return list;
   }
 }

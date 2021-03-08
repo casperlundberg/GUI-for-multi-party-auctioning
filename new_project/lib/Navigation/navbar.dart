@@ -5,7 +5,8 @@ import '../mainGUI.dart';
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   final Function navigate;
   final Function showContractTemplateGUI;
-  NavigationBar(this.navigate, this.showContractTemplateGUI);
+  final Function showNotifications;
+  NavigationBar(this.navigate, this.showContractTemplateGUI, this.showNotifications);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.notifications),
           tooltip: 'Notifications',
           onPressed: () {
-            // Fixa potentiellt interface för detta i framtiden
+            showNotifications(context);
           },
         ),
         IconButton(

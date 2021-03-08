@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart' show rootBundle;
 import 'package:new_project/Handlers/auctionHandler.dart';
 import 'package:new_project/Handlers/filterHandler.dart';
+import 'package:new_project/Handlers/notificationHandler.dart';
 //import 'package:http/http.dart' as http;
 //import 'package:flutter/foundation.dart';
 
@@ -38,8 +39,10 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   AnimationController controller;
   Animation animation;
 
+  UserInfoHandler userHandler;
   FilterHandler filterHandler;
   AuctionHandler auctionHandler;
+  NotificationsHandler notificationsHandler;
 
   @override
   void initState() {
@@ -50,7 +53,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
 
     // USER VARIABLES
     UserList userListObject = userListFromJson(getUserListString());
-
+    userHandler = new UserInfoHandler(userToAuction, userListObject, new User());
     // FILTER VARIABLES
     Filters filters = filtersFromJson(getFilterListString());
     List<Filter> availableFilters = filters.filters;
@@ -61,8 +64,9 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     AuctionDetailsList auctionDetailsList = auctionDetailsListFromJson(getAuctionDetailsListString());
     ContractTemplates supplierContractTemplates = contractTemplatesFromJson(getSupplierContractTemplatesString());
     ContractTemplates consumerContractTemplates = contractTemplatesFromJson(getConsumerContractTemplatesString());
-    auctionHandler = new AuctionHandler(setMainState, allAuctions, auctionDetailsList, null, null, supplierContractTemplates, consumerContractTemplates,
-        new UserInfoHandler(userToAuction, userListObject, new User()));
+    auctionHandler =
+        new AuctionHandler(setMainState, allAuctions, auctionDetailsList, null, null, supplierContractTemplates, consumerContractTemplates, userHandler);
+    notificationsHandler = new NotificationsHandler(userHandler);
   }
 
   @override
@@ -102,7 +106,11 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         ),
       ),
       child: Scaffold(
-        appBar: NavigationBar(navigate, auctionHandler.showContractTemplateGUI),
+        appBar: NavigationBar(
+          navigate,
+          auctionHandler.showContractTemplateGUI,
+          notificationsHandler.showNotifications,
+        ),
         backgroundColor: Colors.transparent,
         body: FutureBuilder(
           future: playAnimation(),

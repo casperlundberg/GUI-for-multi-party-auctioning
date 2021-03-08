@@ -17,18 +17,10 @@ class AuctionHandler {
   ContractTemplates consumerContractTemplates;
   UserInfoHandler userHandler;
 
-  AuctionHandler(
-      this.setMainState,
-      this.allAuctions,
-      this.auctionDetailsList,
-      this.myAuctions,
-      this.currentAuction,
-      this.supplierContractTemplates,
-      this.consumerContractTemplates,
-      this.userHandler);
+  AuctionHandler(this.setMainState, this.allAuctions, this.auctionDetailsList, this.myAuctions, this.currentAuction, this.supplierContractTemplates,
+      this.consumerContractTemplates, this.userHandler);
 
-  void createAuction(int contractID, String title, int maxParticipants,
-      int roundTime, int rounds, String material) {
+  void createAuction(int contractID, String title, int maxParticipants, int roundTime, int rounds, String material) {
     int highestid = 0;
     for (int i = 0; i < allAuctions.auctionList.length; i++) {
       if (allAuctions.auctionList[i].id > highestid) {
@@ -78,8 +70,7 @@ class AuctionHandler {
     ParticipatingAuction a = new ParticipatingAuction(auctionId: highestid);
     userHandler.user.participatingAuctions.add(a);
     for (int i = 0; i < userHandler.userListObject.users.length; i++) {
-      if (userHandler.userListObject.users[i].userId ==
-          userHandler.user.userId) {
+      if (userHandler.userListObject.users[i].userId == userHandler.user.userId) {
         userHandler.userListObject.users[i].participatingAuctions.add(a);
         break;
       }
@@ -97,23 +88,15 @@ class AuctionHandler {
     }
     // Retrieve contract template
     if (currentAuction.ownerType == "Supplier") {
-      for (int i = 0;
-          i < supplierContractTemplates.contractTemplates.length;
-          i++) {
-        if (supplierContractTemplates.contractTemplates[i].id ==
-            currentAuction.contractTemplateId) {
-          currentAuction.contractTemplate =
-              supplierContractTemplates.contractTemplates[i];
+      for (int i = 0; i < supplierContractTemplates.contractTemplates.length; i++) {
+        if (supplierContractTemplates.contractTemplates[i].id == currentAuction.contractTemplateId) {
+          currentAuction.contractTemplate = supplierContractTemplates.contractTemplates[i];
         }
       }
     } else {
-      for (int i = 0;
-          i < consumerContractTemplates.contractTemplates.length;
-          i++) {
-        if (consumerContractTemplates.contractTemplates[i].id ==
-            currentAuction.contractTemplateId) {
-          currentAuction.contractTemplate =
-              consumerContractTemplates.contractTemplates[i];
+      for (int i = 0; i < consumerContractTemplates.contractTemplates.length; i++) {
+        if (consumerContractTemplates.contractTemplates[i].id == currentAuction.contractTemplateId) {
+          currentAuction.contractTemplate = consumerContractTemplates.contractTemplates[i];
         }
       }
     }
@@ -124,17 +107,12 @@ class AuctionHandler {
     List<KeyValuePair> pairs = [];
 
     for (int i = 0; i < controllers.length; i++) {
-      pairs.add(KeyValuePair(
-          key: currentAuction.contractTemplate.templateVariables[i].key,
-          value: controllers[i].text));
+      pairs.add(KeyValuePair(key: currentAuction.contractTemplate.templateVariables[i].key, value: controllers[i].text));
 
       controllers[i].clear();
     }
 
-    Bid bid = Bid(
-        userId: userHandler.user.userId,
-        time: DateTime.now(),
-        keyValuePairs: pairs);
+    Bid bid = Bid(userId: userHandler.user.userId, time: DateTime.now(), keyValuePairs: pairs);
 
     //TODO: Add pricechecks, copy-checks, etc
     //TODO: Check if auction is ongoing, throw exception if not
@@ -144,8 +122,7 @@ class AuctionHandler {
   }
 
   // NEW TEMPLATE (administrator)
-  void createContractTemplate(List<String> strings, List<String> keys,
-      List<String> valueTypes, String userType) {
+  void createContractTemplate(List<String> strings, List<String> keys, List<String> valueTypes, String userType) {
     ContractTemplates contractTemplates;
     if (userType == "Supplier") {
       contractTemplates = supplierContractTemplates;
@@ -172,27 +149,20 @@ class AuctionHandler {
       tv.add(new TemplateVariable(key: keys[i], valueType: valueTypes[i]));
     }
 
-    ContractTemplate contractTemplate = new ContractTemplate(
-        id: highestid, templateStrings: ts, templateVariables: tv);
+    ContractTemplate contractTemplate = new ContractTemplate(id: highestid, templateStrings: ts, templateVariables: tv);
 
     if (userType == "Supplier") {
       supplierContractTemplates.contractTemplates.add(contractTemplate);
-      setSupplierContractTemplatesString(
-          contractTemplatesToJson(supplierContractTemplates));
+      setSupplierContractTemplatesString(contractTemplatesToJson(supplierContractTemplates));
     }
     if (userType == "Consumer") {
       consumerContractTemplates.contractTemplates.add(contractTemplate);
-      setConsumerContractTemplatesString(
-          contractTemplatesToJson(consumerContractTemplates));
+      setConsumerContractTemplatesString(contractTemplatesToJson(consumerContractTemplates));
     }
   }
 
   int templateItemCount = 1;
-  List<TextEditingController> controllers = [
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController()
-  ];
+  List<TextEditingController> controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
   List<String> valueTypes = ["Text", "Integer"];
   List<String> dropdownValues = ["Text"];
   List<String> userTypes = ["Supplier", "Consumer"];
@@ -205,8 +175,7 @@ class AuctionHandler {
         final ThemeData themeData = Theme.of(context);
 
         return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           child: Container(
@@ -222,8 +191,7 @@ class AuctionHandler {
                   margin: EdgeInsets.only(top: 13.0, right: 8.0),
                   decoration: BoxDecoration(
                     //color: Colors.red,
-                    color: Colors.grey[
-                        900], //Couldn't import from theme as "Dialog" is transparent
+                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(16.0),
                     boxShadow: <BoxShadow>[
@@ -250,8 +218,7 @@ class AuctionHandler {
                                   Text(
                                     "Contract template creator",
                                     textAlign: TextAlign.center,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 2,
                                   ),
                                   SizedBox(height: 24.0),
@@ -264,23 +231,9 @@ class AuctionHandler {
                                             children: [
                                               Container(
                                                 padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.05,
-                                                    right:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.05),
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.1,
+                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                height: MediaQuery.of(context).size.height * 0.1,
                                                 child: TextField(
                                                   maxLines: null,
                                                   controller: controllers[0],
@@ -288,65 +241,33 @@ class AuctionHandler {
                                               ),
                                               Container(
                                                 padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.05,
-                                                    right:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.05),
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.1,
+                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                height: MediaQuery.of(context).size.height * 0.1,
                                                 child: Row(
                                                   children: [
                                                     Text("Key: "),
                                                     Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.05,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height *
-                                                              0.05,
+                                                      width: MediaQuery.of(context).size.width * 0.05,
+                                                      height: MediaQuery.of(context).size.height * 0.05,
                                                       child: TextField(
-                                                        controller:
-                                                            controllers[1],
+                                                        controller: controllers[1],
                                                       ),
                                                     ),
                                                     Text(" Value Type: "),
                                                     DropdownButton(
-                                                      icon: Icon(
-                                                          Icons.arrow_downward),
+                                                      icon: Icon(Icons.arrow_downward),
                                                       iconSize: 24,
-                                                      value:
-                                                          dropdownValues[index],
+                                                      value: dropdownValues[index],
                                                       elevation: 16,
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                      onChanged:
-                                                          (String newValue) {
+                                                      style: TextStyle(color: Colors.white),
+                                                      onChanged: (String newValue) {
                                                         setState(() {
-                                                          dropdownValues[
-                                                              index] = newValue;
+                                                          dropdownValues[index] = newValue;
                                                         });
                                                       },
-                                                      items: valueTypes.map<
-                                                              DropdownMenuItem<
-                                                                  String>>(
-                                                          (String value) {
-                                                        return DropdownMenuItem<
-                                                            String>(
+                                                      items: valueTypes.map<DropdownMenuItem<String>>((String value) {
+                                                        return DropdownMenuItem<String>(
                                                           value: value,
                                                           child: Text(value),
                                                         );
@@ -357,23 +278,9 @@ class AuctionHandler {
                                               ),
                                               Container(
                                                 padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.05,
-                                                    right:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.05),
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.1,
+                                                    left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                height: MediaQuery.of(context).size.height * 0.1,
                                                 child: TextField(
                                                   maxLines: null,
                                                   controller: controllers[2],
@@ -386,64 +293,33 @@ class AuctionHandler {
                                           children: [
                                             Container(
                                               padding: EdgeInsets.only(
-                                                  left: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05,
-                                                  right: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.4,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.1,
+                                                  left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                              width: MediaQuery.of(context).size.width * 0.4,
+                                              height: MediaQuery.of(context).size.height * 0.1,
                                               child: Row(
                                                 children: [
                                                   Text("Key: "),
                                                   Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.05,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.05,
+                                                    width: MediaQuery.of(context).size.width * 0.05,
+                                                    height: MediaQuery.of(context).size.height * 0.05,
                                                     child: TextField(
-                                                      controller: controllers[
-                                                          index * 2 + 1],
+                                                      controller: controllers[index * 2 + 1],
                                                     ),
                                                   ),
                                                   Text(" Value Type: "),
                                                   DropdownButton(
-                                                    icon: Icon(
-                                                        Icons.arrow_downward),
+                                                    icon: Icon(Icons.arrow_downward),
                                                     iconSize: 24,
-                                                    value:
-                                                        dropdownValues[index],
+                                                    value: dropdownValues[index],
                                                     elevation: 16,
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                    onChanged:
-                                                        (String newValue) {
+                                                    style: TextStyle(color: Colors.white),
+                                                    onChanged: (String newValue) {
                                                       setState(() {
-                                                        dropdownValues[index] =
-                                                            newValue;
+                                                        dropdownValues[index] = newValue;
                                                       });
                                                     },
-                                                    items: valueTypes.map<
-                                                            DropdownMenuItem<
-                                                                String>>(
-                                                        (String value) {
-                                                      return DropdownMenuItem<
-                                                          String>(
+                                                    items: valueTypes.map<DropdownMenuItem<String>>((String value) {
+                                                      return DropdownMenuItem<String>(
                                                         value: value,
                                                         child: Text(value),
                                                       );
@@ -454,26 +330,12 @@ class AuctionHandler {
                                             ),
                                             Container(
                                               padding: EdgeInsets.only(
-                                                  left: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05,
-                                                  right: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.4,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.1,
+                                                  left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                              width: MediaQuery.of(context).size.width * 0.4,
+                                              height: MediaQuery.of(context).size.height * 0.1,
                                               child: TextField(
                                                 maxLines: null,
-                                                controller:
-                                                    controllers[index * 2 + 2],
+                                                controller: controllers[index * 2 + 2],
                                               ),
                                             ),
                                           ],
@@ -485,27 +347,17 @@ class AuctionHandler {
                                     onPressed: () {
                                       setState(() {
                                         templateItemCount++;
-                                        controllers
-                                            .add(TextEditingController());
-                                        controllers
-                                            .add(TextEditingController());
+                                        controllers.add(TextEditingController());
+                                        controllers.add(TextEditingController());
                                         dropdownValues.add("Text");
                                       });
                                     },
                                     child: Text("New variable"),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.width *
-                                                0.05,
-                                        right:
-                                            MediaQuery.of(context).size.width *
-                                                0.05),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
+                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05, right: MediaQuery.of(context).size.width * 0.05),
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    height: MediaQuery.of(context).size.height * 0.05,
                                     child: Row(
                                       children: [
                                         Text("User Type: "),
@@ -520,9 +372,7 @@ class AuctionHandler {
                                               dropdownValue = newValue;
                                             });
                                           },
-                                          items: userTypes
-                                              .map<DropdownMenuItem<String>>(
-                                                  (String value) {
+                                          items: userTypes.map<DropdownMenuItem<String>>((String value) {
                                             return DropdownMenuItem<String>(
                                               value: value,
                                               child: Text(value),
@@ -555,15 +405,10 @@ class AuctionHandler {
                               keys.add(controllers[i * 2 + 1].text);
                             }
 
-                            createContractTemplate(templateStrings, keys,
-                                dropdownValues, dropdownValue);
+                            createContractTemplate(templateStrings, keys, dropdownValues, dropdownValue);
 
                             templateItemCount = 1;
-                            controllers = [
-                              TextEditingController(),
-                              TextEditingController(),
-                              TextEditingController()
-                            ];
+                            controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
                             dropdownValues = ["Text"];
                             dropdownValue = "Supplier";
                             setMainState();
@@ -579,11 +424,7 @@ class AuctionHandler {
                   child: GestureDetector(
                     onTap: () {
                       templateItemCount = 1;
-                      controllers = [
-                        TextEditingController(),
-                        TextEditingController(),
-                        TextEditingController()
-                      ];
+                      controllers = [TextEditingController(), TextEditingController(), TextEditingController()];
                       dropdownValues = ["Text"];
                       dropdownValue = "Supplier";
                       setMainState();
