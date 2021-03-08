@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart' show rootBundle;
 import 'package:new_project/Handlers/auctionHandler.dart';
 import 'package:new_project/Handlers/filterHandler.dart';
+import 'package:new_project/Handlers/offerHandler.dart';
 //import 'package:http/http.dart' as http;
 //import 'package:flutter/foundation.dart';
 
@@ -11,16 +12,19 @@ import 'package:new_project/Handlers/filterHandler.dart';
 import 'Navigation/navbar.dart';
 import 'Pages/room.dart';
 import 'Entities/filtersJSON.dart';
-import 'Entities/auctionListJSON.dart';
 import 'Entities/auctionDetailsListJSON.dart';
-import 'Entities/contractTemplatesJSON.dart';
+import 'Entities/userListJSON.dart';
+import 'Entities/materialAuctionListJSON.dart';
+import 'Entities/materialOfferListJSON.dart';
+import 'Entities/referencetype2AuctionListJSON.dart';
+import 'Entities/referencetype2OfferListJSON.dart';
+import 'Entities/templateListJSON.dart';
 import 'Pages/auctionsGUI.dart';
 import 'Pages/forgotPass.dart';
 import 'Pages/login.dart';
 import 'Pages/profile.dart';
 import 'Pages/register.dart';
 import 'jsonUtilities.dart';
-import 'Entities/userList.dart';
 import 'Handlers/userInfoHandler.dart';
 
 //Inspired by Widget Switch Demo, by GitHub user TechieBlossom
@@ -38,8 +42,15 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   AnimationController controller;
   Animation animation;
 
+  UserInfoHandler userHandler;
   FilterHandler filterHandler;
   AuctionHandler auctionHandler;
+  OfferHandler offerHandler;
+
+  int nextAuctionID;
+  int nextBidID;
+  int nextTemplateID;
+  int nextOfferID;
 
   @override
   void initState() {
@@ -48,21 +59,108 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     animation = Tween(begin: 0.0, end: 1.0).animate(controller);
     selectedWidgetMarker = WidgetMarker.login;
 
-    // USER VARIABLES
-    UserList userListObject = userListFromJson(getUserListString());
+    userHandler = new UserInfoHandler(updateUser);
+    filterHandler = new FilterHandler(setMainState);
 
-    // FILTER VARIABLES
-    Filters filters = filtersFromJson(getFilterListString());
-    List<Filter> availableFilters = filters.filters;
-    filterHandler = new FilterHandler(filters, availableFilters, [], [], 0);
+    // INITIALIZE BID ID
+    AuctionDetailsList consumerAuctionDetails = auctionDetailsListFromJson(getConsumerAuctionDetails());
+    AuctionDetailsList supplierAuctionDetails = auctionDetailsListFromJson(getSupplierAuctionDetails());
+    nextBidID = 1;
+    for (int i = 0; i < consumerAuctionDetails.auctionDetailsList.length; i++) {
+      for (int y = 0; y < consumerAuctionDetails.auctionDetailsList[i].bids.length; y++) {
+        if (nextBidID <= consumerAuctionDetails.auctionDetailsList[i].bids[y].id) {
+          nextBidID = consumerAuctionDetails.auctionDetailsList[i].bids[y].id + 1;
+        }
+      }
+    }
+    for (int i = 0; i < supplierAuctionDetails.auctionDetailsList.length; i++) {
+      for (int y = 0; y < supplierAuctionDetails.auctionDetailsList[i].bids.length; y++) {
+        if (nextBidID <= supplierAuctionDetails.auctionDetailsList[i].bids[y].id) {
+          nextBidID = supplierAuctionDetails.auctionDetailsList[i].bids[y].id + 1;
+        }
+      }
+    }
 
-    // AUCTION VARIABLES
-    AuctionList allAuctions = auctionListFromJson(getAuctionsListString());
-    AuctionDetailsList auctionDetailsList = auctionDetailsListFromJson(getAuctionDetailsListString());
-    ContractTemplates supplierContractTemplates = contractTemplatesFromJson(getSupplierContractTemplatesString());
-    ContractTemplates consumerContractTemplates = contractTemplatesFromJson(getConsumerContractTemplatesString());
-    auctionHandler = new AuctionHandler(setMainState, allAuctions, auctionDetailsList, null, null, supplierContractTemplates, consumerContractTemplates,
-        new UserInfoHandler(userToAuction, userListObject, new User()));
+    // INITIALIZE TEMPLATE ID
+    TemplateList consumerContractTemplates = templateListFromJson(getConsumerContractTemplates());
+    TemplateList supplierContractTemplates = templateListFromJson(getSupplierContractTemplates());
+    TemplateList consumerOfferTemplates = templateListFromJson(getConsumerOfferTemplates());
+    TemplateList supplierOfferTemplates = templateListFromJson(getSupplierOfferTemplates());
+    nextTemplateID = 1;
+    for (int i = 0; i < consumerContractTemplates.templates.length; i++) {
+      if (nextTemplateID <= consumerContractTemplates.templates[i].id) {
+        nextTemplateID = consumerContractTemplates.templates[i].id + 1;
+      }
+    }
+    for (int i = 0; i < supplierContractTemplates.templates.length; i++) {
+      if (nextTemplateID <= supplierContractTemplates.templates[i].id) {
+        nextTemplateID = supplierContractTemplates.templates[i].id + 1;
+      }
+    }
+    for (int i = 0; i < consumerOfferTemplates.templates.length; i++) {
+      if (nextTemplateID <= consumerOfferTemplates.templates[i].id) {
+        nextTemplateID = consumerOfferTemplates.templates[i].id + 1;
+      }
+    }
+    for (int i = 0; i < supplierOfferTemplates.templates.length; i++) {
+      if (nextTemplateID <= supplierOfferTemplates.templates[i].id) {
+        nextTemplateID = supplierOfferTemplates.templates[i].id + 1;
+      }
+    }
+
+    // INITIALIZE AUCTION ID
+    MaterialAuctionList consumerMaterialAuctions = materialAuctionListFromJson(getConsumerMaterialAuctions());
+    MaterialAuctionList supplierMaterialAuctions = materialAuctionListFromJson(getSupplierMaterialAuctions());
+    Referencetype2AuctionList consumerReferencetype2Auctions = referencetype2AuctionListFromJson(getConsumerReferencetype2Auctions());
+    Referencetype2AuctionList supplierReferencetype2Auctions = referencetype2AuctionListFromJson(getSupplierReferencetype2Auctions());
+    nextAuctionID = 1;
+    for (int i = 0; i < consumerMaterialAuctions.materialAuctions.length; i++) {
+      if (nextAuctionID <= consumerMaterialAuctions.materialAuctions[i].id) {
+        nextAuctionID = consumerMaterialAuctions.materialAuctions[i].id + 1;
+      }
+    }
+    for (int i = 0; i < supplierMaterialAuctions.materialAuctions.length; i++) {
+      if (nextAuctionID <= supplierMaterialAuctions.materialAuctions[i].id) {
+        nextAuctionID = supplierMaterialAuctions.materialAuctions[i].id + 1;
+      }
+    }
+    for (int i = 0; i < consumerReferencetype2Auctions.referencetype2Auctions.length; i++) {
+      if (nextAuctionID <= consumerReferencetype2Auctions.referencetype2Auctions[i].id) {
+        nextAuctionID = consumerReferencetype2Auctions.referencetype2Auctions[i].id + 1;
+      }
+    }
+    for (int i = 0; i < supplierReferencetype2Auctions.referencetype2Auctions.length; i++) {
+      if (nextAuctionID <= supplierReferencetype2Auctions.referencetype2Auctions[i].id) {
+        nextAuctionID = supplierReferencetype2Auctions.referencetype2Auctions[i].id + 1;
+      }
+    }
+
+    // INITIALIZE OFFER ID
+    MaterialOfferList consumerMaterialOffers = materialOfferListFromJson(getConsumerMaterialOffers());
+    MaterialOfferList supplierMaterialOffers = materialOfferListFromJson(getSupplierMaterialOffers());
+    Referencetype2OfferList consumerReferencetype2Offers = referencetype2OfferListFromJson(getConsumerReferencetype2Offers());
+    Referencetype2OfferList supplierReferencetype2Offers = referencetype2OfferListFromJson(getSupplierReferencetype2Offers());
+    nextOfferID = 1;
+    for (int i = 0; i < consumerMaterialOffers.materialOffers.length; i++) {
+      if (nextOfferID <= consumerMaterialOffers.materialOffers[i].id) {
+        nextOfferID = consumerMaterialOffers.materialOffers[i].id + 1;
+      }
+    }
+    for (int i = 0; i < supplierMaterialOffers.materialOffers.length; i++) {
+      if (nextOfferID <= supplierMaterialOffers.materialOffers[i].id) {
+        nextOfferID = supplierMaterialOffers.materialOffers[i].id + 1;
+      }
+    }
+    for (int i = 0; i < consumerReferencetype2Offers.referencetype2Offers.length; i++) {
+      if (nextOfferID <= consumerReferencetype2Offers.referencetype2Offers[i].id) {
+        nextOfferID = consumerReferencetype2Offers.referencetype2Offers[i].id + 1;
+      }
+    }
+    for (int i = 0; i < supplierReferencetype2Offers.referencetype2Offers.length; i++) {
+      if (nextOfferID <= supplierReferencetype2Offers.referencetype2Offers[i].id) {
+        nextOfferID = supplierReferencetype2Offers.referencetype2Offers[i].id + 1;
+      }
+    }
   }
 
   @override
@@ -119,21 +217,27 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     controller.forward();
   }
 
-  void setMainState() {
-    setState(() {});
+  // Used to update page and userhandler with correct information.
+  void setMainState(String handler) {
+    setState(() {
+      if (handler == "Auction") {
+        userHandler = auctionHandler.userHandler;
+      }
+      if (handler == "Offer") {
+        userHandler = offerHandler.userHandler;
+      }
+    });
   }
 
-  void userToAuction() {
+  // Used whenever the user or the user's current usertype potentially changes.
+  void updateUser() {
     setState(() {
-      if (auctionHandler.userHandler.user.participatingAuctions != null) {
-        auctionHandler.myAuctions = new AuctionList(auctionList: []);
-        for (int i = 0; i < auctionHandler.userHandler.user.participatingAuctions.length; i++) {
-          for (int y = 0; y < auctionHandler.allAuctions.auctionList.length; y++) {
-            if (auctionHandler.userHandler.user.participatingAuctions[i].auctionId == auctionHandler.allAuctions.auctionList[y].id) {
-              auctionHandler.myAuctions.auctionList.add(auctionHandler.allAuctions.auctionList[y]);
-            }
-          }
-        }
+      if (auctionHandler == null && offerHandler == null) {
+        auctionHandler = new AuctionHandler(setMainState, userHandler, nextAuctionID, nextBidID, nextTemplateID);
+        offerHandler = new OfferHandler(setMainState, userHandler, nextOfferID);
+      } else {
+        auctionHandler = new AuctionHandler(setMainState, userHandler, auctionHandler.nextAuctionID, auctionHandler.nextBidID, auctionHandler.nextTemplateID);
+        offerHandler = new OfferHandler(setMainState, userHandler, offerHandler.nextOfferID);
       }
     });
   }
@@ -144,12 +248,17 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     switch (page) {
       case WidgetMarker.auctions:
         setState(() {
+          //Load new filters, auctions and offers.
           filterHandler.retrieveFilters();
+          auctionHandler = new AuctionHandler(setMainState, userHandler, auctionHandler.nextAuctionID, auctionHandler.nextBidID, auctionHandler.nextTemplateID);
+          offerHandler = new OfferHandler(setMainState, userHandler, offerHandler.nextOfferID);
           selectedWidgetMarker = WidgetMarker.auctions;
         });
         return;
       case WidgetMarker.login:
         setState(() {
+          //Load new users.
+          userHandler = new UserInfoHandler(updateUser);
           selectedWidgetMarker = WidgetMarker.login;
         });
         return;
@@ -196,21 +305,21 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getAuctionsGUIContainer() {
     return FadeTransition(
       opacity: animation,
-      child: AuctionsGUI(setMainState, navigate, filterHandler, auctionHandler),
+      child: AuctionsGUI(navigate, filterHandler, auctionHandler, offerHandler),
     );
   }
 
   Widget getLoginContainer() {
     return FadeTransition(
       opacity: animation,
-      child: LoginScreen(navigate, auctionHandler.userHandler),
+      child: LoginScreen(navigate, userHandler),
     );
   }
 
   Widget getRegisterContainer() {
     return FadeTransition(
       opacity: animation,
-      child: RegisterScreen(navigate, auctionHandler.userHandler),
+      child: RegisterScreen(navigate, userHandler),
     );
   }
 
@@ -224,7 +333,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: animation,
-      child: ProfileGUI(navigate, auctionHandler.userHandler),
+      child: ProfileGUI(navigate, userHandler),
     );
   }
 
