@@ -2,11 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../mainGUI.dart';
 
-class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
+class NavigationBar extends StatefulWidget implements PreferredSizeWidget {
   final Function navigate;
   final Function showContractTemplateGUI;
   final Function showNotifications;
-  NavigationBar(this.navigate, this.showContractTemplateGUI, this.showNotifications);
+  int counter;
+  NavigationBar(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter);
+
+  NavigationState createState() => NavigationState(navigate, showContractTemplateGUI, showNotifications, counter);
+
+  @override
+  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+}
+
+class NavigationState extends State<NavigationBar> {
+  final Function navigate;
+  final Function showContractTemplateGUI;
+  final Function showNotifications;
+  int counter;
+  NavigationState(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter);
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +57,42 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
               style: ElevatedButton.styleFrom(primary: Colors.red),
               child: Text("Log out")),
         ),
-        IconButton(
-          icon: Icon(Icons.notifications),
-          tooltip: 'Notifications',
-          onPressed: () {
-            showNotifications(context);
-          },
+        new Stack(
+          children: <Widget>[
+            new IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  setState(() {
+                    //print(counter);
+                  });
+                  showNotifications(context);
+                }),
+            counter != 0
+                ? new Positioned(
+                    right: 11,
+                    top: 11,
+                    child: new Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: new BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 14,
+                        minHeight: 14,
+                      ),
+                      child: Text(
+                        '$counter',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+                : new Container()
+          ],
         ),
         IconButton(
           icon: Icon(Icons.account_circle),
@@ -60,7 +104,4 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
       ],
     );
   }
-
-  @override
-  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
 }

@@ -66,7 +66,10 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     ContractTemplates consumerContractTemplates = contractTemplatesFromJson(getConsumerContractTemplatesString());
     auctionHandler =
         new AuctionHandler(setMainState, allAuctions, auctionDetailsList, null, null, supplierContractTemplates, consumerContractTemplates, userHandler);
+
+    // NOTIFICATION VARIABLES
     notificationsHandler = new NotificationsHandler(userHandler);
+    //notificationsHandler.inbox = userHandler.getInbox();
   }
 
   @override
@@ -110,6 +113,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
           navigate,
           auctionHandler.showContractTemplateGUI,
           notificationsHandler.showNotifications,
+          userHandler.user.inviteInbox.length + userHandler.user.requestInbox.length,
         ),
         backgroundColor: Colors.transparent,
         body: FutureBuilder(

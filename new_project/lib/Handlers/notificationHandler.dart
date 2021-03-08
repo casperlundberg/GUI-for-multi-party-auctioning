@@ -5,8 +5,8 @@ import 'package:new_project/Handlers/userInfoHandler.dart';
 
 class NotificationsHandler {
   final UserInfoHandler _userInfoHandler;
-  List<Inbox> inbox;
   final myController = TextEditingController();
+  List<Inbox> inbox;
 
   NotificationsHandler(this._userInfoHandler);
 
@@ -21,11 +21,39 @@ class NotificationsHandler {
                 Text("User " + item.userId.toString() + " have requested to join your auction " + item.auctionId.toString()),
                 ElevatedButton(
                   child: Text("Approve"),
-                  onPressed: () {},
+                  onPressed: () {
+                    for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
+                      if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
+                        _userInfoHandler.userListObject.users[i].requestInbox.add(new Inbox(
+                          time: new DateTime.now(),
+                          status: "Accepted",
+                          auctionId: item.auctionId,
+                          userId: _userInfoHandler.user.userId,
+                          offerId: null,
+                        ));
+                        _userInfoHandler.userListObject.users[i].participatingAuctions.add(new ParticipatingAuction(
+                          auctionId: item.auctionId,
+                        ));
+                      }
+                      _userInfoHandler.user.requestInbox.remove(item);
+                    }
+                  },
                 ),
                 ElevatedButton(
                   child: Text("Decline"),
-                  onPressed: () {},
+                  onPressed: () {
+                    for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
+                      if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
+                        _userInfoHandler.userListObject.users[i].requestInbox.add(new Inbox(
+                          time: new DateTime.now(),
+                          status: "Declined",
+                          auctionId: item.auctionId,
+                          userId: _userInfoHandler.user.userId,
+                          offerId: null,
+                        ));
+                      }
+                    }
+                  },
                 ),
               ],
             ),
@@ -43,6 +71,32 @@ class NotificationsHandler {
             Wrap(
               children: <Widget>[
                 Text("You have been declined to join auction " + item.auctionId.toString() + " created by user " + item.userId.toString()),
+                ElevatedButton(
+                  child: Text("Dissmiss?"),
+                  onPressed: () {
+                    for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
+                      if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
+                        _userInfoHandler.userListObject.users[i].requestInbox.remove(item);
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
+            Container(
+              height: 8,
+            ),
+          ],
+        ),
+      );
+    } else if (item.offerId == null && item.status == "Accepted") {
+      return Container(
+        width: double.infinity,
+        child: Column(
+          children: [
+            Wrap(
+              children: <Widget>[
+                Text("You have been accepted to join auction " + item.auctionId.toString() + " created by user " + item.userId.toString()),
                 ElevatedButton(
                   child: Text("Dissmiss?"),
                   onPressed: () {},
@@ -116,7 +170,7 @@ class NotificationsHandler {
   }
 
   void showNotifications(BuildContext context) {
-    inbox = _userInfoHandler.getInbox();
+    inbox = new List.from(_userInfoHandler.user.requestInbox)..addAll(_userInfoHandler.user.inviteInbox);
     showDialog(
       context: context,
       builder: (BuildContext context) {

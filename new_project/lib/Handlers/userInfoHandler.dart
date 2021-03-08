@@ -198,11 +198,8 @@ class UserInfoHandler {
   }
 
   List<Inbox> getInbox() {
-    print(this.user.requestInbox.toString());
-    print(this.user.offers.toString());
-    print(this.user.toJson());
-    List<Inbox> list = this.user.requestInbox;
-    list.addAll(this.user.inviteInbox);
-    return list;
+    List<Inbox> inboxList = this.user.requestInbox;
+    inboxList.addAll(this.user.inviteInbox);
+    return inboxList;
   }
 }
