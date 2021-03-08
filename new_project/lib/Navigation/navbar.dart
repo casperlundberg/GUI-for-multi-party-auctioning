@@ -54,45 +54,49 @@ class NavigationState extends State<NavigationBar> {
               onPressed: () {
                 navigate(WidgetMarker.login);
               },
-              style: ElevatedButton.styleFrom(primary: Colors.red),
+              //style: ElevatedButton.styleFrom(primary: Colors.red),
               child: Text("Log out")),
         ),
-        new Stack(
-          children: <Widget>[
-            new IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {
-                  setState(() {
-                    //print(counter);
-                  });
-                  showNotifications(context);
-                }),
-            counter != 0
-                ? new Positioned(
-                    right: 11,
-                    top: 11,
-                    child: new Container(
-                      padding: EdgeInsets.all(2),
-                      decoration: new BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      constraints: BoxConstraints(
-                        minWidth: 14,
-                        minHeight: 14,
-                      ),
-                      child: Text(
-                        '$counter',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 8,
+        Center(
+          child: Stack(
+            children: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.notifications),
+                  onPressed: () {
+                    setState(() {
+                      //print(counter);
+                    });
+                    showNotifications(context);
+                  }),
+              counter != 0
+                  ? Positioned(
+                      right: 5,
+                      top: 5,
+                      child: Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        textAlign: TextAlign.center,
+                        constraints: BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '$counter',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
-                    ),
-                  )
-                : new Container()
-          ],
+                    )
+                  : Container()
+            ],
+          ),
         ),
         IconButton(
           icon: Icon(Icons.account_circle),
