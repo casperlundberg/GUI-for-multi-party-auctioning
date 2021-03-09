@@ -144,7 +144,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     var now = new DateTime.now();
 
     if (referencetype == "Material") {
-      List<MaterialAuction> materialAuctions;
+      List<MaterialAuction> materialAuctions = [];
       if (filterHandler.materialFilter == null) {
         for (int i = 0; i < auctionHandler.allAuctions.materialAuctions.materialAuctions.length; i++) {
           if (type == "Ongoing") {
@@ -180,7 +180,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     }
 
     if (referencetype == "Referencetype2") {
-      List<Referencetype2Auction> referencetype2Auctions;
+      List<Referencetype2Auction> referencetype2Auctions = [];
       if (filterHandler.referencetype2Filter == null) {
         for (int i = 0; i < auctionHandler.allAuctions.referencetype2Auctions.referencetype2Auctions.length; i++) {
           if (type == "Ongoing") {
@@ -220,7 +220,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
 
   SliverFixedExtentList _getOffers() {
     if (referencetype == "Material") {
-      List<MaterialOffer> materialOffers;
+      List<MaterialOffer> materialOffers = [];
       if (filterHandler.materialFilter == null) {
         materialOffers = offerHandler.allOffers.materialOffers.materialOffers;
       } else {
@@ -234,7 +234,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     }
 
     if (referencetype == "Referencetype2") {
-      List<Referencetype2Offer> referencetype2Offers;
+      List<Referencetype2Offer> referencetype2Offers = [];
       if (filterHandler.referencetype2Filter == null) {
         referencetype2Offers = offerHandler.allOffers.referencetype2Offers.referencetype2Offers;
       } else {
