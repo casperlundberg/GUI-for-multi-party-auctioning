@@ -142,7 +142,6 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
 
   SliverFixedExtentList _getAuctions(String type) {
     var now = new DateTime.now();
-
     if (referencetype == "Material") {
       List<MaterialAuction> materialAuctions = [];
       if (filterHandler.materialFilter == null) {
@@ -176,7 +175,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
           }
         }
       }
-      _generateBoxes(materialAuctions: materialAuctions);
+      return _generateBoxes(materialAuctions: materialAuctions);
     }
 
     if (referencetype == "Referencetype2") {
@@ -214,7 +213,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
           }
         }
       }
-      _generateBoxes(referencetype2Auctions: referencetype2Auctions);
+      return _generateBoxes(referencetype2Auctions: referencetype2Auctions);
     }
   }
 
@@ -230,7 +229,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
           }
         }
       }
-      _generateBoxes(materialOffers: materialOffers);
+      return _generateBoxes(materialOffers: materialOffers);
     }
 
     if (referencetype == "Referencetype2") {
@@ -245,7 +244,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
           }
         }
       }
-      _generateBoxes(referencetype2Offers: referencetype2Offers);
+      return _generateBoxes(referencetype2Offers: referencetype2Offers);
     }
   }
 
