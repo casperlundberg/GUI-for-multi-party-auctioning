@@ -16,10 +16,9 @@ class FiltersGUI extends StatefulWidget {
 class _FiltersState extends State<FiltersGUI> {
   final FilterHandler filterHandler;
   final myController = TextEditingController();
-  Filter filter;
 
   _FiltersState(this.filterHandler);
-
+/*
   void showFilterTemplateGUI() {
     if (filter == null) {
       filter = new Filter(
@@ -200,14 +199,10 @@ class _FiltersState extends State<FiltersGUI> {
       },
     );
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-
-    List<Filter> allfilters = [];
-    allfilters.addAll(filterHandler.activeFilters);
-    allfilters.addAll(filterHandler.inactiveFilters);
 
     return new Container(
       height: MediaQuery.of(context).size.height * 0.9,
@@ -230,26 +225,27 @@ class _FiltersState extends State<FiltersGUI> {
               Spacer(),
               IconButton(
                 icon: Icon(Icons.add),
-                tooltip: 'New Filter',
+                tooltip:
+                    'New Filter', /*
                 onPressed: () {
                   setState(() {
                     filter = null;
                   });
                   showFilterTemplateGUI();
-                },
+                },*/
               ),
             ]),
           ),
           Container(
             //Content
             height: MediaQuery.of(context).size.height * 0.7,
-            child: ReturnContent(context, allfilters, filterHandler.activeFilters, filterHandler.inactiveFilters),
+            //child: ReturnContent(context, allfilters, filterHandler.activeFilters, filterHandler.inactiveFilters),
           ),
         ],
       ),
     );
   }
-
+/*
   Widget ReturnContent(context, allfilters, activeFilters, inactiveFilters) {
     if ((activeFilters != null && activeFilters.length > 0) || (inactiveFilters != null && inactiveFilters.length > 0)) {
       return Scrollbar(
@@ -326,5 +322,5 @@ class _FiltersState extends State<FiltersGUI> {
     } else {
       return Center(child: Text("No Filters added"));
     }
-  }
+  }*/
 }

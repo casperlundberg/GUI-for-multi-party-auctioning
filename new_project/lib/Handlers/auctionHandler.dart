@@ -27,6 +27,8 @@ class AuctionHandler {
   int nextTemplateID;
 
   AuctionHandler(this.setMainState, this.userHandler, this.nextAuctionID, this.nextBidID, this.nextTemplateID) {
+    allAuctions = new Auctions(new MaterialAuctionList(), new Referencetype2AuctionList());
+    myAuctions = new Auctions(new MaterialAuctionList(), new Referencetype2AuctionList());
     if (userHandler.user.currentType == "Consumer") {
       auctionDetails = auctionDetailsListFromJson(getConsumerAuctionDetails());
       allAuctions.materialAuctions = materialAuctionListFromJson(getConsumerMaterialAuctions());
@@ -34,8 +36,8 @@ class AuctionHandler {
       contractTemplates = templateListFromJson(getConsumerContractTemplates());
     } else {
       auctionDetails = auctionDetailsListFromJson(getSupplierAuctionDetails());
-      allAuctions.materialAuctions = materialAuctionListFromJson(getSupplierMaterialAuctions());
-      allAuctions.referencetype2Auctions = referencetype2AuctionListFromJson(getSupplierReferencetype2Auctions());
+      allAuctions =
+          new Auctions(materialAuctionListFromJson(getSupplierMaterialAuctions()), referencetype2AuctionListFromJson(getSupplierReferencetype2Auctions()));
       contractTemplates = templateListFromJson(getSupplierContractTemplates());
     }
     // GET MYAUCTIONS

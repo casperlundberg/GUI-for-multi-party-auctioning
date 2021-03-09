@@ -27,9 +27,11 @@ class _RoomState extends State<Room> {
   int endTime;
 
   _RoomState(this.navigate, this.auctionHandler) {
+    /*
     for (int i = 0; i < auctionHandler.currentAuction.contractTemplate.templateVariables.length; i++) {
       this.controllers.add(TextEditingController());
     }
+    */
   }
 
   final TextStyle smallText = TextStyle(
@@ -41,7 +43,7 @@ class _RoomState extends State<Room> {
   final TextStyle boldText = TextStyle(
     fontWeight: FontWeight.bold,
   );
-
+/*
   void showContractGUI() {
     showDialog(
       context: context,
@@ -253,9 +255,10 @@ class _RoomState extends State<Room> {
       },
     );
   }
-
+*/
   @override
   Widget build(BuildContext context) {
+    /*
     endTime = auctionHandler.currentAuction.stopDate.millisecondsSinceEpoch;
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
@@ -455,6 +458,6 @@ class _RoomState extends State<Room> {
           ),
         ),
       ),
-    );
+    );*/
   }
 }
