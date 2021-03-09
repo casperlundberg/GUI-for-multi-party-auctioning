@@ -25,27 +25,68 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
   final AuctionHandler auctionHandler;
   final OfferHandler offerHandler;
   final FilterHandler filterHandler;
-  Template contractTemplate;
+  Template template;
   TextEditingController title = TextEditingController();
   TextEditingController maxParticipants = TextEditingController();
   TextEditingController duration = TextEditingController();
-  List<String> materialTypes = ["Wood", "Metals", "Soil", "Stone", "Gold", "Silver"];
-  String materialDropdownValue = "Wood";
-  List<String> contractIDs = [];
-  String contractDropdownValue;
+  List<TextEditingController> rangeReferenceParameterControllers;
+  List<List<String>> referenceTypes;
+  List<List<String>> referenceParameters;
+  List<List<String>> rangeReferenceParameters;
+  List<String> templateIDs;
+  List<String> types = ["Auction", "Offer"];
+  String referenceSectorDropdownValue;
+  String referenceTypeDropdownValue;
+  List<String> referenceParameterDropdownValues;
+  String typeDropdownValue;
+  String templateIDDropdownValue;
 
   _MyAuctionsState(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler) {
-    if (auctionHandler.userHandler.user.currentType == "Supplier") {
-      contractTemplates = auctionHandler.supplierContractTemplates;
+    referenceTypes = [];
+    referenceParameters = [];
+    rangeReferenceParameters = [];
+    for (int i = 0; i < filterHandler.filters.referenceSectors.length; i++) {
+      List<String> referenceSector = [];
+      referenceSector.add(filterHandler.filters.referenceSectors[i].name);
+      for (int y = 0; y < filterHandler.filters.referenceSectors[i].referenceTypes.length; y++) {
+        referenceSector.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
+        for (int u = 0; u < filterHandler.filters.referenceSectors[i].referenceTypes[y].referenceParameters.length; u++) {
+          List<String> l = [];
+          l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
+          l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].referenceParameters[u].name);
+          for (int o = 0; o < filterHandler.filters.referenceSectors[i].referenceTypes[y].referenceParameters[u].values.length; o++) {
+            l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].referenceParameters[u].values[o].filterValue);
+          }
+          referenceParameters.add(l);
+        }
+        for (int u = 0; u < filterHandler.filters.referenceSectors[i].referenceTypes[y].rangeReferenceParameters.length; u++) {
+          List<String> l = [];
+          l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
+          l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].rangeReferenceParameters[u].name);
+          rangeReferenceParameters.add(l);
+        }
+      }
+      referenceTypes.add(referenceSector);
     }
-    if (auctionHandler.userHandler.user.currentType == "Consumer") {
-      contractTemplates = auctionHandler.consumerContractTemplates;
+    referenceSectorDropdownValue = referenceTypes[0][0];
+    referenceTypeDropdownValue = referenceTypes[0][1];
+    referenceParameterDropdownValues = [];
+    for (int i = 0; i < referenceParameters.length; i++) {
+      if (referenceParameters[i][0] == referenceTypeDropdownValue) {
+        referenceParameterDropdownValues.add(referenceParameters[i][2]);
+      }
     }
-    contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
-    contractTemplate = contractTemplates.contractTemplates[0];
-    for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
-      contractIDs.add(contractTemplates.contractTemplates[i].id.toString());
+    for (int i = 0; i < rangeReferenceParameters.length; i++) {
+      if (rangeReferenceParameters[i][0] == referenceTypeDropdownValue) {
+        rangeReferenceParameterControllers.add(new TextEditingController());
+      }
     }
+    typeDropdownValue = "Auction";
+    templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
+    for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
+      templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
+    }
+    template = auctionHandler.contractTemplates.templates[0];
   }
 
   @override
@@ -65,13 +106,13 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
               Spacer(),
               IconButton(
                 icon: Icon(Icons.add),
-                tooltip: 'New auction',
+                tooltip: 'New listing',
                 onPressed: () {
-                  showContractTemplateGUI();
+                  showTemplateGUI();
                 },
               ),
             ]),
-          ),
+          ), /*
           SliverFixedExtentList(
               itemExtent: 100.0,
               delegate: SliverChildBuilderDelegate(
@@ -100,13 +141,13 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                       ]));
                 },
                 childCount: auctionHandler.myAuctions.auctionList.length,
-              ))
+              ))*/
         ],
       ),
     );
   }
 
-  void showContractTemplateGUI() {
+  void showTemplateGUI() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -154,7 +195,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                               return Column(
                                 children: [
                                   Text(
-                                    "Create new auction",
+                                    typeDropdownValue == "Auction" ? "Create new auction" : "Create new offer",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 2,
@@ -163,69 +204,73 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Auction Title: "),
-                                      Container(
-                                        width: MediaQuery.of(context).size.width * 0.25,
-                                        height: MediaQuery.of(context).size.height * 0.05,
-                                        child: TextField(
-                                          controller: auctionTitle,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Max Participants: "),
-                                      Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
-                                        child: TextField(
-                                          controller: maxParticipants,
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                                        ),
-                                      ),
-                                      SizedBox(width: 30.0),
-                                      Text("Round Time (s): "),
-                                      Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
-                                        child: TextField(
-                                          controller: roundTime,
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                                        ),
-                                      ),
-                                      SizedBox(width: 30.0),
-                                      Text("Number of rounds: "),
-                                      Container(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                        height: MediaQuery.of(context).size.height * 0.05,
-                                        child: TextField(
-                                          controller: rounds,
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Material: "),
+                                      Text("Listing type: "),
                                       DropdownButton(
                                         icon: Icon(Icons.arrow_downward),
                                         iconSize: 24,
-                                        value: materialDropdownValue,
+                                        value: typeDropdownValue,
                                         elevation: 16,
                                         style: TextStyle(color: Colors.white),
                                         onChanged: (String newValue) {
                                           setState(() {
-                                            materialDropdownValue = newValue;
+                                            typeDropdownValue = newValue;
+                                            if (typeDropdownValue == "Auction") {
+                                              templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
+                                              for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
+                                                templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
+                                              }
+                                              template = auctionHandler.contractTemplates.templates[0];
+                                            }
+                                            if (typeDropdownValue == "Offer") {
+                                              templateIDDropdownValue = offerHandler.offerTemplates.templates[0].id.toString();
+                                              for (int i = 0; i < offerHandler.offerTemplates.templates.length; i++) {
+                                                templateIDs.add(offerHandler.offerTemplates.templates[i].id.toString());
+                                              }
+                                              template = offerHandler.offerTemplates.templates[0];
+                                            }
                                           });
                                         },
-                                        items: materialTypes.map<DropdownMenuItem<String>>((String value) {
+                                        items: types.map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                      ),
+                                      SizedBox(width: 30.0),
+                                      Text("Reference sector: "),
+                                      DropdownButton(
+                                        icon: Icon(Icons.arrow_downward),
+                                        iconSize: 24,
+                                        value: referenceSectorDropdownValue,
+                                        elevation: 16,
+                                        style: TextStyle(color: Colors.white),
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            referenceSectorDropdownValue = newValue;
+                                          });
+                                        },
+                                        items: getReferenceSectors().map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                      ),
+                                      SizedBox(width: 30.0),
+                                      Text("Reference type: "),
+                                      DropdownButton(
+                                        icon: Icon(Icons.arrow_downward),
+                                        iconSize: 24,
+                                        value: referenceTypeDropdownValue,
+                                        elevation: 16,
+                                        style: TextStyle(color: Colors.white),
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            referenceTypeDropdownValue = newValue;
+                                          });
+                                        },
+                                        items: getReferenceTypes().map<DropdownMenuItem<String>>((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -235,27 +280,68 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                     ],
                                   ),
                                   SizedBox(height: 20.0),
+                                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                    Text(typeDropdownValue == "Auction" ? "Auction Title: " : "Offer Title"),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.25,
+                                      height: MediaQuery.of(context).size.height * 0.05,
+                                      child: TextField(
+                                        controller: title,
+                                      ),
+                                    ),
+                                    SizedBox(width: 30.0),
+                                    Text("Duration: "),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.25,
+                                      height: MediaQuery.of(context).size.height * 0.05,
+                                      child: TextField(
+                                        controller: duration,
+                                      ),
+                                    ),
+                                    SizedBox(width: 30.0),
+                                    Text(typeDropdownValue == "Auction" ? "Max participants: " : ""),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.25,
+                                      height: MediaQuery.of(context).size.height * 0.05,
+                                      child: typeDropdownValue == "Auction"
+                                          ? TextField(
+                                              controller: maxParticipants,
+                                            )
+                                          : null,
+                                    ),
+                                  ]),
+                                  SizedBox(height: 20.0),
+                                  SizedBox(height: 20.0),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Contract Template ID: "),
+                                      Text("Template ID: "),
                                       DropdownButton(
                                         icon: Icon(Icons.arrow_downward),
                                         iconSize: 24,
-                                        value: contractDropdownValue,
+                                        value: templateIDDropdownValue,
                                         elevation: 16,
                                         style: TextStyle(color: Colors.white),
                                         onChanged: (String newValue) {
                                           setState(() {
-                                            contractDropdownValue = newValue;
-                                            for (int i = 0; i < contractTemplates.contractTemplates.length; i++) {
-                                              if (contractTemplates.contractTemplates[i].id.toString() == newValue) {
-                                                contractTemplate = contractTemplates.contractTemplates[i];
+                                            templateIDDropdownValue = newValue;
+                                            if (typeDropdownValue == "Auction") {
+                                              for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
+                                                if (auctionHandler.contractTemplates.templates[i].id.toString() == templateIDDropdownValue) {
+                                                  template = auctionHandler.contractTemplates.templates[i];
+                                                }
+                                              }
+                                            }
+                                            if (typeDropdownValue == "Offer") {
+                                              for (int i = 0; i < offerHandler.offerTemplates.templates.length; i++) {
+                                                if (offerHandler.offerTemplates.templates[i].id.toString() == templateIDDropdownValue) {
+                                                  template = offerHandler.offerTemplates.templates[i];
+                                                }
                                               }
                                             }
                                           });
                                         },
-                                        items: contractIDs.map<DropdownMenuItem<String>>((String value) {
+                                        items: templateIDs.map<DropdownMenuItem<String>>((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -266,7 +352,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                   ),
                                   SizedBox(height: 20.0),
                                   Text(
-                                    "Contract Template",
+                                    typeDropdownValue == "Auction" ? "Contract Template" : "Offer Template",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 1.5,
@@ -274,13 +360,13 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                   SizedBox(height: 20.0),
                                   Expanded(
                                     child: ListView.builder(
-                                      itemCount: contractTemplate.templateVariables.length,
+                                      itemCount: template.templateVariables.length,
                                       itemBuilder: (context, index) {
                                         if (index == 0) {
                                           return Column(
                                             children: [
                                               Text(
-                                                contractTemplate.templateStrings[0].text,
+                                                template.templateStrings[0].text,
                                                 textAlign: TextAlign.center,
                                               ),
                                               SizedBox(height: 20.0),
@@ -292,7 +378,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                                     style: TextStyle(fontWeight: FontWeight.bold),
                                                   ),
                                                   Text(
-                                                    contractTemplate.templateVariables[0].key,
+                                                    template.templateVariables[0].key,
                                                     style: TextStyle(fontStyle: FontStyle.italic),
                                                   ),
                                                   Text(
@@ -300,14 +386,14 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                                     style: TextStyle(fontWeight: FontWeight.bold),
                                                   ),
                                                   Text(
-                                                    contractTemplate.templateVariables[0].valueType,
+                                                    template.templateVariables[0].valueType,
                                                     style: TextStyle(fontStyle: FontStyle.italic),
                                                   ),
                                                 ],
                                               ),
                                               SizedBox(height: 20.0),
                                               Text(
-                                                contractTemplate.templateStrings[1].text,
+                                                template.templateStrings[1].text,
                                                 textAlign: TextAlign.center,
                                               ),
                                             ],
@@ -324,7 +410,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                                   style: TextStyle(fontWeight: FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  contractTemplate.templateVariables[index].key,
+                                                  template.templateVariables[index].key,
                                                   style: TextStyle(fontStyle: FontStyle.italic),
                                                 ),
                                                 Text(
@@ -332,14 +418,14 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                                   style: TextStyle(fontWeight: FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  contractTemplate.templateVariables[index].valueType,
+                                                  template.templateVariables[index].valueType,
                                                   style: TextStyle(fontStyle: FontStyle.italic),
                                                 ),
                                               ],
                                             ),
                                             SizedBox(height: 20.0),
                                             Text(
-                                              contractTemplate.templateStrings[index + 1].text,
+                                              template.templateStrings[index + 1].text,
                                               textAlign: TextAlign.center,
                                             ),
                                           ],
@@ -410,5 +496,29 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
         );
       },
     );
+  }
+
+  List<String> getReferenceSectors() {
+    List<String> l = [];
+    for (int i = 0; i < referenceTypes.length; i++) {
+      if (l.contains(referenceTypes[i][0])) {
+        continue;
+      }
+      l.add(referenceTypes[i][0]);
+    }
+    return l;
+  }
+
+  List<String> getReferenceTypes() {
+    List<String> l = [];
+    for (int i = 0; i < referenceTypes.length; i++) {
+      if (referenceTypes[i][0] == referenceSectorDropdownValue) {
+        if (l.contains(referenceTypes[i][1])) {
+          continue;
+        }
+        l.add(referenceTypes[i][1]);
+      }
+    }
+    return l;
   }
 }

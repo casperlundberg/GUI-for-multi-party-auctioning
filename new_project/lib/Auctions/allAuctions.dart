@@ -432,19 +432,69 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
         itemExtent: 100.0,
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            bool yourOffer = false;
-            for (int i = 0; i < userHandler.user.offers.length; i++) {
-              if (userHandler.user.offers[i].offerId == referencetype2Offers[index].id) {
-                yourOffer = true;
-                break;
+            if (materialAuctions != null || referencetype2Auctions != null) {
+              bool participant = false;
+              for (int i = 0; i < userHandler.user.participatingAuctions.length; i++) {
+                if (materialAuctions != null) {
+                  if (userHandler.user.participatingAuctions[i].auctionId == materialAuctions[index].id) {
+                    participant = true;
+                    break;
+                  }
+                }
+                if (referencetype2Auctions != null) {
+                  if (userHandler.user.participatingAuctions[i].auctionId == referencetype2Auctions[index].id) {
+                    participant = true;
+                    break;
+                  }
+                }
+              }
+              bool requestSent = false;
+              for (int i = 0; i < userHandler.user.requestInbox.length; i++) {
+                if (materialAuctions != null) {
+                  if (userHandler.user.requestInbox[i].auctionId == materialAuctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                    requestSent = true;
+                    break;
+                  }
+                }
+                if (referencetype2Auctions != null) {
+                  if (userHandler.user.requestInbox[i].auctionId == referencetype2Auctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                    requestSent = true;
+                    break;
+                  }
+                }
               }
             }
-            bool inviteSent = false;
-            if (yourOffer == false) {
-              for (int i = 0; i < userHandler.user.inviteInbox.length; i++) {
-                if (userHandler.user.inviteInbox[i].offerId == referencetype2Offers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                  inviteSent = true;
-                  break;
+            if (materialOffers != null || referencetype2Auctions != null) {
+              bool yourOffer = false;
+              for (int i = 0; i < userHandler.user.offers.length; i++) {
+                if (materialOffers != null) {
+                  if (userHandler.user.offers[i].offerId == materialOffers[index].id) {
+                    yourOffer = true;
+                    break;
+                  }
+                }
+                if (referencetype2Offers != null) {
+                  if (userHandler.user.offers[i].offerId == referencetype2Offers[index].id) {
+                    yourOffer = true;
+                    break;
+                  }
+                }
+              }
+              bool inviteSent = false;
+              if (yourOffer == false) {
+                for (int i = 0; i < userHandler.user.inviteInbox.length; i++) {
+                  if (materialOffers != null) {
+                    if (userHandler.user.inviteInbox[i].offerId == materialOffers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                      inviteSent = true;
+                      break;
+                    }
+                  }
+                  if (referencetype2Offers != null) {
+                    if (userHandler.user.inviteInbox[i].offerId == referencetype2Offers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                      inviteSent = true;
+                      break;
+                    }
+                  }
                 }
               }
             }
@@ -458,7 +508,15 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Title: ' + referencetype2Offers[index].title),
+                      Text('Title: ' +
+                          (materialAuctions != null
+                              ? materialAuctions[index].title
+                              : (materialOffers != null
+                                  ? materialOffers[index].title
+                                  : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title)))),
+                      Text(materialAuctions != null
+                          ? " Participants: " + materialAuctions[index].currentParticipants.toString()
+                          : (referencetype2Auctions != null ? " Participants: " + referencetype2Auctions[index].currentParticipants.toString() : "")),
                     ],
                   ),
                   Spacer(),
@@ -478,7 +536,11 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
               ),
             );
           },
-          childCount: referencetype2Offers.length,
+          childCount: materialAuctions != null
+              ? materialAuctions.length
+              : (materialOffers != null
+                  ? materialOffers.length
+                  : (referencetype2Auctions != null ? referencetype2Auctions.length : referencetype2Offers.length)),
         ),
       );
     }

@@ -56,8 +56,8 @@ class OfferHandler {
     }
   }
 
-  void createMaterialOffer(int templateID, String title, int duration, String fibersType, String resinType, int minFiberLength, int maxFiberLength,
-      String recyclingTechnology, String sizing, String additives, int minVolume, int maxVolume) {
+  void createMaterialOffer(int templateID, String title, int duration, String fibersType, String resinType, String recyclingTechnology, String sizing,
+      String additives, int minFiberLength, int maxFiberLength, int minVolume, int maxVolume) {
     DateTime startDate = new DateTime.now();
     DateTime stopDate = startDate.add(Duration(minutes: (duration)));
 
