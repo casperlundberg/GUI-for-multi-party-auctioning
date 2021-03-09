@@ -206,6 +206,6 @@ class UserInfoHandler {
   }
 
   // unimplemented
-  void requestToJoin() {}
-  void inviteToAuction() {}
+  void requestToJoin(int auctionID) {}
+  void inviteToAuction(int auctionID) {}
 }

@@ -175,6 +175,50 @@ class AuctionHandler {
     }
   }
 
+  // Gets the auction titles of the auctions that do not contain userID.
+  List<String> getAuctionTitles(String referencetype, int userID) {
+    List<String> l = [];
+    if (referencetype == "material") {
+      for (int i = 0; i < myAuctions.materialAuctions.materialAuctions.length; i++) {
+        for (int y = 0; y < auctionDetails.auctionDetailsList.length; y++) {
+          if (myAuctions.materialAuctions.materialAuctions[i].id == auctionDetails.auctionDetailsList[y].id) {
+            bool add = true;
+            for (int u = 0; u < auctionDetails.auctionDetailsList[y].participants.length; u++) {
+              if (auctionDetails.auctionDetailsList[y].participants[u].userId == userID) {
+                add = false;
+                break;
+              }
+            }
+            if (add) {
+              l.add(myAuctions.materialAuctions.materialAuctions[i].title);
+            }
+            break;
+          }
+        }
+      }
+    }
+    if (referencetype == "referencetype2") {
+      for (int i = 0; i < myAuctions.referencetype2Auctions.referencetype2Auctions.length; i++) {
+        for (int y = 0; y < auctionDetails.auctionDetailsList.length; y++) {
+          if (myAuctions.referencetype2Auctions.referencetype2Auctions[i].id == auctionDetails.auctionDetailsList[y].id) {
+            bool add = true;
+            for (int u = 0; u < auctionDetails.auctionDetailsList[y].participants.length; u++) {
+              if (auctionDetails.auctionDetailsList[y].participants[u].userId == userID) {
+                add = false;
+                break;
+              }
+            }
+            if (add) {
+              l.add(myAuctions.referencetype2Auctions.referencetype2Auctions[i].title);
+            }
+            break;
+          }
+        }
+      }
+    }
+    return l;
+  }
+
   void createBid(List<TextEditingController> controllers) {}
 
   // NEW CONTRACT TEMPLATE (administrator, remove?)

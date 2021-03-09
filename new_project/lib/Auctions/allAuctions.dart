@@ -256,293 +256,191 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
       List<MaterialOffer> materialOffers,
       List<Referencetype2Offer> referencetype2Offers}) {
     var now = new DateTime.now();
-    if (materialAuctions != null) {
-      return SliverFixedExtentList(
-        itemExtent: 100.0,
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            bool participant = false;
+    return SliverFixedExtentList(
+      itemExtent: 100.0,
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          bool participant = false;
+          bool requestSent = false;
+          bool yourOffer = false;
+          bool inviteSent = false;
+          if (materialAuctions != null || referencetype2Auctions != null) {
             for (int i = 0; i < userHandler.user.participatingAuctions.length; i++) {
-              if (userHandler.user.participatingAuctions[i].auctionId == materialAuctions[index].id) {
-                participant = true;
-                break;
+              if (materialAuctions != null) {
+                if (userHandler.user.participatingAuctions[i].auctionId == materialAuctions[index].id) {
+                  participant = true;
+                  break;
+                }
               }
-            }
-            bool requestSent = false;
-            for (int i = 0; i < userHandler.user.requestInbox.length; i++) {
-              if (userHandler.user.requestInbox[i].auctionId == materialAuctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                requestSent = true;
-                break;
-              }
-            }
-            return Container(
-              margin: EdgeInsets.all(5.0),
-              padding: EdgeInsets.only(left: 10, right: 10),
-              color: now.isAfter(materialAuctions[index].stopDate) ? Colors.redAccent : Colors.greenAccent[700],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Title: ' + materialAuctions[index].title),
-                      // Print out material auction info.
-                      Text('Participants: ' + materialAuctions[index].currentParticipants.toString()),
-                    ],
-                  ),
-                  Spacer(),
-                  Container(
-                    child: ElevatedButton(
-                      child: participant ? Text("Visit room") : (requestSent ? Text("Request sent") : Text("Send request")),
-                      onPressed: participant
-                          ? () {
-                              auctionHandler.setCurrentAuction(materialAuctions[index].id);
-                              navigate(WidgetMarker.room);
-                            }
-                          : (requestSent
-                              ? null
-                              : () {
-                                  userHandler.requestToJoin();
-                                }),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          childCount: materialAuctions.length,
-        ),
-      );
-    }
-    if (referencetype2Auctions != null) {
-      return SliverFixedExtentList(
-        itemExtent: 100.0,
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            bool participant = false;
-            for (int i = 0; i < userHandler.user.participatingAuctions.length; i++) {
-              if (userHandler.user.participatingAuctions[i].auctionId == referencetype2Auctions[index].id) {
-                participant = true;
-                break;
-              }
-            }
-            bool requestSent = false;
-            for (int i = 0; i < userHandler.user.requestInbox.length; i++) {
-              if (userHandler.user.requestInbox[i].auctionId == referencetype2Auctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                requestSent = true;
-                break;
-              }
-            }
-            return Container(
-              margin: EdgeInsets.all(5.0),
-              padding: EdgeInsets.only(left: 10, right: 10),
-              color: now.isAfter(referencetype2Auctions[index].stopDate) ? Colors.redAccent : Colors.greenAccent[700],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Title: ' + referencetype2Auctions[index].title),
-                      // Print out referencetype2 auction info.
-                      Text('Participants: ' + referencetype2Auctions[index].currentParticipants.toString()),
-                    ],
-                  ),
-                  Spacer(),
-                  Container(
-                    child: ElevatedButton(
-                      child: participant ? Text("Visit room") : (requestSent ? Text("Request sent") : Text("Send request")),
-                      onPressed: participant
-                          ? () {
-                              auctionHandler.setCurrentAuction(referencetype2Auctions[index].id);
-                              navigate(WidgetMarker.room);
-                            }
-                          : (requestSent
-                              ? null
-                              : () {
-                                  userHandler.requestToJoin();
-                                }),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          childCount: referencetype2Auctions.length,
-        ),
-      );
-    }
-    if (materialOffers != null) {
-      return SliverFixedExtentList(
-        itemExtent: 100.0,
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            bool yourOffer = false;
-            for (int i = 0; i < userHandler.user.offers.length; i++) {
-              if (userHandler.user.offers[i].offerId == materialOffers[index].id) {
-                yourOffer = true;
-                break;
-              }
-            }
-            bool inviteSent = false;
-            if (yourOffer == false) {
-              for (int i = 0; i < userHandler.user.inviteInbox.length; i++) {
-                if (userHandler.user.inviteInbox[i].offerId == materialOffers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                  inviteSent = true;
+              if (referencetype2Auctions != null) {
+                if (userHandler.user.participatingAuctions[i].auctionId == referencetype2Auctions[index].id) {
+                  participant = true;
                   break;
                 }
               }
             }
-            return Container(
-              margin: EdgeInsets.all(5.0),
-              padding: EdgeInsets.only(left: 10, right: 10),
-              color: Colors.greenAccent[700],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Title: ' + materialOffers[index].title),
-                    ],
-                  ),
-                  Spacer(),
-                  Container(
-                    child: yourOffer
-                        ? Text("")
-                        : ElevatedButton(
-                            child: inviteSent ? Text('Invite sent') : Text("Send invite"),
-                            onPressed: inviteSent
-                                ? null
-                                : () {
-                                    userHandler.inviteToAuction();
-                                  },
-                          ),
-                  ),
-                ],
-              ),
-            );
-          },
-          childCount: materialOffers.length,
-        ),
-      );
-    }
-    if (referencetype2Offers != null) {
-      return SliverFixedExtentList(
-        itemExtent: 100.0,
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            if (materialAuctions != null || referencetype2Auctions != null) {
-              bool participant = false;
-              for (int i = 0; i < userHandler.user.participatingAuctions.length; i++) {
-                if (materialAuctions != null) {
-                  if (userHandler.user.participatingAuctions[i].auctionId == materialAuctions[index].id) {
-                    participant = true;
-                    break;
-                  }
-                }
-                if (referencetype2Auctions != null) {
-                  if (userHandler.user.participatingAuctions[i].auctionId == referencetype2Auctions[index].id) {
-                    participant = true;
-                    break;
-                  }
+
+            for (int i = 0; i < userHandler.user.requestInbox.length; i++) {
+              if (materialAuctions != null) {
+                if (userHandler.user.requestInbox[i].auctionId == materialAuctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                  requestSent = true;
+                  break;
                 }
               }
-              bool requestSent = false;
-              for (int i = 0; i < userHandler.user.requestInbox.length; i++) {
-                if (materialAuctions != null) {
-                  if (userHandler.user.requestInbox[i].auctionId == materialAuctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                    requestSent = true;
-                    break;
-                  }
-                }
-                if (referencetype2Auctions != null) {
-                  if (userHandler.user.requestInbox[i].auctionId == referencetype2Auctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                    requestSent = true;
-                    break;
-                  }
+              if (referencetype2Auctions != null) {
+                if (userHandler.user.requestInbox[i].auctionId == referencetype2Auctions[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                  requestSent = true;
+                  break;
                 }
               }
             }
-            if (materialOffers != null || referencetype2Auctions != null) {
-              bool yourOffer = false;
-              for (int i = 0; i < userHandler.user.offers.length; i++) {
+          }
+          if (materialOffers != null || referencetype2Auctions != null) {
+            for (int i = 0; i < userHandler.user.offers.length; i++) {
+              if (materialOffers != null) {
+                if (userHandler.user.offers[i].offerId == materialOffers[index].id) {
+                  yourOffer = true;
+                  break;
+                }
+              }
+              if (referencetype2Offers != null) {
+                if (userHandler.user.offers[i].offerId == referencetype2Offers[index].id) {
+                  yourOffer = true;
+                  break;
+                }
+              }
+            }
+
+            if (yourOffer == false) {
+              for (int i = 0; i < userHandler.user.inviteInbox.length; i++) {
                 if (materialOffers != null) {
-                  if (userHandler.user.offers[i].offerId == materialOffers[index].id) {
-                    yourOffer = true;
+                  if (userHandler.user.inviteInbox[i].offerId == materialOffers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                    inviteSent = true;
                     break;
                   }
                 }
                 if (referencetype2Offers != null) {
-                  if (userHandler.user.offers[i].offerId == referencetype2Offers[index].id) {
-                    yourOffer = true;
+                  if (userHandler.user.inviteInbox[i].offerId == referencetype2Offers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                    inviteSent = true;
                     break;
                   }
                 }
               }
-              bool inviteSent = false;
-              if (yourOffer == false) {
-                for (int i = 0; i < userHandler.user.inviteInbox.length; i++) {
-                  if (materialOffers != null) {
-                    if (userHandler.user.inviteInbox[i].offerId == materialOffers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                      inviteSent = true;
-                      break;
-                    }
-                  }
-                  if (referencetype2Offers != null) {
-                    if (userHandler.user.inviteInbox[i].offerId == referencetype2Offers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                      inviteSent = true;
-                      break;
-                    }
-                  }
-                }
-              }
             }
-            return Container(
-              margin: EdgeInsets.all(5.0),
-              padding: EdgeInsets.only(left: 10, right: 10),
-              color: Colors.greenAccent[700],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Title: ' +
-                          (materialAuctions != null
-                              ? materialAuctions[index].title
-                              : (materialOffers != null
-                                  ? materialOffers[index].title
-                                  : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title)))),
-                      Text(materialAuctions != null
-                          ? " Participants: " + materialAuctions[index].currentParticipants.toString()
-                          : (referencetype2Auctions != null ? " Participants: " + referencetype2Auctions[index].currentParticipants.toString() : "")),
-                    ],
-                  ),
-                  Spacer(),
-                  Container(
-                    child: yourOffer
-                        ? Text("")
-                        : ElevatedButton(
-                            child: inviteSent ? Text('Invite sent') : Text("Send invite"),
-                            onPressed: inviteSent
-                                ? null
-                                : () {
-                                    userHandler.inviteToAuction();
-                                  },
-                          ),
-                  ),
-                ],
-              ),
-            );
-          },
-          childCount: materialAuctions != null
-              ? materialAuctions.length
-              : (materialOffers != null
-                  ? materialOffers.length
-                  : (referencetype2Auctions != null ? referencetype2Auctions.length : referencetype2Offers.length)),
-        ),
-      );
-    }
+          }
+          return Container(
+            margin: EdgeInsets.all(5.0),
+            padding: EdgeInsets.only(left: 10, right: 10),
+            color: Colors.greenAccent[700],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Title: ' +
+                        (materialAuctions != null
+                            ? materialAuctions[index].title
+                            : (materialOffers != null
+                                ? materialOffers[index].title
+                                : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title)))),
+                    Text(materialAuctions != null
+                        ? " Participants: " + materialAuctions[index].currentParticipants.toString()
+                        : (referencetype2Auctions != null ? " Participants: " + referencetype2Auctions[index].currentParticipants.toString() : "")),
+                    Text("Start date: " +
+                        (materialAuctions != null
+                            ? materialAuctions[index].startDate.toString()
+                            : (materialOffers != null
+                                ? materialOffers[index].startDate.toString()
+                                : (referencetype2Auctions != null
+                                    ? referencetype2Auctions[index].startDate.toString()
+                                    : referencetype2Offers[index].startDate.toString())))),
+                    Text("Stop date: " +
+                        (materialAuctions != null
+                            ? materialAuctions[index].stopDate.toString()
+                            : (materialOffers != null
+                                ? materialOffers[index].stopDate.toString()
+                                : (referencetype2Auctions != null
+                                    ? referencetype2Auctions[index].stopDate.toString()
+                                    : referencetype2Offers[index].stopDate.toString())))),
+                  ],
+                  //Listview of reference parameters.
+                ),
+                Spacer(),
+                Container(
+                  child: (materialAuctions != null || referencetype2Auctions != null)
+                      ? ElevatedButton(
+                          child: participant ? Text("Visit room") : (requestSent ? Text("Request sent") : Text("Send request")),
+                          onPressed: participant
+                              ? () {
+                                  if (materialAuctions != null) {
+                                    auctionHandler.setCurrentAuction(materialAuctions[index].id);
+                                  }
+                                  if (referencetype2Auctions != null) {
+                                    auctionHandler.setCurrentAuction(referencetype2Auctions[index].id);
+                                  }
+                                  navigate(WidgetMarker.room);
+                                }
+                              : (requestSent
+                                  ? null
+                                  : () {
+                                      if (materialAuctions != null) {
+                                        userHandler.requestToJoin(materialAuctions[index].id);
+                                      }
+                                      if (referencetype2Auctions != null) {
+                                        userHandler.requestToJoin(referencetype2Auctions[index].id);
+                                      }
+                                    }),
+                        )
+                      : (yourOffer
+                          ? null
+                          : (inviteSent
+                              ? Text("Invite sent")
+                              : Row(
+                                  children: [
+                                    Text("Invite to auction: "),
+                                    DropdownButton(
+                                      icon: Icon(Icons.arrow_downward),
+                                      iconSize: 24,
+                                      value: "Auction title",
+                                      elevation: 16,
+                                      style: TextStyle(color: Colors.white),
+                                      onChanged: (String auctionID) {
+                                        userHandler.inviteToAuction(int.parse(auctionID));
+                                      },
+                                      items: materialOffers != null
+                                          ? (auctionHandler.getAuctionTitles("material", materialOffers[index].userId) != null
+                                              ? auctionHandler
+                                                  .getAuctionTitles("material", materialOffers[index].userId)
+                                                  .map<DropdownMenuItem<String>>((String value) {
+                                                  return DropdownMenuItem<String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList()
+                                              : null)
+                                          : (auctionHandler.getAuctionTitles("referencetype2", referencetype2Offers[index].userId) != null
+                                              ? auctionHandler
+                                                  .getAuctionTitles("referencetype2", referencetype2Offers[index].userId)
+                                                  .map<DropdownMenuItem<String>>((String value) {
+                                                  return DropdownMenuItem<String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList()
+                                              : null),
+                                    ),
+                                  ],
+                                ))),
+                ),
+              ],
+            ),
+          );
+        },
+        childCount: materialAuctions != null
+            ? materialAuctions.length
+            : (materialOffers != null ? materialOffers.length : (referencetype2Auctions != null ? referencetype2Auctions.length : referencetype2Offers.length)),
+      ),
+    );
   }
 }
