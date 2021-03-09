@@ -22,7 +22,7 @@ Explore the Dart language and develop a how GUI and data/information sharing sys
 ### Project managers 
 - Shai Fernandez shai.fernandez@ltu.se
 - Eric Chiquito eric.chiquito@ltu.se
-- Ulf Bodin Ulf.Bodin@ltu.se
+- Ulf Bodin ulf.bodin@ltu.se
 
 ### Devs for the GUI
 - Erik Salomonsson erisal-8@student.ltu.se
