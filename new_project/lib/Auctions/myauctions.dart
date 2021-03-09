@@ -67,7 +67,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
               Spacer(),
               IconButton(
                 icon: Icon(Icons.add),
-                tooltip: 'New auction',
+                tooltip: 'New Auction',
                 onPressed: () {
                   showContractTemplateGUI();
                 },
