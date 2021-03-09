@@ -12,6 +12,7 @@ class NotificationsHandler {
 
   Container getListTile(Inbox item) {
     if (item.offerId == null && item.status == "Pending") {
+      // Accept/Decline someone to join your auction
       return Container(
         width: double.infinity,
         child: Column(
@@ -34,8 +35,8 @@ class NotificationsHandler {
                         _userInfoHandler.userListObject.users[i].participatingAuctions.add(new ParticipatingAuction(
                           auctionId: item.auctionId,
                         ));
+                        _userInfoHandler.user.requestInbox.remove(item);
                       }
-                      _userInfoHandler.user.requestInbox.remove(item);
                     }
                   },
                 ),
@@ -51,6 +52,7 @@ class NotificationsHandler {
                           userId: _userInfoHandler.user.userId,
                           offerId: null,
                         ));
+                        _userInfoHandler.user.requestInbox.remove(item);
                       }
                     }
                   },
@@ -64,6 +66,7 @@ class NotificationsHandler {
         ),
       );
     } else if (item.offerId == null && item.status == "Declined") {
+      // Remove notis when "Declined" to join auction
       return Container(
         width: double.infinity,
         child: Column(
@@ -72,13 +75,9 @@ class NotificationsHandler {
               children: <Widget>[
                 Text("You have been declined to join auction " + item.auctionId.toString() + " created by user " + item.userId.toString()),
                 ElevatedButton(
-                  child: Text("Dissmiss?"),
+                  child: Text("Dissmiss"),
                   onPressed: () {
-                    for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
-                      if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
-                        _userInfoHandler.userListObject.users[i].requestInbox.remove(item);
-                      }
-                    }
+                    _userInfoHandler.user.requestInbox.remove(item);
                   },
                 ),
               ],
@@ -90,6 +89,7 @@ class NotificationsHandler {
         ),
       );
     } else if (item.offerId == null && item.status == "Accepted") {
+      // Remove notis when "Accepted" to join auction
       return Container(
         width: double.infinity,
         child: Column(
@@ -98,8 +98,10 @@ class NotificationsHandler {
               children: <Widget>[
                 Text("You have been accepted to join auction " + item.auctionId.toString() + " created by user " + item.userId.toString()),
                 ElevatedButton(
-                  child: Text("Dissmiss?"),
-                  onPressed: () {},
+                  child: Text("Dissmiss"),
+                  onPressed: () {
+                    _userInfoHandler.user.requestInbox.remove(item);
+                  },
                 ),
               ],
             ),
@@ -110,6 +112,7 @@ class NotificationsHandler {
         ),
       );
     } else if (item.offerId != null && item.status == "Pending") {
+      // Accept/Decline invite to join someones auction
       return Container(
         width: double.infinity,
         child: Column(
@@ -124,11 +127,63 @@ class NotificationsHandler {
                     item.offerId.toString()),
                 ElevatedButton(
                   child: Text("Join auction"),
-                  onPressed: () {},
+                  onPressed: () {
+                    for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
+                      if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
+                        _userInfoHandler.userListObject.users[i].inviteInbox.add(new Inbox(
+                          time: new DateTime.now(),
+                          status: "Accepted",
+                          auctionId: item.auctionId,
+                          userId: _userInfoHandler.user.userId,
+                          offerId: null, // TODO: icrement offerId
+                        ));
+                        _userInfoHandler.user.participatingAuctions.add(new ParticipatingAuction(
+                          auctionId: item.auctionId,
+                        ));
+                        _userInfoHandler.user.inviteInbox.remove(item);
+                      }
+                    }
+                  },
                 ),
                 ElevatedButton(
-                  child: Text("Decline offfer"),
-                  onPressed: () {},
+                  child: Text("Decline offer"),
+                  onPressed: () {
+                    for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
+                      if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
+                        _userInfoHandler.userListObject.users[i].inviteInbox.add(new Inbox(
+                          time: new DateTime.now(),
+                          status: "Declined",
+                          auctionId: item.auctionId,
+                          userId: _userInfoHandler.user.userId,
+                          offerId: null, // TODO: icrement offerId
+                        ));
+                        _userInfoHandler.user.inviteInbox.remove(item);
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
+            Container(
+              height: 8,
+            ),
+          ],
+        ),
+      );
+    } else if (item.offerId != null && item.status == "Declined") {
+      // Remove notis when invited user "Declined" to join your auction
+      return Container(
+        width: double.infinity,
+        child: Column(
+          children: [
+            Wrap(
+              children: <Widget>[
+                Text("User " + item.userId.toString() + " have declined to join your auction " + item.auctionId.toString()),
+                ElevatedButton(
+                  child: Text("Dissmiss"),
+                  onPressed: () {
+                    _userInfoHandler.user.inviteInbox.remove(item);
+                  },
                 ),
               ],
             ),
@@ -139,6 +194,7 @@ class NotificationsHandler {
         ),
       );
     } else if (item.offerId != null && item.status == "Accepted") {
+      // Remove notis when invited user "Accepted" to join auction
       return Container(
         width: double.infinity,
         child: Column(
@@ -152,8 +208,10 @@ class NotificationsHandler {
                     " via offer " +
                     item.offerId.toString()),
                 ElevatedButton(
-                  child: Text("Dissmiss?"),
-                  onPressed: () {},
+                  child: Text("Dissmiss"),
+                  onPressed: () {
+                    _userInfoHandler.user.inviteInbox.remove(item);
+                  },
                 ),
               ],
             ),

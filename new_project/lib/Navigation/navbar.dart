@@ -61,40 +61,15 @@ class NavigationState extends State<NavigationBar> {
           child: Stack(
             children: <Widget>[
               IconButton(
-                  icon: Icon(Icons.notifications),
-                  onPressed: () {
-                    setState(() {
-                      //print(counter);
-                    });
-                    showNotifications(context);
-                  }),
-              counter != 0
-                  ? Positioned(
-                      right: 5,
-                      top: 5,
-                      child: Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 16,
-                          minHeight: 16,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '$counter',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 9,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Container()
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  setState(() {
+                    //print(counter);
+                  });
+                  showNotifications(context);
+                },
+              ),
+              getNotificationsWidgetCounter(),
             ],
           ),
         ),
@@ -107,5 +82,36 @@ class NavigationState extends State<NavigationBar> {
         ),
       ],
     );
+  }
+
+  Widget getNotificationsWidgetCounter() {
+    if (counter != 0) {
+      return Positioned(
+        right: 5,
+        top: 5,
+        child: Container(
+          padding: EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          constraints: BoxConstraints(
+            minWidth: 16,
+            minHeight: 16,
+          ),
+          child: Center(
+            child: Text(
+              '$counter',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 9,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
+    return SizedBox(height: 0.01);
   }
 }
