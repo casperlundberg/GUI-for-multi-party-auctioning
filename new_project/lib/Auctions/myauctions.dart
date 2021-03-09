@@ -40,6 +40,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
   List<String> referenceParameterDropdownValues;
   String typeDropdownValue;
   String templateIDDropdownValue;
+  List<List<String>> currentReferenceParameters;
 
   _MyAuctionsState(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler) {
     referenceTypes = [];
@@ -71,15 +72,22 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
     referenceSectorDropdownValue = referenceTypes[0][0];
     referenceTypeDropdownValue = referenceTypes[0][1];
     referenceParameterDropdownValues = [];
+    currentReferenceParameters = [];
     for (int i = 0; i < referenceParameters.length; i++) {
       if (referenceParameters[i][0] == referenceTypeDropdownValue) {
         referenceParameterDropdownValues.add(referenceParameters[i][2]);
+        List<String> l = [];
+        for (int y = 1; y < referenceParameters[i].length; y++) {
+          l.add(referenceParameters[i][y]);
+        }
+        currentReferenceParameters.add(l);
       }
     }
     rangeReferenceParameterControllers = [];
     for (int i = 0; i < rangeReferenceParameters.length; i++) {
       if (rangeReferenceParameters[i][0] == referenceTypeDropdownValue) {
         rangeReferenceParameterControllers.add(new TextEditingController());
+        currentReferenceParameters.add([rangeReferenceParameters[i][1]]);
       }
     }
     typeDropdownValue = "Auction";
@@ -273,15 +281,22 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                           setState(() {
                                             referenceTypeDropdownValue = newValue;
                                             referenceParameterDropdownValues = [];
+                                            currentReferenceParameters = [];
                                             for (int i = 0; i < referenceParameters.length; i++) {
                                               if (referenceParameters[i][0] == referenceTypeDropdownValue) {
                                                 referenceParameterDropdownValues.add(referenceParameters[i][2]);
+                                                List<String> l = [];
+                                                for (int y = 1; y < referenceParameters[i].length; y++) {
+                                                  l.add(referenceParameters[i][y]);
+                                                }
+                                                currentReferenceParameters.add(l);
                                               }
                                             }
                                             rangeReferenceParameterControllers = [];
                                             for (int i = 0; i < rangeReferenceParameters.length; i++) {
                                               if (rangeReferenceParameters[i][0] == referenceTypeDropdownValue) {
                                                 rangeReferenceParameterControllers.add(new TextEditingController());
+                                                currentReferenceParameters.add([rangeReferenceParameters[i][1]]);
                                               }
                                             }
                                           });
@@ -335,8 +350,48 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                           children: [
                                             Expanded(
                                               child: ListView.builder(
-                                                itemCount: (index + 1), 
-                                                itemBuilder: ,
+                                                itemCount: index + 1 ==
+                                                        ((referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) / 3).ceil()
+                                                    ? (referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) - (index * 3)
+                                                    : 3,
+                                                itemBuilder: (context, rowIndex) {
+                                                  return Row(
+                                                    children: ((index * 3) + rowIndex < referenceParameterDropdownValues.length)
+                                                        ? [
+                                                            Text(currentReferenceParameters[(index * 3) + rowIndex][0] + ": "),
+                                                            DropdownButton(
+                                                              icon: Icon(Icons.arrow_downward),
+                                                              iconSize: 24,
+                                                              value: referenceParameterDropdownValues[(index * 3) + rowIndex],
+                                                              elevation: 16,
+                                                              style: TextStyle(color: Colors.white),
+                                                              onChanged: (String newValue) {
+                                                                setState(() {
+                                                                  referenceParameterDropdownValues[(index * 3) + rowIndex] = newValue;
+                                                                });
+                                                              },
+                                                              items:
+                                                                  getReferenceParameters((index * 3) + rowIndex).map<DropdownMenuItem<String>>((String value) {
+                                                                return DropdownMenuItem<String>(
+                                                                  value: value,
+                                                                  child: Text(value),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          ]
+                                                        : [
+                                                            Text(currentReferenceParameters[(index * 3) + rowIndex][0] + ": "),
+                                                            Container(
+                                                              width: MediaQuery.of(context).size.width * 0.25,
+                                                              height: MediaQuery.of(context).size.height * 0.05,
+                                                              child: TextField(
+                                                                controller: rangeReferenceParameterControllers[
+                                                                    (index * 3) + rowIndex - referenceParameterDropdownValues.length],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ],
@@ -582,6 +637,14 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
         }
         l.add(referenceTypes[i][1]);
       }
+    }
+    return l;
+  }
+
+  List<String> getReferenceParameters(int index) {
+    List<String> l = [];
+    for (int i = 1; i < currentReferenceParameters[index].length; i++) {
+      l.add(currentReferenceParameters[index][i]);
     }
     return l;
   }
