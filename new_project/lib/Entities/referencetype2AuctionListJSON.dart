@@ -88,7 +88,7 @@ class Referencetype2ReferenceParameters {
   String parameter2;
   int minVolume;
   int maxVolume;
-  int localid;
+  int localid; // Used for local filtering.
 
   factory Referencetype2ReferenceParameters.fromJson(Map<String, dynamic> json) => Referencetype2ReferenceParameters(
         parameter1: json["parameter1"],

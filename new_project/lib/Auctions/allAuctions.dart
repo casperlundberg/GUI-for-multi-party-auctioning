@@ -255,7 +255,6 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
       List<Referencetype2Auction> referencetype2Auctions,
       List<MaterialOffer> materialOffers,
       List<Referencetype2Offer> referencetype2Offers}) {
-    var now = new DateTime.now();
     return SliverFixedExtentList(
       itemExtent: 100.0,
       delegate: SliverChildBuilderDelegate(
@@ -364,7 +363,71 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                     ? referencetype2Auctions[index].stopDate.toString()
                                     : referencetype2Offers[index].stopDate.toString())))),
                   ],
-                  //Listview of reference parameters.
+                ),
+                Column(
+                  children: (materialAuctions != null || materialOffers != null)
+                      ? [
+                          Text("Fibers type: " +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].materialReferenceParameters.fibersType
+                                  : materialOffers[index].materialReferenceParameters.fibersType)),
+                          Text("Resin type: " +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].materialReferenceParameters.resinType
+                                  : materialOffers[index].materialReferenceParameters.resinType)),
+                          Text("Minimum fiber length: " +
+                              (materialAuctions != null
+                                      ? materialAuctions[index].materialReferenceParameters.minFiberLength
+                                      : materialOffers[index].materialReferenceParameters.minFiberLength)
+                                  .toString()),
+                          Text("Maximum fiber length: " +
+                              (materialAuctions != null
+                                      ? materialAuctions[index].materialReferenceParameters.maxFiberLength
+                                      : materialOffers[index].materialReferenceParameters.maxFiberLength)
+                                  .toString()),
+                          Text("Recycling technology: " +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].materialReferenceParameters.recyclingTechnology
+                                  : materialOffers[index].materialReferenceParameters.recyclingTechnology)),
+                          Text("Sizing: " +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].materialReferenceParameters.sizing
+                                  : materialOffers[index].materialReferenceParameters.sizing)),
+                          Text("Additives: " +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].materialReferenceParameters.additives
+                                  : materialOffers[index].materialReferenceParameters.additives)),
+                          Text("Minimum volume: " +
+                              (materialAuctions != null
+                                      ? materialAuctions[index].materialReferenceParameters.minVolume
+                                      : materialOffers[index].materialReferenceParameters.minVolume)
+                                  .toString()),
+                          Text("Maximum volume: " +
+                              (materialAuctions != null
+                                      ? materialAuctions[index].materialReferenceParameters.maxVolume
+                                      : materialOffers[index].materialReferenceParameters.maxVolume)
+                                  .toString()),
+                        ]
+                      : [
+                          Text("Parameter 1: " +
+                              (referencetype2Auctions != null
+                                  ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter1
+                                  : referencetype2Offers[index].referencetype2ReferenceParameters.parameter1)),
+                          Text("Parameter 2: " +
+                              (referencetype2Auctions != null
+                                  ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter2
+                                  : referencetype2Offers[index].referencetype2ReferenceParameters.parameter2)),
+                          Text("Minimum volume: " +
+                              (referencetype2Auctions != null
+                                      ? referencetype2Auctions[index].referencetype2ReferenceParameters.minVolume
+                                      : referencetype2Offers[index].referencetype2ReferenceParameters.minVolume)
+                                  .toString()),
+                          Text("Maximum volume: " +
+                              (referencetype2Auctions != null
+                                      ? referencetype2Auctions[index].referencetype2ReferenceParameters.maxVolume
+                                      : referencetype2Offers[index].referencetype2ReferenceParameters.maxVolume)
+                                  .toString()),
+                        ],
                 ),
                 Spacer(),
                 Container(

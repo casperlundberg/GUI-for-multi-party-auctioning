@@ -98,7 +98,7 @@ class MaterialReferenceParameters {
   String additives;
   int minVolume;
   int maxVolume;
-  int localid;
+  int localid; // Used for local filtering.
 
   factory MaterialReferenceParameters.fromJson(Map<String, dynamic> json) => MaterialReferenceParameters(
         fibersType: json["fibersType"],

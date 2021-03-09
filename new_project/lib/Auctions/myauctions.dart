@@ -34,7 +34,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
   List<List<String>> referenceParameters;
   List<List<String>> rangeReferenceParameters;
   List<String> templateIDs;
-  List<String> types = ["Auction", "Offer"];
+  final List<String> types = ["Auction", "Offer"];
   String referenceSectorDropdownValue;
   String referenceTypeDropdownValue;
   List<String> referenceParameterDropdownValues;
@@ -76,6 +76,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
         referenceParameterDropdownValues.add(referenceParameters[i][2]);
       }
     }
+    rangeReferenceParameterControllers = [];
     for (int i = 0; i < rangeReferenceParameters.length; i++) {
       if (rangeReferenceParameters[i][0] == referenceTypeDropdownValue) {
         rangeReferenceParameterControllers.add(new TextEditingController());
@@ -83,6 +84,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
     }
     typeDropdownValue = "Auction";
     templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
+    templateIDs = [];
     for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
       templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
     }
@@ -216,6 +218,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                             typeDropdownValue = newValue;
                                             if (typeDropdownValue == "Auction") {
                                               templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
+                                              templateIDs = [];
                                               for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
                                                 templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
                                               }
@@ -223,6 +226,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                             }
                                             if (typeDropdownValue == "Offer") {
                                               templateIDDropdownValue = offerHandler.offerTemplates.templates[0].id.toString();
+                                              templateIDs = [];
                                               for (int i = 0; i < offerHandler.offerTemplates.templates.length; i++) {
                                                 templateIDs.add(offerHandler.offerTemplates.templates[i].id.toString());
                                               }
@@ -268,6 +272,18 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                         onChanged: (String newValue) {
                                           setState(() {
                                             referenceTypeDropdownValue = newValue;
+                                            referenceParameterDropdownValues = [];
+                                            for (int i = 0; i < referenceParameters.length; i++) {
+                                              if (referenceParameters[i][0] == referenceTypeDropdownValue) {
+                                                referenceParameterDropdownValues.add(referenceParameters[i][2]);
+                                              }
+                                            }
+                                            rangeReferenceParameterControllers = [];
+                                            for (int i = 0; i < rangeReferenceParameters.length; i++) {
+                                              if (rangeReferenceParameters[i][0] == referenceTypeDropdownValue) {
+                                                rangeReferenceParameterControllers.add(new TextEditingController());
+                                              }
+                                            }
                                           });
                                         },
                                         items: getReferenceTypes().map<DropdownMenuItem<String>>((String value) {
@@ -445,6 +461,12 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                         child: ElevatedButton(
                           child: Text("Create auction"),
                           onPressed: () {
+                            if(referenceTypeDropdownValue == "material"){
+                              auctionHandler.createMaterialAuction(int.parse(templateIDDropdownValue), title.text, int.parse(maxParticipants.text), int.parse(duration.text), fibersType, resinType, recyclingTechnology, sizing, additives, minFiberLength, maxFiberLength, minVolume, maxVolume)
+                            }
+                            if(referenceTypeDropdownValue == "referencetype2"){
+
+                            }
                             setState(() {
                               auctionHandler.createAuction(int.parse(contractDropdownValue), auctionTitle.text, int.parse(maxParticipants.text),
                                   int.parse(roundTime.text), int.parse(rounds.text), materialDropdownValue);
