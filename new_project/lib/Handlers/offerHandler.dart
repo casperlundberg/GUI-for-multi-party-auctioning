@@ -23,8 +23,8 @@ class OfferHandler {
   int nextOfferID;
 
   OfferHandler(this.setMainState, this.userHandler, this.nextOfferID) {
-    allOffers = new Offers(new MaterialOfferList(), new Referencetype2OfferList());
-    myOffers = new Offers(new MaterialOfferList(), new Referencetype2OfferList());
+    allOffers = new Offers(new MaterialOfferList(materialOffers: []), new Referencetype2OfferList(referencetype2Offers: []));
+    myOffers = new Offers(new MaterialOfferList(materialOffers: []), new Referencetype2OfferList(referencetype2Offers: []));
     if (userHandler.user.currentType == "Consumer") {
       allOffers.materialOffers = materialOfferListFromJson(getConsumerMaterialOffers());
       allOffers.referencetype2Offers = referencetype2OfferListFromJson(getConsumerReferencetype2Offers());

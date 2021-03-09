@@ -27,8 +27,8 @@ class AuctionHandler {
   int nextTemplateID;
 
   AuctionHandler(this.setMainState, this.userHandler, this.nextAuctionID, this.nextBidID, this.nextTemplateID) {
-    allAuctions = new Auctions(new MaterialAuctionList(), new Referencetype2AuctionList());
-    myAuctions = new Auctions(new MaterialAuctionList(), new Referencetype2AuctionList());
+    allAuctions = new Auctions(new MaterialAuctionList(materialAuctions: []), new Referencetype2AuctionList(referencetype2Auctions: []));
+    myAuctions = new Auctions(new MaterialAuctionList(materialAuctions: []), new Referencetype2AuctionList(referencetype2Auctions: []));
     if (userHandler.user.currentType == "Consumer") {
       auctionDetails = auctionDetailsListFromJson(getConsumerAuctionDetails());
       allAuctions.materialAuctions = materialAuctionListFromJson(getConsumerMaterialAuctions());
