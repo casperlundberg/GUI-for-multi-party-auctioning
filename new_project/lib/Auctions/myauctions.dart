@@ -327,6 +327,23 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                     ),
                                   ]),
                                   SizedBox(height: 20.0),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: ((referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) / 3).ceil(),
+                                      itemBuilder: (context, index) {
+                                        return Row(
+                                          children: [
+                                            Expanded(
+                                              child: ListView.builder(
+                                                itemCount: (index + 1), 
+                                                itemBuilder: ,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
                                   SizedBox(height: 20.0),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -459,27 +476,35 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ElevatedButton(
-                          child: Text("Create auction"),
+                          child: Text(typeDropdownValue == "Auction" ? "Create auction" : "Create offer"),
                           onPressed: () {
-                            if(referenceTypeDropdownValue == "material"){
-                              auctionHandler.createMaterialAuction(int.parse(templateIDDropdownValue), title.text, int.parse(maxParticipants.text), int.parse(duration.text), fibersType, resinType, recyclingTechnology, sizing, additives, minFiberLength, maxFiberLength, minVolume, maxVolume)
+                            if (referenceTypeDropdownValue == "material") {
+                              auctionHandler.createMaterialAuction(
+                                  int.parse(templateIDDropdownValue),
+                                  title.text,
+                                  int.parse(maxParticipants.text),
+                                  int.parse(duration.text),
+                                  referenceParameterDropdownValues[0],
+                                  referenceParameterDropdownValues[1],
+                                  referenceParameterDropdownValues[2],
+                                  referenceParameterDropdownValues[3],
+                                  referenceParameterDropdownValues[4],
+                                  int.parse(rangeReferenceParameterControllers[0].text),
+                                  int.parse(rangeReferenceParameterControllers[1].text),
+                                  int.parse(rangeReferenceParameterControllers[2].text),
+                                  int.parse(rangeReferenceParameterControllers[3].text));
                             }
-                            if(referenceTypeDropdownValue == "referencetype2"){
-
+                            if (referenceTypeDropdownValue == "referencetype2") {
+                              auctionHandler.createReferencetype2Auction(
+                                  int.parse(templateIDDropdownValue),
+                                  title.text,
+                                  int.parse(maxParticipants.text),
+                                  int.parse(duration.text),
+                                  referenceParameterDropdownValues[0],
+                                  referenceParameterDropdownValues[1],
+                                  int.parse(rangeReferenceParameterControllers[0].text),
+                                  int.parse(rangeReferenceParameterControllers[1].text));
                             }
-                            setState(() {
-                              auctionHandler.createAuction(int.parse(contractDropdownValue), auctionTitle.text, int.parse(maxParticipants.text),
-                                  int.parse(roundTime.text), int.parse(rounds.text), materialDropdownValue);
-
-                              auctionTitle.clear();
-                              maxParticipants.clear();
-                              roundTime.clear();
-                              rounds.clear();
-                              materialDropdownValue = "Wood";
-                              contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
-                              contractTemplate = contractTemplates.contractTemplates[0];
-                            });
-                            setMainState();
                             Navigator.pop(context);
                           },
                         ),
@@ -492,13 +517,30 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        auctionTitle.clear();
+                        title.clear();
                         maxParticipants.clear();
-                        roundTime.clear();
-                        rounds.clear();
-                        materialDropdownValue = "Wood";
-                        contractDropdownValue = contractTemplates.contractTemplates[0].id.toString();
-                        contractTemplate = contractTemplates.contractTemplates[0];
+                        duration.clear();
+                        referenceSectorDropdownValue = referenceTypes[0][0];
+                        referenceTypeDropdownValue = referenceTypes[0][1];
+                        referenceParameterDropdownValues = [];
+                        for (int i = 0; i < referenceParameters.length; i++) {
+                          if (referenceParameters[i][0] == referenceTypeDropdownValue) {
+                            referenceParameterDropdownValues.add(referenceParameters[i][2]);
+                          }
+                        }
+                        rangeReferenceParameterControllers = [];
+                        for (int i = 0; i < rangeReferenceParameters.length; i++) {
+                          if (rangeReferenceParameters[i][0] == referenceTypeDropdownValue) {
+                            rangeReferenceParameterControllers.add(new TextEditingController());
+                          }
+                        }
+                        typeDropdownValue = "Auction";
+                        templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
+                        templateIDs = [];
+                        for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
+                          templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
+                        }
+                        template = auctionHandler.contractTemplates.templates[0];
                       });
                       Navigator.of(context).pop();
                     },

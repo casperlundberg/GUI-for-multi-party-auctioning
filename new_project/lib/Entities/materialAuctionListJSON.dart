@@ -59,7 +59,7 @@ class MaterialAuction {
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
         referenceType: json["referenceType"],
-        materialReferenceParameters: MaterialReferenceParameters.fromJson(json["materialReferenceParameters"]),
+        materialReferenceParameters: MaterialReferenceParameters.fromJson(json["referenceParameters"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,7 +72,7 @@ class MaterialAuction {
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,
         "referenceType": referenceType,
-        "materialReferenceParameters": materialReferenceParameters.toJson(),
+        "referenceParameters": materialReferenceParameters.toJson(),
       };
 }
 

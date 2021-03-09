@@ -1490,7 +1490,7 @@ String consumerMaterialAuctions = '''{
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1529,7 +1529,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-02-15T11:30:00.001Z",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1551,7 +1551,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-02-15T11:30:00.001Z",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1573,7 +1573,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1595,7 +1595,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1617,7 +1617,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1639,7 +1639,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1661,7 +1661,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1683,7 +1683,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1705,7 +1705,7 @@ String supplierMaterialAuctions = '''{
             "stopDate": "2021-06-15T11:30:00+01:00",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1743,7 +1743,7 @@ String consumerMaterialOffers = '''{
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1764,7 +1764,7 @@ String consumerMaterialOffers = '''{
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
@@ -1802,7 +1802,7 @@ String supplierMaterialOffers = '''{
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
             "referenceType": "material",
-            "materialReferenceParameters": {
+            "referenceParameters": {
                 "fibersType": "glass fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,

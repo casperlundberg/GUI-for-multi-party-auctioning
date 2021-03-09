@@ -57,7 +57,7 @@ class Referencetype2Offer {
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
         referenceType: json["referenceType"],
-        referencetype2ReferenceParameters: Referencetype2ReferenceParameters.fromJson(json["referencetype2ReferenceParameters"]),
+        referencetype2ReferenceParameters: Referencetype2ReferenceParameters.fromJson(json["referenceParameters"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -69,6 +69,6 @@ class Referencetype2Offer {
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,
         "referenceType": referenceType,
-        "referencetype2ReferenceParameters": referencetype2ReferenceParameters.toJson(),
+        "referenceParameters": referencetype2ReferenceParameters.toJson(),
       };
 }
