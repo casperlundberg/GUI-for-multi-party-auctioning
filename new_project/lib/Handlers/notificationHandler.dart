@@ -3,6 +3,8 @@ import 'package:new_project/Entities/userList.dart';
 import 'package:new_project/Handlers/auctionHandler.dart';
 import 'package:new_project/Handlers/userInfoHandler.dart';
 
+import '../jsonUtilities.dart';
+
 class NotificationsHandler {
   final UserInfoHandler _userInfoHandler;
   final myController = TextEditingController();
@@ -36,6 +38,7 @@ class NotificationsHandler {
                           auctionId: item.auctionId,
                         ));
                         _userInfoHandler.user.requestInbox.remove(item);
+                        _userInfoHandler.updateProfile();
                       }
                     }
                   },
@@ -53,6 +56,7 @@ class NotificationsHandler {
                           offerId: null,
                         ));
                         _userInfoHandler.user.requestInbox.remove(item);
+                        _userInfoHandler.updateProfile();
                       }
                     }
                   },
@@ -78,6 +82,7 @@ class NotificationsHandler {
                   child: Text("Dissmiss"),
                   onPressed: () {
                     _userInfoHandler.user.requestInbox.remove(item);
+                    _userInfoHandler.updateProfile();
                   },
                 ),
               ],
@@ -101,6 +106,7 @@ class NotificationsHandler {
                   child: Text("Dissmiss"),
                   onPressed: () {
                     _userInfoHandler.user.requestInbox.remove(item);
+                    _userInfoHandler.updateProfile();
                   },
                 ),
               ],
@@ -141,6 +147,7 @@ class NotificationsHandler {
                           auctionId: item.auctionId,
                         ));
                         _userInfoHandler.user.inviteInbox.remove(item);
+                        userListToJson(_userInfoHandler.userListObject);
                       }
                     }
                   },
@@ -158,6 +165,7 @@ class NotificationsHandler {
                           offerId: null, // TODO: icrement offerId
                         ));
                         _userInfoHandler.user.inviteInbox.remove(item);
+                        _userInfoHandler.updateProfile();
                       }
                     }
                   },
@@ -183,6 +191,7 @@ class NotificationsHandler {
                   child: Text("Dissmiss"),
                   onPressed: () {
                     _userInfoHandler.user.inviteInbox.remove(item);
+                    _userInfoHandler.updateProfile();
                   },
                 ),
               ],
@@ -211,6 +220,7 @@ class NotificationsHandler {
                   child: Text("Dissmiss"),
                   onPressed: () {
                     _userInfoHandler.user.inviteInbox.remove(item);
+                    _userInfoHandler.updateProfile();
                   },
                 ),
               ],

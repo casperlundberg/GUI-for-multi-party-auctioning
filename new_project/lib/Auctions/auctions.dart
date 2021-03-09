@@ -248,7 +248,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
                             int myID = auctionHandler.userHandler.user.userId;
                             auctionHandler.userHandler.userListObject.users[auctionOwner].requestInbox
                                 .add(new Inbox(time: now, status: status, auctionId: auctionID, userId: myID, offerId: null));
-                            setUserListString(userListToJson(auctionHandler.userHandler.userListObject));
+                            auctionHandler.userHandler.updateProfile();
                           },
                         ),
                 ),
