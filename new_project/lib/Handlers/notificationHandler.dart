@@ -147,7 +147,7 @@ class NotificationsHandler {
                           auctionId: item.auctionId,
                         ));
                         _userInfoHandler.user.inviteInbox.remove(item);
-                        userListToJson(_userInfoHandler.userListObject);
+                        _userInfoHandler.updateProfile();
                       }
                     }
                   },

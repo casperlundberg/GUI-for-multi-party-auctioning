@@ -112,6 +112,9 @@ class NavigationState extends State<NavigationBar> {
         ),
       );
     }
-    return SizedBox(height: 0.01);
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
   }
 }
