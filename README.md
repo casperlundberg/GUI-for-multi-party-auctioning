@@ -8,7 +8,7 @@ The matching between demand and supply of components and materials across multip
 
 2. Download flutter: `https://flutter.dev/docs/get-started/install`
 
-3. In the project folder run command: `flutter run -d chrome`
+3. Inside the `new_project` folder run command: `flutter run -d chrome`
 
 ### Open issue 
 Assuming that solutions for multi-party contractual interactions, negotiations and auctioning will be developed, how should such mechanisms be visualized in a GUI and be connected to data and information sharing for the circular economy? 
