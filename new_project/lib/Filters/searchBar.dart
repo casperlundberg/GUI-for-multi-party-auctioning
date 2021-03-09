@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:search_widget/search_widget.dart';
 
 class SearchBarGUI extends StatefulWidget {
-  // ExamplePage({ Key key }) : super(key: key);
   @override
   _SearchBarGUIState createState() => new _SearchBarGUIState();
 }

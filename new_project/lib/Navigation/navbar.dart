@@ -66,7 +66,7 @@ class NavigationState extends State<NavigationBar> {
                   setState(() {
                     //print(counter);
                   });
-                  showNotifications(context);
+                  showNotifications(context, null);
                 },
               ),
               getNotificationsWidgetCounter(),

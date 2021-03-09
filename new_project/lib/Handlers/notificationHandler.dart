@@ -227,8 +227,12 @@ class NotificationsHandler {
     );
   }
 
-  void showNotifications(BuildContext context) {
-    inbox = new List.from(_userInfoHandler.user.requestInbox)..addAll(_userInfoHandler.user.inviteInbox);
+  void showNotifications(BuildContext context, List<Inbox> list) {
+    if (list == null) {
+      inbox = new List.from(_userInfoHandler.user.requestInbox)..addAll(_userInfoHandler.user.inviteInbox);
+    } else {
+      inbox = list;
+    }
     showDialog(
       context: context,
       builder: (BuildContext context) {

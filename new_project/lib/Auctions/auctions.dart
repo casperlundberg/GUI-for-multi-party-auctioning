@@ -26,6 +26,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   final FilterHandler filterHandler;
   final AuctionHandler auctionHandler;
   PageMarker _currentPage;
+  SearchBarGUI searchBar;
 
   _AuctionsState(this.navigate, this.filterHandler, this.auctionHandler);
 
@@ -33,6 +34,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     _currentPage = PageMarker.ongoing;
+    searchBar = new SearchBarGUI();
   }
 
   @override
@@ -107,7 +109,7 @@ class _AuctionsState extends State<Auctions> with SingleTickerProviderStateMixin
               width: double.infinity,
               height: 100,
               //color: Colors.pink,
-              child: SearchBarGUI(),
+              child: searchBar,
             ),
           ),
           FutureBuilder(
