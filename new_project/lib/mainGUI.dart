@@ -218,14 +218,13 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   }
 
   // Used to update page and userhandler with correct information.
-  void setMainState(String handler) {
+  void setMainState({String handler}) {
     setState(() {
       if (handler == "Auction") {
         userHandler = auctionHandler.userHandler;
-      }
-      if (handler == "Offer") {
+      } else if (handler == "Offer") {
         userHandler = offerHandler.userHandler;
-      }
+      } else {}
     });
   }
 

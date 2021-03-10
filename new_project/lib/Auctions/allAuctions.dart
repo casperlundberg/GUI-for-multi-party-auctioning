@@ -50,29 +50,6 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     referenceSectorDropdownValue = referenceTypes[0][0];
     referenceTypeDropdownValue = referenceTypes[0][1];
   }
-  List<String> getReferenceSectors() {
-    List<String> l = [];
-    for (int i = 0; i < referenceTypes.length; i++) {
-      if (l.contains(referenceTypes[i][0])) {
-        continue;
-      }
-      l.add(referenceTypes[i][0]);
-    }
-    return l;
-  }
-
-  List<String> getReferenceTypes() {
-    List<String> l = [];
-    for (int i = 0; i < referenceTypes.length; i++) {
-      if (referenceTypes[i][0] == referenceSectorDropdownValue) {
-        if (l.contains(referenceTypes[i][1])) {
-          continue;
-        }
-        l.add(referenceTypes[i][1]);
-      }
-    }
-    return l;
-  }
 
   @override
   void initState() {
@@ -677,5 +654,29 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
             : (materialOffers != null ? materialOffers.length : (referencetype2Auctions != null ? referencetype2Auctions.length : referencetype2Offers.length)),
       ),
     );
+  }
+
+  List<String> getReferenceSectors() {
+    List<String> l = [];
+    for (int i = 0; i < referenceTypes.length; i++) {
+      if (l.contains(referenceTypes[i][0])) {
+        continue;
+      }
+      l.add(referenceTypes[i][0]);
+    }
+    return l;
+  }
+
+  List<String> getReferenceTypes() {
+    List<String> l = [];
+    for (int i = 0; i < referenceTypes.length; i++) {
+      if (referenceTypes[i][0] == referenceSectorDropdownValue) {
+        if (l.contains(referenceTypes[i][1])) {
+          continue;
+        }
+        l.add(referenceTypes[i][1]);
+      }
+    }
+    return l;
   }
 }

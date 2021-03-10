@@ -9,127 +9,28 @@ class FilterHandler {
   Filters filters; //NOT STORED LOCALLY
   MaterialReferenceParameters materialFilter; //STORED LOCALLY
   Referencetype2ReferenceParameters referencetype2Filter; //STORED LOCALLY
-  List<MaterialReferenceParameters> inactiveMaterialFilters; //STORED LOCALLY
-  List<Referencetype2ReferenceParameters> inactiveReferencetype2Filters; //STORED LOCALLY
   int localFilteridCounter; //STORED LOCALLY
 
   FilterHandler(this.setMainState) {
     filters = filtersFromJson(getFilters());
-    inactiveMaterialFilters = [];
-    inactiveReferencetype2Filters = [];
-    localFilteridCounter = 1;
   }
 
-  void updateFilters({MaterialReferenceParameters materialFilter, Referencetype2ReferenceParameters referencetype2Filter}) {
+  void updateFilter({MaterialReferenceParameters materialFilter, Referencetype2ReferenceParameters referencetype2Filter}) {
     if (materialFilter != null) {
-      if (materialFilter.localid == null) {
-        materialFilter.localid = localFilteridCounter;
-        localFilteridCounter++;
-        if (this.materialFilter == null) {
-          this.materialFilter = materialFilter;
-        } else {
-          inactiveMaterialFilters.add(this.materialFilter);
-          this.materialFilter = materialFilter;
-        }
-      } else {
-        if (this.materialFilter.localid == materialFilter.localid) {
-          this.materialFilter = materialFilter;
-        } else {
-          for (int i = 0; i < inactiveMaterialFilters.length; i++) {
-            if (inactiveMaterialFilters[i].localid == materialFilter.localid) {
-              inactiveMaterialFilters[i] = materialFilter;
-              break;
-            }
-          }
-        }
-      }
-    }
-    if (referencetype2Filter != null) {
-      if (referencetype2Filter.localid == null) {
-        referencetype2Filter.localid = localFilteridCounter;
-        localFilteridCounter++;
-        if (this.referencetype2Filter == null) {
-          this.referencetype2Filter = referencetype2Filter;
-        } else {
-          inactiveReferencetype2Filters.add(this.referencetype2Filter);
-          this.referencetype2Filter = referencetype2Filter;
-        }
-      } else {
-        if (this.referencetype2Filter.localid == referencetype2Filter.localid) {
-          this.referencetype2Filter = referencetype2Filter;
-        } else {
-          for (int i = 0; i < inactiveReferencetype2Filters.length; i++) {
-            if (inactiveReferencetype2Filters[i].localid == referencetype2Filter.localid) {
-              inactiveReferencetype2Filters[i] = referencetype2Filter;
-              break;
-            }
-          }
-        }
-      }
-    }
-    setMainState();
-  }
-
-  void deleteFilter({MaterialReferenceParameters materialFilter, Referencetype2ReferenceParameters referencetype2Filter}) {
-    if (materialFilter != null) {
-      if (this.materialFilter.localid == materialFilter.localid) {
-        this.materialFilter = null;
-      } else {
-        for (int i = 0; i < inactiveMaterialFilters.length; i++) {
-          if (inactiveMaterialFilters[i].localid == materialFilter.localid) {
-            inactiveMaterialFilters.removeAt(i);
-            break;
-          }
-        }
-      }
-    }
-    if (referencetype2Filter != null) {
-      if (this.referencetype2Filter.localid == referencetype2Filter.localid) {
-        this.referencetype2Filter = null;
-      } else {
-        for (int i = 0; i < inactiveReferencetype2Filters.length; i++) {
-          if (inactiveReferencetype2Filters[i].localid == referencetype2Filter.localid) {
-            inactiveReferencetype2Filters.removeAt(i);
-            break;
-          }
-        }
-      }
-    }
-    setMainState();
-  }
-
-  void activateFilter({MaterialReferenceParameters materialFilter, Referencetype2ReferenceParameters referencetype2Filter}) {
-    if (materialFilter != null) {
-      for (int i = 0; i < inactiveMaterialFilters.length; i++) {
-        if (inactiveMaterialFilters[i].localid == materialFilter.localid) {
-          inactiveMaterialFilters.removeAt(i);
-          break;
-        }
-      }
-      inactiveMaterialFilters.add(this.materialFilter);
       this.materialFilter = materialFilter;
     }
     if (referencetype2Filter != null) {
-      for (int i = 0; i < inactiveReferencetype2Filters.length; i++) {
-        if (inactiveReferencetype2Filters[i].localid == referencetype2Filter.localid) {
-          inactiveReferencetype2Filters.removeAt(i);
-          break;
-        }
-      }
-      inactiveReferencetype2Filters.add(this.referencetype2Filter);
       this.referencetype2Filter = referencetype2Filter;
     }
     setMainState();
   }
 
-  void deactivateFilter({MaterialReferenceParameters materialFilter, Referencetype2ReferenceParameters referencetype2Filter}) {
-    if (materialFilter != null) {
-      inactiveMaterialFilters.add(this.materialFilter);
-      this.materialFilter = null;
+  void deleteFilter(String referencetype) {
+    if (referencetype == "material") {
+      materialFilter = null;
     }
-    if (referencetype2Filter != null) {
-      inactiveReferencetype2Filters.add(this.referencetype2Filter);
-      this.referencetype2Filter = null;
+    if (referencetype == "referencetype2") {
+      referencetype2Filter = null;
     }
     setMainState();
   }
@@ -163,13 +64,18 @@ class FilterHandler {
           (this.referencetype2Filter.parameter2 == "any" ||
               referencetype2Filter.parameter2 == "any" ||
               referencetype2Filter.parameter2 == this.referencetype2Filter.parameter2) &&
-          (this.materialFilter.maxVolume == null || materialFilter.minVolume == null || materialFilter.minVolume <= this.materialFilter.maxVolume) &&
-          (this.materialFilter.minVolume == null || materialFilter.maxVolume == null || materialFilter.maxVolume >= this.materialFilter.minVolume)) {
+          (this.referencetype2Filter.maxVolume == null ||
+              referencetype2Filter.minVolume == null ||
+              referencetype2Filter.minVolume <= this.referencetype2Filter.maxVolume) &&
+          (this.referencetype2Filter.minVolume == null ||
+              referencetype2Filter.maxVolume == null ||
+              referencetype2Filter.maxVolume >= this.referencetype2Filter.minVolume)) {
         return true;
       } else {
         return false;
       }
     }
+    return false;
   }
 
   void retrieveFilters() {
