@@ -27,16 +27,20 @@ class NotificationsHandler {
                   onPressed: () {
                     for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
                       if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
-                        _userInfoHandler.userListObject.users[i].requestInbox.add(new Inbox(
-                          time: new DateTime.now(),
-                          status: "Accepted",
-                          auctionId: item.auctionId,
-                          userId: _userInfoHandler.user.userId,
-                          offerId: null,
-                        ));
-                        _userInfoHandler.userListObject.users[i].participatingAuctions.add(new ParticipatingAuction(
-                          auctionId: item.auctionId,
-                        ));
+                        _userInfoHandler.userListObject.users[i].requestInbox.add(
+                          new Inbox(
+                            time: new DateTime.now(),
+                            status: "Accepted",
+                            auctionId: item.auctionId,
+                            userId: _userInfoHandler.user.userId,
+                            offerId: null,
+                          ),
+                        );
+                        _userInfoHandler.userListObject.users[i].participatingAuctions.add(
+                          new ParticipatingAuction(
+                            auctionId: item.auctionId,
+                          ),
+                        );
                         _userInfoHandler.user.requestInbox.remove(item);
                         _userInfoHandler.updateProfile();
                       }
@@ -48,13 +52,15 @@ class NotificationsHandler {
                   onPressed: () {
                     for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
                       if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
-                        _userInfoHandler.userListObject.users[i].requestInbox.add(new Inbox(
-                          time: new DateTime.now(),
-                          status: "Declined",
-                          auctionId: item.auctionId,
-                          userId: _userInfoHandler.user.userId,
-                          offerId: null,
-                        ));
+                        _userInfoHandler.userListObject.users[i].requestInbox.add(
+                          new Inbox(
+                            time: new DateTime.now(),
+                            status: "Declined",
+                            auctionId: item.auctionId,
+                            userId: _userInfoHandler.user.userId,
+                            offerId: null,
+                          ),
+                        );
                         _userInfoHandler.user.requestInbox.remove(item);
                         _userInfoHandler.updateProfile();
                       }
@@ -136,16 +142,20 @@ class NotificationsHandler {
                   onPressed: () {
                     for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
                       if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
-                        _userInfoHandler.userListObject.users[i].inviteInbox.add(new Inbox(
-                          time: new DateTime.now(),
-                          status: "Accepted",
-                          auctionId: item.auctionId,
-                          userId: _userInfoHandler.user.userId,
-                          offerId: null, // TODO: icrement offerId
-                        ));
-                        _userInfoHandler.user.participatingAuctions.add(new ParticipatingAuction(
-                          auctionId: item.auctionId,
-                        ));
+                        _userInfoHandler.userListObject.users[i].inviteInbox.add(
+                          new Inbox(
+                            time: new DateTime.now(),
+                            status: "Accepted",
+                            auctionId: item.auctionId,
+                            userId: _userInfoHandler.user.userId,
+                            offerId: null, // TODO: icrement offerId
+                          ),
+                        );
+                        _userInfoHandler.user.participatingAuctions.add(
+                          new ParticipatingAuction(
+                            auctionId: item.auctionId,
+                          ),
+                        );
                         _userInfoHandler.user.inviteInbox.remove(item);
                         _userInfoHandler.updateProfile();
                       }
@@ -157,13 +167,15 @@ class NotificationsHandler {
                   onPressed: () {
                     for (int i = 0; i < _userInfoHandler.userListObject.users.length; i++) {
                       if (_userInfoHandler.userListObject.users[i].userId == item.userId) {
-                        _userInfoHandler.userListObject.users[i].inviteInbox.add(new Inbox(
-                          time: new DateTime.now(),
-                          status: "Declined",
-                          auctionId: item.auctionId,
-                          userId: _userInfoHandler.user.userId,
-                          offerId: null, // TODO: icrement offerId
-                        ));
+                        _userInfoHandler.userListObject.users[i].inviteInbox.add(
+                          new Inbox(
+                            time: new DateTime.now(),
+                            status: "Declined",
+                            auctionId: item.auctionId,
+                            userId: _userInfoHandler.user.userId,
+                            offerId: null, // TODO: icrement offerId
+                          ),
+                        );
                         _userInfoHandler.user.inviteInbox.remove(item);
                         _userInfoHandler.updateProfile();
                       }

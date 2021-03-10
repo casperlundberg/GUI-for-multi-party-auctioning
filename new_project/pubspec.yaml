@@ -22,6 +22,10 @@ environment:
 
  # Dio is not really needed, just used to populate ListView directly from an API-call
 dependencies:
+  flutter_email_sender: ^5.0.0
+  mailer: ^3.0.3
+  mailto: ^1.1.0
+  url_launcher: ^5.4.1
   search_widget: ^1.0.2
   dcdg: ^2.0.1
   flutter_search_bar: ^2.1.0
