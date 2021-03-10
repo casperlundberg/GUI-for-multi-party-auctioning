@@ -339,7 +339,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   Widget getRoomContainer() {
     return FadeTransition(
       opacity: animation,
-      child: Room(navigate, auctionHandler),
+      child: Room(navigate, auctionHandler, userHandler),
     );
   }
 }

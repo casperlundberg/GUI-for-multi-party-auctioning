@@ -180,12 +180,24 @@ class OfferHandler {
   }
 
   void endOffer(int id) {
-    // Remove from user's offers.
+    // Remove from user's offers. ????????????????????????????????
     for (int i = 0; i < userHandler.user.offers.length; i++) {
       if (userHandler.user.offers[i].offerId == id) {
         userHandler.user.offers.removeAt(i);
       }
     }
+    for (int i = 0; i < userHandler.userListObject.users.length; i++) {
+      if (userHandler.userListObject.users[i].userId == userHandler.user.userId) {
+        for (int y = 0; i < userHandler.userListObject.users[i].offers.length; i++) {
+          if (userHandler.userListObject.users[i].offers[i].offerId == id) {
+            userHandler.userListObject.users[i].offers.removeAt(y);
+            break;
+          }
+        }
+        break;
+      }
+    }
+    setUsers(userListToJson(userHandler.userListObject));
     // Remove from myOffers.
     String type;
     for (int i = 0; i < myOffers.materialOffers.materialOffers.length; i++) {
@@ -232,7 +244,6 @@ class OfferHandler {
     setMainState("Offer");
   }
 
-  //unimplemented
   void viewOffer(int templateID, List<KeyValuePair> keyValuePairs, BuildContext context) {
     Template template;
     for (int i = 0; i < consumerOfferTemplates.templates.length; i++) {

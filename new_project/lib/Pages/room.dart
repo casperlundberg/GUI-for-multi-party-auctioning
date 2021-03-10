@@ -7,31 +7,75 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:new_project/Entities/auctionDetailsListJSON.dart';
 import 'package:new_project/Handlers/auctionHandler.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:new_project/Handlers/userInfoHandler.dart';
+import '../Entities/templateListJSON.dart';
+import '../Entities/materialAuctionListJSON.dart';
+import '../Entities/referencetype2AuctionListJSON.dart';
+import '../Entities/userListJSON.dart';
 
 import '../mainGUI.dart';
 
 class Room extends StatefulWidget {
   final Function navigate;
   final AuctionHandler auctionHandler;
+  final UserInfoHandler userHandler;
   CountdownTimerController controller;
-  Room(this.navigate, this.auctionHandler);
+  Room(this.navigate, this.auctionHandler, this.userHandler);
 
   @override
-  _RoomState createState() => _RoomState(navigate, auctionHandler);
+  _RoomState createState() => _RoomState(navigate, auctionHandler, userHandler);
 }
 
 class _RoomState extends State<Room> {
   final Function navigate;
   final AuctionHandler auctionHandler;
+  final UserInfoHandler userHandler;
+  Template contractTemplate;
   List<TextEditingController> controllers = [];
-  int endTime;
+  MaterialAuction materialAuction;
+  Referencetype2Auction referencetype2Auction;
+  bool isFinished;
+  bool isHost;
 
-  _RoomState(this.navigate, this.auctionHandler) {
-    /*
-    for (int i = 0; i < auctionHandler.currentAuction.contractTemplate.templateVariables.length; i++) {
-      this.controllers.add(TextEditingController());
+  _RoomState(this.navigate, this.auctionHandler, this.userHandler) {
+    this.contractTemplate = auctionHandler.getContractTemplate(auctionHandler.currentAuctionDetails.templateId);
+    for (int i = 0; i < contractTemplate.templateVariables.length; i++) {
+      controllers.add(new TextEditingController());
     }
-    */
+    for (int i = 0; i < auctionHandler.myAuctions.materialAuctions.materialAuctions.length; i++) {
+      if (auctionHandler.myAuctions.materialAuctions.materialAuctions[i].id == auctionHandler.currentAuctionDetails.id) {
+        materialAuction = auctionHandler.myAuctions.materialAuctions.materialAuctions[i];
+      }
+    }
+    for (int i = 0; i < auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions.length; i++) {
+      if (auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i].id == auctionHandler.currentAuctionDetails.id) {
+        referencetype2Auction = auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i];
+      }
+    }
+    if (materialAuction != null) {
+      if (new DateTime.now().isBefore(materialAuction.stopDate)) {
+        isFinished = false;
+      } else {
+        isFinished = true;
+      }
+      if (materialAuction.ownerId == userHandler.user.userId) {
+        isHost = true;
+      } else {
+        isHost = false;
+      }
+    }
+    if (referencetype2Auction != null) {
+      if (new DateTime.now().isBefore(referencetype2Auction.stopDate)) {
+        isFinished = false;
+      } else {
+        isFinished = true;
+      }
+      if (referencetype2Auction.ownerId == userHandler.user.userId) {
+        isHost = true;
+      } else {
+        isHost = false;
+      }
+    }
   }
 
   final TextStyle smallText = TextStyle(
@@ -43,7 +87,223 @@ class _RoomState extends State<Room> {
   final TextStyle boldText = TextStyle(
     fontWeight: FontWeight.bold,
   );
-/*
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: Container(
+          width: 1400.0,
+          height: MediaQuery.of(context).size.height * 0.9,
+          color: themeData.primaryColor,
+          margin: EdgeInsets.all(25.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Row(children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  tooltip: 'Back',
+                  onPressed: () {
+                    navigate(WidgetMarker.auctions);
+                  },
+                ),
+                Container(
+                  child: Text(
+                    materialAuction != null ? materialAuction.title : (referencetype2Auction != null ? referencetype2Auction.title : null),
+                    style: bigText,
+                  ),
+                  height: 40.0,
+                  margin: EdgeInsets.all(5.0),
+                ),
+                Spacer(),
+                Container(
+                    height: 40.0,
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.all(5.0),
+                    child: Tooltip(
+                      message: "Copy to clipboard",
+                      child: TextButton(
+                          child: Text(
+                            'ROOM CODE: ${auctionHandler.currentAuctionDetails.id}',
+                            textAlign: TextAlign.end,
+                            style: bigText,
+                          ),
+                          onPressed: () {
+                            Clipboard.setData(new ClipboardData(text: "${auctionHandler.currentAuctionDetails.id}")).then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: Colors.grey[900], content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
+                            });
+                          }),
+                    )),
+              ]),
+              Container(
+                child: Text(
+                  'Participants: ' +
+                      (materialAuction != null
+                          ? materialAuction.currentParticipants.toString() + "/" + materialAuction.maxParticipants.toString()
+                          : (referencetype2Auction != null
+                              ? referencetype2Auction.currentParticipants.toString() + "/" + referencetype2Auction.maxParticipants.toString()
+                              : "")),
+                  style: bigText,
+                ),
+                width: 1400.0,
+                height: MediaQuery.of(context).size.height * 0.05,
+                //color: Colors.black,
+                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  boxShadow: [BoxShadow(blurRadius: 3, offset: Offset(0, 4))],
+                ),
+              ),
+              Expanded(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                      child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                    //color: Colors.amber[700],
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: materialAuction != null
+                          ? [
+                              Text("Reference parameters", style: bigText),
+                              Text("Fibers type: " + materialAuction.materialReferenceParameters.fibersType),
+                              Text("Resin type: " + materialAuction.materialReferenceParameters.resinType),
+                              Text("Minimum fiber length: " + materialAuction.materialReferenceParameters.minFiberLength.toString()),
+                              Text("Maximum fiber length: " + materialAuction.materialReferenceParameters.maxFiberLength.toString()),
+                              Text("Recycling technology: " + materialAuction.materialReferenceParameters.recyclingTechnology),
+                              Text("Sizing: " + materialAuction.materialReferenceParameters.sizing),
+                              Text("Additives: " + materialAuction.materialReferenceParameters.additives),
+                              Text("Minimum volume: " + materialAuction.materialReferenceParameters.minVolume.toString()),
+                              Text("Maximum volume: " + materialAuction.materialReferenceParameters.maxVolume.toString()),
+                            ]
+                          : (referencetype2Auction != null
+                              ? [
+                                  Text("Reference parameters", style: bigText),
+                                  Text("Parameter 1: " + referencetype2Auction.referencetype2ReferenceParameters.parameter1),
+                                  Text("Parameter 2: " + referencetype2Auction.referencetype2ReferenceParameters.parameter2),
+                                  Text("Minimum volume: " + referencetype2Auction.referencetype2ReferenceParameters.minVolume.toString()),
+                                  Text("Maximum volume: " + referencetype2Auction.referencetype2ReferenceParameters.maxVolume.toString()),
+                                ]
+                              : [
+                                  Text("Reference parameters", style: bigText),
+                                ]),
+                    ),
+                  )),
+                  //Spacer(),
+                  Expanded(
+                    child: Container(
+                      color: Colors.white70,
+                      margin: EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: CountdownTimer(
+                        endTime: materialAuction != null
+                            ? materialAuction.stopDate.millisecondsSinceEpoch
+                            : (referencetype2Auction != null ? referencetype2Auction.stopDate.millisecondsSinceEpoch : null),
+                        widgetBuilder: (_, CurrentRemainingTime time) {
+                          if (time == null) {
+                            return Text('Auction Finished');
+                          }
+                          return Text('Days: ${time.days}, Hours: ${time.hours}, Minute: ${time.min}, Seconds: ${time.sec}');
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+              Expanded(
+                  child: Container(
+                      color: Colors.grey[900],
+                      margin: EdgeInsets.all(5.0),
+
+                      //height: 300,
+                      child: Scrollbar(
+                        child: CustomScrollView(
+                          slivers: <Widget>[
+                            SliverAppBar(
+                              floating: true,
+                              pinned: true,
+                              snap: true,
+                              expandedHeight: 50.0,
+                              title: Row(children: [
+                                Text(
+                                  'Bids',
+                                  textAlign: TextAlign.start,
+                                ),
+                                Spacer(),
+                                IconButton(
+                                  icon: Icon(Icons.add),
+                                  tooltip: 'New bid',
+                                  onPressed: () {
+                                    showContractGUI();
+                                  },
+                                ),
+                              ]),
+                            ),
+                            SliverFixedExtentList(
+                              itemExtent: 25.0,
+                              delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                                  List<KeyValuePair> currentBid = auctionHandler.currentAuctionDetails.bids[index].keyValuePairs;
+                                  User user;
+                                  for (int i = 0; i < userHandler.userListObject.users.length; i++) {
+                                    if (userHandler.userListObject.users[i].userId == auctionHandler.currentAuctionDetails.bids[index].userId) {
+                                      user = userHandler.userListObject.users[i];
+                                    }
+                                  }
+                                  String timeString = auctionHandler.currentAuctionDetails.bids[index].time.toLocal().toString();
+                                  int amountOfMoney;
+                                  for (int i = 0; i < currentBid.length; i++) {
+                                    if (currentBid[i].key == "Amount of money") {
+                                      amountOfMoney = currentBid[i].value;
+                                    }
+                                  }
+
+                                  return Container(
+                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                      alignment: Alignment.centerRight,
+                                      color: Colors.grey[850 + (50 * (index % 2))],
+                                      child: Row(children: [
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                              //Sample string, could be reworked
+                                              '[$timeString] ${user.userName} placed bid for ${amountOfMoney.toString()} SEK',
+                                              style: TextStyle(fontFamily: 'Consolas')),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          alignment: Alignment.centerRight,
+                                          child: TextButton(
+                                            child: Text("View"),
+                                            onPressed: () {
+                                              auctionHandler.viewBid(contractTemplate, currentBid, context);
+                                            },
+                                          ),
+                                        )
+                                      ]));
+                                },
+                                childCount: auctionHandler.currentAuctionDetails.bids.length,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void showContractGUI() {
     showDialog(
       context: context,
@@ -89,129 +349,86 @@ class _RoomState extends State<Room> {
                       SizedBox(height: 20.0),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: auctionHandler.currentAuction.contractTemplate.templateVariables.length,
-                          // ignore: missing_return
+                          itemCount: contractTemplate.templateVariables.length,
                           itemBuilder: (context, index) {
                             if (index == 0) {
-                              if (auctionHandler.currentAuction.contractTemplate.templateVariables[0].valueType == "Text") {
-                                return Column(
-                                  children: [
-                                    Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[0].text,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
-                                          child: TextField(
-                                            controller: controllers[0],
-                                            decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[0].key,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[1].text,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                );
-                              } else if (auctionHandler.currentAuction.contractTemplate.templateVariables[0].valueType == "Integer") {
-                                return Column(
-                                  children: [
-                                    Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[0].text,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
-                                          child: TextField(
-                                            controller: controllers[0],
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                                            decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[0].key,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[1].text,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                );
-                              }
+                              return Column(
+                                children: [
+                                  Text(
+                                    contractTemplate.templateStrings[0].text,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.2,
+                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        child: contractTemplate.templateVariables[0].valueType == "Text"
+                                            ? TextField(
+                                                controller: controllers[0],
+                                                decoration: InputDecoration(
+                                                  hintText: contractTemplate.templateVariables[0].key,
+                                                ),
+                                              )
+                                            : (contractTemplate.templateVariables[0].valueType == "Integer"
+                                                ? TextField(
+                                                    controller: controllers[0],
+                                                    keyboardType: TextInputType.number,
+                                                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                    decoration: InputDecoration(
+                                                      hintText: contractTemplate.templateVariables[0].key,
+                                                    ),
+                                                  )
+                                                : null),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    contractTemplate.templateStrings[1].text,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              );
                             } else {
-                              if (auctionHandler.currentAuction.contractTemplate.templateVariables[index].valueType == "Text") {
-                                return Column(
-                                  children: [
-                                    SizedBox(height: 10.0),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
-                                          child: TextField(
-                                            controller: controllers[index],
-                                            decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[index].key,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[index + 1].text,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                );
-                              } else if (auctionHandler.currentAuction.contractTemplate.templateVariables[index].valueType == "Integer") {
-                                return Column(
-                                  children: [
-                                    SizedBox(height: 10.0),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.height * 0.05,
-                                          child: TextField(
-                                            controller: controllers[index],
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                                            decoration: InputDecoration(
-                                              hintText: auctionHandler.currentAuction.contractTemplate.templateVariables[index].key,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Text(
-                                      auctionHandler.currentAuction.contractTemplate.templateStrings[index + 1].text,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                );
-                              }
+                              return Column(
+                                children: [
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.2,
+                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        child: contractTemplate.templateVariables[index].valueType == "Text"
+                                            ? TextField(
+                                                controller: controllers[index],
+                                                decoration: InputDecoration(
+                                                  hintText: contractTemplate.templateVariables[index].key,
+                                                ),
+                                              )
+                                            : (contractTemplate.templateVariables[index].valueType == "Integer"
+                                                ? TextField(
+                                                    controller: controllers[index],
+                                                    keyboardType: TextInputType.number,
+                                                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                    decoration: InputDecoration(
+                                                      hintText: contractTemplate.templateVariables[index].key,
+                                                    ),
+                                                  )
+                                                : null),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    contractTemplate.templateStrings[index + 1].text,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              );
                             }
                           },
                         ),
@@ -223,7 +440,7 @@ class _RoomState extends State<Room> {
                           child: Text("Make bid"),
                           onPressed: () {
                             setState(() {
-                              auctionHandler.createBid(controllers);
+                              auctionHandler.makeBid();
                               Navigator.pop(context);
                             });
                           },
@@ -254,210 +471,5 @@ class _RoomState extends State<Room> {
         );
       },
     );
-  }
-*/
-  @override
-  Widget build(BuildContext context) {
-    /*
-    endTime = auctionHandler.currentAuction.stopDate.millisecondsSinceEpoch;
-    final ThemeData themeData = Theme.of(context);
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Container(
-          width: 1400.0,
-          height: MediaQuery.of(context).size.height * 0.9,
-          color: themeData.primaryColor,
-          margin: EdgeInsets.all(25.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Row(children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  tooltip: 'Back',
-                  onPressed: () {
-                    navigate(WidgetMarker.auctions);
-                  },
-                ),
-                Container(
-                  child: Text((() {
-                    if (auctionHandler.userHandler.user.currentType.toLowerCase().contains("consumer")) {
-                      return "Requested: ${auctionHandler.currentAuction.material}";
-                    } else {
-                      return "Provided: ${auctionHandler.currentAuction.material}";
-                    }
-                  })(), style: bigText),
-                  height: 40.0,
-                  margin: EdgeInsets.all(5.0),
-                ),
-                Spacer(),
-                Container(
-                    height: 40.0,
-                    alignment: Alignment.topLeft,
-                    margin: EdgeInsets.all(5.0),
-                    child: Tooltip(
-                      message: "Copy to clipboard",
-                      child: TextButton(
-                          child: Text(
-                            'ROOM CODE: ${auctionHandler.currentAuction.id}',
-                            textAlign: TextAlign.end,
-                            style: bigText,
-                          ),
-                          onPressed: () {
-                            Clipboard.setData(new ClipboardData(text: "${auctionHandler.currentAuction.id}")).then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  backgroundColor: Colors.grey[900], content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
-                            });
-                          }),
-                    )),
-              ]),
-              Container(
-                child: Text(
-                  'Company: ${auctionHandler.userHandler.user.company}',
-                  style: bigText,
-                ),
-                width: 1400.0,
-                height: MediaQuery.of(context).size.height * 0.05,
-                //color: Colors.black,
-                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[900],
-                  boxShadow: [BoxShadow(blurRadius: 3, offset: Offset(0, 4))],
-                ),
-              ),
-              Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: Container(
-                          padding: EdgeInsets.all(5.0),
-                          margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                          //color: Colors.amber[700],
-                          alignment: Alignment.centerLeft,
-                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Text(
-                              'Specific Auction info',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Company: {Name}',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Quantity: {Quantity}',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Material: {Material}',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                            Text(
-                              'Specific Auction info',
-                              textAlign: TextAlign.start,
-                              style: smallText,
-                            ),
-                          ]))),
-                  //Spacer(),
-                  Expanded(
-                    child: Container(
-                      color: Colors.white70,
-                      margin: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      child: CountdownTimer(
-                        endTime: endTime,
-                        widgetBuilder: (_, CurrentRemainingTime time) {
-                          if (time == null) {
-                            return Text('Time ended');
-                          }
-                          return Text('Days: ${time.days}, Hours: ${time.hours}, Minute: ${time.min}, Seconds: ${time.sec}');
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-              Expanded(
-                  child: Container(
-                      color: Colors.grey[900],
-                      margin: EdgeInsets.all(5.0),
-
-                      //height: 300,
-                      child: Scrollbar(
-                        child: CustomScrollView(
-                          slivers: <Widget>[
-                            SliverAppBar(
-                              floating: true,
-                              pinned: true,
-                              snap: true,
-                              expandedHeight: 50.0,
-                              title: Row(children: [
-                                Text(
-                                  'Bids',
-                                  textAlign: TextAlign.start,
-                                ),
-                                Spacer(),
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  tooltip: 'New bid',
-                                  onPressed: () {
-                                    showContractGUI();
-                                  },
-                                ),
-                              ]),
-                            ),
-                            SliverFixedExtentList(
-                              itemExtent: 25.0,
-                              delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                                  List<KeyValuePair> currentBid = auctionHandler.currentAuction.bids[index].keyValuePairs;
-                                  String timeString = auctionHandler.currentAuction.bids[index].time.toLocal().toString();
-                                  //[0] : Name
-                                  //[1] : Quantity
-                                  //[2] : ArticleID
-                                  //[3] : Money
-                                  //[4] : Hours
-
-                                  return Container(
-                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                      alignment: Alignment.centerRight,
-                                      color: Colors.grey[850 + (50 * (index % 2))],
-                                      child: Row(children: [
-                                        Container(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                              //Sample string, could be reworked
-                                              '[$timeString] ${currentBid[0].value} placed bid for ${currentBid[3].value} SEK',
-                                              style: TextStyle(fontFamily: 'Consolas')),
-                                        ),
-                                        Spacer(),
-                                        Container(
-                                          alignment: Alignment.centerRight,
-                                          child: TextButton(
-                                            child: Text("Show"),
-                                            onPressed: () {
-                                              //TODO: Show contract popup on press
-                                            },
-                                          ),
-                                        )
-                                      ]));
-                                },
-                                childCount: auctionHandler.currentAuction.bids.length,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ))),
-            ],
-          ),
-        ),
-      ),
-    );*/
   }
 }

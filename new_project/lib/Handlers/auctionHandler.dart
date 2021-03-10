@@ -201,8 +201,170 @@ class AuctionHandler {
   void joinAuction() {}
   void leaveAuction() {}
   void selectAuctionWinner() {}
+  void viewBid(Template contractTemplate, List<KeyValuePair> keyValuePairs, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final ThemeData themeData = Theme.of(context);
 
-  // Triggers when "visit room" button is pressed. Assumes that user already is a participant of the auction.
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          child: Container(
+            color: themeData.primaryColor,
+            width: MediaQuery.of(context).size.width * 0.5,
+            margin: EdgeInsets.only(left: 0.0, right: 0.0),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(
+                    top: 18.0,
+                  ),
+                  margin: EdgeInsets.only(top: 13.0, right: 8.0),
+                  decoration: BoxDecoration(
+                    //color: Colors.red,
+                    color: Colors.grey[900], //Couldn't import from theme as "Dialog" is transparent
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(16.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 0.0,
+                        offset: Offset(0.0, 0.0),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: StatefulBuilder(
+                            builder: (context, setState) {
+                              return Column(
+                                children: [
+                                  Text(
+                                    "Bid",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    textScaleFactor: 2,
+                                  ),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: contractTemplate.templateVariables.length,
+                                      itemBuilder: (context, index) {
+                                        if (index == 0) {
+                                          return Column(
+                                            children: [
+                                              Text(
+                                                contractTemplate.templateStrings[0].text,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              SizedBox(height: 20.0),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Key: ",
+                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    keyValuePairs[0].key,
+                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                  ),
+                                                  Text(
+                                                    " Value: ",
+                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    keyValuePairs[0].value.toString(),
+                                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 20.0),
+                                              Text(
+                                                contractTemplate.templateStrings[1].text,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                        return Column(
+                                          children: [
+                                            SizedBox(height: 20.0),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "Key: ",
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  keyValuePairs[index].key,
+                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                ),
+                                                Text(
+                                                  " Value Type: ",
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  keyValuePairs[index].value.toString(),
+                                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20.0),
+                                            Text(
+                                              contractTemplate.templateStrings[index + 1].text,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  right: 0.0,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: CircleAvatar(
+                        radius: 14.0,
+                        backgroundColor: Colors.white,
+                        child: Icon(Icons.close, color: Colors.red),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void makeBid() {}
+
+  // Triggers when "visit room" button is pressed.
   void setCurrentAuction(int auctionid) {
     for (int i = 0; i < consumerAuctionDetails.auctionDetailsList.length; i++) {
       if (consumerAuctionDetails.auctionDetailsList[i].id == auctionid) {
@@ -316,7 +478,19 @@ class AuctionHandler {
     return l;
   }
 
-  void createBid(List<TextEditingController> controllers) {}
+  Template getContractTemplate(int templateID) {
+    for (int i = 0; i < consumerContractTemplates.templates.length; i++) {
+      if (consumerContractTemplates.templates[i].id == templateID) {
+        return consumerContractTemplates.templates[i];
+      }
+    }
+    for (int i = 0; i < supplierContractTemplates.templates.length; i++) {
+      if (supplierContractTemplates.templates[i].id == templateID) {
+        return supplierContractTemplates.templates[i];
+      }
+    }
+    return null;
+  }
 
   // NEW CONTRACT TEMPLATE (administrator, remove?)
   void createContractTemplate(List<String> strings, List<String> keys, List<String> valueTypes, String userType) {
