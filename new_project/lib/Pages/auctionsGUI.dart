@@ -25,7 +25,7 @@ class AuctionsGUI extends StatelessWidget {
       children: <Widget>[
         FiltersGUI(filterHandler),
         Center(child: AllAuctions(navigate, filterHandler, auctionHandler, offerHandler, userHandler)),
-        Center(child: MyAuctions(navigate, auctionHandler, offerHandler, filterHandler)),
+        Center(child: MyAuctions(navigate, auctionHandler, offerHandler, filterHandler, userHandler)),
       ],
     );
   }

@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 import '../Entities/referencetype2AuctionListJSON.dart';
+import '../Entities/auctionDetailsListJSON.dart';
 
 Referencetype2OfferList referencetype2OfferListFromJson(String str) => Referencetype2OfferList.fromJson(json.decode(str));
 
@@ -31,6 +32,7 @@ class Referencetype2Offer {
     this.title,
     this.userId,
     this.templateId,
+    this.keyValuePairs,
     this.startDate,
     this.stopDate,
     this.referenceSector,
@@ -42,6 +44,7 @@ class Referencetype2Offer {
   String title;
   int userId;
   int templateId;
+  List<KeyValuePair> keyValuePairs;
   DateTime startDate;
   DateTime stopDate;
   String referenceSector;
@@ -53,6 +56,7 @@ class Referencetype2Offer {
         title: json["title"],
         userId: json["userID"],
         templateId: json["templateID"],
+        keyValuePairs: List<KeyValuePair>.from(json["keyValuePairs"].map((x) => KeyValuePair.fromJson(x))),
         startDate: DateTime.parse(json["startDate"]),
         stopDate: DateTime.parse(json["stopDate"]),
         referenceSector: json["referenceSector"],
@@ -65,6 +69,7 @@ class Referencetype2Offer {
         "title": title,
         "userID": userId,
         "templateID": templateId,
+        "keyValuePairs": List<dynamic>.from(keyValuePairs.map((x) => x.toJson())),
         "startDate": startDate.toIso8601String(),
         "stopDate": stopDate.toIso8601String(),
         "referenceSector": referenceSector,

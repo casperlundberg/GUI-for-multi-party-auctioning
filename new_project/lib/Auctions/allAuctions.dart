@@ -33,15 +33,51 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
   final OfferHandler offerHandler;
   final UserInfoHandler userHandler;
   PageMarker _currentPage;
-  String referencetype;
+  String referenceTypeDropdownValue;
+  String referenceSectorDropdownValue;
+  List<List<String>> referenceTypes;
 
-  _AllAuctionsState(this.navigate, this.filterHandler, this.auctionHandler, this.offerHandler, this.userHandler);
+  _AllAuctionsState(this.navigate, this.filterHandler, this.auctionHandler, this.offerHandler, this.userHandler) {
+    referenceTypes = [];
+    for (int i = 0; i < filterHandler.filters.referenceSectors.length; i++) {
+      for (int y = 0; y < filterHandler.filters.referenceSectors[i].referenceTypes.length; y++) {
+        List<String> referenceType = [];
+        referenceType.add(filterHandler.filters.referenceSectors[i].name);
+        referenceType.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
+        referenceTypes.add(referenceType);
+      }
+    }
+    referenceSectorDropdownValue = referenceTypes[0][0];
+    referenceTypeDropdownValue = referenceTypes[0][1];
+  }
+  List<String> getReferenceSectors() {
+    List<String> l = [];
+    for (int i = 0; i < referenceTypes.length; i++) {
+      if (l.contains(referenceTypes[i][0])) {
+        continue;
+      }
+      l.add(referenceTypes[i][0]);
+    }
+    return l;
+  }
+
+  List<String> getReferenceTypes() {
+    List<String> l = [];
+    for (int i = 0; i < referenceTypes.length; i++) {
+      if (referenceTypes[i][0] == referenceSectorDropdownValue) {
+        if (l.contains(referenceTypes[i][1])) {
+          continue;
+        }
+        l.add(referenceTypes[i][1]);
+      }
+    }
+    return l;
+  }
 
   @override
   void initState() {
     super.initState();
     _currentPage = PageMarker.ongoing;
-    referencetype = "Material";
   }
 
   @override
@@ -116,6 +152,48 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
               width: double.infinity,
               height: 50,
               color: Colors.pink,
+              child: Row(
+                children: [
+                  Text("Reference sector: "),
+                  DropdownButton(
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    value: referenceSectorDropdownValue,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.white),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        referenceSectorDropdownValue = newValue;
+                      });
+                    },
+                    items: getReferenceSectors().map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  Text("Reference type: "),
+                  DropdownButton(
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    value: referenceTypeDropdownValue,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.white),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        referenceTypeDropdownValue = newValue;
+                      });
+                    },
+                    items: getReferenceTypes().map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
           ),
           FutureBuilder(
@@ -128,7 +206,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     );
   }
 
-  SliverFixedExtentList _getPageContainer() {
+  SliverList _getPageContainer() {
     switch (_currentPage) {
       case PageMarker.ongoing:
         return _getAuctions("Ongoing");
@@ -140,9 +218,9 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     return _getAuctions("Ongoing");
   }
 
-  SliverFixedExtentList _getAuctions(String type) {
+  SliverList _getAuctions(String type) {
     var now = new DateTime.now();
-    if (referencetype == "Material") {
+    if (referenceTypeDropdownValue == "material") {
       List<MaterialAuction> materialAuctions = [];
       if (filterHandler.materialFilter == null) {
         for (int i = 0; i < auctionHandler.allAuctions.materialAuctions.materialAuctions.length; i++) {
@@ -178,7 +256,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
       return _generateBoxes(materialAuctions: materialAuctions);
     }
 
-    if (referencetype == "Referencetype2") {
+    if (referenceTypeDropdownValue == "referencetype2") {
       List<Referencetype2Auction> referencetype2Auctions = [];
       if (filterHandler.referencetype2Filter == null) {
         for (int i = 0; i < auctionHandler.allAuctions.referencetype2Auctions.referencetype2Auctions.length; i++) {
@@ -217,8 +295,8 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     }
   }
 
-  SliverFixedExtentList _getOffers() {
-    if (referencetype == "Material") {
+  SliverList _getOffers() {
+    if (referenceTypeDropdownValue == "material") {
       List<MaterialOffer> materialOffers = [];
       if (filterHandler.materialFilter == null) {
         materialOffers = offerHandler.allOffers.materialOffers.materialOffers;
@@ -232,7 +310,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
       return _generateBoxes(materialOffers: materialOffers);
     }
 
-    if (referencetype == "Referencetype2") {
+    if (referenceTypeDropdownValue == "referencetype2") {
       List<Referencetype2Offer> referencetype2Offers = [];
       if (filterHandler.referencetype2Filter == null) {
         referencetype2Offers = offerHandler.allOffers.referencetype2Offers.referencetype2Offers;
@@ -249,18 +327,16 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
   }
 
   //Generates the auctionboxes themselves
-  SliverFixedExtentList _generateBoxes(
+  SliverList _generateBoxes(
       {List<MaterialAuction> materialAuctions,
       List<Referencetype2Auction> referencetype2Auctions,
       List<MaterialOffer> materialOffers,
       List<Referencetype2Offer> referencetype2Offers}) {
-    return SliverFixedExtentList(
-      itemExtent: 100.0,
+    return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           bool participant = false;
           bool requestSent = false;
-          bool yourOffer = false;
           bool inviteSent = false;
           if (materialAuctions != null || referencetype2Auctions != null) {
             for (int i = 0; i < userHandler.user.participatingAuctions.length; i++) {
@@ -294,34 +370,17 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
             }
           }
           if (materialOffers != null || referencetype2Auctions != null) {
-            for (int i = 0; i < userHandler.user.offers.length; i++) {
+            for (int i = 0; i < userHandler.user.inviteInbox.length; i++) {
               if (materialOffers != null) {
-                if (userHandler.user.offers[i].offerId == materialOffers[index].id) {
-                  yourOffer = true;
+                if (userHandler.user.inviteInbox[i].offerId == materialOffers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                  inviteSent = true;
                   break;
                 }
               }
               if (referencetype2Offers != null) {
-                if (userHandler.user.offers[i].offerId == referencetype2Offers[index].id) {
-                  yourOffer = true;
+                if (userHandler.user.inviteInbox[i].offerId == referencetype2Offers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
+                  inviteSent = true;
                   break;
-                }
-              }
-            }
-
-            if (yourOffer == false) {
-              for (int i = 0; i < userHandler.user.inviteInbox.length; i++) {
-                if (materialOffers != null) {
-                  if (userHandler.user.inviteInbox[i].offerId == materialOffers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                    inviteSent = true;
-                    break;
-                  }
-                }
-                if (referencetype2Offers != null) {
-                  if (userHandler.user.inviteInbox[i].offerId == referencetype2Offers[index].id && userHandler.user.requestInbox[i].status == "Sent") {
-                    inviteSent = true;
-                    break;
-                  }
                 }
               }
             }
@@ -333,167 +392,281 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Title: ' +
-                        (materialAuctions != null
-                            ? materialAuctions[index].title
-                            : (materialOffers != null
-                                ? materialOffers[index].title
-                                : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title)))),
-                    Text(materialAuctions != null
-                        ? " Participants: " + materialAuctions[index].currentParticipants.toString()
-                        : (referencetype2Auctions != null ? " Participants: " + referencetype2Auctions[index].currentParticipants.toString() : "")),
-                    Text("Start date: " +
-                        (materialAuctions != null
-                            ? materialAuctions[index].startDate.toString()
-                            : (materialOffers != null
-                                ? materialOffers[index].startDate.toString()
-                                : (referencetype2Auctions != null
-                                    ? referencetype2Auctions[index].startDate.toString()
-                                    : referencetype2Offers[index].startDate.toString())))),
-                    Text("Stop date: " +
-                        (materialAuctions != null
-                            ? materialAuctions[index].stopDate.toString()
-                            : (materialOffers != null
-                                ? materialOffers[index].stopDate.toString()
-                                : (referencetype2Auctions != null
-                                    ? referencetype2Auctions[index].stopDate.toString()
-                                    : referencetype2Offers[index].stopDate.toString())))),
-                  ],
-                ),
-                Column(
-                  children: (materialAuctions != null || materialOffers != null)
-                      ? [
-                          Text("Fibers type: " +
+                Expanded(
+                  child: Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Title: ' +
                               (materialAuctions != null
-                                  ? materialAuctions[index].materialReferenceParameters.fibersType
-                                  : materialOffers[index].materialReferenceParameters.fibersType)),
-                          Text("Resin type: " +
+                                  ? materialAuctions[index].title
+                                  : (materialOffers != null
+                                      ? materialOffers[index].title
+                                      : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title)))),
+                          Text(materialAuctions != null
+                              ? " Participants: " +
+                                  materialAuctions[index].currentParticipants.toString() +
+                                  "/" +
+                                  materialAuctions[index].maxParticipants.toString()
+                              : (referencetype2Auctions != null
+                                  ? " Participants: " +
+                                      referencetype2Auctions[index].currentParticipants.toString() +
+                                      "/" +
+                                      referencetype2Auctions[index].maxParticipants.toString()
+                                  : "")),
+                          Text("Start date: " +
                               (materialAuctions != null
-                                  ? materialAuctions[index].materialReferenceParameters.resinType
-                                  : materialOffers[index].materialReferenceParameters.resinType)),
-                          Text("Minimum fiber length: " +
+                                  ? materialAuctions[index].startDate.toString().substring(0, 19)
+                                  : (materialOffers != null
+                                      ? materialOffers[index].startDate.toString().substring(0, 19)
+                                      : (referencetype2Auctions != null
+                                          ? referencetype2Auctions[index].startDate.toString().substring(0, 19)
+                                          : referencetype2Offers[index].startDate.toString().substring(0, 19))))),
+                          Text("Stop date: " +
                               (materialAuctions != null
-                                      ? materialAuctions[index].materialReferenceParameters.minFiberLength
-                                      : materialOffers[index].materialReferenceParameters.minFiberLength)
-                                  .toString()),
-                          Text("Maximum fiber length: " +
-                              (materialAuctions != null
-                                      ? materialAuctions[index].materialReferenceParameters.maxFiberLength
-                                      : materialOffers[index].materialReferenceParameters.maxFiberLength)
-                                  .toString()),
-                          Text("Recycling technology: " +
-                              (materialAuctions != null
-                                  ? materialAuctions[index].materialReferenceParameters.recyclingTechnology
-                                  : materialOffers[index].materialReferenceParameters.recyclingTechnology)),
-                          Text("Sizing: " +
-                              (materialAuctions != null
-                                  ? materialAuctions[index].materialReferenceParameters.sizing
-                                  : materialOffers[index].materialReferenceParameters.sizing)),
-                          Text("Additives: " +
-                              (materialAuctions != null
-                                  ? materialAuctions[index].materialReferenceParameters.additives
-                                  : materialOffers[index].materialReferenceParameters.additives)),
-                          Text("Minimum volume: " +
-                              (materialAuctions != null
-                                      ? materialAuctions[index].materialReferenceParameters.minVolume
-                                      : materialOffers[index].materialReferenceParameters.minVolume)
-                                  .toString()),
-                          Text("Maximum volume: " +
-                              (materialAuctions != null
-                                      ? materialAuctions[index].materialReferenceParameters.maxVolume
-                                      : materialOffers[index].materialReferenceParameters.maxVolume)
-                                  .toString()),
-                        ]
-                      : [
-                          Text("Parameter 1: " +
-                              (referencetype2Auctions != null
-                                  ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter1
-                                  : referencetype2Offers[index].referencetype2ReferenceParameters.parameter1)),
-                          Text("Parameter 2: " +
-                              (referencetype2Auctions != null
-                                  ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter2
-                                  : referencetype2Offers[index].referencetype2ReferenceParameters.parameter2)),
-                          Text("Minimum volume: " +
-                              (referencetype2Auctions != null
-                                      ? referencetype2Auctions[index].referencetype2ReferenceParameters.minVolume
-                                      : referencetype2Offers[index].referencetype2ReferenceParameters.minVolume)
-                                  .toString()),
-                          Text("Maximum volume: " +
-                              (referencetype2Auctions != null
-                                      ? referencetype2Auctions[index].referencetype2ReferenceParameters.maxVolume
-                                      : referencetype2Offers[index].referencetype2ReferenceParameters.maxVolume)
-                                  .toString()),
+                                  ? materialAuctions[index].stopDate.toString().substring(0, 19)
+                                  : (materialOffers != null
+                                      ? materialOffers[index].stopDate.toString().substring(0, 19)
+                                      : (referencetype2Auctions != null
+                                          ? referencetype2Auctions[index].stopDate.toString().substring(0, 19)
+                                          : referencetype2Offers[index].stopDate.toString().substring(0, 19))))),
                         ],
-                ),
-                Spacer(),
-                Container(
-                  child: (materialAuctions != null || referencetype2Auctions != null)
-                      ? ElevatedButton(
-                          child: participant ? Text("Visit room") : (requestSent ? Text("Request sent") : Text("Send request")),
-                          onPressed: participant
-                              ? () {
-                                  if (materialAuctions != null) {
-                                    auctionHandler.setCurrentAuction(materialAuctions[index].id);
-                                  }
-                                  if (referencetype2Auctions != null) {
-                                    auctionHandler.setCurrentAuction(referencetype2Auctions[index].id);
-                                  }
-                                  navigate(WidgetMarker.room);
-                                }
-                              : (requestSent
-                                  ? null
-                                  : () {
-                                      if (materialAuctions != null) {
-                                        userHandler.requestToJoin(materialAuctions[index].id);
-                                      }
-                                      if (referencetype2Auctions != null) {
-                                        userHandler.requestToJoin(referencetype2Auctions[index].id);
-                                      }
-                                    }),
-                        )
-                      : (yourOffer
-                          ? null
-                          : (inviteSent
-                              ? Text("Invite sent")
-                              : Row(
-                                  children: [
-                                    Text("Invite to auction: "),
-                                    DropdownButton(
-                                      icon: Icon(Icons.arrow_downward),
-                                      iconSize: 24,
-                                      value: "Auction title",
-                                      elevation: 16,
-                                      style: TextStyle(color: Colors.white),
-                                      onChanged: (String auctionID) {
-                                        userHandler.inviteToAuction(int.parse(auctionID));
-                                      },
-                                      items: materialOffers != null
-                                          ? (auctionHandler.getAuctionTitles("material", materialOffers[index].userId) != null
-                                              ? auctionHandler
-                                                  .getAuctionTitles("material", materialOffers[index].userId)
-                                                  .map<DropdownMenuItem<String>>((String value) {
-                                                  return DropdownMenuItem<String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList()
-                                              : null)
-                                          : (auctionHandler.getAuctionTitles("referencetype2", referencetype2Offers[index].userId) != null
-                                              ? auctionHandler
-                                                  .getAuctionTitles("referencetype2", referencetype2Offers[index].userId)
-                                                  .map<DropdownMenuItem<String>>((String value) {
-                                                  return DropdownMenuItem<String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList()
-                                              : null),
-                                    ),
-                                  ],
-                                ))),
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: (materialAuctions != null || materialOffers != null)
+                            ? [
+                                Text("Fibers type: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.fibersType
+                                        : materialOffers[index].materialReferenceParameters.fibersType)),
+                                Text("Resin type: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.resinType
+                                        : materialOffers[index].materialReferenceParameters.resinType)),
+                                Text("Minimum fiber length: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.minFiberLength
+                                            : materialOffers[index].materialReferenceParameters.minFiberLength)
+                                        .toString() +
+                                    "mm"),
+                                Text("Maximum fiber length: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.maxFiberLength
+                                            : materialOffers[index].materialReferenceParameters.maxFiberLength)
+                                        .toString() +
+                                    "mm"),
+                                Text("Recycling technology: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.recyclingTechnology
+                                        : materialOffers[index].materialReferenceParameters.recyclingTechnology)),
+                                Text("Sizing: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.sizing
+                                        : materialOffers[index].materialReferenceParameters.sizing)),
+                                Text("Additives: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.additives
+                                        : materialOffers[index].materialReferenceParameters.additives)),
+                                Text("Minimum volume: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.minVolume
+                                            : materialOffers[index].materialReferenceParameters.minVolume)
+                                        .toString() +
+                                    "kg"),
+                                Text("Maximum volume: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.maxVolume
+                                            : materialOffers[index].materialReferenceParameters.maxVolume)
+                                        .toString() +
+                                    "kg"),
+                              ]
+                            : [
+                                Text("Parameter 1: " +
+                                    (referencetype2Auctions != null
+                                        ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter1
+                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter1)),
+                                Text("Parameter 2: " +
+                                    (referencetype2Auctions != null
+                                        ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter2
+                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter2)),
+                                Text("Minimum volume: " +
+                                    (referencetype2Auctions != null
+                                            ? referencetype2Auctions[index].referencetype2ReferenceParameters.minVolume
+                                            : referencetype2Offers[index].referencetype2ReferenceParameters.minVolume)
+                                        .toString() +
+                                    "kg"),
+                                Text("Maximum volume: " +
+                                    (referencetype2Auctions != null
+                                            ? referencetype2Auctions[index].referencetype2ReferenceParameters.maxVolume
+                                            : referencetype2Offers[index].referencetype2ReferenceParameters.maxVolume)
+                                        .toString() +
+                                    "kg"),
+                              ],
+                      ),
+                      Spacer(),
+                      Container(
+                        child: (materialAuctions != null
+                            ? (materialAuctions[index].ownerId == userHandler.user.userId
+                                ? null
+                                : ElevatedButton(
+                                    child: participant || materialAuctions[index].stopDate.isBefore(new DateTime.now())
+                                        ? Text("Visit room")
+                                        : (requestSent ? Text("Request sent") : Text("Send request")),
+                                    onPressed: participant
+                                        ? () {
+                                            auctionHandler.setCurrentAuction(materialAuctions[index].id);
+                                            navigate(WidgetMarker.room);
+                                          }
+                                        : (requestSent
+                                            ? null
+                                            : () {
+                                                userHandler.requestToJoin(materialAuctions[index].id);
+                                              }),
+                                  ))
+                            : (referencetype2Auctions != null
+                                ? (referencetype2Auctions[index].ownerId == userHandler.user.userId
+                                    ? null
+                                    : ElevatedButton(
+                                        child: participant || referencetype2Auctions[index].stopDate.isBefore(new DateTime.now())
+                                            ? Text("Visit room")
+                                            : (requestSent ? Text("Request sent") : Text("Send request")),
+                                        onPressed: participant
+                                            ? () {
+                                                auctionHandler.setCurrentAuction(referencetype2Auctions[index].id);
+                                                navigate(WidgetMarker.room);
+                                              }
+                                            : (requestSent
+                                                ? null
+                                                : () {
+                                                    userHandler.requestToJoin(referencetype2Auctions[index].id);
+                                                  }),
+                                      ))
+                                : (materialOffers != null
+                                    ? (materialOffers[index].userId == userHandler.user.userId
+                                        ? ElevatedButton(
+                                            onPressed: () {
+                                              offerHandler.viewOffer(materialOffers[index].templateId, materialOffers[index].keyValuePairs, context);
+                                            },
+                                            child: Text("View Offer"),
+                                          )
+                                        : Column(
+                                            children: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  offerHandler.viewOffer(materialOffers[index].templateId, materialOffers[index].keyValuePairs, context);
+                                                },
+                                                child: Text("View Offer"),
+                                              ),
+                                              Row(
+                                                children: inviteSent
+                                                    ? [
+                                                        Text("Invite sent"),
+                                                      ]
+                                                    : [
+                                                        Row(
+                                                          children: [
+                                                            Text("Invite to auction: "),
+                                                            DropdownButton(
+                                                              icon: Icon(Icons.arrow_downward),
+                                                              iconSize: 24,
+                                                              value: "Auction title",
+                                                              elevation: 16,
+                                                              style: TextStyle(color: Colors.white),
+                                                              onChanged: (String auctionTitle) {
+                                                                if (auctionTitle != "Auction title") {
+                                                                  for (int i = 0; i < auctionHandler.myAuctions.materialAuctions.materialAuctions.length; i++) {
+                                                                    if (auctionTitle == auctionHandler.myAuctions.materialAuctions.materialAuctions[i].title) {
+                                                                      userHandler
+                                                                          .inviteToAuction(auctionHandler.myAuctions.materialAuctions.materialAuctions[i].id);
+                                                                      return;
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              items: auctionHandler
+                                                                  .getAuctionTitles("material", materialOffers[index].userId)
+                                                                  .map<DropdownMenuItem<String>>((String value) {
+                                                                return DropdownMenuItem<String>(
+                                                                  value: value,
+                                                                  child: Text(value),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                              ),
+                                            ],
+                                          ))
+                                    : (referencetype2Offers != null
+                                        ? (referencetype2Offers[index].userId == userHandler.user.userId
+                                            ? ElevatedButton(
+                                                onPressed: () {
+                                                  offerHandler.viewOffer(
+                                                      referencetype2Offers[index].templateId, referencetype2Offers[index].keyValuePairs, context);
+                                                },
+                                                child: Text("View Offer"),
+                                              )
+                                            : Column(
+                                                children: [
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      offerHandler.viewOffer(
+                                                          referencetype2Offers[index].templateId, referencetype2Offers[index].keyValuePairs, context);
+                                                    },
+                                                    child: Text("View Offer"),
+                                                  ),
+                                                  Row(
+                                                    children: inviteSent
+                                                        ? [
+                                                            Text("Invite sent"),
+                                                          ]
+                                                        : [
+                                                            Row(
+                                                              children: [
+                                                                Text("Invite to auction: "),
+                                                                DropdownButton(
+                                                                  icon: Icon(Icons.arrow_downward),
+                                                                  iconSize: 24,
+                                                                  value: "Auction title",
+                                                                  elevation: 16,
+                                                                  style: TextStyle(color: Colors.white),
+                                                                  onChanged: (String auctionTitle) {
+                                                                    if (auctionTitle != "Auction title") {
+                                                                      for (int i = 0;
+                                                                          i < auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions.length;
+                                                                          i++) {
+                                                                        if (auctionTitle ==
+                                                                            auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i].title) {
+                                                                          userHandler.inviteToAuction(
+                                                                              auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i].id);
+                                                                          return;
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  items: auctionHandler
+                                                                      .getAuctionTitles("referencetype2", referencetype2Offers[index].userId)
+                                                                      .map<DropdownMenuItem<String>>((String value) {
+                                                                    return DropdownMenuItem<String>(
+                                                                      value: value,
+                                                                      child: Text(value),
+                                                                    );
+                                                                  }).toList(),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                  ),
+                                                ],
+                                              ))
+                                        : null)))),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

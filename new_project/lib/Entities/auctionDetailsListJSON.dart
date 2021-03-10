@@ -38,7 +38,7 @@ class AuctionDetails {
   List<Participant> participants;
   int templateId;
   List<Bid> bids;
-  int winningBid;
+  int winningBid; //0 if not yet picked, -1 if there was no winner.
 
   factory AuctionDetails.fromJson(Map<String, dynamic> json) => AuctionDetails(
         id: json["id"],

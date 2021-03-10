@@ -707,18 +707,6 @@ String supplierAuctionDetails = '''{
         {
             "id": 2,
             "participants": [
-                {
-                    "userID": 2
-                },
-                {
-                    "userID": 3
-                },
-                {
-                    "userID": 4
-                },
-                {
-                    "userID": 5
-                }
             ],
             "templateID": 3,
             "bids": [
@@ -1546,7 +1534,7 @@ String supplierMaterialAuctions = '''{
             "title": "Testauction 2",
             "ownerID": 1,
             "maxParticipants": 10,
-            "currentParticipants": 4,
+            "currentParticipants": 0,
             "startDate": "2021-02-15T10:30:00.001Z",
             "stopDate": "2021-02-15T11:30:00.001Z",
             "referenceSector": "composites",
@@ -1739,6 +1727,16 @@ String consumerMaterialOffers = '''{
             "title": "Title 1",
             "userID": 1,
             "templateID": 6,
+            "keyValuePairs": [
+                {
+                    "key": "Name",
+                    "value": "Thule Thulesson"
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 25
+                }
+            ],
             "startDate": "2021-02-15T10:30:00.001Z",
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
@@ -1760,6 +1758,16 @@ String consumerMaterialOffers = '''{
             "title": "Title 2",
             "userID": 2,
             "templateID": 6,
+            "keyValuePairs": [
+                {
+                    "key": "Name",
+                    "value": "Casper Lundberg"
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 1
+                }
+            ],
             "startDate": "2021-02-15T10:30:00.001Z",
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
@@ -1798,6 +1806,28 @@ String supplierMaterialOffers = '''{
             "title": "Supplier material offer",
             "userID": 1,
             "templateID": 7,
+            "keyValuePairs": [
+                {
+                    "key": "CompanyName",
+                    "value": "Demand and supply Co."
+                },
+                {
+                    "key": "Weight",
+                    "value": 10
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 200
+                },
+                {
+                    "key": "Quantity",
+                    "value": 1000
+                },
+                {
+                    "key": "Time",
+                    "value": 2
+                }
+            ],
             "startDate": "2021-02-15T10:30:00.001Z",
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
@@ -1841,7 +1871,7 @@ String consumerOfferTemplates = '''{
                     "text": " am interested in purchasing units at the starting price of "
                 },
                 {
-                    "text": " per kg. "
+                    "text": " EUR per kg. "
                 }
             ],
             "templateVariables": [
@@ -1924,7 +1954,7 @@ String supplierOfferTemplates = '''{
                     "text": ""
                 },
                 {
-                    "text": " is willing to sell 100 units of certified quality for minimum "
+                    "text": " is willing to sell 100 units of certified quality for the buyout price of "
                 },
                 {
                     "text": " EUR, our dispatch time is on average "
@@ -2038,6 +2068,16 @@ String consumerReferencetype2Offers = '''{
             "title": "Reference type 2 offer",
             "userID": 1,
             "templateID": 6,
+            "keyValuePairs": [
+                {
+                    "key": "Name",
+                    "value": "Thule Thulesson"
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 225
+                }
+            ],
             "startDate": "2021-02-15T10:30:00.001Z",
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",
@@ -2071,6 +2111,20 @@ String supplierReferencetype2Offers = '''{
             "title": "Supplier reference type 2 offer",
             "userID": 1,
             "templateID": 8,
+            "keyValuePairs": [
+                {
+                    "key": "CompanyName",
+                    "value": "Demand and supply Co."
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 2000
+                },
+                {
+                    "key": "Time",
+                    "value": 2
+                }
+            ],
             "startDate": "2021-02-15T10:30:00.001Z",
             "stopDate": "2021-04-15T11:30:00.001Z",
             "referenceSector": "composites",

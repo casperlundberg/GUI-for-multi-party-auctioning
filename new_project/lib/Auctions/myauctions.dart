@@ -2,8 +2,10 @@ import 'dart:html';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
+import 'package:new_project/Entities/auctionDetailsListJSON.dart';
 import 'package:new_project/Handlers/filterHandler.dart';
 import 'package:new_project/Handlers/offerHandler.dart';
+import 'package:new_project/Handlers/userInfoHandler.dart';
 import '../Handlers/auctionHandler.dart';
 import '../mainGUI.dart';
 import '../Entities/templateListJSON.dart';
@@ -13,11 +15,12 @@ class MyAuctions extends StatefulWidget {
   final AuctionHandler auctionHandler;
   final OfferHandler offerHandler;
   final FilterHandler filterHandler;
+  final UserInfoHandler userHandler;
 
-  MyAuctions(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler);
+  MyAuctions(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler, this.userHandler);
 
   @override
-  _MyAuctionsState createState() => _MyAuctionsState(navigate, auctionHandler, offerHandler, filterHandler);
+  _MyAuctionsState createState() => _MyAuctionsState(navigate, auctionHandler, offerHandler, filterHandler, userHandler);
 }
 
 class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateMixin<MyAuctions> {
@@ -25,32 +28,34 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
   final AuctionHandler auctionHandler;
   final OfferHandler offerHandler;
   final FilterHandler filterHandler;
-  Template template;
+  final UserInfoHandler userHandler;
+  final List<String> types = ["Auction", "Offer"];
+  String typeDropdownValue;
   TextEditingController title = TextEditingController();
   TextEditingController maxParticipants = TextEditingController();
   TextEditingController duration = TextEditingController();
-  List<TextEditingController> rangeReferenceParameterControllers;
   List<List<String>> referenceTypes;
   List<List<String>> referenceParameters;
   List<List<String>> rangeReferenceParameters;
-  List<String> templateIDs;
-  final List<String> types = ["Auction", "Offer"];
+  List<List<String>> currentReferenceParameters;
   String referenceSectorDropdownValue;
   String referenceTypeDropdownValue;
   List<String> referenceParameterDropdownValues;
-  String typeDropdownValue;
+  List<TextEditingController> rangeReferenceParameterControllers;
+  List<String> templateIDs;
+  Template template;
   String templateIDDropdownValue;
-  List<List<String>> currentReferenceParameters;
+  List<TextEditingController> offerControllers;
 
-  _MyAuctionsState(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler) {
+  _MyAuctionsState(this.navigate, this.auctionHandler, this.offerHandler, this.filterHandler, this.userHandler) {
     referenceTypes = [];
     referenceParameters = [];
     rangeReferenceParameters = [];
     for (int i = 0; i < filterHandler.filters.referenceSectors.length; i++) {
-      List<String> referenceSector = [];
-      referenceSector.add(filterHandler.filters.referenceSectors[i].name);
       for (int y = 0; y < filterHandler.filters.referenceSectors[i].referenceTypes.length; y++) {
-        referenceSector.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
+        List<String> referenceType = [];
+        referenceType.add(filterHandler.filters.referenceSectors[i].name);
+        referenceType.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
         for (int u = 0; u < filterHandler.filters.referenceSectors[i].referenceTypes[y].referenceParameters.length; u++) {
           List<String> l = [];
           l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
@@ -63,11 +68,15 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
         for (int u = 0; u < filterHandler.filters.referenceSectors[i].referenceTypes[y].rangeReferenceParameters.length; u++) {
           List<String> l = [];
           l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
-          l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].rangeReferenceParameters[u].name);
+          l.add("min" + filterHandler.filters.referenceSectors[i].referenceTypes[y].rangeReferenceParameters[u].name);
+          rangeReferenceParameters.add(l);
+          l = [];
+          l.add(filterHandler.filters.referenceSectors[i].referenceTypes[y].name);
+          l.add("max" + filterHandler.filters.referenceSectors[i].referenceTypes[y].rangeReferenceParameters[u].name);
           rangeReferenceParameters.add(l);
         }
+        referenceTypes.add(referenceType);
       }
-      referenceTypes.add(referenceSector);
     }
     referenceSectorDropdownValue = referenceTypes[0][0];
     referenceTypeDropdownValue = referenceTypes[0][1];
@@ -91,12 +100,22 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
       }
     }
     typeDropdownValue = "Auction";
-    templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
-    templateIDs = [];
-    for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
-      templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
+    if (userHandler.user.currentType == "Consumer") {
+      templateIDDropdownValue = auctionHandler.consumerContractTemplates.templates[0].id.toString();
+      templateIDs = [];
+      for (int i = 0; i < auctionHandler.consumerContractTemplates.templates.length; i++) {
+        templateIDs.add(auctionHandler.consumerContractTemplates.templates[i].id.toString());
+      }
+      template = auctionHandler.consumerContractTemplates.templates[0];
     }
-    template = auctionHandler.contractTemplates.templates[0];
+    if (userHandler.user.currentType == "Supplier") {
+      templateIDDropdownValue = auctionHandler.supplierContractTemplates.templates[0].id.toString();
+      templateIDs = [];
+      for (int i = 0; i < auctionHandler.supplierContractTemplates.templates.length; i++) {
+        templateIDs.add(auctionHandler.supplierContractTemplates.templates[i].id.toString());
+      }
+      template = auctionHandler.supplierContractTemplates.templates[0];
+    }
   }
 
   @override
@@ -225,20 +244,44 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                           setState(() {
                                             typeDropdownValue = newValue;
                                             if (typeDropdownValue == "Auction") {
-                                              templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
-                                              templateIDs = [];
-                                              for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
-                                                templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
+                                              if (userHandler.user.currentType == "Consumer") {
+                                                templateIDDropdownValue = auctionHandler.consumerContractTemplates.templates[0].id.toString();
+                                                templateIDs = [];
+                                                for (int i = 0; i < auctionHandler.consumerContractTemplates.templates.length; i++) {
+                                                  templateIDs.add(auctionHandler.consumerContractTemplates.templates[i].id.toString());
+                                                }
+                                                template = auctionHandler.consumerContractTemplates.templates[0];
                                               }
-                                              template = auctionHandler.contractTemplates.templates[0];
+                                              if (userHandler.user.currentType == "Supplier") {
+                                                templateIDDropdownValue = auctionHandler.supplierContractTemplates.templates[0].id.toString();
+                                                templateIDs = [];
+                                                for (int i = 0; i < auctionHandler.supplierContractTemplates.templates.length; i++) {
+                                                  templateIDs.add(auctionHandler.supplierContractTemplates.templates[i].id.toString());
+                                                }
+                                                template = auctionHandler.supplierContractTemplates.templates[0];
+                                              }
                                             }
                                             if (typeDropdownValue == "Offer") {
-                                              templateIDDropdownValue = offerHandler.offerTemplates.templates[0].id.toString();
-                                              templateIDs = [];
-                                              for (int i = 0; i < offerHandler.offerTemplates.templates.length; i++) {
-                                                templateIDs.add(offerHandler.offerTemplates.templates[i].id.toString());
+                                              if (userHandler.user.currentType == "Consumer") {
+                                                templateIDDropdownValue = offerHandler.consumerOfferTemplates.templates[0].id.toString();
+                                                templateIDs = [];
+                                                for (int i = 0; i < offerHandler.consumerOfferTemplates.templates.length; i++) {
+                                                  templateIDs.add(offerHandler.consumerOfferTemplates.templates[i].id.toString());
+                                                }
+                                                template = offerHandler.consumerOfferTemplates.templates[0];
                                               }
-                                              template = offerHandler.offerTemplates.templates[0];
+                                              if (userHandler.user.currentType == "Supplier") {
+                                                templateIDDropdownValue = offerHandler.supplierOfferTemplates.templates[0].id.toString();
+                                                templateIDs = [];
+                                                for (int i = 0; i < offerHandler.supplierOfferTemplates.templates.length; i++) {
+                                                  templateIDs.add(offerHandler.supplierOfferTemplates.templates[i].id.toString());
+                                                }
+                                                template = offerHandler.supplierOfferTemplates.templates[0];
+                                              }
+                                              offerControllers = [];
+                                              for (int i = 0; i < template.templateVariables.length; i++) {
+                                                offerControllers.add(new TextEditingController());
+                                              }
                                             }
                                           });
                                         },
@@ -312,9 +355,9 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                   ),
                                   SizedBox(height: 20.0),
                                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                    Text(typeDropdownValue == "Auction" ? "Auction Title: " : "Offer Title"),
+                                    Text(typeDropdownValue == "Auction" ? "Auction Title: " : "Offer Title: "),
                                     Container(
-                                      width: MediaQuery.of(context).size.width * 0.25,
+                                      width: MediaQuery.of(context).size.width * 0.15,
                                       height: MediaQuery.of(context).size.height * 0.05,
                                       child: TextField(
                                         controller: title,
@@ -323,19 +366,23 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                     SizedBox(width: 30.0),
                                     Text("Duration: "),
                                     Container(
-                                      width: MediaQuery.of(context).size.width * 0.25,
+                                      width: MediaQuery.of(context).size.width * 0.03,
                                       height: MediaQuery.of(context).size.height * 0.05,
                                       child: TextField(
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                         controller: duration,
                                       ),
                                     ),
                                     SizedBox(width: 30.0),
                                     Text(typeDropdownValue == "Auction" ? "Max participants: " : ""),
                                     Container(
-                                      width: MediaQuery.of(context).size.width * 0.25,
+                                      width: MediaQuery.of(context).size.width * 0.03,
                                       height: MediaQuery.of(context).size.height * 0.05,
                                       child: typeDropdownValue == "Auction"
                                           ? TextField(
+                                              keyboardType: TextInputType.number,
+                                              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                               controller: maxParticipants,
                                             )
                                           : null,
@@ -347,31 +394,146 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                       itemCount: ((referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) / 3).ceil(),
                                       itemBuilder: (context, index) {
                                         return Row(
-                                          children: [
-                                            Expanded(
-                                              child: ListView.builder(
-                                                itemCount: index + 1 ==
-                                                        ((referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) / 3).ceil()
-                                                    ? (referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) - (index * 3)
-                                                    : 3,
-                                                itemBuilder: (context, rowIndex) {
-                                                  return Row(
-                                                    children: ((index * 3) + rowIndex < referenceParameterDropdownValues.length)
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: ((index + 1) ==
+                                                      ((referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) / 3).ceil()) &&
+                                                  ((referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) - (index * 3) != 3)
+                                              ? (((referenceParameterDropdownValues.length + rangeReferenceParameterControllers.length) - (index * 3)) == 1
+                                                  ? [
+                                                      Row(
+                                                        children: ((index * 3) < referenceParameterDropdownValues.length)
+                                                            ? [
+                                                                Text(currentReferenceParameters[(index * 3)][0] + ": "),
+                                                                DropdownButton(
+                                                                  icon: Icon(Icons.arrow_downward),
+                                                                  iconSize: 24,
+                                                                  value: referenceParameterDropdownValues[(index * 3)],
+                                                                  elevation: 16,
+                                                                  style: TextStyle(color: Colors.white),
+                                                                  onChanged: (String newValue) {
+                                                                    setState(() {
+                                                                      referenceParameterDropdownValues[(index * 3)] = newValue;
+                                                                    });
+                                                                  },
+                                                                  items: getReferenceParameters((index * 3)).map<DropdownMenuItem<String>>((String value) {
+                                                                    return DropdownMenuItem<String>(
+                                                                      value: value,
+                                                                      child: Text(value),
+                                                                    );
+                                                                  }).toList(),
+                                                                ),
+                                                              ]
+                                                            : [
+                                                                Text(currentReferenceParameters[(index * 3)][0] + ": "),
+                                                                Container(
+                                                                  width: MediaQuery.of(context).size.width * 0.05,
+                                                                  height: MediaQuery.of(context).size.height * 0.05,
+                                                                  child: TextField(
+                                                                    keyboardType: TextInputType.number,
+                                                                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                    controller: rangeReferenceParameterControllers[
+                                                                        (index * 3) - referenceParameterDropdownValues.length],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                      ),
+                                                    ]
+                                                  : [
+                                                      Row(
+                                                        children: ((index * 3) < referenceParameterDropdownValues.length)
+                                                            ? [
+                                                                Text(currentReferenceParameters[(index * 3)][0] + ": "),
+                                                                DropdownButton(
+                                                                  icon: Icon(Icons.arrow_downward),
+                                                                  iconSize: 24,
+                                                                  value: referenceParameterDropdownValues[(index * 3)],
+                                                                  elevation: 16,
+                                                                  style: TextStyle(color: Colors.white),
+                                                                  onChanged: (String newValue) {
+                                                                    setState(() {
+                                                                      referenceParameterDropdownValues[(index * 3)] = newValue;
+                                                                    });
+                                                                  },
+                                                                  items: getReferenceParameters((index * 3)).map<DropdownMenuItem<String>>((String value) {
+                                                                    return DropdownMenuItem<String>(
+                                                                      value: value,
+                                                                      child: Text(value),
+                                                                    );
+                                                                  }).toList(),
+                                                                ),
+                                                              ]
+                                                            : [
+                                                                Text(currentReferenceParameters[(index * 3)][0] + ": "),
+                                                                Container(
+                                                                  width: MediaQuery.of(context).size.width * 0.05,
+                                                                  height: MediaQuery.of(context).size.height * 0.05,
+                                                                  child: TextField(
+                                                                    keyboardType: TextInputType.number,
+                                                                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                    controller: rangeReferenceParameterControllers[
+                                                                        (index * 3) - referenceParameterDropdownValues.length],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10.0,
+                                                      ),
+                                                      Row(
+                                                        children: ((index * 3) + 1 < referenceParameterDropdownValues.length)
+                                                            ? [
+                                                                Text(currentReferenceParameters[(index * 3) + 1][0] + ": "),
+                                                                DropdownButton(
+                                                                  icon: Icon(Icons.arrow_downward),
+                                                                  iconSize: 24,
+                                                                  value: referenceParameterDropdownValues[(index * 3) + 1],
+                                                                  elevation: 16,
+                                                                  style: TextStyle(color: Colors.white),
+                                                                  onChanged: (String newValue) {
+                                                                    setState(() {
+                                                                      referenceParameterDropdownValues[(index * 3) + 1] = newValue;
+                                                                    });
+                                                                  },
+                                                                  items: getReferenceParameters((index * 3) + 1).map<DropdownMenuItem<String>>((String value) {
+                                                                    return DropdownMenuItem<String>(
+                                                                      value: value,
+                                                                      child: Text(value),
+                                                                    );
+                                                                  }).toList(),
+                                                                ),
+                                                              ]
+                                                            : [
+                                                                Text(currentReferenceParameters[(index * 3) + 1][0] + ": "),
+                                                                Container(
+                                                                  width: MediaQuery.of(context).size.width * 0.05,
+                                                                  height: MediaQuery.of(context).size.height * 0.05,
+                                                                  child: TextField(
+                                                                    keyboardType: TextInputType.number,
+                                                                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                    controller: rangeReferenceParameterControllers[
+                                                                        (index * 3) + 1 - referenceParameterDropdownValues.length],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                      ),
+                                                    ])
+                                              : [
+                                                  Row(
+                                                    children: ((index * 3) < referenceParameterDropdownValues.length)
                                                         ? [
-                                                            Text(currentReferenceParameters[(index * 3) + rowIndex][0] + ": "),
+                                                            Text(currentReferenceParameters[(index * 3)][0] + ": "),
                                                             DropdownButton(
                                                               icon: Icon(Icons.arrow_downward),
                                                               iconSize: 24,
-                                                              value: referenceParameterDropdownValues[(index * 3) + rowIndex],
+                                                              value: referenceParameterDropdownValues[(index * 3)],
                                                               elevation: 16,
                                                               style: TextStyle(color: Colors.white),
                                                               onChanged: (String newValue) {
                                                                 setState(() {
-                                                                  referenceParameterDropdownValues[(index * 3) + rowIndex] = newValue;
+                                                                  referenceParameterDropdownValues[(index * 3)] = newValue;
                                                                 });
                                                               },
-                                                              items:
-                                                                  getReferenceParameters((index * 3) + rowIndex).map<DropdownMenuItem<String>>((String value) {
+                                                              items: getReferenceParameters((index * 3)).map<DropdownMenuItem<String>>((String value) {
                                                                 return DropdownMenuItem<String>(
                                                                   value: value,
                                                                   child: Text(value),
@@ -380,26 +542,104 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                                             ),
                                                           ]
                                                         : [
-                                                            Text(currentReferenceParameters[(index * 3) + rowIndex][0] + ": "),
+                                                            Text(currentReferenceParameters[(index * 3)][0] + ": "),
                                                             Container(
-                                                              width: MediaQuery.of(context).size.width * 0.25,
+                                                              width: MediaQuery.of(context).size.width * 0.05,
                                                               height: MediaQuery.of(context).size.height * 0.05,
                                                               child: TextField(
-                                                                controller: rangeReferenceParameterControllers[
-                                                                    (index * 3) + rowIndex - referenceParameterDropdownValues.length],
+                                                                keyboardType: TextInputType.number,
+                                                                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                controller:
+                                                                    rangeReferenceParameterControllers[(index * 3) - referenceParameterDropdownValues.length],
                                                               ),
                                                             ),
                                                           ],
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.0,
+                                                  ),
+                                                  Row(
+                                                    children: ((index * 3) + 1 < referenceParameterDropdownValues.length)
+                                                        ? [
+                                                            Text(currentReferenceParameters[(index * 3) + 1][0] + ": "),
+                                                            DropdownButton(
+                                                              icon: Icon(Icons.arrow_downward),
+                                                              iconSize: 24,
+                                                              value: referenceParameterDropdownValues[(index * 3) + 1],
+                                                              elevation: 16,
+                                                              style: TextStyle(color: Colors.white),
+                                                              onChanged: (String newValue) {
+                                                                setState(() {
+                                                                  referenceParameterDropdownValues[(index * 3) + 1] = newValue;
+                                                                });
+                                                              },
+                                                              items: getReferenceParameters((index * 3) + 1).map<DropdownMenuItem<String>>((String value) {
+                                                                return DropdownMenuItem<String>(
+                                                                  value: value,
+                                                                  child: Text(value),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          ]
+                                                        : [
+                                                            Text(currentReferenceParameters[(index * 3) + 1][0] + ": "),
+                                                            Container(
+                                                              width: MediaQuery.of(context).size.width * 0.05,
+                                                              height: MediaQuery.of(context).size.height * 0.05,
+                                                              child: TextField(
+                                                                keyboardType: TextInputType.number,
+                                                                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                controller: rangeReferenceParameterControllers[
+                                                                    (index * 3) + 1 - referenceParameterDropdownValues.length],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.0,
+                                                  ),
+                                                  Row(
+                                                    children: ((index * 3) + 2 < referenceParameterDropdownValues.length)
+                                                        ? [
+                                                            Text(currentReferenceParameters[(index * 3) + 2][0] + ": "),
+                                                            DropdownButton(
+                                                              icon: Icon(Icons.arrow_downward),
+                                                              iconSize: 24,
+                                                              value: referenceParameterDropdownValues[(index * 3) + 2],
+                                                              elevation: 16,
+                                                              style: TextStyle(color: Colors.white),
+                                                              onChanged: (String newValue) {
+                                                                setState(() {
+                                                                  referenceParameterDropdownValues[(index * 3) + 2] = newValue;
+                                                                });
+                                                              },
+                                                              items: getReferenceParameters((index * 3) + 2).map<DropdownMenuItem<String>>((String value) {
+                                                                return DropdownMenuItem<String>(
+                                                                  value: value,
+                                                                  child: Text(value),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          ]
+                                                        : [
+                                                            Text(currentReferenceParameters[(index * 3) + 2][0] + ": "),
+                                                            Container(
+                                                              width: MediaQuery.of(context).size.width * 0.05,
+                                                              height: MediaQuery.of(context).size.height * 0.05,
+                                                              child: TextField(
+                                                                keyboardType: TextInputType.number,
+                                                                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                controller: rangeReferenceParameterControllers[
+                                                                    (index * 3) + 2 - referenceParameterDropdownValues.length],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                  ),
+                                                ],
                                         );
                                       },
                                     ),
                                   ),
-                                  SizedBox(height: 20.0),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -414,16 +654,34 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                           setState(() {
                                             templateIDDropdownValue = newValue;
                                             if (typeDropdownValue == "Auction") {
-                                              for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
-                                                if (auctionHandler.contractTemplates.templates[i].id.toString() == templateIDDropdownValue) {
-                                                  template = auctionHandler.contractTemplates.templates[i];
+                                              if (userHandler.user.currentType == "Consumer") {
+                                                for (int i = 0; i < auctionHandler.consumerContractTemplates.templates.length; i++) {
+                                                  if (auctionHandler.consumerContractTemplates.templates[i].id.toString() == templateIDDropdownValue) {
+                                                    template = auctionHandler.consumerContractTemplates.templates[i];
+                                                  }
+                                                }
+                                              }
+                                              if (userHandler.user.currentType == "Supplier") {
+                                                for (int i = 0; i < auctionHandler.supplierContractTemplates.templates.length; i++) {
+                                                  if (auctionHandler.supplierContractTemplates.templates[i].id.toString() == templateIDDropdownValue) {
+                                                    template = auctionHandler.supplierContractTemplates.templates[i];
+                                                  }
                                                 }
                                               }
                                             }
                                             if (typeDropdownValue == "Offer") {
-                                              for (int i = 0; i < offerHandler.offerTemplates.templates.length; i++) {
-                                                if (offerHandler.offerTemplates.templates[i].id.toString() == templateIDDropdownValue) {
-                                                  template = offerHandler.offerTemplates.templates[i];
+                                              if (userHandler.user.currentType == "Consumer") {
+                                                for (int i = 0; i < offerHandler.consumerOfferTemplates.templates.length; i++) {
+                                                  if (offerHandler.consumerOfferTemplates.templates[i].id.toString() == templateIDDropdownValue) {
+                                                    template = offerHandler.consumerOfferTemplates.templates[i];
+                                                  }
+                                                }
+                                              }
+                                              if (userHandler.user.currentType == "Supplier") {
+                                                for (int i = 0; i < offerHandler.supplierOfferTemplates.templates.length; i++) {
+                                                  if (offerHandler.supplierOfferTemplates.templates[i].id.toString() == templateIDDropdownValue) {
+                                                    template = offerHandler.supplierOfferTemplates.templates[i];
+                                                  }
                                                 }
                                               }
                                             }
@@ -440,7 +698,7 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                   ),
                                   SizedBox(height: 20.0),
                                   Text(
-                                    typeDropdownValue == "Auction" ? "Contract Template" : "Offer Template",
+                                    typeDropdownValue == "Auction" ? "Contract Template" : "Your Offer",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(fontWeight: FontWeight.bold),
                                     textScaleFactor: 1.5,
@@ -460,24 +718,48 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                               SizedBox(height: 20.0),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Key: ",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Text(
-                                                    template.templateVariables[0].key,
-                                                    style: TextStyle(fontStyle: FontStyle.italic),
-                                                  ),
-                                                  Text(
-                                                    " Value Type: ",
-                                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Text(
-                                                    template.templateVariables[0].valueType,
-                                                    style: TextStyle(fontStyle: FontStyle.italic),
-                                                  ),
-                                                ],
+                                                children: typeDropdownValue == "Auction"
+                                                    ? [
+                                                        Text(
+                                                          "Key: ",
+                                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                                        ),
+                                                        Text(
+                                                          template.templateVariables[0].key,
+                                                          style: TextStyle(fontStyle: FontStyle.italic),
+                                                        ),
+                                                        Text(
+                                                          " Value Type: ",
+                                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                                        ),
+                                                        Text(
+                                                          template.templateVariables[0].valueType,
+                                                          style: TextStyle(fontStyle: FontStyle.italic),
+                                                        ),
+                                                      ]
+                                                    : [
+                                                        Container(
+                                                          width: MediaQuery.of(context).size.width * 0.2,
+                                                          height: MediaQuery.of(context).size.height * 0.05,
+                                                          child: template.templateVariables[0].valueType == "Text"
+                                                              ? TextField(
+                                                                  controller: offerControllers[0],
+                                                                  decoration: InputDecoration(
+                                                                    hintText: template.templateVariables[0].key,
+                                                                  ),
+                                                                )
+                                                              : (template.templateVariables[0].valueType == "Integer"
+                                                                  ? TextField(
+                                                                      controller: offerControllers[0],
+                                                                      keyboardType: TextInputType.number,
+                                                                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                      decoration: InputDecoration(
+                                                                        hintText: template.templateVariables[0].key,
+                                                                      ),
+                                                                    )
+                                                                  : null),
+                                                        ),
+                                                      ],
                                               ),
                                               SizedBox(height: 20.0),
                                               Text(
@@ -492,24 +774,48 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                                             SizedBox(height: 20.0),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "Key: ",
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  template.templateVariables[index].key,
-                                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                                ),
-                                                Text(
-                                                  " Value Type: ",
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  template.templateVariables[index].valueType,
-                                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                                ),
-                                              ],
+                                              children: typeDropdownValue == "Auction"
+                                                  ? [
+                                                      Text(
+                                                        "Key: ",
+                                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                                      ),
+                                                      Text(
+                                                        template.templateVariables[index].key,
+                                                        style: TextStyle(fontStyle: FontStyle.italic),
+                                                      ),
+                                                      Text(
+                                                        " Value Type: ",
+                                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                                      ),
+                                                      Text(
+                                                        template.templateVariables[index].valueType,
+                                                        style: TextStyle(fontStyle: FontStyle.italic),
+                                                      ),
+                                                    ]
+                                                  : [
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width * 0.2,
+                                                        height: MediaQuery.of(context).size.height * 0.05,
+                                                        child: template.templateVariables[index].valueType == "Text"
+                                                            ? TextField(
+                                                                controller: offerControllers[index],
+                                                                decoration: InputDecoration(
+                                                                  hintText: template.templateVariables[index].key,
+                                                                ),
+                                                              )
+                                                            : (template.templateVariables[index].valueType == "Integer"
+                                                                ? TextField(
+                                                                    controller: offerControllers[index],
+                                                                    keyboardType: TextInputType.number,
+                                                                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                    decoration: InputDecoration(
+                                                                      hintText: template.templateVariables[index].key,
+                                                                    ),
+                                                                  )
+                                                                : null),
+                                                      ),
+                                                    ],
                                             ),
                                             SizedBox(height: 20.0),
                                             Text(
@@ -533,32 +839,72 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                         child: ElevatedButton(
                           child: Text(typeDropdownValue == "Auction" ? "Create auction" : "Create offer"),
                           onPressed: () {
-                            if (referenceTypeDropdownValue == "material") {
-                              auctionHandler.createMaterialAuction(
-                                  int.parse(templateIDDropdownValue),
-                                  title.text,
-                                  int.parse(maxParticipants.text),
-                                  int.parse(duration.text),
-                                  referenceParameterDropdownValues[0],
-                                  referenceParameterDropdownValues[1],
-                                  referenceParameterDropdownValues[2],
-                                  referenceParameterDropdownValues[3],
-                                  referenceParameterDropdownValues[4],
-                                  int.parse(rangeReferenceParameterControllers[0].text),
-                                  int.parse(rangeReferenceParameterControllers[1].text),
-                                  int.parse(rangeReferenceParameterControllers[2].text),
-                                  int.parse(rangeReferenceParameterControllers[3].text));
+                            if (typeDropdownValue == "Auction") {
+                              if (referenceTypeDropdownValue == "material") {
+                                auctionHandler.createMaterialAuction(
+                                    int.parse(templateIDDropdownValue),
+                                    title.text,
+                                    int.parse(maxParticipants.text),
+                                    int.parse(duration.text),
+                                    referenceParameterDropdownValues[0],
+                                    referenceParameterDropdownValues[1],
+                                    referenceParameterDropdownValues[2],
+                                    referenceParameterDropdownValues[3],
+                                    referenceParameterDropdownValues[4],
+                                    int.parse(rangeReferenceParameterControllers[0].text),
+                                    int.parse(rangeReferenceParameterControllers[1].text),
+                                    int.parse(rangeReferenceParameterControllers[2].text),
+                                    int.parse(rangeReferenceParameterControllers[3].text));
+                              }
+                              if (referenceTypeDropdownValue == "referencetype2") {
+                                auctionHandler.createReferencetype2Auction(
+                                    int.parse(templateIDDropdownValue),
+                                    title.text,
+                                    int.parse(maxParticipants.text),
+                                    int.parse(duration.text),
+                                    referenceParameterDropdownValues[0],
+                                    referenceParameterDropdownValues[1],
+                                    int.parse(rangeReferenceParameterControllers[0].text),
+                                    int.parse(rangeReferenceParameterControllers[1].text));
+                              }
                             }
-                            if (referenceTypeDropdownValue == "referencetype2") {
-                              auctionHandler.createReferencetype2Auction(
-                                  int.parse(templateIDDropdownValue),
-                                  title.text,
-                                  int.parse(maxParticipants.text),
-                                  int.parse(duration.text),
-                                  referenceParameterDropdownValues[0],
-                                  referenceParameterDropdownValues[1],
-                                  int.parse(rangeReferenceParameterControllers[0].text),
-                                  int.parse(rangeReferenceParameterControllers[1].text));
+                            if (typeDropdownValue == "Offer") {
+                              List<KeyValuePair> keyValuePairs = [];
+                              for (int i = 0; i < template.templateVariables.length; i++) {
+                                if (template.templateVariables[i].valueType == "Text") {
+                                  keyValuePairs.add(KeyValuePair(key: template.templateVariables[i].key, value: offerControllers[i].text));
+                                }
+                                if (template.templateVariables[i].valueType == "Integer") {
+                                  keyValuePairs.add(KeyValuePair(key: template.templateVariables[i].key, value: int.parse(offerControllers[i].text)));
+                                }
+                              }
+                              if (referenceTypeDropdownValue == "material") {
+                                offerHandler.createMaterialOffer(
+                                    int.parse(templateIDDropdownValue),
+                                    title.text,
+                                    keyValuePairs,
+                                    int.parse(duration.text),
+                                    referenceParameterDropdownValues[0],
+                                    referenceParameterDropdownValues[1],
+                                    referenceParameterDropdownValues[2],
+                                    referenceParameterDropdownValues[3],
+                                    referenceParameterDropdownValues[4],
+                                    int.parse(rangeReferenceParameterControllers[0].text),
+                                    int.parse(rangeReferenceParameterControllers[1].text),
+                                    int.parse(rangeReferenceParameterControllers[2].text),
+                                    int.parse(rangeReferenceParameterControllers[3].text));
+                              }
+                              if (referenceTypeDropdownValue == "referencetype2") {
+                                offerHandler.createReferencetype2Offer(
+                                    int.parse(templateIDDropdownValue),
+                                    title.text,
+                                    keyValuePairs,
+                                    int.parse(duration.text),
+                                    referenceParameterDropdownValues[0],
+                                    referenceParameterDropdownValues[1],
+                                    int.parse(rangeReferenceParameterControllers[0].text),
+                                    int.parse(rangeReferenceParameterControllers[1].text));
+                              }
                             }
                             Navigator.pop(context);
                           },
@@ -578,24 +924,41 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                         referenceSectorDropdownValue = referenceTypes[0][0];
                         referenceTypeDropdownValue = referenceTypes[0][1];
                         referenceParameterDropdownValues = [];
+                        currentReferenceParameters = [];
                         for (int i = 0; i < referenceParameters.length; i++) {
                           if (referenceParameters[i][0] == referenceTypeDropdownValue) {
                             referenceParameterDropdownValues.add(referenceParameters[i][2]);
+                            List<String> l = [];
+                            for (int y = 1; y < referenceParameters[i].length; y++) {
+                              l.add(referenceParameters[i][y]);
+                            }
+                            currentReferenceParameters.add(l);
                           }
                         }
                         rangeReferenceParameterControllers = [];
                         for (int i = 0; i < rangeReferenceParameters.length; i++) {
                           if (rangeReferenceParameters[i][0] == referenceTypeDropdownValue) {
                             rangeReferenceParameterControllers.add(new TextEditingController());
+                            currentReferenceParameters.add([rangeReferenceParameters[i][1]]);
                           }
                         }
                         typeDropdownValue = "Auction";
-                        templateIDDropdownValue = auctionHandler.contractTemplates.templates[0].id.toString();
-                        templateIDs = [];
-                        for (int i = 0; i < auctionHandler.contractTemplates.templates.length; i++) {
-                          templateIDs.add(auctionHandler.contractTemplates.templates[i].id.toString());
+                        if (userHandler.user.currentType == "Consumer") {
+                          templateIDDropdownValue = auctionHandler.consumerContractTemplates.templates[0].id.toString();
+                          templateIDs = [];
+                          for (int i = 0; i < auctionHandler.consumerContractTemplates.templates.length; i++) {
+                            templateIDs.add(auctionHandler.consumerContractTemplates.templates[i].id.toString());
+                          }
+                          template = auctionHandler.consumerContractTemplates.templates[0];
                         }
-                        template = auctionHandler.contractTemplates.templates[0];
+                        if (userHandler.user.currentType == "Supplier") {
+                          templateIDDropdownValue = auctionHandler.supplierContractTemplates.templates[0].id.toString();
+                          templateIDs = [];
+                          for (int i = 0; i < auctionHandler.supplierContractTemplates.templates.length; i++) {
+                            templateIDs.add(auctionHandler.supplierContractTemplates.templates[i].id.toString());
+                          }
+                          template = auctionHandler.supplierContractTemplates.templates[0];
+                        }
                       });
                       Navigator.of(context).pop();
                     },

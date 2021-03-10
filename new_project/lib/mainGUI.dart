@@ -200,7 +200,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         ),
       ),
       child: Scaffold(
-        appBar: NavigationBar(navigate, auctionHandler.showContractTemplateGUI),
+        appBar: NavigationBar(navigate, auctionHandler.showContractTemplateGUI, userHandler),
         backgroundColor: Colors.transparent,
         body: FutureBuilder(
           future: playAnimation(),
