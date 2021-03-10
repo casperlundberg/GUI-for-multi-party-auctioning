@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:mailer/smtp_server.dart';
 import 'package:mailto/mailto.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../mainGUI.dart';
@@ -17,44 +19,73 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
   final Function navigate;
   ForgotPasswordState(this.navigate);
 
-  List<String> attachments = [];
-  bool isHTML = false;
+  TextEditingController _recipientController = new TextEditingController();
 
-  final _recipientController = TextEditingController(
-    text: 'example@example.com',
-  );
+  Future<void> sendMail() async {
+    String username = 'cappe5@hotmail.se';
+    String password = 'VOVVE1a2s3d';
 
-  final _subjectController = TextEditingController(text: 'The subject');
+    final smtpServer = hotmail(username, password);
+    // Use the SmtpServer class to configure an SMTP server:
+    // final smtpServer = SmtpServer('smtp.domain.com');
+    // See the named arguments of SmtpServer for further configuration
+    // options.
 
-  final _bodyController = TextEditingController(
-    text: 'Mail body.',
-  );
-
-  Future<void> send() async {
-    final Email email = Email(
-      body: _bodyController.text,
-      subject: _subjectController.text,
-      recipients: [_recipientController.text],
-      attachmentPaths: attachments,
-      isHTML: isHTML,
-    );
-
-    String platformResponse;
+    // Create our message.
+    final message = Message()
+      ..from = Address(username, 'Your name')
+      ..recipients.add(_recipientController.text)
+      //..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
+      //..bccRecipients.add(Address('bccAddress@example.com'))
+      ..subject = 'Forgot password? :: 😀 :: ${DateTime.now()}'
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
 
     try {
-      await FlutterEmailSender.send(email);
-      platformResponse = 'success';
-    } catch (error) {
-      platformResponse = error.toString();
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
     }
+    // DONE
 
-    if (!mounted) return;
+    // Let's send another message using a slightly different syntax:
+    //
+    // Addresses without a name part can be set directly.
+    // For instance `..recipients.add('destination@example.com')`
+    // If you want to display a name part you have to create an
+    // Address object: `new Address('destination@example.com', 'Display name part')`
+    // Creating and adding an Address object without a name part
+    // `new Address('destination@example.com')` is equivalent to
+    // adding the mail address as `String`.
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(platformResponse),
-      ),
-    );
+    /* final equivalentMessage = Message()
+      ..from = Address(username, 'Your name')
+      ..recipients.add(Address('destination@example.com'))
+      ..ccRecipients.addAll([Address('destCc1@example.com'), 'destCc2@example.com'])
+      ..bccRecipients.add('bccAddress@example.com')
+      ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
+
+    final sendReport2 = await send(equivalentMessage, smtpServer);
+
+    // Sending multiple messages with the same connection
+    //
+    // Create a smtp client that will persist the connection
+    var connection = PersistentConnection(smtpServer);
+
+    // Send the first message
+    await connection.send(message);
+
+    // send the equivalent message
+    await connection.send(equivalentMessage);
+
+    // close the connection
+    await connection.close(); */
   }
 
   @override
@@ -82,7 +113,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
                   TextButton(
                     child: Text('Reset Password'),
                     onPressed: () {
-                      send();
+                      sendMail();
                       //Should go to a waiting for confiramtion screen or just sit here with a message saying the same
                       //this.parent.selectedWidgetMarker = WidgetMarker.register;
                     },
