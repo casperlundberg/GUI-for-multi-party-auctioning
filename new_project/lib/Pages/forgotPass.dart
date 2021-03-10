@@ -19,7 +19,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
   final Function navigate;
   ForgotPasswordState(this.navigate);
 
-  TextEditingController _recipientController = new TextEditingController();
+/*   TextEditingController _recipientController = new TextEditingController();
 
   Future<void> sendMail() async {
     String username = 'cappe5@hotmail.se';
@@ -50,43 +50,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
         print('Problem: ${p.code}: ${p.msg}');
       }
     }
-    // DONE
-
-    // Let's send another message using a slightly different syntax:
-    //
-    // Addresses without a name part can be set directly.
-    // For instance `..recipients.add('destination@example.com')`
-    // If you want to display a name part you have to create an
-    // Address object: `new Address('destination@example.com', 'Display name part')`
-    // Creating and adding an Address object without a name part
-    // `new Address('destination@example.com')` is equivalent to
-    // adding the mail address as `String`.
-
-    /* final equivalentMessage = Message()
-      ..from = Address(username, 'Your name')
-      ..recipients.add(Address('destination@example.com'))
-      ..ccRecipients.addAll([Address('destCc1@example.com'), 'destCc2@example.com'])
-      ..bccRecipients.add('bccAddress@example.com')
-      ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
-      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-      ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
-
-    final sendReport2 = await send(equivalentMessage, smtpServer);
-
-    // Sending multiple messages with the same connection
-    //
-    // Create a smtp client that will persist the connection
-    var connection = PersistentConnection(smtpServer);
-
-    // Send the first message
-    await connection.send(message);
-
-    // send the equivalent message
-    await connection.send(equivalentMessage);
-
-    // close the connection
-    await connection.close(); */
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +77,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
                   TextButton(
                     child: Text('Reset Password'),
                     onPressed: () {
-                      sendMail();
+                      //sendMail();
                       //Should go to a waiting for confiramtion screen or just sit here with a message saying the same
                       //this.parent.selectedWidgetMarker = WidgetMarker.register;
                     },
