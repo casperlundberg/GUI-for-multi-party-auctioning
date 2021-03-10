@@ -71,7 +71,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
                     padding: EdgeInsets.all(8.0),
                     child: TextFormField(
                       decoration: InputDecoration(hintText: 'Email'),
-                      controller: _recipientController,
+                      //controller: _recipientController,
                     ),
                   ),
                   TextButton(
