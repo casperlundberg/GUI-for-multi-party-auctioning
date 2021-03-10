@@ -1,0 +1,30 @@
+{
+    "referencetype2Offers":[
+        {
+            "id": 4,
+            "title": "Reference type 2 offer",
+            "userID": 1,
+            "templateID": 6,
+            "keyValuePairs": [
+                {
+                    "key": "Name",
+                    "value": "Thule Thulesson"
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 225
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-04-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "referencetype2",
+            "referenceParameters": {
+                "parameter1": "good choice",
+                "parameter2": "great choice",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        }
+    ]
+}

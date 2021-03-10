@@ -1,0 +1,34 @@
+{
+    "referencetype2Offers":[
+        {
+            "id": 5,
+            "title": "Supplier reference type 2 offer",
+            "userID": 1,
+            "templateID": 8,
+            "keyValuePairs": [
+                {
+                    "key": "CompanyName",
+                    "value": "Demand and supply Co."
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 2000
+                },
+                {
+                    "key": "Time",
+                    "value": 2
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-04-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "referencetype2",
+            "referenceParameters": {
+                "parameter1": "good choice",
+                "parameter2": "great choice",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        }
+    ]
+}

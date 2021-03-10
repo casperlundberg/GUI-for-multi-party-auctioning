@@ -1,7 +1,7 @@
 {
-    "offerTemplates": [
+    "templates": [
         {
-            "id": 1,
+            "id": 6,
             "templateStrings": [
                 {
                     "text": "I, "
@@ -10,7 +10,7 @@
                     "text": " am interested in purchasing units at the starting price of "
                 },
                 {
-                    "text": " per kg. "
+                    "text": " EUR per kg. "
                 }
             ],
             "templateVariables": [

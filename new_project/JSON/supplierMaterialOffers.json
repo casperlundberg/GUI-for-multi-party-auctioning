@@ -1,0 +1,47 @@
+{
+    "materialOffers":[
+        {
+            "id": 3,
+            "title": "Supplier material offer",
+            "userID": 1,
+            "templateID": 7,
+            "keyValuePairs": [
+                {
+                    "key": "CompanyName",
+                    "value": "Demand and supply Co."
+                },
+                {
+                    "key": "Weight",
+                    "value": 10
+                },
+                {
+                    "key": "Amount of money",
+                    "value": 200
+                },
+                {
+                    "key": "Quantity",
+                    "value": 1000
+                },
+                {
+                    "key": "Time",
+                    "value": 2
+                }
+            ],
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-04-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        }
+    ]
+}

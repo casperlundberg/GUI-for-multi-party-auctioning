@@ -1,7 +1,7 @@
 {
-    "offerTemplates": [
+    "templates": [
         {
-            "id": 1,
+            "id": 7,
             "templateStrings": [
                 {
                     "text": ""
@@ -46,13 +46,13 @@
             ]
         },
         {
-            "id": 2,
+            "id": 8,
             "templateStrings": [
                 {
                     "text": ""
                 },
                 {
-                    "text": " is willing to sell 100 units of certified quality for minimum "
+                    "text": " is willing to sell 100 units of certified quality for the buyout price of "
                 },
                 {
                     "text": " EUR, our dispatch time is on average "

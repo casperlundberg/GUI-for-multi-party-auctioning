@@ -1,34 +1,133 @@
 {
-    "filters": [
+    "referenceSectors": [
         {
-            "id": 1,
-            "name": "Wood",
-            "description": "Soft material which often is used in the paper industry"
-        },
-        {
-            "id": 2,
-            "name": "Metals",
-            "description": "Metal is stronger than most materials"
-        },
-        {
-            "id": 3,
-            "name": "Soil",
-            "description": "Soil is used to grow plants and trees"
-        },
-        {
-            "id": 4,
-            "name": "Stone",
-            "description": "Description for stone"
-        },
-        {
-            "id": 5,
-            "name": "Gold",
-            "description": "Description for gold"
-        },
-        {
-            "id": 6,
-            "name": "Silver",
-            "description": "Description for silver"
+            "name": "composites",
+            "referenceTypes":[
+                {
+                    "name": "material",
+                    "referenceParameters":[
+                        {
+                            "name": "fibersType",
+                            "values": [
+                                {
+                                    "filterValue": "any"
+                                },
+                                {
+                                    "filterValue": "glass fibers"
+                                },
+                                {
+                                    "filterValue": "other fibers"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "resinType",
+                            "values": [
+                                {
+                                    "filterValue": "any"
+                                },
+                                {
+                                    "filterValue": "epoxy"
+                                },
+                                {
+                                    "filterValue": "yxope"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "recyclingTechnology",
+                            "values":[
+                                {
+                                    "filterValue": "any"
+                                },
+                                {
+                                    "filterValue": "cutting edge"
+                                },
+                                {
+                                    "filterValue": "outdated"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "sizing",
+                            "values":[
+                                {
+                                    "filterValue": "any"
+                                },
+                                {
+                                    "filterValue": "small"
+                                },
+                                {
+                                    "filterValue": "medium"
+                                },
+                                {
+                                    "filterValue": "large"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "additives",
+                            "values":[
+                                {
+                                    "filterValue": "any"
+                                },
+                                {
+                                    "filterValue": "deluxe"
+                                },
+                                {
+                                    "filterValue": "minimalistic"
+                                }
+                            ]
+                        }
+                    ],
+                    "rangeReferenceParameters":[
+                        {
+                            "name": "fiberLength"
+                        },
+                        {
+                            "name": "volume"
+                        }
+                    ]
+                },
+                {
+                    "name": "referencetype2",
+                    "referenceParameters":[
+                        {
+                            "name": "parameter1",
+                            "values":[
+                                {
+                                    "filterValue": "any"
+                                },
+                                {
+                                    "filterValue": "good choice"
+                                },
+                                {
+                                    "filterValue": "bad choice"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "parameter2",
+                            "values": [
+                                {
+                                    "filterValue": "any"
+                                },
+                                {
+                                    "filterValue": "great choice"
+                                },
+                                {
+                                    "filterValue": "not so great choice"
+                                }
+                            ]
+                        }
+                    ],
+                    "rangeReferenceParameters":[
+                        {
+                            "name": "volume"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

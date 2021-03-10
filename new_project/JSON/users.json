@@ -22,6 +22,9 @@
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
+                    "auctionID": 1
+                },
+                {
                     "auctionID": 2
                 },
                 {
@@ -32,6 +35,21 @@
                 },
                 {
                     "auctionID": 5
+                },
+                {
+                    "auctionID": 6
+                },
+                {
+                    "auctionID": 7
+                },
+                {
+                    "auctionID": 10
+                },
+                {
+                    "auctionID": 11
+                },
+                {
+                    "auctionID": 12
                 }
             ],
             "offers": [
@@ -39,7 +57,13 @@
                     "offerID": 1
                 },
                 {
-                    "offerID": 2
+                    "offerID": 3
+                },
+                {
+                    "offerID": 4
+                },
+                {
+                    "offerID": 5
                 }
             ],
             "requestInbox": [
@@ -69,7 +93,7 @@
                     "status": "Accepted",
                     "auctionID": 7,
                     "userID": 2,
-                    "offerID": 3
+                    "offerID": 2
                 }
             ]
         },
@@ -95,21 +119,36 @@
             "company": "Netlight",
             "participatingAuctions": [
                 {
-                    "auctionID": 2
+                    "auctionID": 1
                 },
                 {
-                    "auctionID": 3
+                    "auctionID": 2
                 },
                 {
                     "auctionID": 4
                 },
                 {
                     "auctionID": 5
+                },
+                {
+                    "auctionID": 6
+                },
+                {
+                    "auctionID": 7
+                },
+                {
+                    "auctionID": 8
+                },
+                {
+                    "auctionID": 9
+                },
+                {
+                    "auctionID": 10
                 }
             ],
             "offers":[
                 {
-                    "offerID": 3
+                    "offerID": 2
                 }
             ],
             "requestInbox":[
@@ -141,6 +180,9 @@
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
+                    "auctionID": 1
+                },
+                {
                     "auctionID": 2
                 },
                 {
@@ -151,6 +193,21 @@
                 },
                 {
                     "auctionID": 5
+                },
+                {
+                    "auctionID": 6
+                },
+                {
+                    "auctionID": 7
+                },
+                {
+                    "auctionID": 8
+                },
+                {
+                    "auctionID": 9
+                },
+                {
+                    "auctionID": 10
                 }
             ],
             "offers":[
@@ -185,6 +242,9 @@
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
+                    "auctionID": 1
+                },
+                {
                     "auctionID": 2
                 },
                 {
@@ -195,6 +255,21 @@
                 },
                 {
                     "auctionID": 5
+                },
+                {
+                    "auctionID": 6
+                },
+                {
+                    "auctionID": 7
+                },
+                {
+                    "auctionID": 8
+                },
+                {
+                    "auctionID": 9
+                },
+                {
+                    "auctionID": 10
                 }
             ],
             "offers":[
@@ -229,6 +304,9 @@
             "company": "Teknologkåren",
             "participatingAuctions": [
                 {
+                    "auctionID": 1
+                },
+                {
                     "auctionID": 2
                 },
                 {
@@ -239,6 +317,21 @@
                 },
                 {
                     "auctionID": 5
+                },
+                {
+                    "auctionID": 6
+                },
+                {
+                    "auctionID": 7
+                },
+                {
+                    "auctionID": 8
+                },
+                {
+                    "auctionID": 9
+                },
+                {
+                    "auctionID": 10
                 }
             ],
             "offers":[

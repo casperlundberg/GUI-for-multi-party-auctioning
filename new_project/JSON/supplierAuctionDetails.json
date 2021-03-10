@@ -2,10 +2,6 @@
     "auctionDetailsList": [
         {
             "id": 1,
-            "title": "Testauction 1",
-            "ownerID": 1,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 2
@@ -20,11 +16,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Wood",
-            "contractTemplateID": 1,
+            "templateID": 3,
             "bids": [
                 {
+                    "id": 3,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
@@ -51,6 +46,7 @@
                     ]
                 },
                 {
+                    "id": 4,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -77,36 +73,16 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 2,
-            "title": "Testauction 2",
-            "ownerID": 1,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
-                {
-                    "userID": 2
-                },
-                {
-                    "userID": 3
-                },
-                {
-                    "userID": 4
-                },
-                {
-                    "userID": 5
-                }
             ],
-            "roundTime": 300,
-            "material": "Stone",
-            "contractTemplateID": 1,
+            "templateID": 3,
             "bids": [
                 {
+                    "id": 5,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
@@ -133,6 +109,7 @@
                     ]
                 },
                 {
+                    "id": 6,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -159,17 +136,10 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00.001Z",
-            "stopDate": "2021-02-15T11:30:00.001Z",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 3,
-            "title": "Testauction 3",
-            "ownerID": 1,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 3
@@ -181,11 +151,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Gold",
-            "contractTemplateID": 1,
+            "templateID": 3,
             "bids": [
                 {
+                    "id": 7,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -212,17 +181,10 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-06-15T11:30:00+01:00",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 4,
-            "title": "Testauction 4",
-            "ownerID": 1,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 2
@@ -237,11 +199,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Silver",
-            "contractTemplateID": 1,
+            "templateID": 3,
             "bids": [
                 {
+                    "id": 8,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
@@ -268,6 +229,7 @@
                     ]
                 },
                 {
+                    "id": 9,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -294,17 +256,10 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-06-15T11:30:00+01:00",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 5,
-            "title": "Testauction 5",
-            "ownerID": 1,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 2
@@ -319,11 +274,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Wood",
-            "contractTemplateID": 1,
+            "templateID": 3,
             "bids": [
                 {
+                    "id": 10,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
@@ -350,6 +304,7 @@
                     ]
                 },
                 {
+                    "id": 11,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -376,17 +331,10 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-06-15T11:30:00+01:00",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 6,
-            "title": "Testauction 6",
-            "ownerID": 1,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 2
@@ -401,11 +349,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Wood",
-            "contractTemplateID": 1,
+            "templateID": 4,
             "bids": [
                 {
+                    "id": 12,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
@@ -432,6 +379,7 @@
                     ]
                 },
                 {
+                    "id": 13,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -458,17 +406,10 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-06-15T11:30:00+01:00",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 7,
-            "title": "Testauction 7",
-            "ownerID": 1,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 2
@@ -483,11 +424,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Wood",
-            "contractTemplateID": 1,
+            "templateID": 4,
             "bids": [
                 {
+                    "id": 14,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 2,
                     "keyValuePairs": [
@@ -514,6 +454,7 @@
                     ]
                 },
                 {
+                    "id": 15,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -540,17 +481,10 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-06-15T11:30:00+01:00",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 8,
-            "title": "Testauction 8",
-            "ownerID": 2,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 3
@@ -562,11 +496,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Wood",
-            "contractTemplateID": 1,
+            "templateID": 4,
             "bids": [
                 {
+                    "id": 16,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -593,17 +526,10 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-06-15T11:30:00+01:00",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
         },
         {
             "id": 9,
-            "title": "Testauction 9",
-            "ownerID": 2,
-            "ownerType" : "Supplier",
-            "maxParticipants": 10,
             "participants": [
                 {
                     "userID": 3
@@ -615,11 +541,10 @@
                     "userID": 5
                 }
             ],
-            "roundTime": 300,
-            "material": "Wood",
-            "contractTemplateID": 1,
+            "templateID": 4,
             "bids": [
                 {
+                    "id": 17,
                     "time": "2021-02-15T10:40:00.001Z",
                     "userID": 3,
                     "keyValuePairs": [
@@ -646,10 +571,18 @@
                     ]
                 }
             ],
-            "startDate": "2021-02-15T10:30:00+01:00",
-            "stopDate": "2021-06-15T11:30:00+01:00",
-            "referenceSector": "composites",
-            "referenceType": "material"
+            "winningBid": 0
+        },
+        {
+            "id": 12,
+            "participants": [
+
+            ],
+            "templateID": 4,
+            "bids": [
+
+            ],
+            "winningBid": 0
         }
     ]
 }

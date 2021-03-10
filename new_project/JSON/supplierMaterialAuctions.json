@@ -1,0 +1,202 @@
+{
+    "materialAuctions": [
+        {
+            "id": 1,
+            "title": "Testauction 1",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 4,
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 2,
+            "title": "Testauction 2",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 0,
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-02-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 3,
+            "title": "Testauction 3",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 3,
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 4,
+            "title": "Testauction 4",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 4,
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 5,
+            "title": "Testauction 5",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 4,
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 6,
+            "title": "Testauction 6",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 4,
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 7,
+            "title": "Testauction 7",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 4,
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 8,
+            "title": "Testauction 8",
+            "ownerID": 2,
+            "maxParticipants": 10,
+            "currentParticipants": 3,
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        },
+        {
+            "id": 9,
+            "title": "Testauction 9",
+            "ownerID": 2,
+            "maxParticipants": 10,
+            "currentParticipants": 3,
+            "startDate": "2021-02-15T10:30:00+01:00",
+            "stopDate": "2021-06-15T11:30:00+01:00",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 2,
+                "maxFiberLength": 10,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        }
+    ]
+}

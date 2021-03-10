@@ -1,0 +1,21 @@
+{
+    "referencetype2Auctions": [
+        {
+            "id": 12,
+            "title": "Supplier referencetype2 auction",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 0,
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-04-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "referencetype2",
+            "referenceParameters": {
+                "parameter1": "good choice",
+                "parameter2": "great choice",
+                "minVolume": 500,
+                "maxVolume": 5000
+            }
+        }
+    ]
+}

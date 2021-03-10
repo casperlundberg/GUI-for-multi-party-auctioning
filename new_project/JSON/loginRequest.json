@@ -1,7 +1,0 @@
-{
-    "email": "thule@gmail.com",
-    "password": {
-        "type": "sha1",
-        "encryption": "7638417db6d59f3c431d3e1f261cc637155684cd"
-    }
-}
