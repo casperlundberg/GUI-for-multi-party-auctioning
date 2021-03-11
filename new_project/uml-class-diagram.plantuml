@@ -1,4 +1,4 @@
-@startuml
+@startuml Auctionsystem
 set namespaceSeparator ::
 
 
@@ -430,7 +430,7 @@ class "Auctioneer::mainGUI.dart::MainGUIState" {
 "Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
 "Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::offerHandler.dart::OfferHandler"
 
-package UserPages <<Rectangle>> {
+package UserPages <<Folder>> {
   class "Login" {
     /'+Function navigate
     +UserInfoHandler userHandler
@@ -491,15 +491,15 @@ package UserPages <<Rectangle>> {
 }
 
 
-"Auctioneer::Pages::login.dart::Login" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Login" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
 
 
-"Auctioneer::Pages::profile.dart::Profile" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Profile" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
 
 
-"Auctioneer::Pages::register.dart::Register" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Register" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
 class "Auctioneer::Pages::room.dart::_RoomState" {
   /'+Function navigate
