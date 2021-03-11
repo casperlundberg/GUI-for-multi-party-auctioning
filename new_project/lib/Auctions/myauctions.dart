@@ -213,13 +213,22 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
       List<Referencetype2Auction> referencetype2Auctions,
       List<MaterialOffer> materialOffers,
       List<Referencetype2Offer> referencetype2Offers}) {
+    DateTime now = DateTime.now();
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return Container(
             margin: EdgeInsets.all(5.0),
             padding: EdgeInsets.only(left: 10, right: 10),
-            color: Colors.greenAccent[700],
+            color: materialAuctions != null
+                ? (materialAuctions[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
+                : referencetype2Auctions != null
+                    ? (referencetype2Auctions[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
+                    : materialOffers != null
+                        ? (materialOffers[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
+                        : (referencetype2Offers != null
+                            ? (referencetype2Offers[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
+                            : null),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
