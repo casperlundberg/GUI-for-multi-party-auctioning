@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/Entities/userList.dart';
+import 'package:new_project/Handlers/userInfoHandler.dart';
 
 import '../mainGUI.dart';
 
@@ -6,10 +8,11 @@ class NavigationBar extends StatefulWidget implements PreferredSizeWidget {
   final Function navigate;
   final Function showContractTemplateGUI;
   final Function showNotifications;
+  final UserInfoHandler userHandler;
   int counter;
-  NavigationBar(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter);
+  NavigationBar(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter, this.userHandler);
 
-  NavigationState createState() => NavigationState(navigate, showContractTemplateGUI, showNotifications, counter);
+  NavigationState createState() => NavigationState(navigate, showContractTemplateGUI, showNotifications, counter, userHandler);
 
   @override
   Size get preferredSize => new Size.fromHeight(kToolbarHeight);
@@ -19,8 +22,9 @@ class NavigationState extends State<NavigationBar> {
   final Function navigate;
   final Function showContractTemplateGUI;
   final Function showNotifications;
+  final UserInfoHandler userHandler;
   int counter;
-  NavigationState(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter);
+  NavigationState(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter, this.userHandler);
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +56,7 @@ class NavigationState extends State<NavigationBar> {
           margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: ElevatedButton(
               onPressed: () {
+                userHandler.user = new User();
                 navigate(WidgetMarker.login);
               },
               //style: ElevatedButton.styleFrom(primary: Colors.red),

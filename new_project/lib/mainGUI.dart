@@ -114,6 +114,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
           auctionHandler.showContractTemplateGUI,
           notificationsHandler.showNotifications,
           userHandler.user.inviteInbox.length + userHandler.user.requestInbox.length,
+          userHandler,
         ),
         backgroundColor: Colors.transparent,
         body: FutureBuilder(

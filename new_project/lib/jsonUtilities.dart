@@ -127,27 +127,11 @@ String userListString = '''{
                 }
             ],
             "offers":[
-                {
-                    "offerID": 3
-                }
             ],
             "requestInbox":[
-                {
-                    "time": "2021-02-15T10:30:00.001Z",
-                    "status": "null",
-                    "auctionID": null,
-                    "userID": null
-                }
 
             ],
             "inviteInbox":[
-                {
-                    "time": "2021-02-15T10:30:00.001Z",
-                    "status": "null",
-                    "auctionID": null,
-                    "userID": null,
-                    "offerID": null
-                }
             ]
         },
         {
