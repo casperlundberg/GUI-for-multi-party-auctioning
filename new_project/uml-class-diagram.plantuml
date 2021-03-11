@@ -3,7 +3,7 @@ set namespaceSeparator ::
 
 
 
-class "new_project::Auctions::allAuctions.dart::_AllAuctionsState" {
+class "Auctioneer::Auctions::allAuctions.dart::_AllAuctionsState" {
   +Function navigate
   +FilterHandler filterHandler
   +AuctionHandler auctionHandler
@@ -23,15 +23,13 @@ class "new_project::Auctions::allAuctions.dart::_AllAuctionsState" {
   +List getReferenceTypes()
 }
 
-"new_project::Auctions::allAuctions.dart::_AllAuctionsState" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::Auctions::allAuctions.dart::_AllAuctionsState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::Auctions::allAuctions.dart::_AllAuctionsState" o-- "new_project::Handlers::offerHandler.dart::OfferHandler"
-"new_project::Auctions::allAuctions.dart::_AllAuctionsState" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Auctions::allAuctions.dart::_AllAuctionsState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Auctions::allAuctions.dart::_AllAuctionsState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::Auctions::allAuctions.dart::_AllAuctionsState" o-- "Auctioneer::Handlers::offerHandler.dart::OfferHandler"
+"Auctioneer::Auctions::allAuctions.dart::_AllAuctionsState" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
 
-
-
-class "new_project::Auctions::myauctions.dart::_MyAuctionsState" {
+class "Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" {
   +Function navigate
   +AuctionHandler auctionHandler
   +OfferHandler offerHandler
@@ -63,18 +61,18 @@ class "new_project::Auctions::myauctions.dart::_MyAuctionsState" {
   +List getReferenceParameters()
 }
 
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Handlers::offerHandler.dart::OfferHandler"
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"new_project::Auctions::myauctions.dart::_MyAuctionsState" o-- "new_project::Entities::templateListJSON.dart::Template"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Handlers::offerHandler.dart::OfferHandler"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Entities::templateListJSON.dart::Template"
 
-class "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetailsList" {
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetailsList" {
   +List<AuctionDetails> auctionDetailsList
   +Map toJson()
 }
 
-class "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetails" {
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails" {
   +int id
   +List<Participant> participants
   +int templateId
@@ -83,65 +81,30 @@ class "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetails" {
   +Map toJson()
 }
 
-class "new_project::Entities::auctionDetailsListJSON.dart::Bid" {
-  +int id
-  +DateTime time
-  +int userId
-  +List<KeyValuePair> keyValuePairs
-  +Map toJson()
-}
-
-class "new_project::Entities::auctionDetailsListJSON.dart::KeyValuePair" {
-  +String key
-  +dynamic value
-  +Map toJson()
-}
-
-class "new_project::Entities::auctionDetailsListJSON.dart::Participant" {
-  +int userId
-  +Map toJson()
-}
-
-class "new_project::Entities::filtersJSON.dart::Filters" {
+class "Auctioneer::Entities::filtersJSON.dart::Filters" {
   +List<ReferenceSector> referenceSectors
   +Map toJson()
 }
 
-class "new_project::Entities::filtersJSON.dart::ReferenceSector" {
+class "Auctioneer::Entities::filtersJSON.dart::ReferenceSector" {
   +String name
   +List<ReferenceType> referenceTypes
   +Map toJson()
 }
 
-class "new_project::Entities::filtersJSON.dart::ReferenceType" {
+class "Auctioneer::Entities::filtersJSON.dart::ReferenceType" {
   +String name
   +List<ReferenceParameter> referenceParameters
   +List<RangeReferenceParameter> rangeReferenceParameters
   +Map toJson()
 }
 
-class "new_project::Entities::filtersJSON.dart::RangeReferenceParameter" {
-  +String name
-  +Map toJson()
-}
-
-class "new_project::Entities::filtersJSON.dart::ReferenceParameter" {
-  +String name
-  +List<FilterValue> values
-  +Map toJson()
-}
-
-class "new_project::Entities::filtersJSON.dart::FilterValue" {
-  +String filterValue
-  +Map toJson()
-}
-
-class "new_project::Entities::materialAuctionListJSON.dart::MaterialAuctionList" {
+class "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialAuctionList" {
   +List<MaterialAuction> materialAuctions
   +Map toJson()
 }
 
-class "new_project::Entities::materialAuctionListJSON.dart::MaterialAuction" {
+class "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialAuction" {
   +int id
   +String title
   +int ownerId
@@ -155,9 +118,9 @@ class "new_project::Entities::materialAuctionListJSON.dart::MaterialAuction" {
   +Map toJson()
 }
 
-"new_project::Entities::materialAuctionListJSON.dart::MaterialAuction" o-- "new_project::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters"
+"Auctioneer::Entities::materialAuctionListJSON.dart::MaterialAuction" o-- "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters"
 
-class "new_project::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters" {
+class "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters" {
   +String fibersType
   +String resinType
   +int minFiberLength
@@ -171,12 +134,12 @@ class "new_project::Entities::materialAuctionListJSON.dart::MaterialReferencePar
   +Map toJson()
 }
 
-class "new_project::Entities::materialOfferListJSON.dart::MaterialOfferList" {
+class "Auctioneer::Entities::materialOfferListJSON.dart::MaterialOfferList" {
   +List<MaterialOffer> materialOffers
   +Map toJson()
 }
 
-class "new_project::Entities::materialOfferListJSON.dart::MaterialOffer" {
+class "Auctioneer::Entities::materialOfferListJSON.dart::MaterialOffer" {
   +int id
   +String title
   +int userId
@@ -190,14 +153,14 @@ class "new_project::Entities::materialOfferListJSON.dart::MaterialOffer" {
   +Map toJson()
 }
 
-"new_project::Entities::materialOfferListJSON.dart::MaterialOffer" o-- "new_project::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters"
+"Auctioneer::Entities::materialOfferListJSON.dart::MaterialOffer" o-- "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters"
 
-class "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2AuctionList" {
+class "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2AuctionList" {
   +List<Referencetype2Auction> referencetype2Auctions
   +Map toJson()
 }
 
-class "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2Auction" {
+class "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2Auction" {
   +int id
   +String title
   +int ownerId
@@ -211,9 +174,9 @@ class "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2
   +Map toJson()
 }
 
-"new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2Auction" o-- "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters"
+"Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2Auction" o-- "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters"
 
-class "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters" {
+class "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters" {
   +String parameter1
   +String parameter2
   +int minVolume
@@ -222,12 +185,12 @@ class "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2
   +Map toJson()
 }
 
-class "new_project::Entities::referencetype2OfferListJSON.dart::Referencetype2OfferList" {
+class "Auctioneer::Entities::referencetype2OfferListJSON.dart::Referencetype2OfferList" {
   +List<Referencetype2Offer> referencetype2Offers
   +Map toJson()
 }
 
-class "new_project::Entities::referencetype2OfferListJSON.dart::Referencetype2Offer" {
+class "Auctioneer::Entities::referencetype2OfferListJSON.dart::Referencetype2Offer" {
   +int id
   +String title
   +int userId
@@ -241,33 +204,22 @@ class "new_project::Entities::referencetype2OfferListJSON.dart::Referencetype2Of
   +Map toJson()
 }
 
-"new_project::Entities::referencetype2OfferListJSON.dart::Referencetype2Offer" o-- "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters"
+"Auctioneer::Entities::referencetype2OfferListJSON.dart::Referencetype2Offer" o-- "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters"
 
-class "new_project::Entities::templateListJSON.dart::TemplateList" {
+class "Auctioneer::Entities::templateListJSON.dart::TemplateList" {
   +List<Template> templates
   +Map toJson()
 }
 
-class "new_project::Entities::templateListJSON.dart::Template" {
+class "Auctioneer::Entities::templateListJSON.dart::Template" {
   +int id
   +List<TemplateString> templateStrings
   +List<TemplateVariable> templateVariables
   +Map toJson()
 }
 
-class "new_project::Entities::templateListJSON.dart::TemplateString" {
-  +String text
-  +Map toJson()
-}
 
-class "new_project::Entities::templateListJSON.dart::TemplateVariable" {
-  +String key
-  +String valueType
-  +Map toJson()
-}
-
-
-class "new_project::Entities::userListJSON.dart::User" {
+class "Auctioneer::Entities::userListJSON.dart::User" {
   +int userId
   +String userName
   +String email
@@ -286,44 +238,8 @@ class "new_project::Entities::userListJSON.dart::User" {
   +Map toJson()
 }
 
-"new_project::Entities::userListJSON.dart::User" o-- "new_project::Entities::userListJSON.dart::Password"
-"new_project::Entities::userListJSON.dart::User" o-- "new_project::Entities::userListJSON.dart::Address"
 
-class "new_project::Entities::userListJSON.dart::Address" {
-  +String streetAddress
-  +String city
-  +String state
-  +String postalCode
-  +Map toJson()
-}
-
-class "new_project::Entities::userListJSON.dart::Inbox" {
-  +DateTime time
-  +String status
-  +int auctionId
-  +int userId
-  +int offerId
-  +Map toJson()
-}
-
-class "new_project::Entities::userListJSON.dart::Offer" {
-  +int offerId
-  +Map toJson()
-}
-
-class "new_project::Entities::userListJSON.dart::ParticipatingAuction" {
-  +int auctionId
-  +Map toJson()
-}
-
-class "new_project::Entities::userListJSON.dart::Password" {
-  +String type
-  +String encryption
-  +Map toJson()
-}
-
-
-class "new_project::Filters::filtersGUI.dart::_FiltersState" {
+class "Auctioneer::Filters::filtersGUI.dart::_FiltersState" {
   +FilterHandler filterHandler
   +List<TextEditingController> controllers
   +List<List> referenceTypes
@@ -342,18 +258,18 @@ class "new_project::Filters::filtersGUI.dart::_FiltersState" {
   +List getReferenceParameters()
 }
 
-"new_project::Filters::filtersGUI.dart::_FiltersState" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Filters::filtersGUI.dart::_FiltersState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
 
 
-class "new_project::Handlers::auctionHandler.dart::Auctions" {
+class "Auctioneer::Handlers::auctionHandler.dart::Auctions" {
   +MaterialAuctionList materialAuctions
   +Referencetype2AuctionList referencetype2Auctions
 }
 
-"new_project::Handlers::auctionHandler.dart::Auctions" o-- "new_project::Entities::materialAuctionListJSON.dart::MaterialAuctionList"
-"new_project::Handlers::auctionHandler.dart::Auctions" o-- "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2AuctionList"
+"Auctioneer::Handlers::auctionHandler.dart::Auctions" o-- "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialAuctionList"
+"Auctioneer::Handlers::auctionHandler.dart::Auctions" o-- "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2AuctionList"
 
-class "new_project::Handlers::auctionHandler.dart::AuctionHandler" {
+class "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" {
   +Function setMainState
   +AuctionDetailsList consumerAuctionDetails
   +AuctionDetailsList supplierAuctionDetails
@@ -390,13 +306,13 @@ class "new_project::Handlers::auctionHandler.dart::AuctionHandler" {
   +void showContractTemplateGUI()
 }
 
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetailsList"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Handlers::auctionHandler.dart::Auctions"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Entities::templateListJSON.dart::TemplateList"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Entities::auctionDetailsListJSON.dart::AuctionDetails"
-"new_project::Handlers::auctionHandler.dart::AuctionHandler" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetailsList"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Handlers::auctionHandler.dart::Auctions"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::templateListJSON.dart::TemplateList"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Handlers::filterHandler.dart::FilterHandler" {
+class "Auctioneer::Handlers::filterHandler.dart::FilterHandler" {
   +Function setMainState
   +Filters filters
   +MaterialReferenceParameters materialFilter
@@ -408,19 +324,19 @@ class "new_project::Handlers::filterHandler.dart::FilterHandler" {
   +void retrieveFilters()
 }
 
-"new_project::Handlers::filterHandler.dart::FilterHandler" o-- "new_project::Entities::filtersJSON.dart::Filters"
-"new_project::Handlers::filterHandler.dart::FilterHandler" o-- "new_project::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters"
-"new_project::Handlers::filterHandler.dart::FilterHandler" o-- "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters"
+"Auctioneer::Handlers::filterHandler.dart::FilterHandler" o-- "Auctioneer::Entities::filtersJSON.dart::Filters"
+"Auctioneer::Handlers::filterHandler.dart::FilterHandler" o-- "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialReferenceParameters"
+"Auctioneer::Handlers::filterHandler.dart::FilterHandler" o-- "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2ReferenceParameters"
 
-class "new_project::Handlers::offerHandler.dart::Offers" {
+class "Auctioneer::Handlers::offerHandler.dart::Offers" {
   +MaterialOfferList materialOffers
   +Referencetype2OfferList referencetype2Offers
 }
 
-"new_project::Handlers::offerHandler.dart::Offers" o-- "new_project::Entities::materialOfferListJSON.dart::MaterialOfferList"
-"new_project::Handlers::offerHandler.dart::Offers" o-- "new_project::Entities::referencetype2OfferListJSON.dart::Referencetype2OfferList"
+"Auctioneer::Handlers::offerHandler.dart::Offers" o-- "Auctioneer::Entities::materialOfferListJSON.dart::MaterialOfferList"
+"Auctioneer::Handlers::offerHandler.dart::Offers" o-- "Auctioneer::Entities::referencetype2OfferListJSON.dart::Referencetype2OfferList"
 
-class "new_project::Handlers::offerHandler.dart::OfferHandler" {
+class "Auctioneer::Handlers::offerHandler.dart::OfferHandler" {
   +Function setMainState
   +Offers allOffers
   +Offers myOffers
@@ -434,11 +350,11 @@ class "new_project::Handlers::offerHandler.dart::OfferHandler" {
   +void viewOffer()
 }
 
-"new_project::Handlers::offerHandler.dart::OfferHandler" o-- "new_project::Handlers::offerHandler.dart::Offers"
-"new_project::Handlers::offerHandler.dart::OfferHandler" o-- "new_project::Entities::templateListJSON.dart::TemplateList"
-"new_project::Handlers::offerHandler.dart::OfferHandler" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Handlers::offerHandler.dart::OfferHandler" o-- "Auctioneer::Handlers::offerHandler.dart::Offers"
+"Auctioneer::Handlers::offerHandler.dart::OfferHandler" o-- "Auctioneer::Entities::templateListJSON.dart::TemplateList"
+"Auctioneer::Handlers::offerHandler.dart::OfferHandler" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Handlers::userInfoHandler.dart::UserInfoHandler" {
+class "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" {
   +Function updateUser
   +UserList userListObject
   +User user
@@ -457,10 +373,10 @@ class "new_project::Handlers::userInfoHandler.dart::UserInfoHandler" {
   +void inviteToAuction()
 }
 
-"new_project::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "new_project::Entities::userListJSON.dart::User"
+"Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "Auctioneer::Entities::userListJSON.dart::User"
 
 
-class "new_project::mainGUI.dart::WidgetMarker" {
+class "Auctioneer::mainGUI.dart::WidgetMarker" {
   +int index
   {static} +List<WidgetMarker> values
   {static} +WidgetMarker auctions
@@ -471,10 +387,10 @@ class "new_project::mainGUI.dart::WidgetMarker" {
   {static} +WidgetMarker room
 }
 
-"new_project::mainGUI.dart::WidgetMarker" o-- "new_project::mainGUI.dart::WidgetMarker"
+"Auctioneer::mainGUI.dart::WidgetMarker" o-- "Auctioneer::mainGUI.dart::WidgetMarker"
 
 
-class "new_project::mainGUI.dart::MainGUIState" {
+class "Auctioneer::mainGUI.dart::MainGUIState" {
   +WidgetMarker selectedWidgetMarker
   +AnimationController controller
   +Animation animation
@@ -502,15 +418,15 @@ class "new_project::mainGUI.dart::MainGUIState" {
   +Widget getRoomContainer()
 }
 
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::mainGUI.dart::WidgetMarker"
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::Handlers::filterHandler.dart::FilterHandler"
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::mainGUI.dart::MainGUIState" o-- "new_project::Handlers::offerHandler.dart::OfferHandler"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::mainGUI.dart::WidgetMarker"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::offerHandler.dart::OfferHandler"
 
 
 
-class "new_project::Navigation::navbar.dart::NavigationState" {
+class "Auctioneer::Navigation::navbar.dart::NavigationState" {
   +Function navigate
   +Function showContractTemplateGUI
   +Function showNotifications
@@ -520,10 +436,10 @@ class "new_project::Navigation::navbar.dart::NavigationState" {
   +Widget getNotificationsWidgetCounter()
 }
 
-"new_project::Navigation::navbar.dart::NavigationState" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Navigation::navbar.dart::NavigationState" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
 
-class "new_project::Pages::login.dart::Login" {
+class "Auctioneer::Pages::login.dart::Login" {
   +Function navigate
   +UserInfoHandler userHandler
   -TextEditingController _controllerUserName
@@ -533,9 +449,9 @@ class "new_project::Pages::login.dart::Login" {
   +Widget build()
 }
 
-"new_project::Pages::login.dart::Login" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Pages::login.dart::Login" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Pages::profile.dart::Profile" {
+class "Auctioneer::Pages::profile.dart::Profile" {
   +Function navigate
   +UserInfoHandler userHandler
   -GlobalKey<FormState> _formKey
@@ -571,9 +487,9 @@ class "new_project::Pages::profile.dart::Profile" {
   +Widget build()
 }
 
-"new_project::Pages::profile.dart::Profile" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Pages::profile.dart::Profile" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Pages::register.dart::Register" {
+class "Auctioneer::Pages::register.dart::Register" {
   +Function navigate
   +UserInfoHandler userHandler
   -TextEditingController _controllerUserName
@@ -587,9 +503,9 @@ class "new_project::Pages::register.dart::Register" {
   +Widget build()
 }
 
-"new_project::Pages::register.dart::Register" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Pages::register.dart::Register" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
 
-class "new_project::Pages::room.dart::_RoomState" {
+class "Auctioneer::Pages::room.dart::_RoomState" {
   +Function navigate
   +AuctionHandler auctionHandler
   +UserInfoHandler userHandler
@@ -609,11 +525,11 @@ class "new_project::Pages::room.dart::_RoomState" {
   +void showContractGUI()
 }
 
-"new_project::Pages::room.dart::_RoomState" o-- "new_project::Handlers::auctionHandler.dart::AuctionHandler"
-"new_project::Pages::room.dart::_RoomState" o-- "new_project::Handlers::userInfoHandler.dart::UserInfoHandler"
-"new_project::Pages::room.dart::_RoomState" o-- "new_project::Entities::templateListJSON.dart::Template"
-"new_project::Pages::room.dart::_RoomState" o-- "new_project::Entities::materialAuctionListJSON.dart::MaterialAuction"
-"new_project::Pages::room.dart::_RoomState" o-- "new_project::Entities::referencetype2AuctionListJSON.dart::Referencetype2Auction"
+"Auctioneer::Pages::room.dart::_RoomState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::Pages::room.dart::_RoomState" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+"Auctioneer::Pages::room.dart::_RoomState" o-- "Auctioneer::Entities::templateListJSON.dart::Template"
+"Auctioneer::Pages::room.dart::_RoomState" o-- "Auctioneer::Entities::materialAuctionListJSON.dart::MaterialAuction"
+"Auctioneer::Pages::room.dart::_RoomState" o-- "Auctioneer::Entities::referencetype2AuctionListJSON.dart::Referencetype2Auction"
 
 
 @enduml
