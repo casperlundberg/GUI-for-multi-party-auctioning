@@ -3,11 +3,27 @@ import 'package:new_project/Handlers/userInfoHandler.dart';
 
 import '../mainGUI.dart';
 
-class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
+class NavigationBar extends StatefulWidget implements PreferredSizeWidget {
   final Function navigate;
   final Function showContractTemplateGUI;
+  final Function showNotifications;
   final UserInfoHandler userHandler;
-  NavigationBar(this.navigate, this.showContractTemplateGUI, this.userHandler);
+  int counter;
+  NavigationBar(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter, this.userHandler);
+
+  NavigationState createState() => NavigationState(navigate, showContractTemplateGUI, showNotifications, counter, userHandler);
+
+  @override
+  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+}
+
+class NavigationState extends State<NavigationBar> {
+  final Function navigate;
+  final Function showContractTemplateGUI;
+  final Function showNotifications;
+  final UserInfoHandler userHandler;
+  int counter;
+  NavigationState(this.navigate, this.showContractTemplateGUI, this.showNotifications, this.counter, this.userHandler);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +43,23 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
       ),
 
       actions: <Widget>[
+        Column(
+          children: [
+            SizedBox(height: 20.0),
+            Text(
+              userHandler.user.userName,
+            ),
+          ],
+        ),
+        Container(
+          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          child: ElevatedButton(
+              onPressed: () {
+                navigate(WidgetMarker.login);
+              },
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+              child: Text("Log out")),
+        ),
         Container(
           margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
           child: ElevatedButton(
@@ -35,12 +68,21 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
               },
               child: Text("New Contract Template")),
         ),
-        IconButton(
-          icon: Icon(Icons.notifications),
-          tooltip: 'Notifications',
-          onPressed: () {
-            // Fixa potentiellt interface för detta i framtiden
-          },
+        Center(
+          child: Stack(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  setState(() {
+                    //print(counter);
+                  });
+                  showNotifications(context, null, null);
+                },
+              ),
+              getNotificationsWidgetCounter(),
+            ],
+          ),
         ),
         IconButton(
           icon: Icon(Icons.account_circle),
@@ -53,6 +95,37 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  @override
-  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+  Widget getNotificationsWidgetCounter() {
+    if (counter != 0) {
+      return Positioned(
+        right: 5,
+        top: 5,
+        child: Container(
+          padding: EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          constraints: BoxConstraints(
+            minWidth: 16,
+            minHeight: 16,
+          ),
+          child: Center(
+            child: Text(
+              '$counter',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 9,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
 }

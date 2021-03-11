@@ -201,11 +201,75 @@ class UserInfoHandler {
     updateUser();
   }
 
-  void logOut() {
-    this.user = new User();
+  void requestToJoin(int auctionID, int userID) {
+    DateTime now = DateTime.now();
+    //Put "sent" notification in users inbox.
+    user.requestInbox.add(Inbox(
+      time: now,
+      status: "Sent",
+      auctionId: auctionID,
+      userId: userID,
+      offerId: null,
+    ));
+    //Update "database".
+    for (int i = 0; i < userListObject.users.length; i++) {
+      if (userListObject.users[i].userId == userID) {
+        //Put "pending" request in userIDs inbox.
+        userListObject.users[i].requestInbox.add(Inbox(
+          time: now,
+          status: "Pending",
+          auctionId: auctionID,
+          userId: user.userId,
+          offerId: null,
+        ));
+      }
+      if (userListObject.users[i].userId == user.userId) {
+        userListObject.users[i].requestInbox.add(Inbox(
+          time: now,
+          status: "Sent",
+          auctionId: auctionID,
+          userId: userID,
+          offerId: null,
+        ));
+      }
+    }
+    setUsers(userListToJson(userListObject));
+    updateUser();
   }
 
-  // unimplemented
-  void requestToJoin(int auctionID) {}
-  void inviteToAuction(int auctionID) {}
+  void inviteToAuction(int auctionID, int offerID, int userID) {
+    DateTime now = DateTime.now();
+    //Put "sent" notification in users inbox.
+    user.inviteInbox.add(Inbox(
+      time: now,
+      status: "Sent",
+      auctionId: auctionID,
+      userId: userID,
+      offerId: offerID,
+    ));
+    //Update "database".
+    for (int i = 0; i < userListObject.users.length; i++) {
+      if (userListObject.users[i].userId == userID) {
+        //Put "pending" invite in userIDs inbox.
+        userListObject.users[i].inviteInbox.add(Inbox(
+          time: now,
+          status: "Pending",
+          auctionId: auctionID,
+          userId: user.userId,
+          offerId: offerID,
+        ));
+      }
+      if (userListObject.users[i].userId == user.userId) {
+        userListObject.users[i].inviteInbox.add(Inbox(
+          time: now,
+          status: "Sent",
+          auctionId: auctionID,
+          userId: userID,
+          offerId: offerID,
+        ));
+      }
+    }
+    setUsers(userListToJson(userListObject));
+    updateUser();
+  }
 }

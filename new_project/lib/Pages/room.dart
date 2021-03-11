@@ -18,20 +18,21 @@ import '../mainGUI.dart';
 class Room extends StatefulWidget {
   final Function navigate;
   final AuctionHandler auctionHandler;
-  final UserInfoHandler userHandler;
-  CountdownTimerController controller;
-  Room(this.navigate, this.auctionHandler, this.userHandler);
+  final UserInfoHandler _userHandler;
+  Room(this.navigate, this.auctionHandler, this._userHandler);
 
   @override
-  _RoomState createState() => _RoomState(navigate, auctionHandler, userHandler);
+  _RoomState createState() => _RoomState(navigate, auctionHandler, _userHandler);
 }
 
 class _RoomState extends State<Room> {
   final Function navigate;
   final AuctionHandler auctionHandler;
   final UserInfoHandler userHandler;
+  CountdownTimerController controller;
+  List<Inbox> out;
   Template contractTemplate;
-  List<TextEditingController> controllers = [];
+  List<TextEditingController> controllers;
   MaterialAuction materialAuction;
   Referencetype2Auction referencetype2Auction;
   bool isFinished;
@@ -39,9 +40,12 @@ class _RoomState extends State<Room> {
 
   _RoomState(this.navigate, this.auctionHandler, this.userHandler) {
     this.contractTemplate = auctionHandler.getContractTemplate(auctionHandler.currentAuctionDetails.templateId);
+
+    controllers = [];
     for (int i = 0; i < contractTemplate.templateVariables.length; i++) {
       controllers.add(new TextEditingController());
     }
+
     for (int i = 0; i < auctionHandler.myAuctions.materialAuctions.materialAuctions.length; i++) {
       if (auctionHandler.myAuctions.materialAuctions.materialAuctions[i].id == auctionHandler.currentAuctionDetails.id) {
         materialAuction = auctionHandler.myAuctions.materialAuctions.materialAuctions[i];
@@ -52,6 +56,7 @@ class _RoomState extends State<Room> {
         referencetype2Auction = auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i];
       }
     }
+
     if (materialAuction != null) {
       if (new DateTime.now().isBefore(materialAuction.stopDate)) {
         isFinished = false;
@@ -119,35 +124,110 @@ class _RoomState extends State<Room> {
                   margin: EdgeInsets.all(5.0),
                 ),
                 Spacer(),
-                Container(
-                    height: 40.0,
-                    alignment: Alignment.topLeft,
-                    margin: EdgeInsets.all(5.0),
-                    child: Tooltip(
-                      message: "Copy to clipboard",
-                      child: TextButton(
-                          child: Text(
-                            'ROOM CODE: ${auctionHandler.currentAuctionDetails.id}',
-                            textAlign: TextAlign.end,
-                            style: bigText,
-                          ),
-                          onPressed: () {
-                            Clipboard.setData(new ClipboardData(text: "${auctionHandler.currentAuctionDetails.id}")).then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  backgroundColor: Colors.grey[900], content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
-                            });
-                          }),
-                    )),
+                Column(
+                  children: [
+                    Container(
+                        height: 40.0,
+                        alignment: Alignment.topLeft,
+                        margin: EdgeInsets.all(5.0),
+                        child: Tooltip(
+                          message: "Copy to clipboard",
+                          child: TextButton(
+                              child: Text(
+                                'ROOM CODE: ${auctionHandler.currentAuctionDetails.id}',
+                                textAlign: TextAlign.end,
+                                style: bigText,
+                              ),
+                              onPressed: () {
+                                Clipboard.setData(new ClipboardData(text: "${auctionHandler.currentAuctionDetails.id}")).then((_) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      backgroundColor: Colors.grey[900],
+                                      content: Text("Room code copied to clipboard", style: TextStyle(color: Colors.white))));
+                                });
+                              }),
+                        )),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: isHost
+                          ? TextButton(
+                              child: Text(
+                                "End auction",
+                                textScaleFactor: 2,
+                              ),
+                              onPressed: () {
+                                auctionHandler.endAuction();
+                              },
+                            )
+                          : null,
+                    ),
+                  ],
+                ),
               ]),
               Container(
-                child: Text(
-                  'Participants: ' +
-                      (materialAuction != null
-                          ? materialAuction.currentParticipants.toString() + "/" + materialAuction.maxParticipants.toString()
-                          : (referencetype2Auction != null
-                              ? referencetype2Auction.currentParticipants.toString() + "/" + referencetype2Auction.maxParticipants.toString()
-                              : "")),
-                  style: bigText,
+                child: Row(
+                  children: [
+                    Text(
+                      'Participants: ' +
+                          (materialAuction != null
+                              ? materialAuction.currentParticipants.toString() + "/" + materialAuction.maxParticipants.toString()
+                              : (referencetype2Auction != null
+                                  ? referencetype2Auction.currentParticipants.toString() + "/" + referencetype2Auction.maxParticipants.toString()
+                                  : "")),
+                      style: bigText,
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    CountdownTimer(
+                      endTime: materialAuction != null
+                          ? materialAuction.stopDate.millisecondsSinceEpoch
+                          : (referencetype2Auction != null ? referencetype2Auction.stopDate.millisecondsSinceEpoch : null),
+                      widgetBuilder: (_, CurrentRemainingTime time) {
+                        if (time == null) {
+                          return Text('Auction finished', style: bigText);
+                        }
+                        return Text(
+                          'Time left: ${time.days} days, ${time.hours} hours, ${time.min} minutes, ${time.sec} seconds.',
+                          style: bigText,
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Container(
+                      child: auctionHandler.currentAuctionDetails.winningBid != 0
+                          ? Row(
+                              children: [
+                                Text(
+                                  () {
+                                    for (int i = 0; i < auctionHandler.currentAuctionDetails.bids.length; i++) {
+                                      if (auctionHandler.currentAuctionDetails.bids[i].id == auctionHandler.currentAuctionDetails.winningBid) {
+                                        for (int y = 0; y < userHandler.userListObject.users.length; y++) {
+                                          if (userHandler.userListObject.users[y].userId == auctionHandler.currentAuctionDetails.bids[i].userId) {
+                                            return "Winning bid made by " + userHandler.userListObject.users[y].userName;
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }(),
+                                  style: bigText,
+                                ),
+                                TextButton(
+                                  child: Text("View"),
+                                  onPressed: () {
+                                    for (int i = 0; i < auctionHandler.currentAuctionDetails.bids.length; i++) {
+                                      if (auctionHandler.currentAuctionDetails.bids[i].id == auctionHandler.currentAuctionDetails.winningBid) {
+                                        auctionHandler.viewBid(contractTemplate, auctionHandler.currentAuctionDetails.bids[i].keyValuePairs, context);
+                                      }
+                                    }
+                                  },
+                                )
+                              ],
+                            )
+                          : null,
+                    ),
+                  ],
                 ),
                 width: 1400.0,
                 height: MediaQuery.of(context).size.height * 0.05,
@@ -159,149 +239,206 @@ class _RoomState extends State<Room> {
                 ),
               ),
               Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                    //color: Colors.amber[700],
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: materialAuction != null
-                          ? [
-                              Text("Reference parameters", style: bigText),
-                              Text("Fibers type: " + materialAuction.materialReferenceParameters.fibersType),
-                              Text("Resin type: " + materialAuction.materialReferenceParameters.resinType),
-                              Text("Minimum fiber length: " + materialAuction.materialReferenceParameters.minFiberLength.toString()),
-                              Text("Maximum fiber length: " + materialAuction.materialReferenceParameters.maxFiberLength.toString()),
-                              Text("Recycling technology: " + materialAuction.materialReferenceParameters.recyclingTechnology),
-                              Text("Sizing: " + materialAuction.materialReferenceParameters.sizing),
-                              Text("Additives: " + materialAuction.materialReferenceParameters.additives),
-                              Text("Minimum volume: " + materialAuction.materialReferenceParameters.minVolume.toString()),
-                              Text("Maximum volume: " + materialAuction.materialReferenceParameters.maxVolume.toString()),
-                            ]
-                          : (referencetype2Auction != null
-                              ? [
-                                  Text("Reference parameters", style: bigText),
-                                  Text("Parameter 1: " + referencetype2Auction.referencetype2ReferenceParameters.parameter1),
-                                  Text("Parameter 2: " + referencetype2Auction.referencetype2ReferenceParameters.parameter2),
-                                  Text("Minimum volume: " + referencetype2Auction.referencetype2ReferenceParameters.minVolume.toString()),
-                                  Text("Maximum volume: " + referencetype2Auction.referencetype2ReferenceParameters.maxVolume.toString()),
-                                ]
-                              : [
-                                  Text("Reference parameters", style: bigText),
-                                ]),
-                    ),
-                  )),
-                  //Spacer(),
-                  Expanded(
-                    child: Container(
-                      color: Colors.white70,
-                      margin: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      child: CountdownTimer(
-                        endTime: materialAuction != null
-                            ? materialAuction.stopDate.millisecondsSinceEpoch
-                            : (referencetype2Auction != null ? referencetype2Auction.stopDate.millisecondsSinceEpoch : null),
-                        widgetBuilder: (_, CurrentRemainingTime time) {
-                          if (time == null) {
-                            return Text('Auction Finished');
-                          }
-                          return Text('Days: ${time.days}, Hours: ${time.hours}, Minute: ${time.min}, Seconds: ${time.sec}');
-                        },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: Container(
+                      padding: EdgeInsets.all(5.0),
+                      margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                      //color: Colors.amber[700],
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: materialAuction != null
+                            ? [
+                                Text("Reference parameters", style: bigText),
+                                Text("Fibers type: " + materialAuction.materialReferenceParameters.fibersType),
+                                Text("Resin type: " + materialAuction.materialReferenceParameters.resinType),
+                                Text("Minimum fiber length: " + materialAuction.materialReferenceParameters.minFiberLength.toString()),
+                                Text("Maximum fiber length: " + materialAuction.materialReferenceParameters.maxFiberLength.toString()),
+                                Text("Recycling technology: " + materialAuction.materialReferenceParameters.recyclingTechnology),
+                                Text("Sizing: " + materialAuction.materialReferenceParameters.sizing),
+                                Text("Additives: " + materialAuction.materialReferenceParameters.additives),
+                                Text("Minimum volume: " + materialAuction.materialReferenceParameters.minVolume.toString()),
+                                Text("Maximum volume: " + materialAuction.materialReferenceParameters.maxVolume.toString()),
+                              ]
+                            : (referencetype2Auction != null
+                                ? [
+                                    Text("Reference parameters", style: bigText),
+                                    Text("Parameter 1: " + referencetype2Auction.referencetype2ReferenceParameters.parameter1),
+                                    Text("Parameter 2: " + referencetype2Auction.referencetype2ReferenceParameters.parameter2),
+                                    Text("Minimum volume: " + referencetype2Auction.referencetype2ReferenceParameters.minVolume.toString()),
+                                    Text("Maximum volume: " + referencetype2Auction.referencetype2ReferenceParameters.maxVolume.toString()),
+                                  ]
+                                : [
+                                    Text("Reference parameters", style: bigText),
+                                  ]),
+                      ),
+                    )),
+                    //Spacer(),
+
+                    Expanded(
+                      child: Column(
+                        children: [
+                          checkForNotifications()
+                              ? Expanded(
+                                  child: ElevatedButton(
+                                    child: Text("Show notifications for this auction"),
+                                    onPressed: () {
+                                      auctionHandler.showNotifications(
+                                          context,
+                                          out,
+                                          (materialAuction != null
+                                              ? materialAuction.title
+                                              : (referencetype2Auction != null ? referencetype2Auction.title : null)));
+                                    },
+                                  ),
+                                )
+                              : SizedBox(height: 0.01),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                ),
+              ),
               Expanded(
-                  child: Container(
-                      color: Colors.grey[900],
-                      margin: EdgeInsets.all(5.0),
+                child: Container(
+                  color: Colors.grey[900],
+                  margin: EdgeInsets.all(5.0),
 
-                      //height: 300,
-                      child: Scrollbar(
-                        child: CustomScrollView(
-                          slivers: <Widget>[
-                            SliverAppBar(
-                              floating: true,
-                              pinned: true,
-                              snap: true,
-                              expandedHeight: 50.0,
-                              title: Row(children: [
-                                Text(
-                                  'Bids',
-                                  textAlign: TextAlign.start,
-                                ),
-                                Spacer(),
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  tooltip: 'New bid',
-                                  onPressed: () {
-                                    showContractGUI();
-                                  },
-                                ),
-                              ]),
-                            ),
-                            SliverFixedExtentList(
-                              itemExtent: 25.0,
-                              delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                                  List<KeyValuePair> currentBid = auctionHandler.currentAuctionDetails.bids[index].keyValuePairs;
-                                  User user;
-                                  for (int i = 0; i < userHandler.userListObject.users.length; i++) {
-                                    if (userHandler.userListObject.users[i].userId == auctionHandler.currentAuctionDetails.bids[index].userId) {
-                                      user = userHandler.userListObject.users[i];
-                                    }
-                                  }
-                                  String timeString = auctionHandler.currentAuctionDetails.bids[index].time.toLocal().toString();
-                                  int amountOfMoney;
-                                  for (int i = 0; i < currentBid.length; i++) {
-                                    if (currentBid[i].key == "Amount of money") {
-                                      amountOfMoney = currentBid[i].value;
-                                    }
-                                  }
-
-                                  return Container(
-                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                      alignment: Alignment.centerRight,
-                                      color: Colors.grey[850 + (50 * (index % 2))],
-                                      child: Row(children: [
-                                        Container(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                              //Sample string, could be reworked
-                                              '[$timeString] ${user.userName} placed bid for ${amountOfMoney.toString()} SEK',
-                                              style: TextStyle(fontFamily: 'Consolas')),
-                                        ),
-                                        Spacer(),
-                                        Container(
-                                          alignment: Alignment.centerRight,
-                                          child: TextButton(
-                                            child: Text("View"),
-                                            onPressed: () {
-                                              auctionHandler.viewBid(contractTemplate, currentBid, context);
-                                            },
-                                          ),
-                                        )
-                                      ]));
-                                },
-                                childCount: auctionHandler.currentAuctionDetails.bids.length,
+                  //height: 300,
+                  child: Scrollbar(
+                    child: CustomScrollView(
+                      slivers: <Widget>[
+                        SliverAppBar(
+                          floating: true,
+                          pinned: true,
+                          snap: true,
+                          expandedHeight: 50.0,
+                          title: Row(
+                            children: [
+                              Text(
+                                'Bids',
+                                textAlign: TextAlign.start,
                               ),
-                            ),
-                          ],
+                              Spacer(),
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                tooltip: isFinished ? "Auction has ended" : 'New bid',
+                                onPressed: isFinished
+                                    ? null
+                                    : () {
+                                        showContractGUI();
+                                      },
+                              ),
+                            ],
+                          ),
                         ),
-                      ))),
+                        SliverFixedExtentList(
+                          itemExtent: 25.0,
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              List<KeyValuePair> currentBid = auctionHandler.currentAuctionDetails.bids[index].keyValuePairs;
+                              User user;
+                              for (int i = 0; i < userHandler.userListObject.users.length; i++) {
+                                if (userHandler.userListObject.users[i].userId == auctionHandler.currentAuctionDetails.bids[index].userId) {
+                                  user = userHandler.userListObject.users[i];
+                                }
+                              }
+                              String timeString = auctionHandler.currentAuctionDetails.bids[index].time.toLocal().toString();
+                              int amountOfMoney;
+                              for (int i = 0; i < currentBid.length; i++) {
+                                if (currentBid[i].key == "Amount of money") {
+                                  amountOfMoney = currentBid[i].value;
+                                }
+                              }
+                              return Container(
+                                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                alignment: Alignment.centerRight,
+                                color: Colors.grey[850 + (50 * (index % 2))],
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                          //Sample string, could be reworked
+                                          '[$timeString] ${user.userName} placed bid for ${amountOfMoney.toString()} SEK',
+                                          style: TextStyle(fontFamily: 'Consolas')),
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Row(
+                                        children: isHost && !isFinished
+                                            ? [
+                                                TextButton(
+                                                  child: Text("Declare winner"),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      auctionHandler.selectAuctionWinner(auctionHandler.currentAuctionDetails.bids[index].id);
+                                                    });
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: Text("View"),
+                                                  onPressed: () {
+                                                    auctionHandler.viewBid(contractTemplate, currentBid, context);
+                                                  },
+                                                ),
+                                              ]
+                                            : [
+                                                TextButton(
+                                                  child: Text("View"),
+                                                  onPressed: () {
+                                                    auctionHandler.viewBid(contractTemplate, currentBid, context);
+                                                  },
+                                                ),
+                                              ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                            childCount: auctionHandler.currentAuctionDetails.bids.length,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  bool checkForNotifications() {
+    List<Inbox> req = new List.from(userHandler.user.requestInbox);
+    out = [];
+    for (int i = 0; i < auctionHandler.myAuctions.materialAuctions.materialAuctions.length; i++) {
+      for (int y = 0; y < req.length; y++) {
+        if (req[y].auctionId == auctionHandler.myAuctions.materialAuctions.materialAuctions[i].id) {
+          out.add(req[y]);
+        }
+      }
+    }
+    for (int i = 0; i < auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions.length; i++) {
+      for (int y = 0; y < req.length; y++) {
+        if (req[y].auctionId == auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i].id) {
+          out.add(req[y]);
+        }
+      }
+    }
+    if (out.isNotEmpty) {
+      return true;
+    }
+    return false;
   }
 
   void showContractGUI() {
@@ -440,7 +577,16 @@ class _RoomState extends State<Room> {
                           child: Text("Make bid"),
                           onPressed: () {
                             setState(() {
-                              auctionHandler.makeBid();
+                              List<KeyValuePair> keyValuePairs = [];
+                              for (int i = 0; i < contractTemplate.templateVariables.length; i++) {
+                                if (contractTemplate.templateVariables[i].valueType == "Text") {
+                                  keyValuePairs.add(KeyValuePair(key: contractTemplate.templateVariables[i].key, value: controllers[i].text));
+                                }
+                                if (contractTemplate.templateVariables[i].valueType == "Integer") {
+                                  keyValuePairs.add(KeyValuePair(key: contractTemplate.templateVariables[i].key, value: int.parse(controllers[i].text)));
+                                }
+                              }
+                              auctionHandler.makeBid(keyValuePairs);
                               Navigator.pop(context);
                             });
                           },

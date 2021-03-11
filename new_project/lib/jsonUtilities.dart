@@ -171,10 +171,22 @@ String users = '''{
                 }
             ],
             "requestInbox":[
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
 
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
@@ -230,13 +242,26 @@ String users = '''{
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 4
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
@@ -292,18 +317,31 @@ String users = '''{
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 5
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         },
         {
             "userId": 5,
-            "userName": "Gustav Curan",
+            "userName": "g",
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",
@@ -354,13 +392,26 @@ String users = '''{
                 }
             ],
             "offers":[
-
+                {
+                    "offerID": 6
+                }
             ],
             "requestInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null
+                }
             ],
             "inviteInbox":[
-
+                {
+                    "time": "2021-02-15T10:30:00.001Z",
+                    "status": "null",
+                    "auctionID": null,
+                    "userID": null,
+                    "offerID": null
+                }
             ]
         }
     ]
@@ -765,7 +816,7 @@ String supplierAuctionDetails = '''{
                     ]
                 }
             ],
-            "winningBid": 0
+            "winningBid": 5
         },
         {
             "id": 3,

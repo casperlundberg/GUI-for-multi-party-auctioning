@@ -200,7 +200,13 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         ),
       ),
       child: Scaffold(
-        appBar: NavigationBar(navigate, auctionHandler.showContractTemplateGUI, userHandler),
+        appBar: NavigationBar(
+          navigate,
+          auctionHandler.showContractTemplateGUI,
+          auctionHandler.showNotifications,
+          auctionHandler.inbox.length,
+          userHandler,
+        ),
         backgroundColor: Colors.transparent,
         body: FutureBuilder(
           future: playAnimation(),
@@ -218,7 +224,7 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
   }
 
   // Used to update page and userhandler with correct information.
-  void setMainState({String handler}) {
+  void setMainState(String handler) {
     setState(() {
       if (handler == "Auction") {
         userHandler = auctionHandler.userHandler;
@@ -228,7 +234,6 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
     });
   }
 
-  // Used whenever the user or the user's current usertype potentially changes.
   void updateUser() {
     setState(() {
       if (auctionHandler == null && offerHandler == null) {
@@ -278,6 +283,9 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         return;
       case WidgetMarker.room:
         setState(() {
+          if (auctionHandler.currentAuctionDetails == null) {
+            print("is null");
+          }
           selectedWidgetMarker = WidgetMarker.room;
         });
     }

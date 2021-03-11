@@ -1,8 +1,20 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'mainGUI.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  enablePlatformOverrideForDesktop();
+  runApp(MyApp());
+}
+
+void enablePlatformOverrideForDesktop() {
+  if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override

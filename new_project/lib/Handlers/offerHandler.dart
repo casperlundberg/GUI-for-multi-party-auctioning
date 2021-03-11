@@ -48,29 +48,10 @@ class OfferHandler {
     if (userHandler.user.offers.length != 0) {
       for (int i = 0; i < userHandler.user.offers.length; i++) {
         bool added = false;
-        for (int y = 0; y < allOffers.materialOffers.materialOffers.length; y++) {
-          if (userHandler.user.offers[i].offerId == allOffers.materialOffers.materialOffers[y].id) {
-            myOffers.materialOffers.materialOffers.add(allOffers.materialOffers.materialOffers[y]);
-            added = true;
-            break;
-          }
-        }
-        if (added) {
-          continue;
-        }
         for (int y = 0; y < m.materialOffers.length; y++) {
           if (userHandler.user.offers[i].offerId == m.materialOffers[y].id) {
             myOffers.materialOffers.materialOffers.add(m.materialOffers[y]);
             added = true;
-            break;
-          }
-        }
-        if (added) {
-          continue;
-        }
-        for (int y = 0; y < allOffers.referencetype2Offers.referencetype2Offers.length; y++) {
-          if (userHandler.user.offers[i].offerId == allOffers.referencetype2Offers.referencetype2Offers[y].id) {
-            myOffers.referencetype2Offers.referencetype2Offers.add(allOffers.referencetype2Offers.referencetype2Offers[y]);
             break;
           }
         }

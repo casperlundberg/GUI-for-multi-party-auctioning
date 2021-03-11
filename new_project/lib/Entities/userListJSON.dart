@@ -142,16 +142,16 @@ class Inbox {
   factory Inbox.fromJson(Map<String, dynamic> json) => Inbox(
         time: DateTime.parse(json["time"]),
         status: json["status"],
-        auctionId: json["auctionID"],
-        userId: json["userID"],
+        auctionId: json["auctionID"] == null ? null : json["auctionID"],
+        userId: json["userID"] == null ? null : json["userID"],
         offerId: json["offerID"] == null ? null : json["offerID"],
       );
 
   Map<String, dynamic> toJson() => {
         "time": time.toIso8601String(),
         "status": status,
-        "auctionID": auctionId,
-        "userID": userId,
+        "auctionID": auctionId == null ? null : auctionId,
+        "userID": userId == null ? null : userId,
         "offerID": offerId == null ? null : offerId,
       };
 }

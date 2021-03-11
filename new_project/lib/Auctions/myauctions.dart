@@ -3,12 +3,16 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
 import 'package:new_project/Entities/auctionDetailsListJSON.dart';
+import 'package:new_project/Entities/materialAuctionListJSON.dart';
 import 'package:new_project/Handlers/filterHandler.dart';
 import 'package:new_project/Handlers/offerHandler.dart';
 import 'package:new_project/Handlers/userInfoHandler.dart';
 import '../Handlers/auctionHandler.dart';
 import '../mainGUI.dart';
 import '../Entities/templateListJSON.dart';
+import '../Entities/referencetype2AuctionListJSON.dart';
+import '../Entities/materialOfferListJSON.dart';
+import '../Entities/referencetype2OfferListJSON.dart';
 
 class MyAuctions extends StatefulWidget {
   final Function navigate;
@@ -121,10 +125,13 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     var now = new DateTime.now();
+    Map materialAuctions = split(materialAuctions: auctionHandler.myAuctions.materialAuctions.materialAuctions, time: now);
+    Map referencetype2Auctions = split(referencetype2Auctions: auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions, time: now);
+
     return new Container(
       color: Colors.grey[900],
       height: MediaQuery.of(context).size.height * 0.9,
-      width: MediaQuery.of(context).size.width * 0.2,
+      width: MediaQuery.of(context).size.width * 0.35,
       margin: EdgeInsets.all(5.0),
       child: CustomScrollView(
         slivers: <Widget>[
@@ -141,37 +148,240 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
                 },
               ),
             ]),
-          ), /*
-          SliverFixedExtentList(
-              itemExtent: 100.0,
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.all(5.0),
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      color: now.isAfter(auctionHandler.myAuctions.auctionList[index].stopDate) ? Colors.redAccent : Colors.greenAccent[700],
-                      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Text('Name: Room ${auctionHandler.myAuctions.auctionList[index].id}'),
-                          Text('Material: ${auctionHandler.myAuctions.auctionList[index].material}'),
-                          Text('Participants: ${auctionHandler.myAuctions.auctionList[index].currentParticipants}'),
-                        ]),
-                        Spacer(),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: ElevatedButton(
-                              child: Text('Visit room'),
-                              onPressed: () {
-                                auctionHandler.setCurrentAuction(auctionHandler.myAuctions.auctionList[index].id);
-                                navigate(WidgetMarker.room);
-                              }),
-                        ),
-                      ]));
-                },
-                childCount: auctionHandler.myAuctions.auctionList.length,
-              ))*/
+          ),
+          //TODO: Collapseable categories?
+          SliverToBoxAdapter(
+            child: Container(
+              height: Size.fromHeight(kToolbarHeight).height * 0.5,
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+              child: Text("Ongoing auctions"),
+            ),
+          ),
+          buildAuctionList(materialAuctions: materialAuctions["ongoing"]),
+          buildAuctionList(referencetype2Auctions: referencetype2Auctions["ongoing"]),
+          SliverToBoxAdapter(
+            child: Container(
+              height: Size.fromHeight(kToolbarHeight).height * 0.5,
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+              child: Text("Finished auctions"),
+            ),
+          ),
+          buildAuctionList(materialAuctions: materialAuctions["finished"]),
+          buildAuctionList(referencetype2Auctions: referencetype2Auctions["finished"]),
+          SliverToBoxAdapter(
+            child: Container(
+              height: Size.fromHeight(kToolbarHeight).height * 0.5,
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+              child: Text("Offers"),
+            ),
+          ),
+          buildAuctionList(materialOffers: offerHandler.myOffers.materialOffers.materialOffers),
+          buildAuctionList(referencetype2Offers: offerHandler.myOffers.referencetype2Offers.referencetype2Offers),
         ],
+      ),
+    );
+  }
+
+  //Maps the a list of auctions into "finished" and "ongoing"
+  Map split({List<MaterialAuction> materialAuctions, List<Referencetype2Auction> referencetype2Auctions, DateTime time}) {
+    if (materialAuctions != null) {
+      List<MaterialAuction> finished = [];
+      List<MaterialAuction> ongoing = [];
+
+      for (int i = 0; i < materialAuctions.length; i++) {
+        time.isAfter(materialAuctions[i].stopDate) ? finished.add(materialAuctions[i]) : ongoing.add(materialAuctions[i]);
+      }
+
+      return {"finished": finished, "ongoing": ongoing};
+    }
+    if (referencetype2Auctions != null) {
+      List<Referencetype2Auction> finished = [];
+      List<Referencetype2Auction> ongoing = [];
+
+      for (int i = 0; i < referencetype2Auctions.length; i++) {
+        time.isAfter(referencetype2Auctions[i].stopDate) ? finished.add(referencetype2Auctions[i]) : ongoing.add(referencetype2Auctions[i]);
+      }
+
+      return {"finished": finished, "ongoing": ongoing};
+    }
+    return {"finished": [], "ongoing": []};
+  }
+
+  //Builder function for the auction list
+  SliverList buildAuctionList(
+      {List<MaterialAuction> materialAuctions,
+      List<Referencetype2Auction> referencetype2Auctions,
+      List<MaterialOffer> materialOffers,
+      List<Referencetype2Offer> referencetype2Offers}) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return Container(
+            margin: EdgeInsets.all(5.0),
+            padding: EdgeInsets.only(left: 10, right: 10),
+            color: Colors.greenAccent[700],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Title: ' +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].title
+                                  : (materialOffers != null
+                                      ? materialOffers[index].title
+                                      : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title)))),
+                          Text(materialAuctions != null
+                              ? " Participants: " +
+                                  materialAuctions[index].currentParticipants.toString() +
+                                  "/" +
+                                  materialAuctions[index].maxParticipants.toString()
+                              : (referencetype2Auctions != null
+                                  ? " Participants: " +
+                                      referencetype2Auctions[index].currentParticipants.toString() +
+                                      "/" +
+                                      referencetype2Auctions[index].maxParticipants.toString()
+                                  : "")),
+                          Text("Start date: " +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].startDate.toString().substring(0, 19)
+                                  : (materialOffers != null
+                                      ? materialOffers[index].startDate.toString().substring(0, 19)
+                                      : (referencetype2Auctions != null
+                                          ? referencetype2Auctions[index].startDate.toString().substring(0, 19)
+                                          : referencetype2Offers[index].startDate.toString().substring(0, 19))))),
+                          Text("Stop date: " +
+                              (materialAuctions != null
+                                  ? materialAuctions[index].stopDate.toString().substring(0, 19)
+                                  : (materialOffers != null
+                                      ? materialOffers[index].stopDate.toString().substring(0, 19)
+                                      : (referencetype2Auctions != null
+                                          ? referencetype2Auctions[index].stopDate.toString().substring(0, 19)
+                                          : referencetype2Offers[index].stopDate.toString().substring(0, 19))))),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: (materialAuctions != null || materialOffers != null)
+                            ? [
+                                Text("Fibers type: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.fibersType
+                                        : materialOffers[index].materialReferenceParameters.fibersType)),
+                                Text("Resin type: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.resinType
+                                        : materialOffers[index].materialReferenceParameters.resinType)),
+                                Text("Minimum fiber length: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.minFiberLength
+                                            : materialOffers[index].materialReferenceParameters.minFiberLength)
+                                        .toString() +
+                                    "mm"),
+                                Text("Maximum fiber length: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.maxFiberLength
+                                            : materialOffers[index].materialReferenceParameters.maxFiberLength)
+                                        .toString() +
+                                    "mm"),
+                                Text("Recycling technology: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.recyclingTechnology
+                                        : materialOffers[index].materialReferenceParameters.recyclingTechnology)),
+                                Text("Sizing: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.sizing
+                                        : materialOffers[index].materialReferenceParameters.sizing)),
+                                Text("Additives: " +
+                                    (materialAuctions != null
+                                        ? materialAuctions[index].materialReferenceParameters.additives
+                                        : materialOffers[index].materialReferenceParameters.additives)),
+                                Text("Minimum volume: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.minVolume
+                                            : materialOffers[index].materialReferenceParameters.minVolume)
+                                        .toString() +
+                                    "kg"),
+                                Text("Maximum volume: " +
+                                    (materialAuctions != null
+                                            ? materialAuctions[index].materialReferenceParameters.maxVolume
+                                            : materialOffers[index].materialReferenceParameters.maxVolume)
+                                        .toString() +
+                                    "kg"),
+                              ]
+                            : [
+                                Text("Parameter 1: " +
+                                    (referencetype2Auctions != null
+                                        ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter1
+                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter1)),
+                                Text("Parameter 2: " +
+                                    (referencetype2Auctions != null
+                                        ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter2
+                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter2)),
+                                Text("Minimum volume: " +
+                                    (referencetype2Auctions != null
+                                            ? referencetype2Auctions[index].referencetype2ReferenceParameters.minVolume
+                                            : referencetype2Offers[index].referencetype2ReferenceParameters.minVolume)
+                                        .toString() +
+                                    "kg"),
+                                Text("Maximum volume: " +
+                                    (referencetype2Auctions != null
+                                            ? referencetype2Auctions[index].referencetype2ReferenceParameters.maxVolume
+                                            : referencetype2Offers[index].referencetype2ReferenceParameters.maxVolume)
+                                        .toString() +
+                                    "kg"),
+                              ],
+                      ),
+                      Spacer(),
+                      Container(
+                        child: (materialAuctions != null
+                            ? ElevatedButton(
+                                child: Text("Visit room"),
+                                onPressed: () {
+                                  auctionHandler.setCurrentAuction(materialAuctions[index].id);
+                                  navigate(WidgetMarker.room);
+                                },
+                              )
+                            : (referencetype2Auctions != null
+                                ? ElevatedButton(
+                                    child: Text("Visit room"),
+                                    onPressed: () {
+                                      auctionHandler.setCurrentAuction(referencetype2Auctions[index].id);
+                                      navigate(WidgetMarker.room);
+                                    },
+                                  )
+                                : (materialOffers != null
+                                    ? ElevatedButton(
+                                        onPressed: () {
+                                          offerHandler.viewOffer(materialOffers[index].templateId, materialOffers[index].keyValuePairs, context);
+                                        },
+                                        child: Text("View Offer"),
+                                      )
+                                    : (referencetype2Offers != null
+                                        ? ElevatedButton(
+                                            onPressed: () {
+                                              offerHandler.viewOffer(
+                                                  referencetype2Offers[index].templateId, referencetype2Offers[index].keyValuePairs, context);
+                                            },
+                                            child: Text("View Offer"),
+                                          )
+                                        : null)))),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        childCount: materialAuctions != null
+            ? materialAuctions.length
+            : (materialOffers != null ? materialOffers.length : (referencetype2Auctions != null ? referencetype2Auctions.length : referencetype2Offers.length)),
       ),
     );
   }

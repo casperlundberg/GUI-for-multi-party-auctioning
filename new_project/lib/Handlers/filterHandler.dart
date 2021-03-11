@@ -22,7 +22,7 @@ class FilterHandler {
     if (referencetype2Filter != null) {
       this.referencetype2Filter = referencetype2Filter;
     }
-    setMainState();
+    setMainState("");
   }
 
   void deleteFilter(String referencetype) {
@@ -32,7 +32,7 @@ class FilterHandler {
     if (referencetype == "referencetype2") {
       referencetype2Filter = null;
     }
-    setMainState();
+    setMainState("");
   }
 
   bool checkFilter({MaterialReferenceParameters materialFilter, Referencetype2ReferenceParameters referencetype2Filter}) {

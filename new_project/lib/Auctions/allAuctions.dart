@@ -62,7 +62,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
     final ThemeData themeData = Theme.of(context);
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
-      width: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery.of(context).size.width * 0.35,
       color: Colors.grey[900],
       margin: EdgeInsets.all(5.0),
       child: CustomScrollView(
@@ -492,7 +492,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                     child: participant || materialAuctions[index].stopDate.isBefore(new DateTime.now())
                                         ? Text("Visit room")
                                         : (requestSent ? Text("Request sent") : Text("Send request")),
-                                    onPressed: participant
+                                    onPressed: participant || materialAuctions[index].stopDate.isBefore(new DateTime.now())
                                         ? () {
                                             auctionHandler.setCurrentAuction(materialAuctions[index].id);
                                             navigate(WidgetMarker.room);
@@ -500,7 +500,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                         : (requestSent
                                             ? null
                                             : () {
-                                                userHandler.requestToJoin(materialAuctions[index].id);
+                                                userHandler.requestToJoin(materialAuctions[index].id, materialAuctions[index].ownerId);
                                               }),
                                   ))
                             : (referencetype2Auctions != null
@@ -510,7 +510,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                         child: participant || referencetype2Auctions[index].stopDate.isBefore(new DateTime.now())
                                             ? Text("Visit room")
                                             : (requestSent ? Text("Request sent") : Text("Send request")),
-                                        onPressed: participant
+                                        onPressed: participant || referencetype2Auctions[index].stopDate.isBefore(new DateTime.now())
                                             ? () {
                                                 auctionHandler.setCurrentAuction(referencetype2Auctions[index].id);
                                                 navigate(WidgetMarker.room);
@@ -518,7 +518,7 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                             : (requestSent
                                                 ? null
                                                 : () {
-                                                    userHandler.requestToJoin(referencetype2Auctions[index].id);
+                                                    userHandler.requestToJoin(referencetype2Auctions[index].id, referencetype2Auctions[index].ownerId);
                                                   }),
                                       ))
                                 : (materialOffers != null
@@ -556,8 +556,10 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                                                 if (auctionTitle != "Auction title") {
                                                                   for (int i = 0; i < auctionHandler.myAuctions.materialAuctions.materialAuctions.length; i++) {
                                                                     if (auctionTitle == auctionHandler.myAuctions.materialAuctions.materialAuctions[i].title) {
-                                                                      userHandler
-                                                                          .inviteToAuction(auctionHandler.myAuctions.materialAuctions.materialAuctions[i].id);
+                                                                      userHandler.inviteToAuction(
+                                                                          auctionHandler.myAuctions.materialAuctions.materialAuctions[i].id,
+                                                                          materialOffers[index].id,
+                                                                          materialOffers[index].userId);
                                                                       return;
                                                                     }
                                                                   }
@@ -619,7 +621,9 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                                                         if (auctionTitle ==
                                                                             auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i].title) {
                                                                           userHandler.inviteToAuction(
-                                                                              auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i].id);
+                                                                              auctionHandler.myAuctions.referencetype2Auctions.referencetype2Auctions[i].id,
+                                                                              referencetype2Offers[index].id,
+                                                                              referencetype2Offers[index].userId);
                                                                           return;
                                                                         }
                                                                       }

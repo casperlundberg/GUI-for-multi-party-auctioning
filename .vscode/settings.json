@@ -1,5 +1,7 @@
 {
     "editor.wordWrapColumn": 120,
     "diffEditor.wordWrap": "off",
-    "dart.lineLength": 160
+    "dart.lineLength": 160,
+    "plantuml.diagramsRoot": "docs/diagrams/src",
+    "plantuml.exportOutDir": "docs/diagrams/out"
 }

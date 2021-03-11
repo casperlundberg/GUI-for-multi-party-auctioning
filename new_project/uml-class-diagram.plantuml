@@ -1,0 +1,465 @@
+@startuml
+set namespaceSeparator ::
+
+class "Auctioneer::Auctions::auctions.dart::PageMarker" {
+  +int index
+  {static} +List<PageMarker> values
+  {static} +PageMarker ongoing
+  {static} +PageMarker finished
+  {static} +PageMarker offers
+}
+
+"Auctioneer::Auctions::auctions.dart::PageMarker" o-- "Auctioneer::Auctions::auctions.dart::PageMarker"
+
+
+
+class "Auctioneer::Auctions::auctions.dart::_AuctionsState" {
+  +Function navigate
+  +FilterHandler filterHandler
+  +AuctionHandler auctionHandler
+  -PageMarker _currentPage
+  +void initState()
+  +Widget build()
+  -SliverFixedExtentList _getPageContainer()
+  -SliverFixedExtentList _getOngoing()
+  -SliverFixedExtentList _getFinished()
+  -SliverFixedExtentList _getOffers()
+  -SliverFixedExtentList _generateBoxes()
+}
+
+"Auctioneer::Auctions::auctions.dart::_AuctionsState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Auctions::auctions.dart::_AuctionsState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::Auctions::auctions.dart::_AuctionsState" o-- "Auctioneer::Auctions::auctions.dart::PageMarker"
+
+
+class "Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" {
+  +Function setMainState
+  +Function navigate
+  +AuctionHandler auctionHandler
+  +ContractTemplates contractTemplates
+  +ContractTemplate contractTemplate
+  +TextEditingController auctionTitle
+  +TextEditingController maxParticipants
+  +TextEditingController roundTime
+  +TextEditingController rounds
+  +List materialTypes
+  +dynamic materialDropdownValue
+  +List contractIDs
+  +dynamic contractDropdownValue
+  +Widget build()
+  +Map splitAuctions()
+  +SliverFixedExtentList buildAuctionList()
+  +void showContractTemplateGUI()
+}
+
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplates"
+"Auctioneer::Auctions::myauctions.dart::_MyAuctionsState" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplate"
+
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetailsList" {
+  +List<AuctionDetails> auctionDetailsList
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails" {
+  +int id
+  +String title
+  +int ownerId
+  +String ownerType
+  +int maxParticipants
+  +List<Participant> participants
+  +int roundTime
+  +String material
+  +int contractTemplateId
+  +List<Bid> bids
+  +DateTime startDate
+  +DateTime stopDate
+  +String referenceSector
+  +String referenceType
+  +ContractTemplate contractTemplate
+  +Map toJson()
+}
+
+"Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplate"
+
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::Bid" {
+  +DateTime time
+  +int userId
+  +List<KeyValuePair> keyValuePairs
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::KeyValuePair" {
+  +String key
+  +dynamic value
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::auctionDetailsListJSON.dart::Participant" {
+  +int userId
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::auctionListJSON.dart::AuctionList" {
+  +List<Auction> auctionList
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::auctionListJSON.dart::Auction" {
+  +int id
+  +String title
+  +int ownerId
+  +String ownerType
+  +int maxParticipants
+  +int currentParticipants
+  +int roundTime
+  +String material
+  +DateTime startDate
+  +DateTime stopDate
+  +String referenceSector
+  +String referenceType
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplates" {
+  +List<ContractTemplate> contractTemplates
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplate" {
+  +int id
+  +List<TemplateString> templateStrings
+  +List<TemplateVariable> templateVariables
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::contractTemplatesJSON.dart::TemplateString" {
+  +String text
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::contractTemplatesJSON.dart::TemplateVariable" {
+  +String key
+  +String valueType
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::filtersJSON.dart::Filters" {
+  +List<Filter> filters
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::filtersJSON.dart::Filter" {
+  +int id
+  +int localid
+  +int distance
+  +String name
+  +String description
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::userList.dart::UserList" {
+  +List<User> users
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::userList.dart::User" {
+  +int userId
+  +String userName
+  +String email
+  +Password password
+  +int age
+  +Address address
+  +String homePhoneNumber
+  +String mobilePhoneNumber
+  +String officePhoneNumber
+  +String currentType
+  +String company
+  +List<ParticipatingAuction> participatingAuctions
+  +List<Offer> offers
+  +List<Inbox> requestInbox
+  +List<Inbox> inviteInbox
+  +Map toJson()
+}
+
+"Auctioneer::Entities::userList.dart::User" o-- "Auctioneer::Entities::userList.dart::Password"
+"Auctioneer::Entities::userList.dart::User" o-- "Auctioneer::Entities::userList.dart::Address"
+
+class "Auctioneer::Entities::userList.dart::Address" {
+  +String streetAddress
+  +String city
+  +String state
+  +String postalCode
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::userList.dart::Inbox" {
+  +DateTime time
+  +String status
+  +int auctionId
+  +int userId
+  +int offerId
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::userList.dart::Offer" {
+  +int offerId
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::userList.dart::ParticipatingAuction" {
+  +int auctionId
+  +Map toJson()
+}
+
+class "Auctioneer::Entities::userList.dart::Password" {
+  +String type
+  +String encryption
+  +Map toJson()
+}
+
+
+
+class "Auctioneer::Filters::filtersGUI.dart::_FiltersState" {
+  +Function setMainState
+  +FilterHandler filterHandler
+  +TextEditingController myController
+  +Filter filter
+  +void showFilterTemplateGUI()
+  +Widget build()
+  +Widget ReturnContent()
+}
+
+"Auctioneer::Filters::filtersGUI.dart::_FiltersState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Filters::filtersGUI.dart::_FiltersState" o-- "Auctioneer::Entities::filtersJSON.dart::Filter"
+
+class "Auctioneer::Filters::searchBar.dart::_SearchBarGUIState" {
+  +List<SearchObject> list
+  -SearchObject _selectedItem
+  -bool _show
+  +Widget build()
+}
+
+"Auctioneer::Filters::searchBar.dart::_SearchBarGUIState" o-- "Auctioneer::Filters::searchBar.dart::SearchObject"
+
+class "Auctioneer::Filters::searchBar.dart::SearchObject" {
+  +dynamic name
+  +int id
+}
+
+
+class "Auctioneer::Filters::searchBar.dart::PopupListItemWidget" {
+  +SearchObject item
+  +Widget build()
+}
+
+"Auctioneer::Filters::searchBar.dart::PopupListItemWidget" o-- "Auctioneer::Filters::searchBar.dart::SearchObject"
+
+class "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" {
+  +Function setMainState
+  +AuctionList allAuctions
+  +AuctionDetailsList auctionDetailsList
+  +AuctionList myAuctions
+  +AuctionDetails currentAuction
+  +ContractTemplates supplierContractTemplates
+  +ContractTemplates consumerContractTemplates
+  +UserInfoHandler userHandler
+  +int templateItemCount
+  +List<TextEditingController> controllers
+  +List valueTypes
+  +List dropdownValues
+  +List userTypes
+  +dynamic dropdownValue
+  +void createAuction()
+  +void setCurrentAuction()
+  +void createBid()
+  +void createContractTemplate()
+  +void showContractTemplateGUI()
+}
+
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionListJSON.dart::AuctionList"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetailsList"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::auctionDetailsListJSON.dart::AuctionDetails"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Entities::contractTemplatesJSON.dart::ContractTemplates"
+"Auctioneer::Handlers::auctionHandler.dart::AuctionHandler" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+
+class "Auctioneer::Handlers::filterHandler.dart::FilterHandler" {
+  +Filters filters
+  +List<Filter> availableFilters
+  +List<Filter> activeFilters
+  +List<Filter> inactiveFilters
+  +int localFilteridCounter
+  +void updateFilters()
+  +void deleteFilter()
+  +void activateFilter()
+  +void deactivateFilter()
+  +void retrieveFilters()
+}
+
+"Auctioneer::Handlers::filterHandler.dart::FilterHandler" o-- "Auctioneer::Entities::filtersJSON.dart::Filters"
+
+class "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" {
+  +Function userToAuction
+  +UserList userListObject
+  +User user
+  +bool isEmail()
+  +bool userCheck()
+  +String passHasher()
+  +bool passwordChecker()
+  +bool phoneCheck()
+  +bool profileEditCheck()
+  +bool passwordValidator()
+  +User loginValidator()
+  +void login()
+  +void register()
+  +void updateProfile()
+}
+
+"Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "Auctioneer::Entities::userList.dart::UserList"
+"Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler" o-- "Auctioneer::Entities::userList.dart::User"
+
+
+class "Auctioneer::mainGUI.dart::WidgetMarker" {
+  +int index
+  {static} +List<WidgetMarker> values
+  {static} +WidgetMarker auctions
+  {static} +WidgetMarker login
+  {static} +WidgetMarker register
+  {static} +WidgetMarker profile
+  {static} +WidgetMarker room
+}
+
+"Auctioneer::mainGUI.dart::WidgetMarker" o-- "Auctioneer::mainGUI.dart::WidgetMarker"
+
+
+class "Auctioneer::mainGUI.dart::MainGUIState" {
+  +WidgetMarker selectedWidgetMarker
+  +AnimationController controller
+  +Animation animation
+  +FilterHandler filterHandler
+  +AuctionHandler auctionHandler
+  +void initState()
+  +void dispose()
+  +Widget build()
+  +dynamic playAnimation()
+  +void setMainState()
+  +void userToAuction()
+  +void navigate()
+  +Widget getCustomContainer()
+  +Widget getAuctionsGUIContainer()
+  +Widget getLoginContainer()
+  +Widget getRegisterContainer()
+  +Widget getProfileContainer()
+  +Widget getRoomContainer()
+}
+
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::mainGUI.dart::WidgetMarker"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::mainGUI.dart::MainGUIState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+
+class "Auctioneer::Navigation::navbar.dart::NavigationBar" {
+  +Function navigate
+  +Function showContractTemplateGUI
+  +Size preferredSize
+  +Widget build()
+}
+
+
+class "Auctioneer::Pages::auctionsGUI.dart::AuctionsGUI" {
+  +Function setMainState
+  +Function navigate
+  +FilterHandler filterHandler
+  +AuctionHandler auctionHandler
+  +Widget build()
+}
+
+"Auctioneer::Pages::auctionsGUI.dart::AuctionsGUI" o-- "Auctioneer::Handlers::filterHandler.dart::FilterHandler"
+"Auctioneer::Pages::auctionsGUI.dart::AuctionsGUI" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+
+
+
+class "Auctioneer::Pages::login.dart::Login" {
+  +Function navigate
+  +UserInfoHandler userHandler
+  -TextEditingController _controllerUserName
+  -TextEditingController _controllerPW
+  +dynamic loginUserName
+  +dynamic loginPW
+  +Widget build()
+}
+
+"Auctioneer::Pages::login.dart::Login" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+
+class "Auctioneer::Pages::profile.dart::Profile" {
+  +Function navigate
+  +UserInfoHandler userHandler
+  -GlobalKey<FormState> _formKey
+  -TextEditingController _controllerUserName
+  -TextEditingController _controllerEmail
+  -TextEditingController _controllerAge
+  -TextEditingController _controllerAddress
+  -TextEditingController _controllerCity
+  -TextEditingController _controllerState
+  -TextEditingController _controllerPostalCode
+  -TextEditingController _controllerHomePhoneNumber
+  -TextEditingController _controllerMobilePhoneNumber
+  -TextEditingController _controllerOfficePhoneNumber
+  -TextEditingController _controllerCompany
+  -TextEditingController _controllerOPW
+  -TextEditingController _controllerPW
+  -TextEditingController _controllerRPW
+  +dynamic newUserName
+  +dynamic newEmail
+  +int newAge
+  +dynamic newAddress
+  +dynamic newCity
+  +dynamic newState
+  +dynamic newPostalCode
+  +dynamic newHomePhoneNumber
+  +dynamic newMobilePhoneNumber
+  +dynamic newOfficePhoneNumber
+  +dynamic newCurrentType
+  +dynamic newCompany
+  +dynamic opw
+  +dynamic pw
+  +dynamic rpw
+  +Widget build()
+}
+
+"Auctioneer::Pages::profile.dart::Profile" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+
+class "Auctioneer::Pages::register.dart::Register" {
+  +Function navigate
+  +UserInfoHandler userHandler
+  -TextEditingController _controllerUserName
+  -TextEditingController _controllerEmail
+  -TextEditingController _controllerPW
+  -TextEditingController _controllerRPW
+  +dynamic newUserName
+  +dynamic newEmail
+  +dynamic pw
+  +dynamic rpw
+  +Widget build()
+}
+
+"Auctioneer::Pages::register.dart::Register" o-- "Auctioneer::Handlers::userInfoHandler.dart::UserInfoHandler"
+
+
+class "Auctioneer::Pages::room.dart::_RoomState" {
+  +Function navigate
+  +AuctionHandler auctionHandler
+  +List<TextEditingController> controllers
+  +int endTime
+  +TextStyle smallText
+  +TextStyle bigText
+  +TextStyle boldText
+  +void showContractGUI()
+  +TextSpan generateBidBox()
+  +void showBid()
+  +Widget build()
+}
+
+"Auctioneer::Pages::room.dart::_RoomState" o-- "Auctioneer::Handlers::auctionHandler.dart::AuctionHandler"
+
+
+@enduml
