@@ -69,12 +69,12 @@ String users = '''{
                 },
                 {
                     "auctionID": 12
+                },
+                {
+                    "auctionID": 13
                 }
             ],
             "offers": [
-                {
-                    "offerID": 1
-                },
                 {
                     "offerID": 3
                 },
@@ -100,13 +100,6 @@ String users = '''{
                 }
             ],
             "inviteInbox": [
-                {
-                    "time": "2021-02-15T10:30:00.001Z",
-                    "status": "Pending",
-                    "auctionID": 8,
-                    "userID": 2,
-                    "offerID": 1
-                },
                 {
                     "time": "2021-02-15T10:30:00.001Z",
                     "status": "Accepted",
@@ -166,6 +159,9 @@ String users = '''{
                 }
             ],
             "offers":[
+                {
+                    "offerID": 1
+                },
                 {
                     "offerID": 2
                 }
@@ -239,6 +235,9 @@ String users = '''{
                 },
                 {
                     "auctionID": 10
+                },
+                {
+                    "auctionID": 13
                 }
             ],
             "offers":[
@@ -314,6 +313,9 @@ String users = '''{
                 },
                 {
                     "auctionID": 10
+                },
+                {
+                    "auctionID": 13
                 }
             ],
             "offers":[
@@ -341,7 +343,7 @@ String users = '''{
         },
         {
             "userId": 5,
-            "userName": "g",
+            "userName": "Gustav Curan",
             "email": "gustav@gmail.com",
             "password": {
                 "type": "sha1",
@@ -389,6 +391,9 @@ String users = '''{
                 },
                 {
                     "auctionID": 10
+                },
+                {
+                    "auctionID": 13
                 }
             ],
             "offers":[
@@ -445,6 +450,12 @@ String filters = '''{
                                 },
                                 {
                                     "filterValue": "glass fibers"
+                                },
+                                {
+                                    "filterValue": "paper fibers"
+                                },
+                                {
+                                    "filterValue": "carbon fiber"
                                 },
                                 {
                                     "filterValue": "other fibers"
@@ -655,11 +666,56 @@ String consumerAuctionDetails = '''{
         {
             "id": 11,
             "participants": [
-
+                
             ],
             "templateID": 1,
             "bids": [
                 
+            ],
+            "winningBid": 0
+        },
+        {
+            "id": 13,
+            "participants": [
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "templateID": 1,
+            "bids": [
+                {
+                    "id": 18,
+                    "time": "2021-02-15T10:40:00.001Z",
+                    "userID": 4,
+                    "keyValuePairs": [
+                        {
+                            "key": "CompanyName",
+                            "value": "DollarStore"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
             ],
             "winningBid": 0
         }
@@ -942,7 +998,7 @@ String supplierAuctionDetails = '''{
             "id": 5,
             "participants": [
                 {
-                    "userID": 2
+                    "userID": 1
                 },
                 {
                     "userID": 3
@@ -959,7 +1015,7 @@ String supplierAuctionDetails = '''{
                 {
                     "id": 10,
                     "time": "2021-02-15T10:40:00.001Z",
-                    "userID": 2,
+                    "userID": 1,
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -1017,7 +1073,7 @@ String supplierAuctionDetails = '''{
             "id": 6,
             "participants": [
                 {
-                    "userID": 2
+                    "userID": 1
                 },
                 {
                     "userID": 3
@@ -1034,7 +1090,7 @@ String supplierAuctionDetails = '''{
                 {
                     "id": 12,
                     "time": "2021-02-15T10:40:00.001Z",
-                    "userID": 2,
+                    "userID": 1,
                     "keyValuePairs": [
                         {
                             "key": "Name",
@@ -1540,6 +1596,28 @@ String consumerMaterialAuctions = '''{
                 "minVolume": 500,
                 "maxVolume": 5000
             }
+        },
+        {
+            "id": 13,
+            "title": "Good auction",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 0,
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-04-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 1,
+                "maxFiberLength": 30,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 1,
+                "maxVolume": 5000
+            }
         }
     ]
 }''';
@@ -1560,7 +1638,7 @@ String supplierMaterialAuctions = '''{
     "materialAuctions": [
         {
             "id": 1,
-            "title": "Testauction 1",
+            "title": "Glass & Co.'s Glass fibre extradorinaire",
             "ownerID": 1,
             "maxParticipants": 10,
             "currentParticipants": 4,
@@ -1582,16 +1660,16 @@ String supplierMaterialAuctions = '''{
         },
         {
             "id": 2,
-            "title": "Testauction 2",
+            "title": "Kiruna Mine",
             "ownerID": 1,
             "maxParticipants": 10,
             "currentParticipants": 0,
             "startDate": "2021-02-15T10:30:00.001Z",
             "stopDate": "2021-02-15T11:30:00.001Z",
-            "referenceSector": "composites",
+            "referenceSector": "ores",
             "referenceType": "material",
             "referenceParameters": {
-                "fibersType": "glass fibers",
+                "fibersType": "iron",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
                 "maxFiberLength": 10,
@@ -1604,7 +1682,7 @@ String supplierMaterialAuctions = '''{
         },
         {
             "id": 3,
-            "title": "Testauction 3",
+            "title": "Bob's Plastics",
             "ownerID": 1,
             "maxParticipants": 10,
             "currentParticipants": 3,
@@ -1613,7 +1691,7 @@ String supplierMaterialAuctions = '''{
             "referenceSector": "composites",
             "referenceType": "material",
             "referenceParameters": {
-                "fibersType": "glass fibers",
+                "fibersType": "plastic",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
                 "maxFiberLength": 10,
@@ -1626,7 +1704,7 @@ String supplierMaterialAuctions = '''{
         },
         {
             "id": 4,
-            "title": "Testauction 4",
+            "title": "Papermaker.com",
             "ownerID": 1,
             "maxParticipants": 10,
             "currentParticipants": 4,
@@ -1635,7 +1713,7 @@ String supplierMaterialAuctions = '''{
             "referenceSector": "composites",
             "referenceType": "material",
             "referenceParameters": {
-                "fibersType": "glass fibers",
+                "fibersType": "paper fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
                 "maxFiberLength": 10,
@@ -1648,8 +1726,8 @@ String supplierMaterialAuctions = '''{
         },
         {
             "id": 5,
-            "title": "Testauction 5",
-            "ownerID": 1,
+            "title": "Carfi Carbon Fibres",
+            "ownerID": 2,
             "maxParticipants": 10,
             "currentParticipants": 4,
             "startDate": "2021-02-15T10:30:00+01:00",
@@ -1657,21 +1735,21 @@ String supplierMaterialAuctions = '''{
             "referenceSector": "composites",
             "referenceType": "material",
             "referenceParameters": {
-                "fibersType": "glass fibers",
+                "fibersType": "carbon fiber",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
-                "maxFiberLength": 10,
+                "maxFiberLength": 20,
                 "recyclingTechnology": "cutting edge",
                 "sizing": "large",
                 "additives": "deluxe",
-                "minVolume": 500,
-                "maxVolume": 5000
+                "minVolume": 2,
+                "maxVolume": 30
             }
         },
         {
             "id": 6,
             "title": "Testauction 6",
-            "ownerID": 1,
+            "ownerID": 2,
             "maxParticipants": 10,
             "currentParticipants": 4,
             "startDate": "2021-02-15T10:30:00+01:00",
@@ -1692,7 +1770,7 @@ String supplierMaterialAuctions = '''{
         },
         {
             "id": 7,
-            "title": "Testauction 7",
+            "title": "GREATEST AUCTION EVER",
             "ownerID": 1,
             "maxParticipants": 10,
             "currentParticipants": 4,
@@ -1701,20 +1779,20 @@ String supplierMaterialAuctions = '''{
             "referenceSector": "composites",
             "referenceType": "material",
             "referenceParameters": {
-                "fibersType": "glass fibers",
+                "fibersType": "carbon fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
                 "maxFiberLength": 10,
                 "recyclingTechnology": "cutting edge",
                 "sizing": "large",
                 "additives": "deluxe",
-                "minVolume": 500,
-                "maxVolume": 5000
+                "minVolume": 10,
+                "maxVolume": 300
             }
         },
         {
             "id": 8,
-            "title": "Testauction 8",
+            "title": "don't join",
             "ownerID": 2,
             "maxParticipants": 10,
             "currentParticipants": 3,
@@ -1855,7 +1933,7 @@ String supplierMaterialOffers = '''{
         {
             "id": 3,
             "title": "Supplier material offer",
-            "userID": 1,
+            "userID": 2,
             "templateID": 7,
             "keyValuePairs": [
                 {

@@ -69,6 +69,60 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
+            title: Row(children: [
+              Text("Auctions & Offers"),
+            ]),
+          ),
+          SliverAppBar(
+              pinned: true,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Reference sector: "),
+                  DropdownButton(
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    value: referenceSectorDropdownValue,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.white),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        referenceSectorDropdownValue = newValue;
+                      });
+                    },
+                    items: getReferenceSectors().map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Text("Reference type: "),
+                  DropdownButton(
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    value: referenceTypeDropdownValue,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.white),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        referenceTypeDropdownValue = newValue;
+                      });
+                    },
+                    items: getReferenceTypes().map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              )),
+          SliverAppBar(
+            pinned: true,
             actions: <Widget>[
               Expanded(
                 child: Container(
@@ -122,56 +176,6 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                 ),
               ),
             ],
-          ),
-          SliverToBoxAdapter(
-            //--------------CASPER KOLLA HIT
-            child: Container(
-              width: double.infinity,
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Reference sector: "),
-                  DropdownButton(
-                    icon: Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    value: referenceSectorDropdownValue,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.white),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        referenceSectorDropdownValue = newValue;
-                      });
-                    },
-                    items: getReferenceSectors().map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                  Text("Reference type: "),
-                  DropdownButton(
-                    icon: Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    value: referenceTypeDropdownValue,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.white),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        referenceTypeDropdownValue = newValue;
-                      });
-                    },
-                    items: getReferenceTypes().map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
           ),
           FutureBuilder(
             builder: (BuildContext context, AsyncSnapshot snaptshot) {
@@ -387,39 +391,92 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Title: ' +
-                              (materialAuctions != null
+                          Row(
+                            children: [
+                              Text(
+                                "Title: ",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Text(materialAuctions != null
                                   ? materialAuctions[index].title
                                   : (materialOffers != null
                                       ? materialOffers[index].title
-                                      : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title)))),
-                          Text(materialAuctions != null
-                              ? " Participants: " +
-                                  materialAuctions[index].currentParticipants.toString() +
-                                  "/" +
-                                  materialAuctions[index].maxParticipants.toString()
-                              : (referencetype2Auctions != null
-                                  ? " Participants: " +
-                                      referencetype2Auctions[index].currentParticipants.toString() +
-                                      "/" +
-                                      referencetype2Auctions[index].maxParticipants.toString()
-                                  : "")),
-                          Text("Start date: " +
-                              (materialAuctions != null
+                                      : (referencetype2Auctions != null ? referencetype2Auctions[index].title : referencetype2Offers[index].title))),
+                            ],
+                          ),
+                          Row(
+                            children: materialAuctions != null
+                                ? [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Participants: ",
+                                          style: TextStyle(
+                                            color: Colors.grey[400],
+                                          ),
+                                        ),
+                                        Text(
+                                          materialAuctions[index].currentParticipants.toString() + "/" + materialAuctions[index].maxParticipants.toString(),
+                                        ),
+                                      ],
+                                    ),
+                                  ]
+                                : (referencetype2Auctions != null
+                                    ? [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Participants: ",
+                                              style: TextStyle(
+                                                color: Colors.grey[400],
+                                              ),
+                                            ),
+                                            Text(
+                                              referencetype2Auctions[index].currentParticipants.toString() +
+                                                  "/" +
+                                                  referencetype2Auctions[index].maxParticipants.toString(),
+                                            ),
+                                          ],
+                                        ),
+                                      ]
+                                    : [Text("")]),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Start date: ",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Text(materialAuctions != null
                                   ? materialAuctions[index].startDate.toString().substring(0, 19)
                                   : (materialOffers != null
                                       ? materialOffers[index].startDate.toString().substring(0, 19)
                                       : (referencetype2Auctions != null
                                           ? referencetype2Auctions[index].startDate.toString().substring(0, 19)
-                                          : referencetype2Offers[index].startDate.toString().substring(0, 19))))),
-                          Text("Stop date: " +
-                              (materialAuctions != null
+                                          : referencetype2Offers[index].startDate.toString().substring(0, 19)))),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Stop date: ",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Text(materialAuctions != null
                                   ? materialAuctions[index].stopDate.toString().substring(0, 19)
                                   : (materialOffers != null
                                       ? materialOffers[index].stopDate.toString().substring(0, 19)
                                       : (referencetype2Auctions != null
                                           ? referencetype2Auctions[index].stopDate.toString().substring(0, 19)
-                                          : referencetype2Offers[index].stopDate.toString().substring(0, 19))))),
+                                          : referencetype2Offers[index].stopDate.toString().substring(0, 19)))),
+                            ],
+                          ),
                         ],
                       ),
                       Spacer(),
@@ -427,78 +484,197 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: (materialAuctions != null || materialOffers != null)
                             ? [
-                                Text("Fibers type: " +
-                                    (materialAuctions != null
-                                        ? materialAuctions[index].materialReferenceParameters.fibersType
-                                        : materialOffers[index].materialReferenceParameters.fibersType)),
-                                Text("Resin type: " +
-                                    (materialAuctions != null
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Fibers type: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text(
+                                      materialAuctions != null
+                                          ? materialAuctions[index].materialReferenceParameters.fibersType
+                                          : materialOffers[index].materialReferenceParameters.fibersType,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Resin type: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text(materialAuctions != null
                                         ? materialAuctions[index].materialReferenceParameters.resinType
-                                        : materialOffers[index].materialReferenceParameters.resinType)),
-                                Text("Minimum fiber length: " +
-                                    (materialAuctions != null
+                                        : materialOffers[index].materialReferenceParameters.resinType),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Minimum fiber length: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text((materialAuctions != null
                                             ? materialAuctions[index].materialReferenceParameters.minFiberLength
                                             : materialOffers[index].materialReferenceParameters.minFiberLength)
-                                        .toString() +
-                                    "mm"),
-                                Text("Maximum fiber length: " +
-                                    (materialAuctions != null
+                                        .toString()),
+                                    Text("mm"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Maximum fiber length: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text((materialAuctions != null
                                             ? materialAuctions[index].materialReferenceParameters.maxFiberLength
                                             : materialOffers[index].materialReferenceParameters.maxFiberLength)
-                                        .toString() +
-                                    "mm"),
-                                Text("Recycling technology: " +
-                                    (materialAuctions != null
+                                        .toString()),
+                                    Text("mm"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Recycling technology: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text(materialAuctions != null
                                         ? materialAuctions[index].materialReferenceParameters.recyclingTechnology
-                                        : materialOffers[index].materialReferenceParameters.recyclingTechnology)),
-                                Text("Sizing: " +
-                                    (materialAuctions != null
+                                        : materialOffers[index].materialReferenceParameters.recyclingTechnology),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Sizing: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text(materialAuctions != null
                                         ? materialAuctions[index].materialReferenceParameters.sizing
-                                        : materialOffers[index].materialReferenceParameters.sizing)),
-                                Text("Additives: " +
-                                    (materialAuctions != null
+                                        : materialOffers[index].materialReferenceParameters.sizing),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Additives: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text(materialAuctions != null
                                         ? materialAuctions[index].materialReferenceParameters.additives
-                                        : materialOffers[index].materialReferenceParameters.additives)),
-                                Text("Minimum volume: " +
-                                    (materialAuctions != null
+                                        : materialOffers[index].materialReferenceParameters.additives),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Minimum volume: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text((materialAuctions != null
                                             ? materialAuctions[index].materialReferenceParameters.minVolume
                                             : materialOffers[index].materialReferenceParameters.minVolume)
-                                        .toString() +
-                                    "kg"),
-                                Text("Maximum volume: " +
-                                    (materialAuctions != null
+                                        .toString()),
+                                    Text("kg"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Maximum volume: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text((materialAuctions != null
                                             ? materialAuctions[index].materialReferenceParameters.maxVolume
                                             : materialOffers[index].materialReferenceParameters.maxVolume)
-                                        .toString() +
-                                    "kg"),
+                                        .toString()),
+                                    Text("kg"),
+                                  ],
+                                ),
                               ]
                             : [
-                                Text("Parameter 1: " +
-                                    (referencetype2Auctions != null
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Parameter 1: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text(referencetype2Auctions != null
                                         ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter1
-                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter1)),
-                                Text("Parameter 2: " +
-                                    (referencetype2Auctions != null
+                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter1),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Parameter 2: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text(referencetype2Auctions != null
                                         ? referencetype2Auctions[index].referencetype2ReferenceParameters.parameter2
-                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter2)),
-                                Text("Minimum volume: " +
-                                    (referencetype2Auctions != null
+                                        : referencetype2Offers[index].referencetype2ReferenceParameters.parameter2),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Minimum volume: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text((referencetype2Auctions != null
                                             ? referencetype2Auctions[index].referencetype2ReferenceParameters.minVolume
                                             : referencetype2Offers[index].referencetype2ReferenceParameters.minVolume)
-                                        .toString() +
-                                    "kg"),
-                                Text("Maximum volume: " +
-                                    (referencetype2Auctions != null
+                                        .toString()),
+                                    Text("kg"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Maximum volume: ",
+                                      style: TextStyle(
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Text((referencetype2Auctions != null
                                             ? referencetype2Auctions[index].referencetype2ReferenceParameters.maxVolume
                                             : referencetype2Offers[index].referencetype2ReferenceParameters.maxVolume)
-                                        .toString() +
-                                    "kg"),
+                                        .toString()),
+                                    Text("kg"),
+                                  ],
+                                ),
                               ],
                       ),
                       Spacer(),
                       Container(
                         child: (materialAuctions != null
-                            ? (materialAuctions[index].ownerId == userHandler.user.userId
+                            ? (materialAuctions[index].ownerId == userHandler.user.userId && materialAuctions[index].stopDate.isAfter(new DateTime.now())
                                 ? null
                                 : ElevatedButton(
                                     child: participant || materialAuctions[index].stopDate.isBefore(new DateTime.now())
@@ -516,7 +692,8 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
                                               }),
                                   ))
                             : (referencetype2Auctions != null
-                                ? (referencetype2Auctions[index].ownerId == userHandler.user.userId
+                                ? (referencetype2Auctions[index].ownerId == userHandler.user.userId &&
+                                        referencetype2Auctions[index].stopDate.isAfter(new DateTime.now())
                                     ? null
                                     : ElevatedButton(
                                         child: participant || referencetype2Auctions[index].stopDate.isBefore(new DateTime.now())

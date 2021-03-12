@@ -91,7 +91,7 @@
         {
             "id": 5,
             "title": "Carfi Carbon Fibres",
-            "ownerID": 1,
+            "ownerID": 2,
             "maxParticipants": 10,
             "currentParticipants": 4,
             "startDate": "2021-02-15T10:30:00+01:00",
@@ -102,18 +102,18 @@
                 "fibersType": "carbon fiber",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
-                "maxFiberLength": 10,
+                "maxFiberLength": 20,
                 "recyclingTechnology": "cutting edge",
                 "sizing": "large",
                 "additives": "deluxe",
-                "minVolume": 500,
-                "maxVolume": 5000
+                "minVolume": 2,
+                "maxVolume": 30
             }
         },
         {
             "id": 6,
             "title": "Testauction 6",
-            "ownerID": 1,
+            "ownerID": 2,
             "maxParticipants": 10,
             "currentParticipants": 4,
             "startDate": "2021-02-15T10:30:00+01:00",
@@ -134,7 +134,7 @@
         },
         {
             "id": 7,
-            "title": "Testauction 7",
+            "title": "GREATEST AUCTION EVER",
             "ownerID": 1,
             "maxParticipants": 10,
             "currentParticipants": 4,
@@ -143,20 +143,20 @@
             "referenceSector": "composites",
             "referenceType": "material",
             "referenceParameters": {
-                "fibersType": "glass fibers",
+                "fibersType": "carbon fibers",
                 "resinType": "epoxy",
                 "minFiberLength": 2,
                 "maxFiberLength": 10,
                 "recyclingTechnology": "cutting edge",
                 "sizing": "large",
                 "additives": "deluxe",
-                "minVolume": 500,
-                "maxVolume": 5000
+                "minVolume": 10,
+                "maxVolume": 300
             }
         },
         {
             "id": 8,
-            "title": "Testauction 8",
+            "title": "don't join",
             "ownerID": 2,
             "maxParticipants": 10,
             "currentParticipants": 3,

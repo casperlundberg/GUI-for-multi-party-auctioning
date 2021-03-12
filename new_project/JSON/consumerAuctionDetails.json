@@ -85,6 +85,51 @@
                 
             ],
             "winningBid": 0
+        },
+        {
+            "id": 13,
+            "participants": [
+                {
+                    "userID": 3
+                },
+                {
+                    "userID": 4
+                },
+                {
+                    "userID": 5
+                }
+            ],
+            "templateID": 1,
+            "bids": [
+                {
+                    "id": 18,
+                    "time": "2021-02-15T10:40:00.001Z",
+                    "userID": 4,
+                    "keyValuePairs": [
+                        {
+                            "key": "CompanyName",
+                            "value": "DollarStore"
+                        },
+                        {
+                            "key": "Quantity",
+                            "value": 1
+                        },
+                        {
+                            "key": "ArticleID",
+                            "value": 726387327
+                        },
+                        {
+                            "key": "Amount of money",
+                            "value": 55
+                        },
+                        {
+                            "key": "Amount of hours",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "winningBid": 0
         }
     ]
 }

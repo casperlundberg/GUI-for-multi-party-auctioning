@@ -108,13 +108,6 @@ class _RoomState extends State<Room> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Row(children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  tooltip: 'Back',
-                  onPressed: () {
-                    navigate(WidgetMarker.auctions);
-                  },
-                ),
                 Container(
                   child: Text(
                     materialAuction != null ? materialAuction.title : (referencetype2Auction != null ? referencetype2Auction.title : null),
@@ -148,14 +141,17 @@ class _RoomState extends State<Room> {
                         )),
                     Container(
                       alignment: Alignment.centerRight,
-                      child: isHost
+                      child: (isHost && (isFinished == false))
                           ? TextButton(
                               child: Text(
                                 "End auction",
                                 textScaleFactor: 2,
                               ),
                               onPressed: () {
-                                auctionHandler.endAuction();
+                                setState(() {
+                                  auctionHandler.endAuction();
+                                  isFinished = true;
+                                });
                               },
                             )
                           : null,
@@ -279,7 +275,7 @@ class _RoomState extends State<Room> {
                       ),
                     )),
                     //Spacer(),
-
+                    /*
                     Expanded(
                       child: Column(
                         children: [
@@ -301,6 +297,7 @@ class _RoomState extends State<Room> {
                         ],
                       ),
                     ),
+                    */
                   ],
                 ),
               ),
@@ -326,14 +323,13 @@ class _RoomState extends State<Room> {
                               ),
                               Spacer(),
                               IconButton(
-                                icon: Icon(Icons.add),
-                                tooltip: isFinished ? "Auction has ended" : 'New bid',
-                                onPressed: isFinished
-                                    ? null
-                                    : () {
-                                        showContractGUI();
-                                      },
-                              ),
+                                  icon: Icon(Icons.add),
+                                  tooltip: isHost ? null : (isFinished ? "Auction has ended" : 'New bid'),
+                                  onPressed: isHost || isFinished
+                                      ? null
+                                      : () {
+                                          showContractGUI();
+                                        }),
                             ],
                           ),
                         ),
@@ -379,6 +375,7 @@ class _RoomState extends State<Room> {
                                                   onPressed: () {
                                                     setState(() {
                                                       auctionHandler.selectAuctionWinner(auctionHandler.currentAuctionDetails.bids[index].id);
+                                                      isFinished = true;
                                                     });
                                                   },
                                                 ),

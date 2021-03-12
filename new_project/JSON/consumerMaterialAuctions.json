@@ -21,6 +21,28 @@
                 "minVolume": 500,
                 "maxVolume": 5000
             }
+        },
+        {
+            "id": 13,
+            "title": "Good auction",
+            "ownerID": 1,
+            "maxParticipants": 10,
+            "currentParticipants": 0,
+            "startDate": "2021-02-15T10:30:00.001Z",
+            "stopDate": "2021-04-15T11:30:00.001Z",
+            "referenceSector": "composites",
+            "referenceType": "material",
+            "referenceParameters": {
+                "fibersType": "glass fibers",
+                "resinType": "epoxy",
+                "minFiberLength": 1,
+                "maxFiberLength": 30,
+                "recyclingTechnology": "cutting edge",
+                "sizing": "large",
+                "additives": "deluxe",
+                "minVolume": 1,
+                "maxVolume": 5000
+            }
         }
     ]
 }

@@ -733,7 +733,6 @@ class AuctionHandler {
 
   void makeBid(List<KeyValuePair> keyValuePairs) {
     DateTime now = new DateTime.now();
-    currentAuctionDetails.bids.add(new Bid(id: nextBidID, time: now, userId: userHandler.user.userId, keyValuePairs: keyValuePairs));
     if (userHandler.user.currentType == "Consumer") {
       for (int i = 0; i < supplierAuctionDetails.auctionDetailsList.length; i++) {
         if (currentAuctionDetails.id == supplierAuctionDetails.auctionDetailsList[i].id) {
