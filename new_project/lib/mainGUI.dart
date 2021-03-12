@@ -203,8 +203,13 @@ class MainGUIState extends State<MainGUI> with SingleTickerProviderStateMixin<Ma
         appBar: NavigationBar(
           navigate,
           auctionHandler.showContractTemplateGUI,
+<<<<<<< HEAD
           auctionHandler.showNotifications,
           auctionHandler.inbox.length,
+=======
+          notificationsHandler.showNotifications,
+          userHandler.user.inviteInbox.length + userHandler.user.requestInbox.length,
+>>>>>>> b49264d3b431b848dd8b25ac4990d688df083fe3
           userHandler,
         ),
         backgroundColor: Colors.transparent,

@@ -159,30 +159,20 @@ String users = '''{
                 }
             ],
             "offers":[
+<<<<<<< HEAD
                 {
                     "offerID": 1
                 },
                 {
                     "offerID": 2
                 }
+=======
+>>>>>>> b49264d3b431b848dd8b25ac4990d688df083fe3
             ],
             "requestInbox":[
-                {
-                    "time": "2021-02-15T10:30:00.001Z",
-                    "status": "null",
-                    "auctionID": null,
-                    "userID": null
-                }
 
             ],
             "inviteInbox":[
-                {
-                    "time": "2021-02-15T10:30:00.001Z",
-                    "status": "null",
-                    "auctionID": null,
-                    "userID": null,
-                    "offerID": null
-                }
             ]
         },
         {
