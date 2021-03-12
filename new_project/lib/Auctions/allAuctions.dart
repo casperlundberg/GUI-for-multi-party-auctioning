@@ -128,8 +128,8 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
             child: Container(
               width: double.infinity,
               height: 50,
-              color: Colors.pink,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Reference sector: "),
                   DropdownButton(
@@ -366,15 +366,18 @@ class _AllAuctionsState extends State<AllAuctions> with SingleTickerProviderStat
           return Container(
             margin: EdgeInsets.all(5.0),
             padding: EdgeInsets.only(left: 10, right: 10),
-            color: materialAuctions != null
-                ? (materialAuctions[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                : referencetype2Auctions != null
-                    ? (referencetype2Auctions[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                    : materialOffers != null
-                        ? (materialOffers[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                        : (referencetype2Offers != null
-                            ? (referencetype2Offers[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                            : null),
+            decoration: BoxDecoration(
+              boxShadow: [BoxShadow(blurRadius: 3, offset: Offset(0, 4))],
+              color: materialAuctions != null
+                  ? (materialAuctions[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                  : referencetype2Auctions != null
+                      ? (referencetype2Auctions[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                      : materialOffers != null
+                          ? (materialOffers[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                          : (referencetype2Offers != null
+                              ? (referencetype2Offers[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                              : null),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

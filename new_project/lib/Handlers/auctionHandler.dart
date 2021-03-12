@@ -1351,19 +1351,26 @@ class AuctionHandler {
                               Container(height: 16),
                               Container(
                                 width: 400,
-                                height: 200,
-                                child: StatefulBuilder(
-                                  builder: (context, setState) {
-                                    return Scrollbar(
-                                      child: ListView.builder(
-                                        itemCount: list.length,
-                                        itemBuilder: (context, index) {
-                                          return getListTile(list[index], auctionTitle != null ? auctionTitle : inboxAuctionTitles[index], context);
+                                height: 600,
+                                child: list.length == 0
+                                    ? Center(
+                                        child: Text(
+                                          "No notifications",
+                                          textScaleFactor: 1.5,
+                                        ),
+                                      )
+                                    : StatefulBuilder(
+                                        builder: (context, setState) {
+                                          return Scrollbar(
+                                            child: ListView.builder(
+                                              itemCount: list.length,
+                                              itemBuilder: (context, index) {
+                                                return getListTile(list[index], auctionTitle != null ? auctionTitle : inboxAuctionTitles[index], context);
+                                              },
+                                            ),
+                                          );
                                         },
                                       ),
-                                    );
-                                  },
-                                ),
                               ),
                             ],
                           ),

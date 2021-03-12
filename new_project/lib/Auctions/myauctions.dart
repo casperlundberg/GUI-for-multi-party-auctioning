@@ -157,6 +157,12 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
               child: Text("Ongoing auctions"),
             ),
           ),
+          materialAuctions["ongoing"].length == 0 && referencetype2Auctions["ongoing"].length == 0
+              ? SliverToBoxAdapter(
+                  child: Center(
+                  child: Text("No ongoing auctions"),
+                ))
+              : SliverToBoxAdapter(),
           buildAuctionList(materialAuctions: materialAuctions["ongoing"]),
           buildAuctionList(referencetype2Auctions: referencetype2Auctions["ongoing"]),
           SliverToBoxAdapter(
@@ -166,6 +172,12 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
               child: Text("Finished auctions"),
             ),
           ),
+          materialAuctions["finished"].length == 0 && referencetype2Auctions["finished"].length == 0
+              ? SliverToBoxAdapter(
+                  child: Center(
+                  child: Text("No finished auctions"),
+                ))
+              : SliverToBoxAdapter(),
           buildAuctionList(materialAuctions: materialAuctions["finished"]),
           buildAuctionList(referencetype2Auctions: referencetype2Auctions["finished"]),
           SliverToBoxAdapter(
@@ -175,6 +187,12 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
               child: Text("Offers"),
             ),
           ),
+          offerHandler.myOffers.materialOffers.materialOffers.length == 0 && offerHandler.myOffers.referencetype2Offers.referencetype2Offers.length == 0
+              ? SliverToBoxAdapter(
+                  child: Center(
+                  child: Text("No offers"),
+                ))
+              : SliverToBoxAdapter(),
           buildAuctionList(materialOffers: offerHandler.myOffers.materialOffers.materialOffers),
           buildAuctionList(referencetype2Offers: offerHandler.myOffers.referencetype2Offers.referencetype2Offers),
         ],
@@ -218,17 +236,20 @@ class _MyAuctionsState extends State<MyAuctions> with SingleTickerProviderStateM
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return Container(
+            decoration: BoxDecoration(
+              boxShadow: [BoxShadow(blurRadius: 3, offset: Offset(0, 4))],
+              color: materialAuctions != null
+                  ? (materialAuctions[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                  : referencetype2Auctions != null
+                      ? (referencetype2Auctions[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                      : materialOffers != null
+                          ? (materialOffers[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                          : (referencetype2Offers != null
+                              ? (referencetype2Offers[index].stopDate.isAfter(now) ? Color.fromRGBO(26, 56, 84, 1) : Color.fromRGBO(90, 47, 100, 1))
+                              : null),
+            ),
             margin: EdgeInsets.all(5.0),
             padding: EdgeInsets.only(left: 10, right: 10),
-            color: materialAuctions != null
-                ? (materialAuctions[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                : referencetype2Auctions != null
-                    ? (referencetype2Auctions[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                    : materialOffers != null
-                        ? (materialOffers[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                        : (referencetype2Offers != null
-                            ? (referencetype2Offers[index].stopDate.isAfter(now) ? Colors.greenAccent[700] : Colors.redAccent[200])
-                            : null),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
