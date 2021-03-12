@@ -1,0 +1,945 @@
+[PageMarker
+  |
+  +index: int;
+  <static>+values: List<PageMarker>;
+  <static>+ongoing: PageMarker;
+  <static>+finished: PageMarker;
+  <static>+offers: PageMarker
+]
+
+[PageMarker]o-[PageMarker]
+
+[AllAuctions
+  |
+  +navigate: Function;
+  +filterHandler: FilterHandler;
+  +auctionHandler: AuctionHandler;
+  +offerHandler: OfferHandler;
+  +userHandler: UserInfoHandler
+  |
+  +_AllAuctionsState createState()
+]
+
+[AllAuctions]o-[FilterHandler]
+[AllAuctions]o-[AuctionHandler]
+[AllAuctions]o-[OfferHandler]
+[AllAuctions]o-[UserInfoHandler]
+[<abstract>StatefulWidget]<:-[AllAuctions]
+
+[_AllAuctionsState
+  |
+  +navigate: Function;
+  +filterHandler: FilterHandler;
+  +auctionHandler: AuctionHandler;
+  +offerHandler: OfferHandler;
+  +userHandler: UserInfoHandler;
+  -_currentPage: PageMarker;
+  +referenceTypeDropdownValue: dynamic;
+  +referenceSectorDropdownValue: dynamic;
+  +referenceTypes: List<List>
+  |
+  +void initState();
+  +Widget build();
+  -SliverList _getPageContainer();
+  -SliverList _getAuctions();
+  -SliverList _getOffers();
+  -SliverList _generateBoxes();
+  +List getReferenceSectors();
+  +List getReferenceTypes()
+]
+
+[_AllAuctionsState]o-[FilterHandler]
+[_AllAuctionsState]o-[AuctionHandler]
+[_AllAuctionsState]o-[OfferHandler]
+[_AllAuctionsState]o-[UserInfoHandler]
+[_AllAuctionsState]o-[PageMarker]
+[<abstract>State<T>]<:-[_AllAuctionsState]
+[<abstract>SingleTickerProviderStateMixin<T>]<:-[_AllAuctionsState]
+
+[MyAuctions
+  |
+  +navigate: Function;
+  +auctionHandler: AuctionHandler;
+  +offerHandler: OfferHandler;
+  +filterHandler: FilterHandler;
+  +userHandler: UserInfoHandler
+  |
+  +_MyAuctionsState createState()
+]
+
+[MyAuctions]o-[AuctionHandler]
+[MyAuctions]o-[OfferHandler]
+[MyAuctions]o-[FilterHandler]
+[MyAuctions]o-[UserInfoHandler]
+[<abstract>StatefulWidget]<:-[MyAuctions]
+
+[_MyAuctionsState
+  |
+  +navigate: Function;
+  +auctionHandler: AuctionHandler;
+  +offerHandler: OfferHandler;
+  +filterHandler: FilterHandler;
+  +userHandler: UserInfoHandler;
+  +types: List;
+  +typeDropdownValue: dynamic;
+  +title: TextEditingController;
+  +maxParticipants: TextEditingController;
+  +duration: TextEditingController;
+  +referenceTypes: List<List>;
+  +referenceParameters: List<List>;
+  +rangeReferenceParameters: List<List>;
+  +currentReferenceParameters: List<List>;
+  +referenceSectorDropdownValue: dynamic;
+  +referenceTypeDropdownValue: dynamic;
+  +referenceParameterDropdownValues: List;
+  +rangeReferenceParameterControllers: List<TextEditingController>;
+  +templateIDs: List;
+  +template: Template;
+  +templateIDDropdownValue: dynamic;
+  +offerControllers: List<TextEditingController>
+  |
+  +Widget build();
+  +Map split();
+  +SliverList buildAuctionList();
+  +void showTemplateGUI();
+  +List getReferenceSectors();
+  +List getReferenceTypes();
+  +List getReferenceParameters()
+]
+
+[_MyAuctionsState]o-[AuctionHandler]
+[_MyAuctionsState]o-[OfferHandler]
+[_MyAuctionsState]o-[FilterHandler]
+[_MyAuctionsState]o-[UserInfoHandler]
+[_MyAuctionsState]o-[TextEditingController]
+[_MyAuctionsState]o-[Template]
+[<abstract>State<T>]<:-[_MyAuctionsState]
+[<abstract>SingleTickerProviderStateMixin<T>]<:-[_MyAuctionsState]
+
+[AuctionDetailsList
+  |
+  +auctionDetailsList: List<AuctionDetails>
+  |
+  +Map toJson()
+]
+
+[AuctionDetails
+  |
+  +id: int;
+  +participants: List<Participant>;
+  +templateId: int;
+  +bids: List<Bid>;
+  +winningBid: int
+  |
+  +Map toJson()
+]
+
+[Bid
+  |
+  +id: int;
+  +time: DateTime;
+  +userId: int;
+  +keyValuePairs: List<KeyValuePair>
+  |
+  +Map toJson()
+]
+
+[KeyValuePair
+  |
+  +key: String;
+  +value: dynamic
+  |
+  +Map toJson()
+]
+
+[Participant
+  |
+  +userId: int
+  |
+  +Map toJson()
+]
+
+[Filters
+  |
+  +referenceSectors: List<ReferenceSector>
+  |
+  +Map toJson()
+]
+
+[ReferenceSector
+  |
+  +name: String;
+  +referenceTypes: List<ReferenceType>
+  |
+  +Map toJson()
+]
+
+[ReferenceType
+  |
+  +name: String;
+  +referenceParameters: List<ReferenceParameter>;
+  +rangeReferenceParameters: List<RangeReferenceParameter>
+  |
+  +Map toJson()
+]
+
+[RangeReferenceParameter
+  |
+  +name: String
+  |
+  +Map toJson()
+]
+
+[ReferenceParameter
+  |
+  +name: String;
+  +values: List<FilterValue>
+  |
+  +Map toJson()
+]
+
+[FilterValue
+  |
+  +filterValue: String
+  |
+  +Map toJson()
+]
+
+[MaterialAuctionList
+  |
+  +materialAuctions: List<MaterialAuction>
+  |
+  +Map toJson()
+]
+
+[MaterialAuction
+  |
+  +id: int;
+  +title: String;
+  +ownerId: int;
+  +maxParticipants: int;
+  +currentParticipants: int;
+  +startDate: DateTime;
+  +stopDate: DateTime;
+  +referenceSector: String;
+  +referenceType: String;
+  +materialReferenceParameters: MaterialReferenceParameters
+  |
+  +Map toJson()
+]
+
+[MaterialAuction]o-[MaterialReferenceParameters]
+
+[MaterialReferenceParameters
+  |
+  +fibersType: String;
+  +resinType: String;
+  +minFiberLength: int;
+  +maxFiberLength: int;
+  +recyclingTechnology: String;
+  +sizing: String;
+  +additives: String;
+  +minVolume: int;
+  +maxVolume: int;
+  +localid: int
+  |
+  +Map toJson()
+]
+
+[MaterialOfferList
+  |
+  +materialOffers: List<MaterialOffer>
+  |
+  +Map toJson()
+]
+
+[MaterialOffer
+  |
+  +id: int;
+  +title: String;
+  +userId: int;
+  +templateId: int;
+  +keyValuePairs: List<KeyValuePair>;
+  +startDate: DateTime;
+  +stopDate: DateTime;
+  +referenceSector: String;
+  +referenceType: String;
+  +materialReferenceParameters: MaterialReferenceParameters
+  |
+  +Map toJson()
+]
+
+[MaterialOffer]o-[MaterialReferenceParameters]
+
+[Referencetype2AuctionList
+  |
+  +referencetype2Auctions: List<Referencetype2Auction>
+  |
+  +Map toJson()
+]
+
+[Referencetype2Auction
+  |
+  +id: int;
+  +title: String;
+  +ownerId: int;
+  +maxParticipants: int;
+  +currentParticipants: int;
+  +startDate: DateTime;
+  +stopDate: DateTime;
+  +referenceSector: String;
+  +referenceType: String;
+  +referencetype2ReferenceParameters: Referencetype2ReferenceParameters
+  |
+  +Map toJson()
+]
+
+[Referencetype2Auction]o-[Referencetype2ReferenceParameters]
+
+[Referencetype2ReferenceParameters
+  |
+  +parameter1: String;
+  +parameter2: String;
+  +minVolume: int;
+  +maxVolume: int;
+  +localid: int
+  |
+  +Map toJson()
+]
+
+[Referencetype2OfferList
+  |
+  +referencetype2Offers: List<Referencetype2Offer>
+  |
+  +Map toJson()
+]
+
+[Referencetype2Offer
+  |
+  +id: int;
+  +title: String;
+  +userId: int;
+  +templateId: int;
+  +keyValuePairs: List<KeyValuePair>;
+  +startDate: DateTime;
+  +stopDate: DateTime;
+  +referenceSector: String;
+  +referenceType: String;
+  +referencetype2ReferenceParameters: Referencetype2ReferenceParameters
+  |
+  +Map toJson()
+]
+
+[Referencetype2Offer]o-[Referencetype2ReferenceParameters]
+
+[TemplateList
+  |
+  +templates: List<Template>
+  |
+  +Map toJson()
+]
+
+[Template
+  |
+  +id: int;
+  +templateStrings: List<TemplateString>;
+  +templateVariables: List<TemplateVariable>
+  |
+  +Map toJson()
+]
+
+[TemplateString
+  |
+  +text: String
+  |
+  +Map toJson()
+]
+
+[TemplateVariable
+  |
+  +key: String;
+  +valueType: String
+  |
+  +Map toJson()
+]
+
+[UserList
+  |
+  +users: List<User>
+  |
+  +Map toJson()
+]
+
+[User
+  |
+  +userId: int;
+  +userName: String;
+  +email: String;
+  +password: Password;
+  +age: int;
+  +address: Address;
+  +homePhoneNumber: String;
+  +mobilePhoneNumber: String;
+  +officePhoneNumber: String;
+  +currentType: String;
+  +company: String;
+  +participatingAuctions: List<ParticipatingAuction>;
+  +offers: List<Offer>;
+  +requestInbox: List<Inbox>;
+  +inviteInbox: List<Inbox>
+  |
+  +Map toJson()
+]
+
+[User]o-[Password]
+[User]o-[Address]
+
+[Address
+  |
+  +streetAddress: String;
+  +city: String;
+  +state: String;
+  +postalCode: String
+  |
+  +Map toJson()
+]
+
+[Inbox
+  |
+  +time: DateTime;
+  +status: String;
+  +auctionId: int;
+  +userId: int;
+  +offerId: int
+  |
+  +Map toJson()
+]
+
+[Offer
+  |
+  +offerId: int
+  |
+  +Map toJson()
+]
+
+[ParticipatingAuction
+  |
+  +auctionId: int
+  |
+  +Map toJson()
+]
+
+[Password
+  |
+  +type: String;
+  +encryption: String
+  |
+  +Map toJson()
+]
+
+[FiltersGUI
+  |
+  +filterHandler: FilterHandler
+  |
+  +_FiltersState createState()
+]
+
+[FiltersGUI]o-[FilterHandler]
+[<abstract>StatefulWidget]<:-[FiltersGUI]
+
+[_FiltersState
+  |
+  +filterHandler: FilterHandler;
+  +controllers: List<TextEditingController>;
+  +referenceTypes: List<List>;
+  +referenceParameters: List<List>;
+  +rangeReferenceParameters: List<List>;
+  +currentReferenceParameters: List<List>;
+  +referenceSectorDropdownValue: dynamic;
+  +referenceTypeDropdownValue: dynamic;
+  +referenceParameterDropdownValues: List;
+  +rangeReferenceParameterControllers: List<TextEditingController>
+  |
+  +Widget build();
+  +Widget ReturnContent();
+  +void showFilterTemplateGUI();
+  +List getReferenceSectors();
+  +List getReferenceTypes();
+  +List getReferenceParameters()
+]
+
+[_FiltersState]o-[FilterHandler]
+[<abstract>State<T>]<:-[_FiltersState]
+
+[SearchBarGUI
+  |
+  +_SearchBarGUIState createState()
+]
+
+[<abstract>StatefulWidget]<:-[SearchBarGUI]
+
+[_SearchBarGUIState
+  |
+  +list: List<SearchObject>;
+  -_selectedItem: SearchObject;
+  -_show: bool
+  |
+  +Widget build()
+]
+
+[_SearchBarGUIState]o-[SearchObject]
+[<abstract>State<T>]<:-[_SearchBarGUIState]
+
+[SearchObject
+  |
+  +name: dynamic;
+  +id: int
+]
+
+[MyTextField
+  |
+  +controller: TextEditingController;
+  +focusNode: FocusNode
+  |
+  +Widget build()
+]
+
+[MyTextField]o-[TextEditingController]
+[MyTextField]o-[FocusNode]
+[<abstract>StatelessWidget]<:-[MyTextField]
+
+[PopupListItemWidget
+  |
+  +item: SearchObject
+  |
+  +Widget build()
+]
+
+[PopupListItemWidget]o-[SearchObject]
+[<abstract>StatelessWidget]<:-[PopupListItemWidget]
+
+[Auctions
+  |
+  +materialAuctions: MaterialAuctionList;
+  +referencetype2Auctions: Referencetype2AuctionList
+]
+
+[Auctions]o-[MaterialAuctionList]
+[Auctions]o-[Referencetype2AuctionList]
+
+[AuctionHandler
+  |
+  +setMainState: Function;
+  +consumerAuctionDetails: AuctionDetailsList;
+  +supplierAuctionDetails: AuctionDetailsList;
+  +allAuctions: Auctions;
+  +consumerContractTemplates: TemplateList;
+  +supplierContractTemplates: TemplateList;
+  +myAuctions: Auctions;
+  +currentAuctionDetails: AuctionDetails;
+  +userHandler: UserInfoHandler;
+  +nextAuctionID: int;
+  +nextBidID: int;
+  +nextTemplateID: int;
+  +inbox: List<Inbox>;
+  +inboxAuctionTitles: List;
+  +templateItemCount: int;
+  +controllers: List<TextEditingController>;
+  +valueTypes: List;
+  +dropdownValues: List;
+  +userTypes: List;
+  +dropdownValue: dynamic
+  |
+  +void createMaterialAuction();
+  +void createReferencetype2Auction();
+  +void endAuction();
+  +void leaveAuction();
+  +void selectAuctionWinner();
+  +void viewBid();
+  +void setCurrentAuction();
+  +List getAuctionTitles();
+  +void makeBid();
+  +Template getContractTemplate();
+  +Container getListTile();
+  +void showNotifications();
+  +void createContractTemplate();
+  +void showContractTemplateGUI()
+]
+
+[AuctionHandler]o-[AuctionDetailsList]
+[AuctionHandler]o-[Auctions]
+[AuctionHandler]o-[TemplateList]
+[AuctionHandler]o-[AuctionDetails]
+[AuctionHandler]o-[UserInfoHandler]
+
+[FilterHandler
+  |
+  +setMainState: Function;
+  +filters: Filters;
+  +materialFilter: MaterialReferenceParameters;
+  +referencetype2Filter: Referencetype2ReferenceParameters;
+  +localFilteridCounter: int
+  |
+  +void updateFilter();
+  +void deleteFilter();
+  +bool checkFilter();
+  +void retrieveFilters()
+]
+
+[FilterHandler]o-[Filters]
+[FilterHandler]o-[MaterialReferenceParameters]
+[FilterHandler]o-[Referencetype2ReferenceParameters]
+
+[Offers
+  |
+  +materialOffers: MaterialOfferList;
+  +referencetype2Offers: Referencetype2OfferList
+]
+
+[Offers]o-[MaterialOfferList]
+[Offers]o-[Referencetype2OfferList]
+
+[OfferHandler
+  |
+  +setMainState: Function;
+  +allOffers: Offers;
+  +myOffers: Offers;
+  +consumerOfferTemplates: TemplateList;
+  +supplierOfferTemplates: TemplateList;
+  +userHandler: UserInfoHandler;
+  +nextOfferID: int
+  |
+  +void createMaterialOffer();
+  +void createReferencetype2Offer();
+  +void endOffer();
+  +void viewOffer()
+]
+
+[OfferHandler]o-[Offers]
+[OfferHandler]o-[TemplateList]
+[OfferHandler]o-[UserInfoHandler]
+
+[UserInfoHandler
+  |
+  +updateUser: Function;
+  +userListObject: UserList;
+  +user: User
+  |
+  +bool isEmail();
+  +bool userCheck();
+  +String passHasher();
+  +bool passwordChecker();
+  +bool phoneCheck();
+  +bool profileEditCheck();
+  +bool passwordValidator();
+  +User loginValidator();
+  +void login();
+  +void register();
+  +void updateProfile();
+  +void requestToJoin();
+  +void inviteToAuction()
+]
+
+[UserInfoHandler]o-[UserList]
+[UserInfoHandler]o-[User]
+
+[MyApp
+  |
+  +Widget build()
+]
+
+[<abstract>StatelessWidget]<:-[MyApp]
+
+[WidgetMarker
+  |
+  +index: int;
+  <static>+values: List<WidgetMarker>;
+  <static>+auctions: WidgetMarker;
+  <static>+login: WidgetMarker;
+  <static>+register: WidgetMarker;
+  <static>+profile: WidgetMarker;
+  <static>+forgotPass: WidgetMarker;
+  <static>+room: WidgetMarker
+]
+
+[WidgetMarker]o-[WidgetMarker]
+
+[MainGUI
+  |
+  +State createState()
+]
+
+[<abstract>StatefulWidget]<:-[MainGUI]
+
+[MainGUIState
+  |
+  +selectedWidgetMarker: WidgetMarker;
+  +controller: AnimationController;
+  +animation: Animation;
+  +userHandler: UserInfoHandler;
+  +filterHandler: FilterHandler;
+  +auctionHandler: AuctionHandler;
+  +offerHandler: OfferHandler;
+  +nextAuctionID: int;
+  +nextBidID: int;
+  +nextTemplateID: int;
+  +nextOfferID: int
+  |
+  +void initState();
+  +void dispose();
+  +Widget build();
+  +dynamic playAnimation();
+  +void setMainState();
+  +void updateUser();
+  +void navigate();
+  +Widget getCustomContainer();
+  +Widget getAuctionsGUIContainer();
+  +Widget getLoginContainer();
+  +Widget getRegisterContainer();
+  +Widget getForgotPassContainer();
+  +Widget getProfileContainer();
+  +Widget getRoomContainer()
+]
+
+[MainGUIState]o-[WidgetMarker]
+[MainGUIState]o-[AnimationController]
+[MainGUIState]o-[<abstract>Animation<T>]
+[MainGUIState]o-[UserInfoHandler]
+[MainGUIState]o-[FilterHandler]
+[MainGUIState]o-[AuctionHandler]
+[MainGUIState]o-[OfferHandler]
+[<abstract>State<T>]<:-[MainGUIState]
+[<abstract>SingleTickerProviderStateMixin<T>]<:-[MainGUIState]
+
+[NavigationBar
+  |
+  +navigate: Function;
+  +showContractTemplateGUI: Function;
+  +showNotifications: Function;
+  +userHandler: UserInfoHandler;
+  +counter: int;
+  +preferredSize: Size
+  |
+  +NavigationState createState()
+]
+
+[NavigationBar]o-[UserInfoHandler]
+[NavigationBar]o-[Size]
+[<abstract>StatefulWidget]<:-[NavigationBar]
+[<abstract>PreferredSizeWidget]<:--[NavigationBar]
+
+[NavigationState
+  |
+  +navigate: Function;
+  +showContractTemplateGUI: Function;
+  +showNotifications: Function;
+  +userHandler: UserInfoHandler;
+  +counter: int
+  |
+  +Widget build();
+  +Widget getNotificationsWidgetCounter()
+]
+
+[NavigationState]o-[UserInfoHandler]
+[<abstract>State<T>]<:-[NavigationState]
+
+[NavigationItem
+  |
+  +title: dynamic
+  |
+  +Widget build()
+]
+
+[<abstract>StatelessWidget]<:-[NavigationItem]
+
+[AuctionsGUI
+  |
+  +navigate: Function;
+  +filterHandler: FilterHandler;
+  +auctionHandler: AuctionHandler;
+  +offerHandler: OfferHandler;
+  +userHandler: UserInfoHandler
+  |
+  +Widget build()
+]
+
+[AuctionsGUI]o-[FilterHandler]
+[AuctionsGUI]o-[AuctionHandler]
+[AuctionsGUI]o-[OfferHandler]
+[AuctionsGUI]o-[UserInfoHandler]
+[<abstract>StatelessWidget]<:-[AuctionsGUI]
+
+[ForgotPasswordScreen
+  |
+  +navigate: Function
+  |
+  +ForgotPasswordState createState()
+]
+
+[<abstract>StatefulWidget]<:-[ForgotPasswordScreen]
+
+[ForgotPasswordState
+  |
+  +navigate: Function
+  |
+  +Widget build();
+  +dynamic launchMailto()
+]
+
+[<abstract>State<T>]<:-[ForgotPasswordState]
+
+[LoginScreen
+  |
+  +navigate: Function;
+  +userHandler: UserInfoHandler
+  |
+  +Login createState()
+]
+
+[LoginScreen]o-[UserInfoHandler]
+[<abstract>StatefulWidget]<:-[LoginScreen]
+
+[Login
+  |
+  +navigate: Function;
+  +userHandler: UserInfoHandler;
+  -_controllerUserName: TextEditingController;
+  -_controllerPW: TextEditingController;
+  +loginUserName: dynamic;
+  +loginPW: dynamic
+  |
+  +Widget build()
+]
+
+[Login]o-[UserInfoHandler]
+[Login]o-[TextEditingController]
+[<abstract>State<T>]<:-[Login]
+
+[ProfileGUI
+  |
+  +navigate: Function;
+  +userHandler: UserInfoHandler
+  |
+  +Profile createState()
+]
+
+[ProfileGUI]o-[UserInfoHandler]
+[<abstract>StatefulWidget]<:-[ProfileGUI]
+
+[Profile
+  |
+  +navigate: Function;
+  +userHandler: UserInfoHandler;
+  -_formKey: GlobalKey<FormState>;
+  -_controllerUserName: TextEditingController;
+  -_controllerEmail: TextEditingController;
+  -_controllerAge: TextEditingController;
+  -_controllerAddress: TextEditingController;
+  -_controllerCity: TextEditingController;
+  -_controllerState: TextEditingController;
+  -_controllerPostalCode: TextEditingController;
+  -_controllerHomePhoneNumber: TextEditingController;
+  -_controllerMobilePhoneNumber: TextEditingController;
+  -_controllerOfficePhoneNumber: TextEditingController;
+  -_controllerCompany: TextEditingController;
+  -_controllerOPW: TextEditingController;
+  -_controllerPW: TextEditingController;
+  -_controllerRPW: TextEditingController;
+  +newUserName: dynamic;
+  +newEmail: dynamic;
+  +newAge: int;
+  +newAddress: dynamic;
+  +newCity: dynamic;
+  +newState: dynamic;
+  +newPostalCode: dynamic;
+  +newHomePhoneNumber: dynamic;
+  +newMobilePhoneNumber: dynamic;
+  +newOfficePhoneNumber: dynamic;
+  +newCurrentType: dynamic;
+  +newCompany: dynamic;
+  +opw: dynamic;
+  +pw: dynamic;
+  +rpw: dynamic
+  |
+  +Widget build()
+]
+
+[Profile]o-[UserInfoHandler]
+[Profile]o-[<abstract>GlobalKey<T>]
+[Profile]o-[TextEditingController]
+[<abstract>State<T>]<:-[Profile]
+
+[RegisterScreen
+  |
+  +navigate: Function;
+  +userHandler: UserInfoHandler
+  |
+  +Register createState()
+]
+
+[RegisterScreen]o-[UserInfoHandler]
+[<abstract>StatefulWidget]<:-[RegisterScreen]
+
+[Register
+  |
+  +navigate: Function;
+  +userHandler: UserInfoHandler;
+  -_controllerUserName: TextEditingController;
+  -_controllerEmail: TextEditingController;
+  -_controllerPW: TextEditingController;
+  -_controllerRPW: TextEditingController;
+  +newUserName: dynamic;
+  +newEmail: dynamic;
+  +pw: dynamic;
+  +rpw: dynamic
+  |
+  +Widget build()
+]
+
+[Register]o-[UserInfoHandler]
+[Register]o-[TextEditingController]
+[<abstract>State<T>]<:-[Register]
+
+[Room
+  |
+  +navigate: Function;
+  +auctionHandler: AuctionHandler;
+  -_userHandler: UserInfoHandler
+  |
+  +_RoomState createState()
+]
+
+[Room]o-[AuctionHandler]
+[Room]o-[UserInfoHandler]
+[<abstract>StatefulWidget]<:-[Room]
+
+[_RoomState
+  |
+  +navigate: Function;
+  +auctionHandler: AuctionHandler;
+  +userHandler: UserInfoHandler;
+  +controller: CountdownTimerController;
+  +out: List<Inbox>;
+  +contractTemplate: Template;
+  +controllers: List<TextEditingController>;
+  +materialAuction: MaterialAuction;
+  +referencetype2Auction: Referencetype2Auction;
+  +isFinished: bool;
+  +isHost: bool;
+  +smallText: TextStyle;
+  +bigText: TextStyle;
+  +boldText: TextStyle
+  |
+  +Widget build();
+  +bool checkForNotifications();
+  +void showContractGUI()
+]
+
+[_RoomState]o-[AuctionHandler]
+[_RoomState]o-[UserInfoHandler]
+[_RoomState]o-[CountdownTimerController]
+[_RoomState]o-[Template]
+[_RoomState]o-[MaterialAuction]
+[_RoomState]o-[Referencetype2Auction]
+[_RoomState]o-[TextStyle]
+[<abstract>State<T>]<:-[_RoomState]

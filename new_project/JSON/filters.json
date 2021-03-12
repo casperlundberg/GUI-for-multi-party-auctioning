@@ -16,6 +16,12 @@
                                     "filterValue": "glass fibers"
                                 },
                                 {
+                                    "filterValue": "paper fibers"
+                                },
+                                {
+                                    "filterValue": "carbon fiber"
+                                },
+                                {
                                     "filterValue": "other fibers"
                                 }
                             ]
