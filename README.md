@@ -14,7 +14,7 @@ The matching between demand and supply of components and materials across multip
 
 1. **[Optional]** Install [Chrome](https://www.google.com/chrome/).
 
-1. Inside the `new_project` folder run command: `flutter run -d chrome` and the project will run in a new Chrome window(other browsers should work aswell if one have the plugins for them).
+1. Inside the `GUI` folder run command: `flutter run -d chrome` and the project will run in a new Chrome window(other browsers should work aswell if one have the plugins for them).
    1. One common error when trying to run for first time inside editors such as [VScode](https://code.visualstudio.com/) might be that the editor can't find Chrome(or any other web browser). Please run `flutter doctor -v` and see if there is anything that causes Flutter to fail. If you are on Windows the failure might be because the system variable path for flutter executable is wrong/missing.
 
 ### Open issue 
