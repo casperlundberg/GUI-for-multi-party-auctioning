@@ -39,6 +39,14 @@ The current GUI has no connection with the API whatsoever but there is a file co
    1. Firstly, there is some instances where the themdata is manually overwritten in the `.dart` files. Mostly when is comes to coloring, to solve this, one just go through the files one by one and add `final ThemeData themeData = Theme.of(context);` on the first line of the build method which then can be used to access the themedata loaded into `main.dart`.
    1. It is very easy to create a few themes and just add a drop-down in the user page where the user can choose a theme which then just will be a id-number on the database so the GUI knows which theme to load once a user login. 
    1. The problem with giving user the ability to create their own themes by choosing color, font-size, etc is that it would require to save the themedata file in the database which would consume a lot of unnecessary disk space.
+
+#### Summarized TODO
+- [ ] Implement API
+- [ ] Fix notification system
+- [ ] Design search bar
+- [ ] Make the GUI responsible
+- [ ] Make 3-5 design themes for users to choose from
+- [ ] **[Optional]** Make a tool for users to create their own themes 
  
 ### Project managers 
 - Shai Fernandez shai.fernandez@ltu.se
