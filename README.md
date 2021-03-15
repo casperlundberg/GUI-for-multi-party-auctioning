@@ -58,3 +58,8 @@ The current GUI has no connection with the API whatsoever but there is a file co
 - Gustav Curan guscur-8@student.ltu.se
 - Elliot Huber ellhub-8@student.ltu.se
 - Casper Lundberg caslun-8@student.ltu.se
+
+<p align="center">
+  :yellow_heart:	:yellow_heart:	:yellow_heart:	:yellow_heart:
+</p>
+
