@@ -4,7 +4,7 @@ The matching between demand and supply of components and materials across multip
 
 ### Installation
 
-1. Clone the repository with command: `git clone https://github.com/casperlundberg/GUI-for-multi-party-auctioning`.
+1. Clone the repository with command: `git clone https://github.com/casperlundberg/GUI-for-multi-party-auctioning`. If you don't have git installed, try downloading and unpacking this repository.
 
 1. [Download flutter](https://flutter.dev/docs/get-started/install), the Dart SDK is included in the newer versions of Flutter.
    1. The dev team highly recommend to follow the *get-started* tutorial linked above as it shows how to install neccessary plugins and more for the recommended editors.
@@ -36,9 +36,9 @@ The current GUI has no connection with the API whatsoever but there is a file co
 1. Design a search bar, there is one in [v0.1](https://github.com/casperlundberg/GUI-for-multi-party-auctioning/tree/version_0.1) but it is very buggy and holds no functionality(i.e. if one searches for something it wont change the auctionlist like the filters do). The search bar will provide further filtering so users can even easier find the auction that they're looking for.
 1.  As this GUI is in pre-aplha(of some sort), the website is not fully responsive. In order to make the GUI ready for actual use, a responsive design is a must. Furthermore, Flutter have good compatibility with a lot of different devices and operating systems which means that the more responsive the GUI gets, the easier it will be to adapt it to new devices. 
 1. The last thing that should be on the list according to the dev team is the freedom for users to choose or even create design themes. Dart have this incredibly strong design system that utilizes *themedata* files. Similar to CSS in how they work but very different in syntax and execution. 
-   1. Firstly, there is some instances where the themdata is manually overwritten in the `.dart` files. Mostly when is comes to coloring, to solve this, one just go through the files one by one and add `final ThemeData themeData = Theme.of(context);` on the first line of the build method which then can be used to access the themedata loaded into `main.dart`.
+   1. Firstly, there is some instances where the themdata is manually overwritten in the `.dart` files. Mostly when it comes to coloring, to solve this, one just go through the files one by one and add `final ThemeData themeData = Theme.of(context);` on the first line of the build method which then can be used to access the themedata loaded into `main.dart`.
    1. It is very easy to create a few themes and just add a drop-down in the user page where the user can choose a theme which then just will be a id-number on the database so the GUI knows which theme to load once a user login. 
-   1. The problem with giving user the ability to create their own themes by choosing color, font-size, etc is that it would require to save the themedata file in the database which would consume a lot of unnecessary disk space.
+   1. The problem with giving users the ability to create their own themes by choosing color, font-size, etc is that it would require to save the themedata file in the database which would consume a lot of unnecessary disk space.
 
 #### Summarized TODO
 - [ ] Implement API
